@@ -7,88 +7,177 @@ export type Service = {
 
 export const servicesData: Service[] = [
   {
+    id: "accounting-advisory",
+    title: {
+      ar: "الاستشارات المحاسبية وإعداد التقارير المالية",
+      en: "Accounting Advisory & Financial Reporting"
+    },
+    shortDesc: {
+      ar: "نقدم حلولاً محاسبية تساعد المؤسسات على بناء منظومة مالية قوية وتعزيز الشفافية.",
+      en: "We provide accounting solutions that help organizations build a strong financial framework and enhance transparency."
+    },
+    content: {
+      ar: `في بيئة أعمال تتسم بالتغير المستمر، والتطور المتسارع في المعايير المحاسبية، وزيادة المتطلبات التنظيمية، أصبحت القرارات المالية أكثر تعقيدًا من أي وقت مضى. ولم يعد نجاح المؤسسات يعتمد فقط على إعداد قوائم مالية دقيقة، بل على قدرتها على تفسير المعلومات المالية، وإدارة المخاطر، وتحقيق الامتثال، ودعم القرارات الاستراتيجية التي تحقق النمو المستدام.
+
+في **AFC – AL-Ashmawy Financial Consulting** نقدم خدمات الاستشارات المحاسبية وإعداد التقارير المالية باعتبارها عنصرًا استراتيجيًا يساعد المؤسسات على بناء منظومة مالية قوية، وتعزيز الشفافية، ورفع جودة التقارير المالية، وترسيخ ثقة المستثمرين والممولين والجهات الرقابية.
+
+نعمل جنبًا إلى جنب مع الإدارة التنفيذية والإدارات المالية لتقديم حلول عملية تتوافق مع طبيعة كل نشاط، مع مراعاة أهدافه التشغيلية والاستثمارية والتوسعية، بما يضمن تحقيق التوازن بين الامتثال للمتطلبات النظامية وتعظيم القيمة الاقتصادية للأعمال.
+
+تعتمد خدماتنا على أفضل الممارسات المهنية والمعايير الدولية، بما في ذلك **المعايير الدولية لإعداد التقارير المالية (IFRS)**، و**معايير المحاسبة الدولية (IAS)**، و**معايير المحاسبة المصرية (EAS)**، إضافة إلى المتطلبات التشريعية والتنظيمية ذات الصلة، بما يضمن إعداد تقارير مالية تتسم بالدقة والشفافية وقابلية الاعتماد.
+
+### لماذا تختار AFC؟
+
+نحن لا نقدم حلولًا محاسبية تقليدية، بل نوفر رؤية مالية واستراتيجية تساعد المؤسسات على اتخاذ قرارات أكثر كفاءة، وإدارة التغيرات التنظيمية بثقة، وتحسين جودة المعلومات المالية، وتعزيز الأداء المؤسسي.
+
+ويضم فريقنا نخبة من المتخصصين الذين يجمعون بين الخبرة الفنية والرؤية التجارية، بما يمكنهم من معالجة أكثر المعاملات المحاسبية تعقيدًا، وتقديم حلول عملية تتماشى مع أفضل الممارسات الدولية، مع مراعاة طبيعة السوق المحلي ومتطلبات الجهات الرقابية.
+
+### نطاق خدماتنا
+
+تشمل خدماتنا الاستشارية والمحاسبية مجموعة متكاملة من الحلول، من أبرزها:
+
+- إعداد ومراجعة السياسات المحاسبية وفقًا للمعايير الدولية والمصرية.
+- تقديم الاستشارات الفنية المتعلقة بتطبيق معايير **IFRS** و **IAS** و **EAS**.
+- إعداد القوائم المالية المستقلة والمجمعة والإفصاحات المصاحبة لها.
+- دعم عمليات التحول إلى المعايير الدولية وإدارة مشروعات التحول المحاسبي.
+- تقديم الاستشارات الخاصة بالاندماج والاستحواذ وإعادة هيكلة الشركات من الناحية المحاسبية.
+- إعداد القوائم المالية الافتتاحية وتخصيص سعر الشراء (**Purchase Price Allocation – PPA**) عند عمليات الاستحواذ.
+- تقديم الدعم الفني في المعالجات المحاسبية للمعاملات غير التقليدية والمعقدة.
+- إعداد النماذج المالية وتحليل الآثار المحاسبية والمالية للقرارات الاستثمارية.
+- تصميم وتطوير الدليل المحاسبي والسياسات والإجراءات المالية.
+- دعم الإدارات المالية في إعداد التقارير الموجهة للمستثمرين والبنوك والجهات التنظيمية.
+- تقييم جودة التقارير المالية وتحسين عمليات الإغلاق المالي وإعداد التقارير الدورية.
+- تقديم الاستشارات المتعلقة بإعداد التقارير المالية للشركات قبل الطرح العام أو جذب المستثمرين.
+
+### القيمة التي نقدمها
+
+نساعد عملاءنا على تحويل البيانات المالية إلى أداة لاتخاذ القرار، وليس مجرد وسيلة للامتثال.
+
+ومن خلال الدمج بين الخبرة المهنية، والتحليل المالي، والتطبيق الدقيق للمعايير الدولية، نمكّن المؤسسات من تحسين جودة التقارير المالية، وتعزيز كفاءة الأداء، وتقليل المخاطر، ورفع مستوى الحوكمة، ودعم خطط النمو والتوسع بثقة.
+
+في **AFC** نؤمن بأن المحاسبة ليست مجرد تسجيل للمعاملات، بل هي لغة الأعمال، وأساس الثقة، ومحرك رئيسي لاتخاذ القرارات التي تصنع مستقبل المؤسسات.`,
+      en: `In today's rapidly evolving business environment, organizations are facing unprecedented financial reporting challenges driven by changing accounting standards, increasing regulatory requirements, and growing stakeholder expectations. Success is no longer measured solely by the accuracy of financial statements, but by an organization's ability to transform financial information into strategic insight, manage risk effectively, ensure regulatory compliance, and support sustainable business growth.
+
+At **AFC – AL-Ashmawy Financial Consulting**, we view accounting advisory and financial reporting as strategic business enablers rather than compliance functions. We partner with organizations to strengthen financial governance, enhance transparency, improve reporting quality, and provide reliable financial information that supports confident decision-making and long-term value creation.
+
+Working closely with executive management and finance teams, we develop practical, business-focused solutions tailored to each client's industry, operational environment, and strategic objectives. Our integrated approach enables organizations to meet regulatory expectations while improving operational performance and maximizing business value.
+
+Our services are delivered in accordance with internationally recognized professional standards, including the International Financial Reporting Standards (IFRS), International Accounting Standards (IAS), Egyptian Accounting Standards (EAS), and other applicable regulatory and legislative requirements, ensuring financial reporting that is transparent, reliable, and decision-oriented.
+
+### Why Choose AFC?
+
+At AFC, we go beyond technical accounting advice.
+
+We provide strategic financial insight that enables organizations to respond confidently to evolving regulatory requirements, improve financial reporting quality, strengthen governance, and make informed business decisions.
+
+Our professionals combine deep technical expertise with commercial understanding to address complex accounting challenges, delivering practical solutions that align with international best practices while reflecting the realities of the local business environment.
+
+### Scope of Services
+
+Our Accounting Advisory & Financial Reporting services include:
+
+- Development and review of accounting policies in accordance with IFRS, IAS, and Egyptian Accounting Standards (EAS).
+- Technical accounting advisory for complex financial transactions.
+- Preparation of standalone and consolidated financial statements and related disclosures.
+- IFRS implementation and accounting conversion projects.
+- Accounting advisory for mergers, acquisitions, business combinations, and corporate restructuring.
+- Purchase Price Allocation (PPA) and opening balance sheet preparation.
+- Technical support for complex accounting treatments and financial reporting matters.
+- Financial modelling and accounting impact assessments for strategic business decisions.
+- Design and enhancement of accounting manuals, financial policies, and internal procedures.
+- Support in preparing financial reports for investors, financial institutions, regulators, and other stakeholders.
+- Financial reporting quality assessments and financial close optimization.
+- IPO readiness and financial reporting support for organizations seeking investment or public listing.
+
+### The Value We Deliver
+
+We help organizations transform financial reporting from a compliance requirement into a strategic management tool.
+
+By combining technical excellence, commercial insight, and internationally recognized accounting practices, we enable our clients to improve reporting quality, strengthen financial governance, enhance operational efficiency, reduce business risk, and support sustainable growth.
+
+At AFC, we believe that accounting is far more than recording transactions—it is the language of business, the foundation of trust, and a critical driver of strategic decision-making and long-term success.`
+    }
+  },
+  {
     id: "audit-advisory",
     title: {
-      ar: "المراجعة والاستشارات",
-      en: "Audit & Advisory"
+      ar: "المراجعة وابداء الرأي المهني",
+      en: "Review and Expression of Professional Opinion"
     },
     shortDesc: {
       ar: "أدوات استراتيجية لبناء الثقة، وتعزيز الحوكمة، وإدارة المخاطر، ودعم النمو المستدام.",
       en: "Strategic instruments for building trust, strengthening governance, and enabling sustainable growth."
     },
     content: {
-      ar: `في **AFC – Ashmawy Financial Consulting**، نؤمن بأن المراجعة والاستشارات ليست مجرد خدمات مهنية روتينية، بل هي أدوات استراتيجية فعالة تهدف إلى بناء الثقة، وتعزيز الحوكمة، وإدارة المخاطر بكفاءة لدعم النمو المستدام لشركتك.
+      ar: `في **AFC – Ashmawy Financial Consulting** نؤمن بأن المراجعة والاستشارات ليست مجرد خدمات مهنية، بل أدوات استراتيجية لبناء الثقة، وتعزيز الحوكمة، وإدارة المخاطر، ودعم النمو المستدام.
 
-نعمل جنبًا إلى جنب مع عملائنا لفهم طبيعة أعمالهم بعمق، وتحليل التحديات التي تواجههم، وتقديم حلول عملية مبنية على أفضل الممارسات العالمية.
+نعمل جنبًا إلى جنب مع عملائنا لفهم طبيعة أعمالهم، وتحليل التحديات التي تواجههم، وتقديم حلول عملية مبنية على أفضل الممارسات العالمية، بما يمكنهم من اتخاذ قرارات واثقة وتحقيق أهدافهم بثبات.
+
+تعتمد خدماتنا على الالتزام بأعلى المعايير المهنية الدولية، بما في ذلك المعايير الدولية للمراجعة (ISA)، والمعايير الدولية لإعداد التقارير المالية (IFRS)، ومعايير المحاسبة المصرية (EAS)، ومدونة IESBA لأخلاقيات المهنة، بالإضافة إلى أطر الحوكمة وإدارة المخاطر مثل COSO، مع الالتزام بالقوانين واللوائح المصرية ذات الصلة.
 
 ### لماذا تختار AFC؟
-نحن لا ننظر إلى أعمالنا على أنها مجرد مراجعة للقوائم المالية، بل نعتبر أنفسنا شركاء حقيقيين في نجاحك. نساعد مؤسستك من خلال:
-- **بناء بيئة مالية قوية:** تؤسس لاستقرار طويل الأمد.
-- **تعزيز الثقة:** أمام المستثمرين، البنوك، والجهات الرقابية.
-- **تحسين جودة المعلومات:** لتكون قراراتك الإدارية مبنية على بيانات دقيقة.
-- **إدارة المخاطر بكفاءة:** وتجنب أي مفاجآت مالية أو قانونية.
-- **اغتنام فرص النمو:** بثقة تامة واستدامة.
+
+لأننا لا ننظر إلى أعمالنا على أنها مجرد مراجعة للقوائم المالية أو إعداد للإقرارات الضريبية، بل نعتبر أنفسنا شركاء في نجاح عملائنا.
+
+نساعد المؤسسات على بناء بيئة مالية قوية، وتعزيز الثقة أمام المستثمرين والبنوك والجهات الرقابية، وتحسين جودة المعلومات المالية، وإدارة المخاطر بكفاءة، واغتنام فرص النمو بثقة واستدامة.
+
+ويضم فريقنا نخبة من المهنيين الذين يجمعون بين المعرفة الفنية والخبرة العملية، ويعملون وفق منهجية تعتمد على فهم طبيعة كل نشاط، وتقديم حلول مصممة خصيصًا لتناسب أهداف كل عميل، بغض النظر عن حجم أعماله أو القطاع الذي يعمل فيه.
 
 ### الجودة التي نصنع بها الفرق
-الجودة بالنسبة لنا هي أساس كل قرار. ولهذا نحن نعتمد على:
-- **منهجيات تقييم المخاطر:** المعتمدة دولياً.
-- **أحدث التقنيات الرقمية:** وأدوات تحليل البيانات المتقدمة.
-- **فريق من النخبة:** يجمع بين المعرفة الفنية العميقة والخبرة العملية الواسعة.
-- **الالتزام بالمعايير:** مثل (ISA) و (IFRS) و (EAS) وأطر الحوكمة (COSO).
 
-### ماذا نقدم في هذا القسم؟
+الجودة بالنسبة لنا ليست مرحلة من مراحل العمل، بل هي أساس كل قرار وكل خدمة نقدمها.
+
+ولهذا نطبق منهجيات مراجعة قائمة على تقييم المخاطر، ونستخدم أحدث التقنيات الرقمية وأدوات تحليل البيانات، بما يضمن تقديم خدمات تتسم بالدقة، والشفافية، والكفاءة، والالتزام، مع التركيز على تقديم قيمة مضافة تتجاوز المتطلبات النظامية.
+
+### ماذا نقدم؟
+
+تنقسم خدماتنا إلى محورين رئيسيين يعملان معًا لتحقيق أفضل النتائج لعملائنا.
 
 **أولًا: خدمات المراجعة والتأكيد**
-نوفر خدمات مراجعة مستقلة تمنح جميع الأطراف الثقة المطلقة في موثوقية المعلومات المالية.
-- إبداء الرأي المهني المستقل في القوائم المالية.
-- تقييم سلامة نظم الرقابة الداخلية.
-- تقديم توصيات عملية لتحسين الأداء المالي ورفع كفاءة التشغيل.
+نوفر خدمات مراجعة مستقلة تمنح الإدارة والمساهمين والمستثمرين والجهات الرقابية الثقة في موثوقية المعلومات المالية، وسلامة نظم الرقابة الداخلية، والالتزام بالمعايير والتشريعات. ولا تقتصر أعمالنا على إبداء الرأي المهني في القوائم المالية، بل تمتد إلى تقديم توصيات عملية لتحسين الأداء المالي، وتعزيز الحوكمة، وإدارة المخاطر، ورفع كفاءة العمليات التشغيلية.
 
 **ثانيًا: الخدمات الاستشارية**
-نساعدك على تحويل التحديات إلى فرص للنمو من خلال:
-- تطوير وبناء الأنظمة المالية الحديثة.
-- إعادة هيكلة الأعمال ودراسات الجدوى.
-- التحول السلس إلى المعايير المحاسبية الدولية.
-- التخطيط المالي والاستراتيجي طويل الأمد.`,
+نساعد عملاءنا على تحويل التحديات إلى فرص للنمو من خلال تقديم استشارات مالية واستراتيجية مبنية على التحليل والخبرة. وتشمل خدماتنا تطوير الأنظمة المالية، وتحسين الرقابة الداخلية، وإعادة هيكلة الأعمال، ودراسات الجدوى، والتخطيط الضريبي، والتحول إلى المعايير الدولية، وإدارة المخاطر، والاستشارات المالية، بما يساعد المؤسسات على تحقيق أداء مستدام واتخاذ قرارات أكثر فاعلية في بيئة أعمال متغيرة.
+
+لا نكتفي بتقديم الحلول، بل نبني شراكات طويلة الأمد تقوم على الثقة، والتميز المهني، والالتزام بتحقيق قيمة حقيقية ومستدامة لكل عميل.`,
       en: `At **AFC – Ashmawy Financial Consulting**, we believe that audit and advisory services are far more than professional obligations—they are strategic instruments for building trust, strengthening governance, managing risk, and enabling sustainable growth.
 
-We work closely with our clients to understand their business deeply, identify challenges, and deliver practical, forward-thinking solutions.
+We work closely with our clients to understand their business, identify the challenges they face, and deliver practical, forward-thinking solutions tailored to their strategic objectives. Our goal is to empower organizations with the confidence, clarity, and insight needed to make informed decisions and achieve long-term success.
+
+Our services are delivered in accordance with internationally recognized professional standards, including the International Standards on Auditing (ISA), International Financial Reporting Standards (IFRS), International Accounting Standards (IAS), Egyptian Accounting Standards (EAS), the IESBA Code of Ethics, and globally recognized governance and risk management frameworks such as COSO and ISO 31000, while ensuring full compliance with applicable Egyptian laws and regulatory requirements.
 
 ### Why Choose AFC?
-Choosing AFC means choosing a trusted business partner committed to creating value beyond compliance. We help your organization by:
-- **Building Financial Integrity:** Establishing a solid foundation for long-term stability.
-- **Enhancing Trust:** Among investors, banks, and regulatory bodies.
-- **Improving Information Quality:** Ensuring your decisions are data-driven.
-- **Managing Risks Efficiently:** Avoiding financial or legal surprises.
-- **Seizing Growth Opportunities:** With confidence and sustainability.
+
+Choosing AFC means choosing a trusted business partner committed to creating value beyond compliance.
+
+We go beyond auditing financial statements and fulfilling regulatory requirements. We help organizations strengthen financial integrity, enhance governance, improve operational performance, manage business risks, and build confidence among shareholders, investors, lenders, regulators, and other stakeholders.
+
+Our multidisciplinary team combines technical excellence with commercial insight to deliver tailored solutions that address each client's unique business environment. Regardless of the size or complexity of your organization, we provide the expertise, responsiveness, and strategic perspective needed to support sustainable success.
 
 ### Quality That Creates Value
-Quality is the foundation of everything we do. We rely on:
-- **Risk-Based Methodologies:** Internationally approved standards.
-- **Advanced Digital Technologies:** And data analytics tools.
-- **Elite Professionals:** Combining deep technical knowledge with practical experience.
-- **Strict Compliance:** With (ISA), (IFRS), (EAS), and (COSO) frameworks.
+
+Quality is not simply a stage in our engagement process—it is the foundation of everything we do.
+
+By applying risk-based audit methodologies, leveraging advanced digital technologies and data analytics, and maintaining rigorous quality management procedures, we deliver services that are accurate, transparent, efficient, and value-driven.
+
+Our objective is not only to ensure compliance but also to identify opportunities for improvement, enhance organizational resilience, and create measurable value that contributes to our clients' long-term competitiveness and growth.
 
 ### What We Deliver
 
+Our professional services are built around two integrated pillars that work together to strengthen business performance and support sustainable success.
+
 **Audit & Assurance Services**
-We provide independent audit services that give all stakeholders absolute confidence in your financial information.
-- Expressing an independent professional opinion on financial statements.
-- Evaluating the effectiveness of internal control systems.
-- Providing actionable recommendations to improve financial performance.
+Our independent audit and assurance services provide management, shareholders, investors, financial institutions, and regulators with confidence in the reliability of financial information, the effectiveness of internal controls, and compliance with applicable professional standards and regulatory requirements. Beyond expressing an independent audit opinion, we provide valuable insights and practical recommendations that improve financial reporting, reinforce corporate governance, strengthen internal control environments, and support informed strategic decision-making.
 
 **Advisory Services**
-We help you transform challenges into opportunities through:
-- Designing and building modern financial systems.
-- Business restructuring and feasibility studies.
-- Smooth transition to international accounting standards.
-- Long-term financial and strategic planning.`
+Our advisory practice helps organizations transform challenges into opportunities through strategic financial and business consulting. We assist clients in designing efficient financial systems, improving internal controls, implementing international accounting standards, optimizing tax strategies, conducting feasibility studies, restructuring businesses, strengthening risk management frameworks, and supporting sustainable business transformation.
+
+At AFC, we do not simply provide professional services—we build enduring partnerships founded on integrity, technical excellence, independence, and an unwavering commitment to helping our clients achieve lasting success.`
     }
   },
   {
     id: "tax-advisory",
     title: {
-      ar: "الاستشارات والامتثال الضريبي",
+      ar: "الاستشارات الضريبية والامتثال الضريبي",
       en: "Tax Advisory & Compliance"
     },
     shortDesc: {
@@ -96,105 +185,224 @@ We help you transform challenges into opportunities through:
       en: "Helping organizations confidently navigate the complex tax environment while ensuring full compliance."
     },
     content: {
-      ar: `في **AFC** نؤمن بأن الضرائب ليست مجرد التزام قانوني روتيني، بل هي عنصر استراتيجي يؤثر بصورة مباشرة في كفاءة الأعمال، والأداء المالي، واستدامة النمو.
+      ar: `في **AFC – AL-Ashmawy Financial Consulting** نؤمن بأن الضرائب ليست مجرد التزام قانوني، بل عنصر استراتيجي يؤثر بصورة مباشرة في كفاءة الأعمال، والأداء المالي، واستدامة النمو.
 
-صُممت خدماتنا الضريبية لمساعدة الشركات على التعامل بثقة مع البيئة الضريبية المتغيرة، مع ضمان الامتثال الكامل للتشريعات وتجنب أي غرامات أو مخاطر.
+صُممت خدماتنا الضريبية لمساعدة الشركات على التعامل بثقة مع البيئة الضريبية المتغيرة، مع ضمان الامتثال الكامل للتشريعات واللوائح الضريبية المعمول بها. ونعمل جنبًا إلى جنب مع عملائنا لتطوير حلول ضريبية عملية واستراتيجية تحقق الكفاءة الضريبية، وتحد من المخاطر، وتدعم اتخاذ القرارات التجارية السليمة.
 
-### لماذا تختار AFC كشريك ضريبي؟
-أصبحت المنظومة الضريبية أكثر تطورًا وتعقيدًا، الأمر الذي يتطلب شريكًا يمتلك الخبرة الفنية والرؤية الاستراتيجية. نحن نساعدك على:
-- **اكتشاف الفرص الضريبية المشروعة:** لتحسين الكفاءة المالية للشركة.
-- **تقليل المخاطر:** من خلال التخطيط الضريبي المسبق والامتثال الدقيق.
-- **الاستعداد للتغيرات:** التكيف السريع مع أي تغيرات تشريعية أو رقابية جديدة.
-- **دعم القرارات الاستثمارية:** بدمج الاعتبارات الضريبية قبل اتخاذ أي قرار مالي ضخم.
+يجمع فريقنا بين الخبرة الفنية المتخصصة والفهم العميق للتشريعات الضريبية المصرية والممارسات الدولية، لتقديم حلول متكاملة مصممة بما يتوافق مع طبيعة كل نشاط وأهدافه.
 
-### خدماتنا الضريبية المتكاملة
-نقدم باقة شاملة من الخدمات الضريبية المصممة لحماية أعمالك وتعزيز نموها:
-- **ضريبة الدخل والقيمة المضافة:** استشارات وامتثال كامل لتشريعات ضريبة الدخل وضريبة القيمة المضافة.
-- **الفاتورة والإيصال الإلكتروني:** تطبيق وامتثال تام لمنظومة الفاتورة الإلكترونية والإيصال الإلكتروني.
-- **الفحص الضريبي الوقائي (Health Check):** تقييم استباقي لموقفك الضريبي لاكتشاف ومعالجة أي ثغرات.
-- **التخطيط الضريبي:** تحسين الكفاءة الضريبية للشركات وعمليات الاندماج والاستحواذ.
-- **الضرائب الدولية:** استشارات التسعير التحويلي، المعاملات العابرة للحدود، واتفاقيات منع الازدواج الضريبي.
-- **تمثيل العملاء:** تمثيل قانوني واحترافي أمام مصلحة الضرائب ولجان الطعن وتسوية المنازعات.
-- **ضرائب الرواتب والمنبع:** استشارات الامتثال لضريبة كسب العمل والاستقطاع من المنبع.
+وتُقدم خدماتنا وفقًا لأحكام قانون الضريبة على الدخل، وقانون ضريبة القيمة المضافة، وقانون الإجراءات الضريبية الموحد، وقواعد تسعير المعاملات، ومنظومات الفاتورة الإلكترونية والإيصال الإلكتروني، واتفاقيات منع الازدواج الضريبي، إضافة إلى إرشادات منظمة التعاون الاقتصادي والتنمية (OECD) المتعلقة بالتسعير التحويلي عند الاقتضاء.
 
-لا نساعد عملاءنا على الامتثال للقوانين فحسب، بل نوفر درعاً ضريبياً يحمي أرباحهم ويدعم استقرارهم.`,
-      en: `At **AFC**, we believe that taxation is more than a statutory obligation—it is a strategic function that directly influences business performance, financial efficiency, and long-term sustainability.
+### لماذا تختار AFC؟
 
-Our Tax Advisory services are designed to help organizations confidently navigate an increasingly complex tax environment while ensuring full compliance and avoiding penalties.
+أصبحت المنظومة الضريبية أكثر تطورًا وتعقيدًا، الأمر الذي يتطلب شريكًا يمتلك الخبرة الفنية والرؤية الاستراتيجية.
+
+في AFC لا نقتصر على ضمان الامتثال الضريبي، بل نساعد عملاءنا على اكتشاف الفرص الضريبية المشروعة، وتحسين الكفاءة المالية، وتقليل المخاطر، والاستعداد المسبق لأي تغيرات تشريعية أو رقابية.
+
+نعتمد منهجًا استباقيًا يدمج الاعتبارات الضريبية في القرارات الاستثمارية والتشغيلية، بما يدعم نمو الأعمال ويعزز استدامتها.
+
+### فلسفتنا الضريبية
+
+نؤمن بأن التخطيط الضريبي الفعال يقوم على الشفافية، والنزاهة، والالتزام المهني، والفهم العميق لأهداف العميل وطبيعة نشاطه.
+
+ولا تقتصر خدماتنا على إعداد الإقرارات الضريبية، بل نقدم حلولًا استراتيجية تدعم التوسع، وتحافظ على الامتثال، وتحسن الأداء المالي، وتوفر قيمة حقيقية ومستدامة.
+
+### خدماتنا الضريبية
+
+تشمل خدماتنا المتكاملة:
+
+- الاستشارات والامتثال لضريبة الدخل.
+- الاستشارات والامتثال لضريبة القيمة المضافة.
+- التخطيط الضريبي وتحسين الكفاءة الضريبية.
+- تطبيق منظومة الفاتورة الإلكترونية والإيصال الإلكتروني.
+- إعداد ملفات وتسعير المعاملات بين الأطراف المرتبطة.
+- الفحص الضريبي الوقائي (Tax Health Check).
+- الفحص النافي للجهالة الضريبية.
+- الدعم أثناء الفحص الضريبي.
+- تسوية المنازعات الضريبية.
+- تمثيل العملاء أمام مصلحة الضرائب المصرية.
+- الاستشارات الضريبية الدولية.
+- التخطيط الضريبي للمعاملات العابرة للحدود.
+- الاستشارات الخاصة بضريبة كسب العمل والاستقطاع من المنبع.
+- الامتثال الضريبي للرواتب والأجور.
+- الهيكلة الضريبية لعمليات الاندماج والاستحواذ.
+
+في **AFC** لا نساعد عملاءنا على الامتثال للقوانين الضريبية فحسب، بل نوفر حلولًا ضريبية استراتيجية تعزز الأداء المالي، وتخفض المخاطر، وتحمي الأعمال، وتدعم تحقيق نمو مستدام في بيئة تشريعية دائمة التطور.`,
+      en: `At **AFC – Ashmawy Financial Consulting**, we believe that taxation is more than a statutory obligation—it is a strategic function that directly influences business performance, financial efficiency, and long-term sustainability.
+
+Our Tax Advisory & Compliance services are designed to help organizations confidently navigate an increasingly complex tax environment while ensuring full compliance with applicable tax laws and regulations. We work closely with our clients to develop practical, commercially focused tax strategies that optimize tax efficiency, minimize risk, and support informed business decisions.
+
+Our professionals combine deep technical expertise with a thorough understanding of local legislation and international tax practices to deliver integrated tax solutions tailored to each client's business objectives.
+
+Our services are delivered in accordance with the Egyptian Income Tax Law, Value Added Tax (VAT) Law, Unified Tax Procedures Law, Transfer Pricing Regulations, the Egyptian Tax Authority's electronic systems, relevant Double Taxation Agreements (DTAs), and internationally recognized guidance, including the OECD Transfer Pricing Guidelines, where applicable.
 
 ### Why Choose AFC for Tax Services?
-Tax regulations continue to evolve, requiring a partner with technical expertise and strategic vision. We help you to:
-- **Identify Legitimate Opportunities:** To improve overall tax efficiency.
-- **Minimize Risks:** Through proactive tax planning and strict compliance.
-- **Prepare for Changes:** Quickly adapting to new legislative updates.
-- **Support Investment Decisions:** By integrating tax considerations into major financial moves.
 
-### Our Integrated Tax Services
-We offer a comprehensive suite of tax services tailored to protect and grow your business:
-- **Income & VAT Tax:** Full advisory and compliance for Corporate Income Tax and Value Added Tax.
-- **E-Invoicing Systems:** Seamless implementation of Electronic Invoicing and Receipts.
-- **Tax Health Checks:** Proactive assessments of your tax position to identify and resolve vulnerabilities.
-- **Tax Planning:** Optimizing tax efficiency for daily operations, mergers, and acquisitions.
-- **International Tax:** Transfer pricing advisory, cross-border transactions, and double taxation agreements.
-- **Tax Authority Representation:** Professional representation in tax disputes and before the Egyptian Tax Authority.
-- **Payroll & Withholding Taxes:** Ensuring full compliance with salary and withholding tax regulations.
+Tax regulations continue to evolve, creating both challenges and opportunities for businesses.
 
-We do not merely help clients comply—we provide a tax shield that protects profits and supports stability.`
+At AFC, we help our clients remain compliant while identifying legitimate opportunities to improve tax efficiency and reduce exposure to financial and regulatory risks.
+
+Our proactive approach enables organizations to anticipate tax implications before critical business decisions are made, ensuring that tax considerations support—not hinder—business growth.
+
+We build trusted relationships with our clients by providing timely advice, practical solutions, and continuous professional support throughout every stage of their business journey.
+
+### Our Tax Philosophy
+
+We believe that effective tax planning is built upon transparency, integrity, technical excellence, and a comprehensive understanding of our clients' commercial objectives.
+
+Rather than simply preparing tax returns, we deliver strategic tax solutions that protect our clients' interests, strengthen compliance, support business expansion, and create sustainable value.
+
+### What We Deliver
+
+Our integrated tax services include:
+
+- Corporate Income Tax Advisory & Compliance
+- Value Added Tax (VAT) Advisory & Compliance
+- Tax Planning & Tax Optimization
+- Electronic Tax Compliance (E-Invoice & E-Receipt)
+- Transfer Pricing Documentation & Advisory
+- Tax Health Checks
+- Tax Due Diligence
+- Tax Audit Support
+- Tax Dispute Resolution
+- Representation before the Egyptian Tax Authority
+- International Tax Advisory
+- Cross-Border Tax Planning
+- Withholding Tax Advisory
+- Payroll Tax Compliance
+- Merger & Acquisition Tax Structuring
+
+At AFC, we do not merely help clients comply with tax legislation—we provide strategic tax solutions that protect businesses, strengthen financial performance, reduce risk, and support sustainable growth in an ever-changing regulatory environment.`
     }
   },
   {
-    id: "accounting-advisory",
+    id: "company-formation",
     title: {
-      ar: "الاستشارات المحاسبية وإعداد التقارير",
-      en: "Accounting Advisory & Financial Reporting"
+      ar: "تأسيس الشركات والمنشأت",
+      en: "Company Formation & Corporate Services"
     },
     shortDesc: {
-      ar: "نساعد المؤسسات على بناء منظومة مالية قوية وتعزيز الشفافية وترسيخ ثقة المستثمرين.",
-      en: "Partnering with organizations to strengthen financial governance, enhance transparency, and improve reporting quality."
+      ar: "نساعد عملاءنا على اختيار الهيكل القانوني الأنسب وفقًا لطبيعة النشاط والمتطلبات التنظيمية.",
+      en: "Helping entrepreneurs and investors establish businesses that are legally sound and strategically positioned."
     },
     content: {
-      ar: `في بيئة أعمال تتسم بالتغير المستمر وزيادة المتطلبات التنظيمية، أصبحت القرارات المالية أكثر تعقيدًا من أي وقت مضى. لم يعد نجاح المؤسسات يعتمد فقط على إعداد قوائم مالية، بل على القدرة على تفسير هذه الأرقام وتحويلها إلى قرارات استراتيجية ناجحة.
+      ar: `يمثل اختيار الشكل القانوني المناسب للمنشأة أحد أهم القرارات الاستراتيجية التي تؤثر على مستقبل الأعمال، والالتزامات القانونية، والهيكل الضريبي، وآليات الإدارة، وفرص النمو والاستثمار.
 
-في **AFC**، نقدم خدمات الاستشارات المحاسبية وإعداد التقارير المالية باعتبارها أداة حيوية لتعظيم القيمة الاقتصادية للأعمال.
+في **AFC – AL Ashmawy Financial Consulting** نقدم خدمات تأسيس الشركات باعتبارها نقطة الانطلاق لبناء كيان قانوني قوي ومستدام، وليس مجرد استكمال للإجراءات الإدارية. ونساعد عملاءنا على اختيار الهيكل القانوني الأنسب وفقًا لطبيعة النشاط، وخطط النمو، وهيكل الملكية، والمتطلبات التنظيمية، بما يضمن تحقيق أعلى مستويات الامتثال والكفاءة التشغيلية.
 
-### القيمة التي نضيفها لشركتك
-نحن لا نقدم مجرد قيود دفترية، بل نوفر رؤية مالية واستراتيجية متكاملة تمنحك:
-- **تحويل البيانات إلى قرارات:** نجعل من الأرقام لغة واضحة تساعد الإدارة على التخطيط السليم.
-- **الشفافية والثقة:** إعداد تقارير دقيقة تعزز ثقة المستثمرين، الممولين، والبنوك في شركتك.
-- **الامتثال السلس:** التوافق التام مع المعايير الدولية (IFRS) والمصرية (EAS) دون تعقيد عملياتك.
-- **تقليل المخاطر التنظيمية:** من خلال بناء سياسات وإجراءات مالية داخلية صلبة.
+ويتولى فريقنا إدارة جميع مراحل التأسيس، بدءًا من دراسة النشاط واختيار الشكل القانوني المناسب، مرورًا بإعداد وصياغة عقود التأسيس واللوائح الداخلية، واستخراج التراخيص والتسجيلات القانونية والضريبية، وانتهاءً ببدء مزاولة النشاط واستيفاء جميع المتطلبات النظامية.
 
-### باقة الاستشارات المحاسبية المتقدمة
-يضم فريقنا نخبة من الخبراء القادرين على معالجة أعقد المعاملات المحاسبية من خلال:
-- **إعداد السياسات المحاسبية:** تصميم وتطوير أدلة محاسبية وسياسات تتوافق مع المعايير الدولية والمحلية.
-- **التحول للمعايير الدولية:** إدارة مشروعات التحول بسلاسة لتطبيق معايير (IFRS).
-- **القوائم المالية المجمعة:** إعداد القوائم المستقلة والمجمعة للشركات القابضة بدقة متناهية.
-- **محاسبة الاندماج والاستحواذ:** تقديم الاستشارات الفنية، وتخصيص سعر الشراء (PPA)، وإعداد القوائم الافتتاحية.
-- **النماذج المالية:** إعداد نماذج احترافية لتحليل الآثار المالية للقرارات الاستثمارية المستقبلية.
-- **دعم الطروحات العامة (IPO):** تجهيز الشركات وإعداد تقاريرها المالية تمهيداً لجذب المستثمرين أو الطرح بالبورصة.
+وتُقدم خدماتنا وفقًا لأحكام قانون الشركات رقم 159 لسنة 1981 ولائحته التنفيذية، وقانون الاستثمار رقم 72 لسنة 2017، وقانون تنمية المشروعات المتوسطة والصغيرة ومتناهية الصغر رقم 152 لسنة 2020، بالإضافة إلى القوانين واللوائح الصادرة عن الهيئة العامة للاستثمار والمناطق الحرة (GAFI) والجهات التنظيمية المختصة.
 
-في AFC، نؤمن بأن المحاسبة ليست مجرد تسجيل للمعاملات، بل هي "لغة الأعمال" التي تصنع مستقبلك.`,
-      en: `In a rapidly evolving business environment with increasing regulatory requirements, financial decisions have become more complex than ever. Success no longer relies solely on preparing financial statements, but on the ability to interpret these numbers and turn them into successful strategic decisions.
+### أنواع الشركات التي نقوم بتأسيسها
 
-At **AFC**, we provide Accounting Advisory and Financial Reporting services as a vital tool to maximize your business's economic value.
+**أولاً: شركة الشخص الواحد (One Person Company – OPC)**
+نساعد المستثمرين في تأسيس شركات الشخص الواحد، مع إعداد المستندات القانونية، واستكمال إجراءات التسجيل، وتقديم الاستشارات المتعلقة بالحوكمة، والالتزامات القانونية، والضريبية، بما يتوافق مع أحكام قانون الشركات.
 
-### The Value We Add to Your Business
-We don't just provide bookkeeping; we offer an integrated financial and strategic vision that gives you:
-- **Data into Decisions:** We translate numbers into clear insights that help management plan effectively.
-- **Transparency & Trust:** Accurate reports that boost the confidence of investors, lenders, and banks.
-- **Seamless Compliance:** Full alignment with international (IFRS) and local (EAS) standards without complicating operations.
-- **Reduced Regulatory Risks:** By building solid internal financial policies and procedures.
+**ثانياً: شركة ذات مسؤولية محدودة (Limited Liability Company – LLC)**
+نقدم خدمات تأسيس الشركات ذات المسؤولية المحدودة، بدءًا من إعداد عقد التأسيس، وتحديد هيكل الملكية والإدارة، وحتى استكمال جميع إجراءات التسجيل والترخيص، بما يوفر هيكلًا قانونيًا مرنًا يناسب معظم الأنشطة التجارية والاستثمارية.
 
-### Advanced Accounting Advisory Suite
-Our team of experts can handle the most complex accounting transactions through:
-- **Accounting Policies Setup:** Designing and developing accounting manuals and policies aligned with standard practices.
-- **IFRS Transition:** Managing seamless transition projects to adopt International Financial Reporting Standards.
-- **Consolidated Financial Statements:** Accurate preparation of standalone and consolidated statements for holding groups.
-- **M&A Accounting:** Technical advisory, Purchase Price Allocation (PPA), and opening balance sheet preparation.
-- **Financial Modeling:** Creating professional models to analyze the financial impacts of future investment decisions.
-- **IPO Readiness:** Preparing companies and their financial reports to attract investors or go public.
+**ثالثاً: شركة مساهمة (Joint Stock Company – JSC)**
+نقدم خدمات تأسيس شركات المساهمة، وإعداد النظام الأساسي، وهيكل الحوكمة، وإجراءات إصدار الأسهم، وتكوين مجلس الإدارة، مع ضمان الالتزام بالمتطلبات القانونية والتنظيمية اللازمة للشركات الكبرى والمشروعات الاستثمارية.
 
-At AFC, we believe accounting is not just recording transactions—it is the "language of business" that shapes your future.`
+**رابعاً: شركات التوصية والتضامن**
+نساعد الشركاء في اختيار الهيكل المناسب، وصياغة عقود الشراكة، وتحديد مسؤوليات الشركاء، واستكمال جميع إجراءات التسجيل وفقًا للتشريعات المنظمة.
+
+**خامساً: فروع الشركات الأجنبية ومكاتب التمثيل**
+نوفر خدمات تأسيس فروع الشركات الأجنبية ومكاتب التمثيل، واستيفاء جميع المتطلبات التنظيمية، والحصول على الموافقات والتسجيلات اللازمة لممارسة النشاط داخل جمهورية مصر العربية.
+
+### القيمة التي نقدمها
+
+لا يقتصر دورنا على تأسيس شركة، بل نضع الأساس القانوني والمالي والإداري الذي يضمن انطلاق أعمال عملائنا بثقة واستدامة. ومن خلال خبرتنا في القوانين المنظمة للأعمال، والإجراءات التنظيمية، والالتزامات الضريبية، نقدم حلولًا متكاملة تختصر الوقت، وتقلل المخاطر، وتضمن تأسيس الكيان على أسس سليمة تدعم النمو والتوسع في المستقبل.`,
+      en: `Selecting the appropriate legal structure is one of the most important strategic decisions in the life cycle of any business. It influences governance, taxation, legal liability, operational flexibility, investment opportunities, and long-term growth. A well-structured entity not only ensures regulatory compliance but also establishes a solid foundation for sustainable success.
+
+At **AFC – AL Ashmawy Financial Consulting**, we view company formation as far more than a legal registration process. We help entrepreneurs, investors, and corporate groups establish businesses that are legally sound, commercially efficient, and strategically positioned for future expansion.
+
+Our professionals work closely with clients to evaluate the nature of their business, ownership structure, investment objectives, and regulatory requirements before recommending the most appropriate legal entity. From incorporation to post-registration compliance, we provide comprehensive support throughout every stage of the business establishment process.
+
+Our services are delivered in accordance with the Egyptian Companies Law No. 159 of 1981, the Investment Law No. 72 of 2017, the MSME Development Law No. 152 of 2020, together with the regulations issued by the General Authority for Investment and Free Zones (GAFI) and other applicable Egyptian regulatory authorities.
+
+### Types of Business Entities We Establish
+
+**One Person Company (OPC)**
+We provide comprehensive incorporation services for One Person Companies, including legal documentation, registration procedures, tax registration, licensing requirements, and ongoing corporate compliance, enabling entrepreneurs to establish their businesses efficiently and confidently.
+
+**Limited Liability Company (LLC)**
+Our specialists assist clients in establishing Limited Liability Companies by preparing incorporation documents, structuring ownership arrangements, defining management responsibilities, and completing all legal and regulatory registration procedures, creating a flexible and efficient corporate structure suitable for a wide range of commercial activities.
+
+**Joint Stock Company (JSC)**
+We advise clients on the establishment of Joint Stock Companies, including drafting the Articles of Association, designing corporate governance structures, organizing share capital, supporting board formation, and ensuring compliance with all applicable legal and regulatory requirements.
+
+**Partnerships (General & Limited Partnerships)**
+We assist partners in selecting the appropriate partnership structure, preparing partnership agreements, defining partners' rights and responsibilities, and completing all legal registration procedures in accordance with the applicable legislation.
+
+**Branches of Foreign Companies & Representative Offices**
+We provide end-to-end advisory and registration services for foreign company branches and representative offices, including obtaining regulatory approvals, completing incorporation procedures, and ensuring compliance with Egyptian legal and investment regulations.
+
+### The Value We Deliver
+
+At AFC, our role extends beyond company registration.
+
+We build the legal, financial, and governance foundation upon which successful businesses grow. By combining legal awareness, financial expertise, and regulatory knowledge, we help our clients establish compliant, resilient, and investment-ready organizations while minimizing risk, reducing administrative complexity, and supporting sustainable business growth from day one.`
+    }
+  },
+  {
+    id: "tax-procedures",
+    title: {
+      ar: "الإجراءات الضريبية",
+      en: "Tax Procedures"
+    },
+    shortDesc: {
+      ar: "نقدم الإجراءات الضريبية الكاملة من تأسيس النشاط وحتى الفحص الضريبي وسداد المستحقات.",
+      en: "Complete tax procedures from business establishment to tax audits and payments."
+    },
+    content: {
+      ar: `تُعد الإجراءات الضريبية مجموعة من الخطوات القانونية والإدارية التي يلتزم بها الممول منذ تأسيس النشاط وحتى تقديم الإقرارات وسداد الضرائب المستحقة، وذلك وفقًا لأحكام القوانين واللوائح الضريبية المعمول بها في جمهورية مصر العربية. وتهدف هذه الإجراءات إلى ضمان الامتثال الضريبي، وتعزيز الشفافية، وتنظيم العلاقة بين الممول ومصلحة الضرائب.
+
+### خطوات وإجراءات العمل الضريبي
+
+نوفر في **AFC** متابعة وتنفيذًا لكافة الإجراءات الضريبية اللازمة لعملك بانتظام، وتشمل:
+
+- **أولاً:** تأسيس الشركة أو المنشأة.
+- **ثانياً:** الجمعية العامة العادية.
+- **ثالثاً:** الجمعية العامة غير العادية.
+- **رابعاً:** استخراج السجل التجاري.
+- **خامساً:** استخراج البطاقة الضريبية.
+- **سادساً:** فتح الملف الضريبي لدى مصلحة الضرائب.
+- **سابعاً:** التسجيل في ضريبة القيمة المضافة (VAT).
+- **ثامناً:** التسجيل في منظومة الفاتورة الإلكترونية.
+- **تاسعاً:** التسجيل في منظومة الإيصال الإلكتروني.
+- **عاشراً:** التسجيل في التأمينات الاجتماعية.
+- **الحادي عشر:** تقديم الإقرارات الضريبية الدورية والسنوية.
+- **الثاني عشر:** سداد الضرائب المستحقة في مواعيدها.
+- **الثالث عشر:** الفحص الضريبي والدعم الفني.
+- **الرابع عشر:** الربط الضريبي ومراجعة النماذج.
+- **الخامس عشر:** حل النزاعات والطعن الضريبي (اللجان الداخلية ولجان الطعن).
+- **السادس عشر:** حفظ وتوثيق الدفاتر والسجلات والمستندات المحاسبية.
+- **السابع عشر:** تحديث بيانات الممول والالتزام الدائم بكافة التعديلات الضريبية.`,
+      en: `Tax procedures are a set of legal and administrative steps that taxpayers must follow from the establishment of a business until filing tax returns and paying the taxes due, in accordance with the applicable tax laws and regulations in the Arab Republic of Egypt. These procedures aim to ensure tax compliance, promote transparency, and regulate the relationship between taxpayers and the Egyptian Tax Authority.
+
+### Tax Workflow and Procedures
+
+At **AFC**, we provide comprehensive management and execution of all necessary tax procedures for your business, including:
+
+- **First:** Business or Company Establishment.
+- **Second:** Ordinary General Assembly (OGA).
+- **Third:** Extraordinary General Assembly (EGA).
+- **Fourth:** Obtaining the Commercial Registration (CR).
+- **Fifth:** Obtaining the Tax Card.
+- **Sixth:** Opening the Tax File.
+- **Seventh:** Registering for Value Added Tax (VAT).
+- **Eighth:** Registering for the Electronic Invoice (E-Invoice) System.
+- **Ninth:** Registering for the Electronic Receipt (E-Receipt) System.
+- **Tenth:** Registering with the Social Insurance Authority.
+- **Eleventh:** Filing Tax Returns.
+- **Twelfth:** Paying the Taxes Due.
+- **Thirteenth:** Tax Audit and Technical Support.
+- **Fourteenth:** Tax Assessment.
+- **Fifteenth:** Dispute resolution and tax appeals.
+- **Sixteenth:** Maintaining Accounting Records and Supporting Documents.
+- **Seventeenth:** Updating Taxpayer Information and Complying with Tax Amendments.`
     }
   },
   {
@@ -208,99 +416,101 @@ At AFC, we believe accounting is not just recording transactions—it is the "la
       en: "Helping clients identify potential tax exposures and representing them throughout the examination process."
     },
     content: {
-      ar: `تُعد الفحوصات الضريبية من أكثر المراحل حساسية وتوتراً في حياة أي شركة، حيث قد يترتب عليها فروق ضريبية ضخمة، غرامات، ومنازعات تؤثر على المركز المالي وسمعة المنشأة.
+      ar: `تُعد الفحوصات الضريبية من أكثر المراحل حساسية في دورة حياة أي منشأة، حيث قد يترتب عليها فروق ضريبية، وغرامات، وجزاءات، ومنازعات تؤثر على المركز المالي وسمعة المنشأة واستمرارية أعمالها.
 
-في **AFC**، نؤمن بأن أفضل وسيلة لاجتياز الفحص الضريبي بنجاح هي "الاستعداد المسبق". نحن نقف كدرع حامٍ لشركتك خلال جميع مراحل الفحص.
+في **AFC – AL Ashmawy Financial Consulting** نؤمن بأن أفضل وسيلة لمواجهة الفحص الضريبي ليست عند بدء الفحص، بل بالاستعداد له مسبقًا من خلال بناء منظومة مالية وضريبية متكاملة تقوم على الامتثال، ودقة البيانات، وسلامة المستندات، والتطبيق الصحيح للتشريعات.
 
-### استراتيجيتنا في الفحص الضريبي
-نحن لا ننتظر بدء الفحص لنتحرك، بل نبني موقفاً ضريبياً قوياً من خلال:
-- **تحليل المخاطر مبكراً:** اكتشاف أوجه القصور في مستنداتك وإقراراتك ومعالجتها قبل أن تكتشفها مصلحة الضرائب.
-- **بناء ملف دفاع احترافي:** تجهيز كافة المستندات والتحليلات التي تدعم موقف الشركة القانوني.
-- **التمثيل القوي:** التحدث نيابة عنك والتفاوض باحترافية عالية مع مأموري الضرائب.
-- **تجنب الغرامات:** الحرص التام على إغلاق الفحص بأقل فروق ضريبية ممكنة وتجنب أي غرامات تأخير.
+ومن خلال خبرتنا العملية في التعامل مع مختلف أنواع الفحوصات الضريبية، نساعد عملاءنا على تقليل المخاطر الضريبية، ومعالجة أوجه القصور قبل اكتشافها، وتمثيلهم باحترافية أمام مصلحة الضرائب المصرية، وتقديم الدعم الفني الكامل منذ الإخطار بالفحص وحتى الانتهاء من جميع الإجراءات، بما يضمن حماية مصالحهم وتحقيق أعلى درجات الامتثال.
 
-### أنواع الفحوصات التي نديرها باقتدار
-نمتلك خبرة عميقة في التعامل مع كافة أنواع الفحوصات الضريبية وفقاً للتشريعات المصرية:
-- **فحص ضريبة الدخل:** مراجعة شاملة للإقرارات، المصروفات والإيرادات، والتسويات لضمان سلامة موقفك في ضريبة الأرباح التجارية والصناعية.
-- **فحص ضريبة القيمة المضافة:** التدقيق في الفواتير، الإقرارات الشهرية، ورد الضريبة، ومتطلبات الفاتورة الإلكترونية لتجنب فروق الفحص.
-- **فحص ضريبة كسب العمل (المرتبات):** التأكد من صحة استقطاع وتوريد الضرائب على الرواتب والمزايا العينية للموظفين لتجنب غرامات الباب الخامس.
-- **فحص ضريبة الخصم والإضافة:** التحقق من دقة الاستقطاعات من الموردين والمقاولين وتوريدها في مواعيدها القانونية تجنباً للغرامات الفادحة.
-- **فحص ضريبة الدمغة:** مراجعة العقود والمحررات الخاضعة لضريبة الدمغة لتأمين موقف الشركة.
+يعتمد فريقنا على فهم عميق للتشريعات الضريبية المصرية، مع تطبيق أفضل الممارسات المهنية، والالتزام بأحكام قانون الضريبة على الدخل رقم 91 لسنة 2005 وتعديلاته، وقانون الإجراءات الضريبية الموحد رقم 206 لسنة 2020، وقانون ضريبة القيمة المضافة رقم 67 لسنة 2016، بالإضافة إلى التعليمات والقرارات التنفيذية الصادرة عن مصلحة الضرائب المصرية.
 
-في AFC، نعتبر كل فحص ضريبي فرصة لإثبات قوة منظومتك المالية، وحماية أموالك، لتتفرغ أنت لنمو أعمالك وأنت مطمئن.`,
-      en: `Tax examinations are among the most sensitive and stressful phases for any company, potentially resulting in significant tax adjustments, penalties, and disputes that impact financial stability.
+### أنواع الفحوصات الضريبية
 
-At **AFC**, we believe the best way to successfully pass a tax audit is "Proactive Preparation". We stand as a protective shield for your business throughout all examination stages.
+**أولاً: فحص ضريبة الدخل**
+يشمل مراجعة الإقرارات الضريبية، والقوائم المالية، والمصروفات والإيرادات، والتسويات الضريبية، ومدى الالتزام بأحكام قانون الضريبة على الدخل رقم 91 لسنة 2005. ويعمل فريقنا على إعداد ملف دفاع ضريبي متكامل، ومراجعة المستندات المؤيدة، وتمثيل العميل خلال جميع مراحل الفحص وحتى الانتهاء منه.
 
-### Our Tax Audit Strategy
-We don't wait for the audit to start; we build a strong tax position by:
-- **Early Risk Analysis:** Identifying and rectifying vulnerabilities in your documents and returns before the Tax Authority does.
-- **Professional Defense Files:** Preparing all necessary documents and analyses to robustly support the company's legal position.
-- **Strong Representation:** Speaking on your behalf and negotiating professionally with tax inspectors.
-- **Penalty Avoidance:** Working diligently to close the audit with the minimum possible tax differences and avoiding late penalties.
+**ثانياً: فحص ضريبة كسب العمل (Payroll Tax Audit)**
+يختص بمراجعة مدى صحة احتساب واستقطاع وتوريد الضريبة على المرتبات والأجور والمزايا العينية، وفقًا لأحكام الباب الخامس من قانون الضريبة على الدخل ولائحته التنفيذية. ونقوم بمراجعة كشوف المرتبات، والعقود، والمزايا، والتسويات السنوية، لضمان سلامة التطبيق وتقليل مخاطر الفروق الضريبية.
 
-### Audits We Expertly Manage
-We possess deep expertise in handling all types of tax examinations under Egyptian legislation:
-- **Income Tax Audits:** Comprehensive review of returns, expenses, revenues, and reconciliations to secure your corporate tax position.
-- **VAT Audits:** Scrutinizing invoices, monthly returns, tax refunds, and e-invoicing compliance to prevent audit discrepancies.
-- **Payroll Tax Audits:** Ensuring accurate calculation, withholding, and remittance of taxes on employee salaries and benefits.
-- **Withholding Tax Audits:** Verifying accurate deductions from suppliers and contractors and their timely remittance to avoid severe penalties.
-- **Stamp Tax Audits:** Reviewing contracts and documents subject to stamp tax to secure the company's compliance.
+**ثالثاً: فحص ضريبة الخصم والإضافة (Withholding Tax Audit)**
+يهدف إلى التحقق من صحة تطبيق نظام الخصم تحت حساب الضريبة، ومدى الالتزام بالاستقطاع والتوريد في المواعيد القانونية، وإصدار النماذج الضريبية المعتمدة وفقًا لأحكام قانون الضريبة على الدخل والتعليمات التنفيذية لمصلحة الضرائب. كما نراجع جميع التعاملات الخاضعة للنظام لتجنب الغرامات والجزاءات.
 
-At AFC, we view every tax audit as an opportunity to prove the strength of your financial system and protect your funds, allowing you to focus on business growth with peace of mind.`
+**رابعاً: فحص ضريبة الدمغة (Stamp Tax Audit)**
+يتضمن مراجعة المعاملات والعقود والمحررات والعمليات الخاضعة لضريبة الدمغة، والتأكد من صحة احتساب الضريبة وسدادها وفقًا لأحكام قانون ضريبة الدمغة رقم 111 لسنة 1980 وتعديلاته، مع تقييم أي مخاطر أو التزامات محتملة قد تنشأ نتيجة التطبيق غير الصحيح.
+
+**خامساً: فحص ضريبة القيمة المضافة**
+يشمل مراجعة الإقرارات الضريبية، والفواتير، والإقرارات الشهرية، والخصم الضريبي، ورد الضريبة، والتأكد من الالتزام بأحكام قانون ضريبة القيمة المضافة رقم 67 لسنة 2016، بالإضافة إلى مراجعة تطبيق منظومتي الفاتورة الإلكترونية والإيصال الإلكتروني ومتطلبات الامتثال الرقمي.
+
+### القيمة التي نقدمها
+
+لا يقتصر دورنا على الاستجابة للفحص بعد بدايته، بل نعمل على بناء موقف ضريبي قوي قبل الفحص، وتحليل المخاطر المحتملة، ومعالجة أوجه القصور، وإعداد ملفات دفاع ضريبي احترافية، وتمثيل عملائنا أمام الجهات الضريبية بكفاءة ومهنية.
+
+في AFC نعتبر كل فحص ضريبي فرصة لإثبات قوة منظومة الامتثال لدى عملائنا، وحماية أعمالهم، وتعزيز ثقة المستثمرين والإدارة في سلامة مراكزهم الضريبية.`,
+      en: `Tax examinations represent one of the most critical stages in the lifecycle of any business. If not properly managed, they may result in additional tax assessments, financial penalties, interest, prolonged disputes, and significant operational and reputational risks. In today's evolving regulatory environment, successful organizations recognize that effective tax management begins long before an examination takes place.
+
+At **AFC – AL Ashmawy Financial Consulting**, we believe that the strongest defense against a tax examination is proactive compliance. Our objective is not simply to respond to tax audits, but to help clients establish a robust tax governance framework built upon accuracy, transparency, proper documentation, and full compliance with applicable tax legislation.
+
+Drawing upon extensive practical experience across a wide range of tax examinations, our professionals assist clients in identifying potential tax exposures, correcting compliance deficiencies, strengthening supporting documentation, and representing them throughout every stage of the examination process before the Egyptian Tax Authority (ETA).
+
+Our services are delivered in accordance with the Egyptian Income Tax Law No. 91 of 2005, the Unified Tax Procedures Law No. 206 of 2020, the Value Added Tax Law No. 67 of 2016, together with the Executive Regulations, ETA instructions, and other applicable tax legislation, ensuring that our clients remain fully prepared and protected throughout the examination process.
+
+### Types of Tax Examinations
+
+**Income Tax Examination**
+We review corporate income tax returns, financial statements, tax reconciliations, deductible expenses, taxable revenues, and supporting documentation to assess compliance with the Egyptian Income Tax Law No. 91 of 2005. Our professionals prepare comprehensive tax defense files, identify potential areas of exposure, and represent clients throughout the examination process while working to minimize tax adjustments and disputes.
+
+**Payroll Tax Examination**
+Payroll tax examinations focus on verifying the correct calculation, withholding, reporting, and remittance of payroll taxes relating to salaries, wages, bonuses, and employee benefits. Our specialists review payroll records, employment contracts, annual payroll reconciliations, employee benefit schemes, and tax calculations to ensure full compliance with the relevant provisions of the Egyptian Income Tax Law while reducing the risk of additional assessments and penalties.
+
+**Withholding Tax Examination**
+This examination evaluates whether withholding tax obligations have been correctly applied to payments made to suppliers, contractors, and service providers. We review withholding tax calculations, tax forms, payment records, statutory filing requirements, and supporting documentation to ensure compliance with the applicable provisions of the Egyptian tax legislation and minimize potential financial exposure.
+
+**Stamp Tax Examination**
+Stamp tax examinations involve reviewing contracts, agreements, financial transactions, and taxable instruments to ensure the proper calculation and payment of stamp tax in accordance with Stamp Tax Law No. 111 of 1980 and its amendments. Our team evaluates potential liabilities, identifies compliance gaps, and provides practical recommendations to mitigate future tax risks.
+
+**Value Added Tax (VAT) Examination**
+VAT examinations include a comprehensive review of VAT returns, tax invoices, input tax deductions, output tax calculations, refund claims, and compliance with electronic invoicing and electronic receipt requirements. We assist clients in ensuring compliance with the Value Added Tax Law No. 67 of 2016, reducing VAT risks, resolving technical issues, and supporting them throughout the examination process before the Egyptian Tax Authority.
+
+### The Value We Deliver
+
+Our role extends far beyond responding to tax examinations after they begin.
+
+We help organizations build a strong tax compliance environment before an examination occurs by identifying risks early, strengthening internal controls, improving documentation, and preparing comprehensive tax defense files supported by technical expertise and practical experience.
+
+At AFC, we view every tax examination as an opportunity to protect our clients' interests, reinforce compliance, strengthen stakeholder confidence, and safeguard long-term business success through strategic tax risk management and professional representation.`
     }
   },
   {
-    id: "company-formation",
+    id: "investor-residency",
     title: {
-      ar: "تأسيس الشركات والخدمات المؤسسية",
-      en: "Company Formation & Corporate Services"
+      ar: "إقامات المستثمرين",
+      en: "Investor Residency Services"
     },
     shortDesc: {
-      ar: "نساعد عملاءنا على اختيار الهيكل القانوني الأنسب وفقًا لطبيعة النشاط والمتطلبات التنظيمية.",
-      en: "Helping entrepreneurs and investors establish businesses that are legally sound and strategically positioned."
+      ar: "خدمات متكاملة لاستخراج وتجديد وإدارة إقامات المستثمرين في جمهورية مصر العربية.",
+      en: "End-to-end support for obtaining, renewing, and managing investor residency permits in Egypt."
     },
     content: {
-      ar: `يُعد اختيار الشكل القانوني المناسب للشركة هو حجر الأساس لنجاحها. فهو يؤثر بشكل مباشر على التزاماتك القانونية، حجم الضرائب التي ستدفعها، آلية إدارتك للعمل، وقدرتك على جذب المستثمرين مستقبلاً.
+      ar: `نقدم خدمات متكاملة لاستخراج وتجديد وإدارة إقامات المستثمرين في جمهورية مصر العربية، مع توفير الدعم الكامل في جميع مراحل الإجراءات وحتى إصدار الإقامة. كما نقدم الدعم المستمر فيما يتعلق بتجديد الإقامات والالتزام بالمتطلبات التنظيمية، بما يضمن للمستثمرين استقرار أوضاعهم القانونية ويتيح لهم التركيز على تأسيس أعمالهم وتطوير استثماراتهم بثقة ووفقًا للقوانين المصرية.
 
-في **AFC**، نحن لا نقوم بمجرد تخليص أوراق حكومية؛ بل نبني لك كياناً قانونياً صلباً ومستداماً يدعم طموحاتك ويحميك من المخاطر.
+### وتشمل تلك الخدمات:
 
-### كيف نجعل انطلاقتك مختلفة؟
-تأسيس الشركات معنا تجربة متكاملة مصممة لضمان راحة بالك:
-- **اختيار الهيكل الأمثل:** ندرس طبيعة نشاطك ورأس مالك لنرشح لك أفضل شكل قانوني (مساهمة، مسؤولية محدودة، إلخ).
-- **السرعة والإنجاز:** ننهي كافة الإجراءات مع هيئة الاستثمار (GAFI) والجهات المعنية في أسرع وقت.
-- **صياغة قانونية محكمة:** نعد عقود التأسيس واللوائح الداخلية بشكل يحمي حقوق الشركاء ويمنع النزاعات المستقبلية.
-- **دعم ما بعد التأسيس:** لا نتركك بعد استخراج السجل التجاري، بل نتابع معك استخراج البطاقة الضريبية وتراخيص التشغيل.
+- استخراج وتجديد إقامات المستثمرين.
+- استخراج إقامات الشركاء وأعضاء مجالس الإدارة.
+- إصدار وتجديد تصاريح العمل للأجانب.
+- متابعة جميع الإجراءات أمام الجهات الحكومية المختصة.
+- إعداد واعتماد المستندات المطلوبة وإنهاء الإجراءات حتى استلام الإقامة. تتم هذه الخدمات من خلال الجهات المختصة، ومنها مراكز خدمات المستثمرين التابعة للهيئة العامة للاستثمار، التي تقدم أيضًا توصيات منح الإقامة وتجديدها للمستثمرين الأجانب.`,
+      en: `We provide comprehensive services for obtaining, renewing, and managing investor residency permits in the Arab Republic of Egypt, offering full support throughout every stage of the process until the residency permit is issued. We also provide ongoing assistance with residency renewals and compliance with all applicable regulatory requirements, ensuring that investors maintain their legal status and can focus on establishing and expanding their businesses with confidence and in accordance with Egyptian laws.
 
-### الكيانات التي نقوم بتأسيسها باحترافية
-أياً كان حجم طموحك، لدينا الحل القانوني المناسب:
-- **الشركات ذات المسؤولية المحدودة (LLC):** الخيار الأكثر مرونة وشيوعاً للشركات المتوسطة والصغيرة، لحماية أموالك الخاصة.
-- **شركات المساهمة (JSC):** الهيكل الأقوى للمشروعات الكبرى والكيانات التي تستهدف طرح أسهمها وجذب رؤوس أموال ضخمة.
-- **شركات الشخص الواحد (OPC):** الحل المثالي للمستثمر الفرد الذي يرغب في الاستقلال التام مع التمتع بمزايا الشركات.
-- **فروع الشركات الأجنبية:** نسهل للكيانات الدولية دخول السوق المصري واستخراج التراخيص ومكاتب التمثيل بسلاسة تامة.
-- **شركات التضامن والتوصية:** صياغة دقيقة لعقود الشراكات تحدد مسؤوليات كل شريك بوضوح تام.
+### Our services include:
 
-ابدأ رحلة نجاحك على أساس قانوني ومالي سليم مع AFC، وانطلق بثقة نحو أهدافك.`,
-      en: `Choosing the right legal structure for your company is the cornerstone of its success. It directly impacts your legal liabilities, tax burdens, management mechanisms, and your future ability to attract investors.
+- Obtaining and renewing investor residency permits.
+- Obtaining residency permits for shareholders and members of the Board of Directors.
+- Issuing and renewing work permits for foreign nationals.
+- Handling and following up on all procedures before the relevant governmental authorities.
+- Preparing, reviewing, certifying, and submitting the required documentation, and completing all procedures until the residency permit is issued.
 
-At **AFC**, we don't just clear government paperwork; we build a solid, sustainable legal entity that supports your ambitions and shields you from risks.
-
-### How We Make Your Launch Different
-Company formation with us is an integrated experience designed for your peace of mind:
-- **Optimal Structure Selection:** We analyze your business nature and capital to recommend the best legal form (JSC, LLC, etc.).
-- **Speed and Efficiency:** We finalize all procedures with the General Authority for Investment (GAFI) and relevant authorities promptly.
-- **Watertight Legal Drafting:** We prepare incorporation contracts and bylaws in a way that protects partners' rights and prevents future disputes.
-- **Post-Formation Support:** We don't leave you after issuing the commercial register; we assist with tax cards and operating licenses.
-
-### Entities We Professionally Establish
-Whatever the size of your ambition, we have the right legal solution:
-- **Limited Liability Companies (LLC):** The most flexible and common choice for SMEs, protecting your personal assets.
-- **Joint Stock Companies (JSC):** The strongest structure for major projects aiming to issue shares and attract massive capital.
-- **One Person Companies (OPC):** The ideal solution for a sole investor wanting full independence with corporate benefits.
-- **Foreign Company Branches:** We seamlessly facilitate the entry of international entities into the Egyptian market, including representative offices.
-- **Partnerships:** Precise drafting of partnership agreements that clearly define the responsibilities of each partner.
-
-Start your success journey on a sound legal and financial foundation with AFC, and launch confidently toward your goals.`
+These services are carried out through the competent authorities, including the Investor Service Centers of the General Authority for Investment and Free Zones (GAFI), which are also responsible for issuing recommendations for granting and renewing residency permits for foreign investors.`
     }
   },
   {
@@ -314,99 +524,26 @@ Start your success journey on a sound legal and financial foundation with AFC, a
       en: "Comprehensive advisory and execution services for obtaining industrial licenses."
     },
     content: {
-      ar: `بدء نشاط صناعي أو توسعته يتطلب المرور بسلسلة معقدة من الموافقات والاشتراطات الحكومية التي قد تستهلك الكثير من الوقت والجهد وتؤخر بدء الإنتاج.
+      ar: `نقدم خدمات استشارية وتنفيذية متكاملة للحصول على التراخيص الصناعية، مع دعم عملائنا في جميع مراحل إصدار الترخيص. وتشمل خدماتنا دراسة متطلبات الترخيص، وإعداد ومراجعة المستندات القانونية والفنية، والتنسيق مع الجهات الحكومية المختصة، ومتابعة الطلبات حتى صدور الموافقات النهائية. كما نقدم الاستشارات المتعلقة بالاشتراطات الصناعية والبيئية ومتطلبات السلامة، بما يضمن الامتثال الكامل للتشريعات المنظمة، وتقليل المخاطر، وتسريع إجراءات بدء أو التوسع في النشاط الصناعي.
 
-في **AFC**، نقدم خدمات استشارية وتنفيذية شاملة لتذليل عقبات التراخيص الصناعية، لتمكينك من بدء التشغيل في أسرع وقت وبامتثال تام للقوانين.
+### وتشمل خدماتنا:
 
-### كيف ندعم استثمارك الصناعي؟
-نحن نأخذ على عاتقنا كافة الأعباء الإجرائية نيابة عنك:
-- **دراسة المتطلبات مسبقاً:** تحديد دقيق للاشتراطات الصناعية والبيئية الخاصة بنشاطك قبل بدء الإجراءات.
-- **تجهيز الملفات الفنية:** إعداد ومراجعة كافة المستندات الهندسية والقانونية المطلوبة بدقة لتجنب الرفض.
-- **التنسيق مع الجهات المعنية:** متابعة يومية مع التنمية الصناعية، شؤون البيئة، والحماية المدنية لضمان سرعة الإنجاز.
-- **تقليل المخاطر:** ضمان توافق المصنع مع الاشتراطات منذ اليوم الأول لتجنب الغرامات أو قرارات الغلق مستقبلاً.
+**أولاً: استخراج رخصة التشغيل**
+- **رخصة بنظام الإخطار:** للأنشطة منخفضة المخاطر، ويتم إصدارها بعد استيفاء المستندات والإقرار بالالتزام بالاشتراطات.
+- **رخصة بنظام المسبق:** للأنشطة عالية المخاطر.
 
-### التراخيص والموافقات التي نستخرجها
-نوفر تغطية كاملة لكافة احتياجاتك الورقية الصناعية:
-- **السجل الصناعي:** استخراج وتجديد وتعديل السجلات الصناعية لكافة القطاعات.
-- **رخص التشغيل:** الحصول على التراخيص النهائية للتشغيل المسبق أو الإخطار.
-- **تعديل الأنشطة:** إضافة خطوط إنتاج جديدة أو تغيير النشاط الصناعي بسلاسة.
-- **الموافقات البيئية:** تجهيز دراسات تقييم الأثر البيئي واستخراج الموافقات من وزارة البيئة.
-- **الملفات الفنية والحماية المدنية:** إعداد خطط السلامة المهنية والحصول على موافقات الدفاع المدني.
+**ثانياً: استخراج السجل الصناعي**
+بعد الحصول على رخصة التشغيل يتم التقدم لاستخراج السجل الصناعي، ليكون المشروع مسجلاً بشكل رسمي ومستوفياً لكافة الاشتراطات.`,
+      en: `We provide comprehensive advisory and execution services for obtaining industrial licenses, supporting businesses throughout every stage of the licensing process. Our team assists in assessing regulatory requirements, preparing and reviewing technical and legal documentation, coordinating with the relevant governmental authorities, and monitoring the application until final approval. We also advise clients on compliance with applicable industrial, environmental, and safety regulations, helping them minimize delays, reduce regulatory risks, and commence or expand their industrial operations efficiently and with confidence.
 
-ركز أنت على جودة الإنتاج وتطوير مصنعك، واترك لنا مهمة تمهيد الطريق القانوني لك.`,
-      en: `Starting or expanding an industrial activity requires navigating a complex maze of government approvals and conditions that can consume immense time, effort, and delay production.
+### Our services include:
 
-At **AFC**, we offer comprehensive advisory and execution services to overcome industrial licensing hurdles, enabling you to start operations quickly and in full compliance with the law.
+**Issuing the Operating License**
+- **Notification-Based License:** For low-risk activities. Issued after submitting the required documents and declaring compliance with the applicable regulations and conditions.
+- **Prior Approval License:** For high-risk activities.
 
-### How We Support Your Industrial Investment
-We take the entire procedural burden off your shoulders:
-- **Advance Requirements Study:** Precisely identifying the specific industrial and environmental conditions for your activity before starting procedures.
-- **Technical File Preparation:** Accurate preparation and review of all required engineering and legal documents to prevent rejections.
-- **Authority Coordination:** Daily follow-up with the Industrial Development Authority, Environmental Affairs, and Civil Defense for rapid completion.
-- **Risk Mitigation:** Ensuring your factory complies with regulations from day one to avoid future fines or closure orders.
-
-### Licenses and Approvals We Secure
-We provide complete coverage for all your industrial paperwork needs:
-- **Industrial Registry:** Issuing, renewing, and amending industrial registers for all sectors.
-- **Operating Licenses:** Obtaining final operating licenses, whether pre-approval or by notification.
-- **Activity Modification:** Adding new production lines or seamlessly changing the industrial activity.
-- **Environmental Approvals:** Preparing Environmental Impact Assessment (EIA) studies and securing approvals from the Ministry of Environment.
-- **Technical & Civil Defense Files:** Preparing occupational safety plans and obtaining civil defense approvals.
-
-Focus on production quality and developing your factory, and let us pave the legal road for you.`
-    }
-  },
-  {
-    id: "investor-residency",
-    title: {
-      ar: "خدمات إقامات المستثمرين",
-      en: "Investor Residency Services"
-    },
-    shortDesc: {
-      ar: "خدمات متكاملة لاستخراج وتجديد وإدارة إقامات المستثمرين في جمهورية مصر العربية.",
-      en: "End-to-end support for obtaining, renewing, and managing investor residency permits in Egypt."
-    },
-    content: {
-      ar: `جذب الاستثمارات يتطلب استقراراً قانونياً وشخصياً للمستثمر. لذلك، يُعد الحصول على إقامة مستثمر صالحة وسارية من أهم الخطوات لضمان سير أعمالك في جمهورية مصر العربية دون انقطاع أو عوائق.
-
-في **AFC**، ندرك قيمة وقتك، لذا نقدم حزمة متكاملة وسريعة لإدارة ملفات إقامات المستثمرين بالكامل من الألف إلى الياء.
-
-### مميزات خدمتنا لكبار المستثمرين
-نتعامل مع ملف إقامتك بأعلى درجات الخصوصية والاحترافية:
-- **تقييم الاستحقاق:** مراجعة أوراق شركتك وحصص الشراكة لضمان استيفاء كافة شروط منح الإقامة المحددة من الدولة.
-- **إعداد الملف كاملاً:** تجميع وتوثيق المستندات والشهادات المطلوبة بدقة متناهية لضمان قبول الطلب من المرة الأولى.
-- **توفير الوقت والجهد:** نقوم بالمراجعة والتنسيق مع كافة الجهات الحكومية (مثل هيئة الاستثمار والجوازات والهجرة) نيابة عنك.
-- **متابعة دورية:** تذكيرك بمواعيد التجديد مبكراً والقيام بإجراءاتها لضمان عدم تعرضك لأي غرامات تأخير.
-
-### ماذا تتضمن خدمات الإقامة لدينا؟
-نغطي كافة الإجراءات المتعلقة بإقامتك الاستثمارية لتستقر وتتفرغ لأعمالك:
-- **تأسيس الوضع القانوني:** ربط حصتك الاستثمارية بشروط الجوازات للحصول على الموافقة المبدئية.
-- **الاستعلام الأمني:** متابعة وتسريع إجراءات الاستعلام والموافقات الأمنية اللازمة لإصدار الإقامة.
-- **منح إقامة مستثمر:** استلام بطاقة الإقامة وتسليمها لك سواء كانت لمدة سنة، 3 سنوات، أو 5 سنوات حسب حجم الاستثمار.
-- **تجديد الإقامات:** إدارة عملية التجديد الدورية بسهولة تامة.
-- **إقامات التابعين:** استخراج الإقامات العائلية لأسرة المستثمر لضمان استقرارهم التام في مصر.
-
-استثمر بثقة واستقرار، واترك الإجراءات القانونية لفريقنا المتخصص.`,
-      en: `Attracting investment requires legal and personal stability for the investor. Therefore, obtaining a valid investor residency is one of the most critical steps to ensuring your business operations in Egypt run smoothly without interruption.
-
-At **AFC**, we value your time, offering a fast, comprehensive package to manage your investor residency files from A to Z.
-
-### Service Features for VIP Investors
-We handle your residency file with the highest degree of privacy and professionalism:
-- **Eligibility Assessment:** Reviewing your company documents and shareholding to ensure full compliance with state residency requirements.
-- **Complete File Preparation:** Gathering and authenticating required documents with extreme precision to ensure first-time approval.
-- **Saving Time and Effort:** We coordinate directly with all government entities (like GAFI and the Passports and Immigration Authority) on your behalf.
-- **Periodic Follow-up:** Reminding you of renewal dates early and handling the procedures to prevent any late fines.
-
-### What Do Our Residency Services Include?
-We cover all procedures related to your investment residency so you can settle in and focus on your business:
-- **Legal Status Foundation:** Linking your investment share to immigration requirements to secure initial approval.
-- **Security Clearances:** Tracking and expediting necessary security checks and approvals required for residency issuance.
-- **Granting Investor Residency:** Receiving and delivering your residency card, whether it's for 1, 3, or 5 years depending on the investment size.
-- **Residency Renewals:** Managing the periodic renewal process with complete ease.
-- **Dependent Residencies:** Securing family residency permits for the investor's family to ensure their complete stability in Egypt.
-
-Invest with confidence and stability, and leave the legal procedures to our specialized team.`
+**Issuing the Industrial Registration Certificate**
+After obtaining the operating license, an application is submitted to issue the Industrial Registration Certificate, ensuring the project is officially registered and fully compliant.`
     }
   }
 ];
