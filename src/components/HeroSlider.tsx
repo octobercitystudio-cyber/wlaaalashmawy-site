@@ -141,7 +141,7 @@ export default function HeroSlider() {
       </div>
 
       {/* Navigation Dots (Moved to Center) */}
-      <div style={{ position: "absolute", bottom: "40px", left: "50%", transform: "translateX(-50%)", display: "flex", justifyContent: "center", gap: "10px", zIndex: 4 }}>
+      <div style={{ position: "absolute", bottom: "15px", left: "50%", transform: "translateX(-50%)", display: "flex", justifyContent: "center", gap: "10px", zIndex: 4 }}>
         {slides.map((_, index) => (
           <button
             key={index}
