@@ -107,7 +107,7 @@ export default function HeroSlider() {
           <p style={{ 
             color: "rgba(255,255,255,0.95)", 
             fontSize: "1.5rem", 
-            fontWeight: "500", 
+            fontWeight: "900", 
             marginBottom: "1.5rem", 
             textShadow: "0 2px 8px rgba(0,0,0,0.5)",
             letterSpacing: "1px"
@@ -115,12 +115,12 @@ export default function HeroSlider() {
             للمحاسبة والمراجعة والضرائب
           </p>
           
-          <div style={{ width: "150px", height: "2px", backgroundColor: "#FFFFFF", margin: "0 auto 1.5rem", opacity: 0.8, boxShadow: "0 2px 5px rgba(0,0,0,0.5)" }}></div>
+          <div style={{ width: "150px", height: "4px", backgroundColor: "#FFFFFF", margin: "0 auto 1.5rem", opacity: 0.9, boxShadow: "0 2px 5px rgba(0,0,0,0.5)" }}></div>
           
           <p style={{ 
             color: "#FFFFFF", 
-            fontSize: "1.3rem", 
-            fontWeight: "700", 
+            fontSize: "1.4rem", 
+            fontWeight: "900", 
             letterSpacing: "5px", 
             marginBottom: "3rem", 
             textShadow: "0 2px 5px rgba(0,0,0,0.5)" 
