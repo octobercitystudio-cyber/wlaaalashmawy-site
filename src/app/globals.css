@@ -1,16 +1,16 @@
 :root {
   --color-bg-body: #FAFAFA;
   --color-bg-card: #F8FAFC;
-  --color-primary: #051937;
-  --color-primary-light: #113f7a;
-  --color-accent: #C5A059;
-  --color-accent-hover: #D4AF6A;
-  --color-text-main: #051937;
-  --color-text-muted: #1b5b9c;
-  --color-border: rgba(5, 25, 55, 0.1);
+  --color-primary: #1A1A1A;
+  --color-primary-light: #333333;
+  --color-accent: #005BAB;
+  --color-accent-hover: #004685;
+  --color-text-main: #1A1A1A;
+  --color-text-muted: #555555;
+  --color-border: rgba(26, 26, 26, 0.1);
   
   --gold-gradient: var(--color-accent);
-  --gold-gradient-subtle: rgba(197, 160, 89, 0.1);
+  --gold-gradient-subtle: rgba(0, 91, 171, 0.1);
 
   --border-radius-sm: 4px;
   --border-radius-md: 8px;
@@ -116,15 +116,15 @@ p { margin-bottom: var(--spacing-md); color: var(--color-text-muted); font-size:
 
 .btn-primary {
   background: var(--color-accent);
-  color: var(--color-primary);
+  color: #FFFFFF;
   border: none;
-  box-shadow: 0 4px 15px rgba(197, 160, 89, 0.4);
+  box-shadow: 0 4px 15px rgba(0, 91, 171, 0.4);
 }
 
 .btn-primary:hover {
-  color: var(--color-primary); /* Ensure text stays navy on hover */
+  color: #FFFFFF;
   transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(197, 160, 89, 0.4);
+  box-shadow: 0 8px 25px rgba(0, 91, 171, 0.4);
 }
 
 .btn-secondary {
@@ -136,7 +136,7 @@ p { margin-bottom: var(--spacing-md); color: var(--color-text-muted); font-size:
 }
 
 .btn-secondary:hover {
-  background-color: rgba(197, 160, 89, 0.05);
+  background-color: rgba(0, 91, 171, 0.05);
   transform: translateY(-3px);
 }
 

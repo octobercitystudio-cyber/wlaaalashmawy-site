@@ -66,7 +66,7 @@ export default function HeroSlider() {
       <div style={{
         position: "absolute",
         top: 0, left: 0, right: 0, bottom: 0,
-        backgroundColor: "rgba(5, 25, 55, 0.65)", // Translucent Navy Overlay
+        backgroundColor: "rgba(0, 0, 0, 0.65)", // Translucent Black Overlay
         zIndex: 2
       }} />
       
@@ -103,7 +103,7 @@ export default function HeroSlider() {
                   alignItems: "center"
                 }}
               >
-                <h1 style={{ marginBottom: "var(--spacing-md)", color: "var(--color-accent)", fontSize: "2.4rem", lineHeight: 1.2, whiteSpace: "nowrap" }}>
+                <h1 style={{ marginBottom: "var(--spacing-md)", color: "#FFFFFF", fontSize: "2.4rem", lineHeight: 1.2, whiteSpace: "nowrap", textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>
                   {slide.title}
                 </h1>
                 
