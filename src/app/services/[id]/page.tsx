@@ -121,43 +121,41 @@ export default async function ServicePage({ params }: { params: Promise<{ id: st
       {/* Service Hero */}
       <section style={{ 
         paddingTop: "12rem", 
-        paddingBottom: "6rem", 
-        backgroundColor: "var(--color-primary)", 
+        paddingBottom: "8rem", 
         color: "#FFFFFF",
         textAlign: "center",
         position: "relative",
         overflow: "hidden"
       }}>
-        {/* Abstract Background Element */}
-        <div style={{
-          position: "absolute",
-          top: "-50%",
-          right: "-10%",
-          width: "600px",
-          height: "600px",
-          background: "radial-gradient(circle, rgba(0,91,171,0.4) 0%, rgba(26,26,26,0) 70%)",
-          borderRadius: "50%",
-          zIndex: 0
-        }}></div>
+        {service.image && (
+          <>
+            <Image src={service.image} alt={title} fill style={{ objectFit: "cover", zIndex: 0 }} priority />
+            {/* Dark Overlay */}
+            <div style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundColor: "rgba(0, 0, 0, 0.75)",
+              zIndex: 1
+            }}></div>
+          </>
+        )}
 
-        <div className="container" style={{ position: "relative", zIndex: 1 }}>
-          <h1 style={{ fontSize: "3.5rem", marginBottom: "1.5rem", color: "#FFFFFF", fontWeight: "bold" }}>{title}</h1>
-          <p style={{ fontSize: "1.3rem", maxWidth: "800px", margin: "0 auto 2.5rem", color: "rgba(255,255,255,0.85)", lineHeight: "1.8" }}>
+        <div className="container" style={{ position: "relative", zIndex: 2 }}>
+          <h1 style={{ fontSize: "3.5rem", marginBottom: "1.5rem", color: "#FFFFFF", fontWeight: "bold", textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>{title}</h1>
+          <p style={{ fontSize: "1.3rem", maxWidth: "800px", margin: "0 auto 2.5rem", color: "rgba(255,255,255,0.95)", lineHeight: "1.8", textShadow: "0 2px 5px rgba(0,0,0,0.5)" }}>
             {shortDesc}
           </p>
-          <div style={{ width: "80px", height: "4px", backgroundColor: "var(--color-accent)", margin: "0 auto" }}></div>
+          <div style={{ width: "80px", height: "4px", backgroundColor: "var(--color-accent)", margin: "0 auto", boxShadow: "0 2px 5px rgba(0,0,0,0.3)" }}></div>
         </div>
       </section>
 
       {/* Service Content */}
-      <section className="py-xl" style={{ marginTop: "-4rem", position: "relative", zIndex: 10 }}>
+      <section className="py-xl" style={{ backgroundColor: "var(--color-bg-body)", position: "relative", zIndex: 10 }}>
         <div className="container" style={{ maxWidth: "1000px" }}>
-          {service.image && (
-            <div style={{ position: "relative", width: "100%", height: "450px", borderRadius: "16px", overflow: "hidden", boxShadow: "0 20px 40px rgba(0,0,0,0.15)", marginBottom: "3rem", border: "4px solid white" }}>
-              <Image src={service.image} alt={title} fill style={{ objectFit: "cover" }} priority />
-            </div>
-          )}
-          <div style={{ padding: "0" }}>
+          <div style={{ padding: "0", marginTop: "1rem" }}>
             {renderContent(content)}
           </div>
           
