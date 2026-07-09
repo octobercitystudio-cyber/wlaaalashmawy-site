@@ -50,8 +50,9 @@ const renderContent = (text: string) => {
   });
 };
 
-export default function ServicePage({ params }: { params: { id: string } }) {
-  const service = servicesData.find((s) => s.id === params.id);
+export default async function ServicePage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
+  const service = servicesData.find((s) => s.id === id);
 
   if (!service) {
     notFound();
