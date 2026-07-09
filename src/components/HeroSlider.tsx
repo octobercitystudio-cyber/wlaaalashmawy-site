@@ -83,36 +83,37 @@ export default function HeroSlider() {
       }}>
         <div style={{ maxWidth: "800px", width: "100%", textAlign: "center", marginTop: "8rem" }}>
           
-          <h2 style={{ color: "#FFFFFF", fontSize: "3.5rem", marginBottom: "var(--spacing-md)", fontWeight: "700", fontFamily: "var(--font-amiri)" }}>
-            مكتب العشماوي للمحاسبة
+          <h1 style={{ 
+            color: "#FFFFFF", 
+            fontSize: "6rem", 
+            fontWeight: "900", 
+            letterSpacing: "4px", 
+            marginBottom: "0.5rem", 
+            textShadow: "0 4px 20px rgba(0,0,0,0.6)" 
+          }}>
+            AFC
+          </h1>
+          
+          <h2 style={{ 
+            color: "var(--color-accent)", 
+            fontSize: "2.8rem", 
+            fontWeight: "700", 
+            marginBottom: "1rem", 
+            textShadow: "0 2px 10px rgba(0,0,0,0.5)" 
+          }}>
+            العشماوي للاستشارات المالية
           </h2>
           
-          {/* Dynamic text area: Crossfades in place using grid overlapping */}
-          <div style={{ display: "grid", gridTemplateColumns: "1fr", gridTemplateRows: "1fr" }}>
-            {slides.map((slide, index) => (
-              <div 
-                key={index} 
-                style={{ 
-                  gridColumn: 1, 
-                  gridRow: 1, 
-                  opacity: index === currentIndex ? 1 : 0, 
-                  transition: index === currentIndex ? "opacity 1s ease-in-out 0.8s" : "opacity 0.8s ease-in-out",
-                  pointerEvents: index === currentIndex ? "auto" : "none",
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center"
-                }}
-              >
-                <h1 style={{ marginBottom: "var(--spacing-md)", color: "#FFFFFF", fontSize: "2.4rem", lineHeight: 1.2, whiteSpace: "nowrap", textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>
-                  {slide.title}
-                </h1>
-                
-                <p style={{ fontSize: "1.3rem", margin: "0 0 var(--spacing-lg) 0", color: "rgba(255, 255, 255, 0.95)", fontWeight: 500, lineHeight: 1.8 }}>
-                  {slide.subtitle}
-                </p>
-              </div>
-            ))}
-          </div>
+          <p style={{ 
+            color: "rgba(255,255,255,0.95)", 
+            fontSize: "1.5rem", 
+            fontWeight: "500", 
+            marginBottom: "3rem", 
+            textShadow: "0 2px 8px rgba(0,0,0,0.5)",
+            letterSpacing: "1px"
+          }}>
+            للمحاسبة والمراجعة والضرائب
+          </p>
           
           <div className="flex gap-md flex-wrap justify-center" style={{ marginTop: "1rem" }}>
             <Link href="/contact" className="btn btn-primary" style={{ padding: "1rem 2rem", fontSize: "1.1rem" }}>
