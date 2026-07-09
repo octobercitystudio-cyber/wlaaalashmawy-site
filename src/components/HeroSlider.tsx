@@ -108,11 +108,24 @@ export default function HeroSlider() {
             color: "rgba(255,255,255,0.95)", 
             fontSize: "1.5rem", 
             fontWeight: "500", 
-            marginBottom: "3rem", 
+            marginBottom: "1.5rem", 
             textShadow: "0 2px 8px rgba(0,0,0,0.5)",
             letterSpacing: "1px"
           }}>
             للمحاسبة والمراجعة والضرائب
+          </p>
+          
+          <div style={{ width: "150px", height: "2px", backgroundColor: "#FFFFFF", margin: "0 auto 1.5rem", opacity: 0.8, boxShadow: "0 2px 5px rgba(0,0,0,0.5)" }}></div>
+          
+          <p style={{ 
+            color: "#FFFFFF", 
+            fontSize: "1.3rem", 
+            fontWeight: "700", 
+            letterSpacing: "5px", 
+            marginBottom: "3rem", 
+            textShadow: "0 2px 5px rgba(0,0,0,0.5)" 
+          }}>
+            EGY / KSA / UAE
           </p>
           
           <div className="flex gap-md flex-wrap justify-center" style={{ marginTop: "1rem" }}>
