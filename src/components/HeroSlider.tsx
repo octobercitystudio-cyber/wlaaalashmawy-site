@@ -119,9 +119,9 @@ export default function HeroSlider() {
           
           <p style={{ 
             color: "#FFFFFF", 
-            fontSize: "2rem", 
+            fontSize: "2.8rem", 
             fontWeight: "900", 
-            letterSpacing: "6px", 
+            letterSpacing: "8px", 
             marginBottom: "3rem", 
             textShadow: "0 2px 8px rgba(0,0,0,0.6)" 
           }}>
