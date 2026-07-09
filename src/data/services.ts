@@ -3,11 +3,13 @@ export type Service = {
   title: { ar: string; en: string };
   shortDesc: { ar: string; en: string };
   content: { ar: string; en: string };
+  image: string;
 };
 
 export const servicesData: Service[] = [
   {
     id: "accounting-advisory",
+    image: "/images/services/accounting.jpg",
     title: {
       ar: "الاستشارات المحاسبية وإعداد التقارير المالية",
       en: "Accounting Advisory & Financial Reporting"
@@ -99,6 +101,7 @@ At AFC, we believe that accounting is far more than recording transactions—it 
   },
   {
     id: "audit-advisory",
+    image: "/images/services/audit.jpg",
     title: {
       ar: "المراجعة وابداء الرأي المهني",
       en: "Review and Expression of Professional Opinion"
@@ -176,6 +179,7 @@ At AFC, we do not simply provide professional services—we build enduring partn
   },
   {
     id: "tax-advisory",
+    image: "/images/services/tax_advisory.jpg",
     title: {
       ar: "الاستشارات الضريبية والامتثال الضريبي",
       en: "Tax Advisory & Compliance"
@@ -277,6 +281,7 @@ At AFC, we do not merely help clients comply with tax legislation—we provide s
   },
   {
     id: "company-formation",
+    image: "/images/services/company.jpg",
     title: {
       ar: "تأسيس الشركات والمنشأت",
       en: "Company Formation & Corporate Services"
@@ -348,6 +353,7 @@ We build the legal, financial, and governance foundation upon which successful b
   },
   {
     id: "tax-procedures",
+    image: "/images/services/tax_procedures.jpg",
     title: {
       ar: "الإجراءات الضريبية",
       en: "Tax Procedures"
@@ -407,6 +413,7 @@ At **AFC**, we provide comprehensive management and execution of all necessary t
   },
   {
     id: "tax-examination",
+    image: "/images/services/tax_examination.jpg",
     title: {
       ar: "الفحص الضريبي",
       en: "Tax Examination & Audit Support"
@@ -482,6 +489,7 @@ At AFC, we view every tax examination as an opportunity to protect our clients' 
   },
   {
     id: "investor-residency",
+    image: "/images/services/investor.jpg",
     title: {
       ar: "إقامات المستثمرين",
       en: "Investor Residency Services"
@@ -515,6 +523,7 @@ These services are carried out through the competent authorities, including the 
   },
   {
     id: "industrial-licensing",
+    image: "/images/services/industrial.jpg",
     title: {
       ar: "التراخيص الصناعية",
       en: "Industrial Licensing"

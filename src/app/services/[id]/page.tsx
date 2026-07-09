@@ -1,6 +1,7 @@
 import { servicesData } from "@/data/services";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
 export async function generateStaticParams() {
   return servicesData.map((service) => ({
@@ -149,9 +150,14 @@ export default async function ServicePage({ params }: { params: Promise<{ id: st
       </section>
 
       {/* Service Content */}
-      <section className="py-xl" style={{ marginTop: "2rem", position: "relative", zIndex: 10 }}>
-        <div className="container">
-          <div style={{ padding: "2rem 0" }}>
+      <section className="py-xl" style={{ marginTop: "-4rem", position: "relative", zIndex: 10 }}>
+        <div className="container" style={{ maxWidth: "1000px" }}>
+          {service.image && (
+            <div style={{ position: "relative", width: "100%", height: "450px", borderRadius: "16px", overflow: "hidden", boxShadow: "0 20px 40px rgba(0,0,0,0.15)", marginBottom: "3rem", border: "4px solid white" }}>
+              <Image src={service.image} alt={title} fill style={{ objectFit: "cover" }} priority />
+            </div>
+          )}
+          <div style={{ padding: "0" }}>
             {renderContent(content)}
           </div>
           
