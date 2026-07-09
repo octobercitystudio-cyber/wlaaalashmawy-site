@@ -122,13 +122,13 @@ export default function HeroSlider() {
             fontSize: "2.8rem", 
             fontWeight: "900", 
             letterSpacing: "8px", 
-            marginBottom: "3rem", 
+            marginBottom: "1.5rem", 
             textShadow: "0 2px 8px rgba(0,0,0,0.6)" 
           }}>
             EGY / KSA / UAE
           </p>
           
-          <div className="flex gap-md flex-wrap justify-center" style={{ marginTop: "1rem" }}>
+          <div className="flex gap-md flex-wrap justify-center" style={{ marginTop: "0" }}>
             <Link href="/contact" className="btn btn-primary" style={{ padding: "1rem 2rem", fontSize: "1.1rem" }}>
               طلب استشارة مجانية
             </Link>
