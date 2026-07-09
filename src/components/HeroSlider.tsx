@@ -95,7 +95,7 @@ export default function HeroSlider() {
           </h1>
           
           <h2 style={{ 
-            color: "var(--color-accent)", 
+            color: "#FFFFFF", 
             fontSize: "2.8rem", 
             fontWeight: "700", 
             marginBottom: "1rem", 
