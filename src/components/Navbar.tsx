@@ -2,6 +2,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { servicesData } from "@/data/services";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -52,7 +53,21 @@ export default function Navbar() {
           <ul className="flex gap-lg items-center">
             <li><Link href="/" style={{ fontWeight: 600, color: "var(--color-primary)" }}>الرئيسية</Link></li>
             <li><Link href="/about" style={{ fontWeight: 600, color: "var(--color-primary)" }}>من نحن</Link></li>
-            <li><Link href="/services" style={{ fontWeight: 600, color: "var(--color-primary)" }}>خدماتنا</Link></li>
+            <li className="nav-dropdown">
+              <Link href="/services" style={{ fontWeight: 600, color: "var(--color-primary)", display: "flex", alignItems: "center", gap: "0.2rem" }}>
+                خدماتنا
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+              </Link>
+              <div className="nav-dropdown-content">
+                {servicesData.map(service => (
+                  <Link key={service.id} href={`/services/${service.id}`} className="nav-dropdown-item">
+                    {service.title.ar}
+                  </Link>
+                ))}
+              </div>
+            </li>
             <li><Link href="/sectors" style={{ fontWeight: 600, color: "var(--color-primary)" }}>القطاعات</Link></li>
             <li><Link href="/articles" style={{ fontWeight: 600, color: "var(--color-primary)" }}>المقالات</Link></li>
             <li><Link href="/contact" style={{ fontWeight: 600, color: "var(--color-primary)" }}>تواصل معنا</Link></li>
