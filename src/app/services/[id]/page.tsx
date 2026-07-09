@@ -130,9 +130,9 @@ export default async function ServicePage({ params }: { params: Promise<{ id: st
       </section>
 
       {/* Service Content */}
-      <section className="py-xl" style={{ marginTop: "-3rem", position: "relative", zIndex: 10 }}>
-        <div className="container" style={{ maxWidth: "900px" }}>
-          <div className="premium-card" style={{ padding: "4rem 3rem", backgroundColor: "#FFFFFF", boxShadow: "0 20px 40px rgba(0,0,0,0.08)", borderRadius: "16px" }}>
+      <section className="py-xl" style={{ marginTop: "-2rem", position: "relative", zIndex: 10 }}>
+        <div className="container">
+          <div className="premium-card" style={{ padding: "4rem 2rem", backgroundColor: "#FFFFFF", boxShadow: "0 20px 40px rgba(0,0,0,0.05)", borderRadius: "16px" }}>
             {renderContent(content)}
           </div>
           
