@@ -81,7 +81,7 @@ export default function HeroSlider() {
         position: "relative",
         width: "100%"
       }}>
-        <div style={{ maxWidth: "800px", width: "100%", textAlign: "center", marginBottom: "4rem" }}>
+        <div style={{ maxWidth: "800px", width: "100%", textAlign: "center", marginTop: "2rem" }}>
           
           <h1 style={{ 
             color: "#FFFFFF", 
