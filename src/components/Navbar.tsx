@@ -40,9 +40,7 @@ export default function Navbar() {
               width={195} 
               height={65} 
               style={{ 
-                objectFit: "contain", 
-                mixBlendMode: "multiply",
-                filter: "brightness(1.05) contrast(1.1)" // Eliminates off-white background frames
+                objectFit: "contain"
               }} 
               priority
             />
