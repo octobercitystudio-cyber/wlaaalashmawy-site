@@ -34,33 +34,52 @@ const renderContent = (text: string) => {
       );
     }
     
-    // Bulleted List with Checkmarks
+    // Mixed Block (Paragraphs + List)
     if (block.includes('- ')) {
-      const listItems = block.split('\n').filter(line => line.startsWith('- ')).map(line => line.replace('- ', ''));
+      const lines = block.split('\n');
+      const textLines = lines.filter(line => !line.startsWith('- '));
+      const listItems = lines.filter(line => line.startsWith('- ')).map(line => line.replace('- ', ''));
+      
       return (
-        <ul key={i} style={{ listStyleType: "none", padding: 0, marginBottom: "2rem" }}>
-          {listItems.map((item, j) => (
-            <li 
-              key={j} 
-              style={{ 
-                marginBottom: "1rem", 
-                fontSize: "1.1rem", 
-                lineHeight: "1.8", 
-                display: "flex", 
-                alignItems: "flex-start", 
-                gap: "0.8rem",
-                color: "var(--color-text-main)"
-              }} 
-            >
-              <span style={{ color: "var(--color-accent)", marginTop: "6px", flexShrink: 0 }}>
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <polyline points="20 6 9 17 4 12"></polyline>
-                </svg>
-              </span>
-              <span dangerouslySetInnerHTML={{ __html: item.replace(/\*\*(.*?)\*\*/g, '<strong style="color: var(--color-primary);">$1</strong>') }} />
-            </li>
-          ))}
-        </ul>
+        <div key={i} style={{ marginBottom: "2rem" }}>
+          {textLines.map((line, j) => {
+            if (line.startsWith('**') && line.endsWith('**')) {
+               return (
+                <h4 key={`text-${j}`} style={{ color: "var(--color-primary)", marginTop: "1rem", marginBottom: "0.8rem", fontSize: "1.35rem", fontWeight: "bold" }}>
+                  {line.replace(/\*\*/g, '')}
+                </h4>
+               );
+            }
+            const html = line.replace(/\*\*(.*?)\*\*/g, '<strong style="color: var(--color-primary);">$1</strong>');
+            return (
+              <p key={`text-${j}`} style={{ marginBottom: "1rem", lineHeight: "2", fontSize: "1.15rem", color: "var(--color-text-muted)", textAlign: "justify" }} dangerouslySetInnerHTML={{ __html: html }} />
+            );
+          })}
+          
+          <ul style={{ listStyleType: "none", padding: 0, marginTop: "1rem", marginBottom: "0" }}>
+            {listItems.map((item, j) => (
+              <li 
+                key={`list-${j}`} 
+                style={{ 
+                  marginBottom: "1rem", 
+                  fontSize: "1.1rem", 
+                  lineHeight: "1.8", 
+                  display: "flex", 
+                  alignItems: "flex-start", 
+                  gap: "0.8rem",
+                  color: "var(--color-text-main)"
+                }} 
+              >
+                <span style={{ color: "var(--color-accent)", marginTop: "6px", flexShrink: 0 }}>
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                  </svg>
+                </span>
+                <span dangerouslySetInnerHTML={{ __html: item.replace(/\*\*(.*?)\*\*/g, '<strong style="color: var(--color-primary);">$1</strong>') }} />
+              </li>
+            ))}
+          </ul>
+        </div>
       );
     }
     
@@ -130,9 +149,9 @@ export default async function ServicePage({ params }: { params: Promise<{ id: st
       </section>
 
       {/* Service Content */}
-      <section className="py-xl" style={{ marginTop: "-2rem", position: "relative", zIndex: 10 }}>
+      <section className="py-xl" style={{ marginTop: "2rem", position: "relative", zIndex: 10 }}>
         <div className="container">
-          <div className="premium-card" style={{ padding: "4rem 2rem", backgroundColor: "#FFFFFF", boxShadow: "0 20px 40px rgba(0,0,0,0.05)", borderRadius: "16px" }}>
+          <div style={{ padding: "2rem 0" }}>
             {renderContent(content)}
           </div>
           
