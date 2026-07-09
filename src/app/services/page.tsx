@@ -7,15 +7,28 @@ export default function ServicesPage() {
     <main>
       <section style={{ 
         paddingTop: "12rem", 
-        paddingBottom: "5rem", 
-        backgroundColor: "var(--color-primary)", 
+        paddingBottom: "8rem", 
         color: "#FFFFFF",
-        textAlign: "center"
+        textAlign: "center",
+        position: "relative",
+        overflow: "hidden"
       }}>
-        <div className="container">
-          <h1 style={{ fontSize: "3rem", marginBottom: "1rem", color: "#FFFFFF" }}>خدماتنا الاحترافية</h1>
-          <div style={{ width: "60px", height: "4px", backgroundColor: "var(--color-accent)", margin: "0 auto 2rem" }}></div>
-          <p style={{ fontSize: "1.2rem", maxWidth: "800px", margin: "0 auto", opacity: 0.9 }}>
+        <Image src="/images/services_hero.jpg" alt="خدماتنا الاحترافية" fill style={{ objectFit: "cover", zIndex: 0 }} priority />
+        {/* Dark Overlay */}
+        <div style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backgroundColor: "rgba(0, 0, 0, 0.6)",
+          zIndex: 1
+        }}></div>
+
+        <div className="container" style={{ position: "relative", zIndex: 2 }}>
+          <h1 style={{ fontSize: "3.5rem", marginBottom: "1rem", color: "#FFFFFF", fontWeight: "bold", textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>خدماتنا الاحترافية</h1>
+          <div style={{ width: "80px", height: "4px", backgroundColor: "var(--color-accent)", margin: "0 auto 2rem", boxShadow: "0 2px 5px rgba(0,0,0,0.3)" }}></div>
+          <p style={{ fontSize: "1.3rem", maxWidth: "800px", margin: "0 auto", color: "rgba(255,255,255,0.95)", lineHeight: "1.8", textShadow: "0 2px 5px rgba(0,0,0,0.5)" }}>
             نقدم مجموعة متكاملة من الخدمات المالية والمحاسبية والضريبية والمؤسسية لتلبية كافة احتياجات أعمالك وضمان نموها المستدام.
           </p>
         </div>
