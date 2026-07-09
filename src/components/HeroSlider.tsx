@@ -31,23 +31,55 @@ export default function HeroSlider() {
   }, [slides.length]);
 
   return (
-    <section className="grid grid-cols-1 md-grid-cols-2" style={{ 
+    <section style={{ 
+      position: "relative",
       height: "85vh",
       width: "100%",
-      overflow: "hidden"
+      overflow: "hidden",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "center"
     }}>
-      
-      {/* Right Side: Text Area (Solid Navy) */}
+
+      {/* Background Image Area */}
+      <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: 1 }}>
+        {slides.map((slide, index) => (
+          <div 
+            key={index}
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              backgroundImage: `url(${slide.image})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              opacity: index === currentIndex ? 1 : 0,
+              transition: "opacity 1.5s ease-in-out"
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Dark Overlay for Text Readability */}
       <div style={{
-        backgroundColor: "var(--color-primary)",
+        position: "absolute",
+        top: 0, left: 0, right: 0, bottom: 0,
+        backgroundColor: "rgba(5, 25, 55, 0.65)", // Translucent Navy Overlay
+        zIndex: 2
+      }} />
+      
+      {/* Centered Text Area */}
+      <div style={{
         display: "flex",
+        flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        padding: "4rem 2rem",
-        height: "100%",
-        boxShadow: "-10px 0 30px rgba(0,0,0,0.5)", // Shadow bleeding over the image for depth
-        zIndex: 2,
-        position: "relative"
+        padding: "2rem",
+        zIndex: 3,
+        position: "relative",
+        width: "100%"
       }}>
         <div style={{ maxWidth: "800px", width: "100%", textAlign: "center", marginTop: "8rem" }}>
           
@@ -94,29 +126,8 @@ export default function HeroSlider() {
         </div>
       </div>
 
-      {/* Left Side: Image Area */}
-      <div style={{ position: "relative", height: "100%", zIndex: 1 }}>
-        {slides.map((slide, index) => (
-          <div 
-            key={index}
-            style={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              backgroundImage: `url(${slide.image})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              opacity: index === currentIndex ? 1 : 0,
-              transition: "opacity 1.5s ease-in-out"
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Navigation Dots (Moved to be over the image side) */}
-      <div style={{ position: "absolute", bottom: "30px", left: "25%", transform: "translateX(-50%)", display: "flex", justifyContent: "center", gap: "10px", zIndex: 3 }}>
+      {/* Navigation Dots (Moved to Center) */}
+      <div style={{ position: "absolute", bottom: "40px", left: "50%", transform: "translateX(-50%)", display: "flex", justifyContent: "center", gap: "10px", zIndex: 4 }}>
         {slides.map((_, index) => (
           <button
             key={index}
