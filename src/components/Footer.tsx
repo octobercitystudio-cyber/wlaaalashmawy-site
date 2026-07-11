@@ -2,7 +2,7 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer style={{ marginTop: "auto", borderTop: "1px solid var(--color-primary)", padding: "var(--spacing-xl) 0 var(--spacing-md) 0", background: "var(--color-primary)", color: "#FFFFFF" }}>
+    <footer style={{ marginTop: "auto", borderTop: "1px solid var(--color-accent)", padding: "var(--spacing-xl) 0 var(--spacing-md) 0", background: "var(--color-accent)", color: "#FFFFFF" }}>
       <div className="container grid grid-cols-1 md-grid-cols-3 gap-lg">
         <div>
           <h3 className="text-gold" style={{ marginBottom: "var(--spacing-md)", fontSize: "1.8rem" }}>العشماوي للمحاسبة</h3>
