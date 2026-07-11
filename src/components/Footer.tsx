@@ -2,10 +2,10 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer style={{ marginTop: "auto", borderTop: "1px solid var(--color-accent)", padding: "var(--spacing-xl) 0 var(--spacing-md) 0", background: "var(--color-accent)", color: "#FFFFFF" }}>
+    <footer style={{ marginTop: "auto", borderTop: "1px solid var(--color-accent-hover)", padding: "var(--spacing-xl) 0 var(--spacing-md) 0", background: "var(--color-accent-hover)", color: "#FFFFFF" }}>
       <div className="container grid grid-cols-1 md-grid-cols-3 gap-lg">
         <div>
-          <h3 className="text-gold" style={{ marginBottom: "var(--spacing-md)", fontSize: "1.8rem" }}>العشماوي للمحاسبة</h3>
+          <h3 className="text-gold" style={{ marginBottom: "var(--spacing-md)", fontSize: "2rem", fontWeight: "900", letterSpacing: "2px" }}>AFC</h3>
           <p style={{ opacity: 0.9, maxWidth: "300px" }}>
             شريكك الاستراتيجي للارتقاء بأعمالك وتأمين مستقبلك المالي وفق أعلى المعايير العالمية المعتمدة.
           </p>
