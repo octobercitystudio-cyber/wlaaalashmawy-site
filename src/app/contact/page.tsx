@@ -51,8 +51,8 @@ export default function ContactPage() {
               </div>
               <div>
                 <h3 style={{ fontSize: "1.4rem", color: "var(--color-accent)", marginBottom: "0.8rem" }}>اتصل بنا</h3>
-                <p dir="ltr" style={{ color: "var(--color-text-main)", fontSize: "1.3rem", fontWeight: "bold", marginBottom: "0.5rem" }}>+20 10 000 0000</p>
-                <p dir="ltr" style={{ color: "var(--color-text-main)", fontSize: "1.3rem", fontWeight: "bold" }}>+966 50 000 0000</p>
+                <p dir="ltr" style={{ color: "var(--color-text-main)", fontSize: "1.3rem", fontWeight: "bold", marginBottom: "0.5rem" }}>01155729429</p>
+                <p dir="ltr" style={{ color: "var(--color-text-main)", fontSize: "1.3rem", fontWeight: "bold" }}>0238345397</p>
               </div>
             </div>
 
@@ -74,8 +74,8 @@ export default function ContactPage() {
               <div>
                 <h3 style={{ fontSize: "1.4rem", color: "var(--color-accent)", marginBottom: "0.8rem" }}>المقر الرئيسي</h3>
                 <p style={{ color: "var(--color-text-main)", fontSize: "1.2rem", fontWeight: "bold", lineHeight: "1.6" }}>
-                  القاهرة، التجمع الخامس<br />
-                  منطقة الأعمال المركزية
+                  مكتب 204 الدور الثاني مول اجياد فيو<br />
+                  6 أكتوبر - الجيزة - مصر
                 </p>
               </div>
             </div>

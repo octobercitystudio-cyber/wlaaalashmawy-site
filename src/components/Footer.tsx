@@ -25,8 +25,8 @@ export default function Footer() {
           <h3 style={{ marginBottom: "var(--spacing-md)", fontSize: "1.3rem", color: "#FFFFFF" }}>تواصل معنا</h3>
           <ul className="flex flex-col gap-sm" style={{ opacity: 0.9 }}>
             <li>📧 info@alashmawy-cpa.com</li>
-            <li>📞 +966 50 000 0000</li>
-            <li>📍 الرياض، المملكة العربية السعودية</li>
+            <li dir="ltr" style={{ textAlign: "right" }}>📞 01155729429 - 0238345397</li>
+            <li>📍 مكتب 204 الدور الثاني مول اجياد فيو - 6 أكتوبر - الجيزة - مصر</li>
           </ul>
         </div>
       </div>
