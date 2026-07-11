@@ -57,63 +57,60 @@ export default function ServicesCarousel() {
   const totalSlides = Math.max(1, servicesData.length - itemsToShow + 1);
 
   return (
-    <div style={{ position: "relative", padding: "10px 0" }}>
-      <div style={{ overflow: "hidden", margin: "0 -10px", position: "relative" }}>
-        
-        {/* Navigation Arrows */}
-        <button 
-          onClick={handleNext}
-          style={{
-            position: "absolute",
-            top: "50%",
-            left: "15px",
-            transform: "translateY(-50%)",
-            zIndex: 10,
-            background: "var(--color-accent)",
-            color: "white",
-            border: "none",
-            width: "40px",
-            height: "40px",
-            borderRadius: "50%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            boxShadow: "0 4px 6px rgba(0,0,0,0.2)",
-            fontSize: "1.2rem",
-            opacity: 0.9
-          }}
-          aria-label="التالي"
-        >
-          ❮
-        </button>
-        <button 
-          onClick={handlePrev}
-          style={{
-            position: "absolute",
-            top: "50%",
-            right: "15px",
-            transform: "translateY(-50%)",
-            zIndex: 10,
-            background: "var(--color-accent)",
-            color: "white",
-            border: "none",
-            width: "40px",
-            height: "40px",
-            borderRadius: "50%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            boxShadow: "0 4px 6px rgba(0,0,0,0.2)",
-            fontSize: "1.2rem",
-            opacity: 0.9
-          }}
-          aria-label="السابق"
-        >
-          ❯
-        </button>
+    <div style={{ position: "relative", padding: "10px 50px" }}>
+      {/* Navigation Arrows */}
+      <button 
+        onClick={handleNext}
+        style={{
+          position: "absolute",
+          top: "40%",
+          left: "0",
+          transform: "translateY(-50%)",
+          zIndex: 10,
+          background: "var(--color-accent)",
+          color: "white",
+          border: "none",
+          width: "40px",
+          height: "40px",
+          borderRadius: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "pointer",
+          boxShadow: "0 4px 6px rgba(0,0,0,0.2)",
+          fontSize: "1.2rem"
+        }}
+        aria-label="التالي"
+      >
+        ❮
+      </button>
+      <button 
+        onClick={handlePrev}
+        style={{
+          position: "absolute",
+          top: "40%",
+          right: "0",
+          transform: "translateY(-50%)",
+          zIndex: 10,
+          background: "var(--color-accent)",
+          color: "white",
+          border: "none",
+          width: "40px",
+          height: "40px",
+          borderRadius: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          cursor: "pointer",
+          boxShadow: "0 4px 6px rgba(0,0,0,0.2)",
+          fontSize: "1.2rem"
+        }}
+        aria-label="السابق"
+      >
+        ❯
+      </button>
 
+      <div style={{ overflow: "hidden", margin: "0 -10px", position: "relative" }}>
         <div 
           style={{ 
             display: "flex", 
