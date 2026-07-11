@@ -82,7 +82,7 @@ export default function ServicesCarousel() {
         }}
         aria-label="التالي"
       >
-        ❮
+        ❯
       </button>
       <button 
         onClick={handlePrev}
@@ -107,7 +107,7 @@ export default function ServicesCarousel() {
         }}
         aria-label="السابق"
       >
-        ❯
+        ❮
       </button>
 
       <div style={{ overflow: "hidden", margin: "0 -10px", position: "relative" }}>
