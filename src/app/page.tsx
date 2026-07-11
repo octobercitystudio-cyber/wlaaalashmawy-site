@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import HeroSlider from "@/components/HeroSlider";
 import ServicesCarousel from "@/components/ServicesCarousel";
+import AnimatedStat from "@/components/AnimatedStat";
 
 export default function Home() {
   return (
@@ -12,22 +13,10 @@ export default function Home() {
       {/* Stats Section */}
       <section style={{ padding: "var(--spacing-lg) 0", borderTop: "1px solid var(--color-border)", borderBottom: "1px solid var(--color-border)", background: "var(--color-bg-card)" }}>
         <div className="container grid grid-cols-1 md-grid-cols-4 gap-lg">
-          <div className="flex items-center justify-center gap-sm" style={{ background: "var(--color-bg-body)", padding: "1.5rem", borderRadius: "8px", border: "1px solid var(--color-border)" }}>
-            <h2 className="text-gold" style={{ fontSize: "2.8rem", margin: 0, lineHeight: 1 }}>+15</h2>
-            <p style={{ margin: 0, fontSize: "1.1rem", fontWeight: "bold", textTransform: "uppercase", letterSpacing: "1px", color: "var(--color-text-main)" }}>سنوات<br/>التميز</p>
-          </div>
-          <div className="flex items-center justify-center gap-sm" style={{ background: "var(--color-bg-body)", padding: "1.5rem", borderRadius: "8px", border: "1px solid var(--color-border)" }}>
-            <h2 className="text-gold" style={{ fontSize: "2.8rem", margin: 0, lineHeight: 1 }}>+500</h2>
-            <p style={{ margin: 0, fontSize: "1.1rem", fontWeight: "bold", textTransform: "uppercase", letterSpacing: "1px", color: "var(--color-text-main)" }}>عميل<br/>موثوق</p>
-          </div>
-          <div className="flex items-center justify-center gap-sm" style={{ background: "var(--color-bg-body)", padding: "1.5rem", borderRadius: "8px", border: "1px solid var(--color-border)" }}>
-            <h2 className="text-gold" style={{ fontSize: "2.8rem", margin: 0, lineHeight: 1 }}>+1k</h2>
-            <p style={{ margin: 0, fontSize: "1.1rem", fontWeight: "bold", textTransform: "uppercase", letterSpacing: "1px", color: "var(--color-text-main)" }}>استشارة<br/>ناجحة</p>
-          </div>
-          <div className="flex items-center justify-center gap-sm" style={{ background: "var(--color-bg-body)", padding: "1.5rem", borderRadius: "8px", border: "1px solid var(--color-border)" }}>
-            <h2 className="text-gold" style={{ fontSize: "2.8rem", margin: 0, lineHeight: 1 }}>100%</h2>
-            <p style={{ margin: 0, fontSize: "1.1rem", fontWeight: "bold", textTransform: "uppercase", letterSpacing: "1px", color: "var(--color-text-main)" }}>دقة<br/>وشفافية</p>
-          </div>
+          <AnimatedStat target={15} suffix="+" labelLines={<>سنوات<br/>التميز</>} />
+          <AnimatedStat target={500} suffix="+" labelLines={<>عميل<br/>موثوق</>} />
+          <AnimatedStat target={1000} suffix="+" displayAsK={true} labelLines={<>استشارة<br/>ناجحة</>} />
+          <AnimatedStat target={100} suffix="%" labelLines={<>دقة<br/>وشفافية</>} />
         </div>
       </section>
 
