@@ -12,7 +12,7 @@ export default function ContactPage() {
         position: "relative",
         overflow: "hidden"
       }}>
-        <Image src="/images/sectors/general_contracting.jpg" alt="تواصل معنا" fill style={{ objectFit: "cover", zIndex: 0 }} priority />
+        <Image src="/images/contact_hero.jpg" alt="تواصل معنا" fill style={{ objectFit: "cover", zIndex: 0 }} priority />
         <div style={{
           position: "absolute",
           top: 0, left: 0, right: 0, bottom: 0,
