@@ -92,28 +92,31 @@ export default function ContactPage() {
                 <div className="grid grid-cols-1 md-grid-cols-2 gap-md">
                   <div>
                     <label style={{ display: "block", marginBottom: "0.8rem", color: "var(--color-text-main)", fontWeight: "600" }}>الاسم الكامل *</label>
-                    <input type="text" style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(0,0,0,0.2)", color: "#FFF", outline: "none", transition: "all 0.3s ease" }} placeholder="أدخل اسمك الكريم" required />
+                    <input type="text" style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid var(--color-border)", background: "#FFFFFF", color: "#000", outline: "none", transition: "all 0.3s ease" }} placeholder="أدخل اسمك الكريم" required />
                   </div>
                   <div>
                     <label style={{ display: "block", marginBottom: "0.8rem", color: "var(--color-text-main)", fontWeight: "600" }}>البريد الإلكتروني *</label>
-                    <input type="email" style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(0,0,0,0.2)", color: "#FFF", outline: "none", transition: "all 0.3s ease" }} placeholder="example@domain.com" required />
+                    <input type="email" style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid var(--color-border)", background: "#FFFFFF", color: "#000", outline: "none", transition: "all 0.3s ease" }} placeholder="example@domain.com" required />
                   </div>
                 </div>
                 
                 <div>
                   <label style={{ display: "block", marginBottom: "0.8rem", color: "var(--color-text-main)", fontWeight: "600" }}>نوع الاستشارة</label>
-                  <select style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(0,0,0,0.2)", color: "#FFF", outline: "none", transition: "all 0.3s ease", appearance: "none", cursor: "pointer" }}>
-                    <option style={{ background: "var(--color-bg-card)", color: "var(--color-text-main)" }}>استشارة ضريبية</option>
-                    <option style={{ background: "var(--color-bg-card)", color: "var(--color-text-main)" }}>خدمات مراجعة وتدقيق</option>
-                    <option style={{ background: "var(--color-bg-card)", color: "var(--color-text-main)" }}>مسك الدفاتر المحاسبية</option>
-                    <option style={{ background: "var(--color-bg-card)", color: "var(--color-text-main)" }}>تأسيس شركات</option>
-                    <option style={{ background: "var(--color-bg-card)", color: "var(--color-text-main)" }}>استفسار عام</option>
+                  <select defaultValue="" style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid var(--color-border)", background: "#FFFFFF", color: "#000", outline: "none", transition: "all 0.3s ease", appearance: "none", cursor: "pointer", fontWeight: "bold" }}>
+                    <option value="" disabled>اختر الخدمة المطلوبة...</option>
+                    <option style={{ color: "#000" }}>الاستشارات المحاسبية وإعداد التقارير المالية</option>
+                    <option style={{ color: "#000" }}>المراجعة وإبداء الرأي المهني</option>
+                    <option style={{ color: "#000" }}>الاستشارات والامتثال الضريبي</option>
+                    <option style={{ color: "#000" }}>تأسيس الشركات والمنشآت</option>
+                    <option style={{ color: "#000" }}>الإجراءات الضريبية</option>
+                    <option style={{ color: "#000" }}>الفحص الضريبي</option>
+                    <option style={{ color: "#000" }}>أخرى</option>
                   </select>
                 </div>
                 
                 <div>
                   <label style={{ display: "block", marginBottom: "0.8rem", color: "var(--color-text-main)", fontWeight: "600" }}>كيف يمكننا مساعدتك؟ *</label>
-                  <textarea rows={5} style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(0,0,0,0.2)", color: "#FFF", outline: "none", resize: "vertical", transition: "all 0.3s ease" }} placeholder="اكتب رسالتك أو استفسارك هنا بالتفصيل..." required />
+                  <textarea rows={5} style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid var(--color-border)", background: "#FFFFFF", color: "#000", outline: "none", resize: "vertical", transition: "all 0.3s ease" }} placeholder="اكتب رسالتك أو استفسارك هنا بالتفصيل..." required />
                 </div>
                 
                 <button type="button" className="btn btn-primary" style={{ marginTop: "1rem", width: "100%", padding: "1.2rem", fontSize: "1.2rem", fontWeight: "bold", borderRadius: "8px" }}>
