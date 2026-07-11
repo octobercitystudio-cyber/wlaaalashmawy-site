@@ -133,7 +133,7 @@ export default function Home() {
           <p style={{ maxWidth: "600px", margin: "0 auto var(--spacing-md)" }}>
             احجز استشارتك المجانية اليوم، ودع خبراءنا يرشدونك نحو الاستقرار المالي والنمو المستدام.
           </p>
-          <Link href="/contact" className="btn btn-primary" style={{ padding: "1rem 2.5rem", fontSize: "1.2rem" }}>تواصل معنا الآن</Link>
+          <a href="https://wa.me/201155729429?text=مرحباً،%20أود%20الاستفسار%20عن%20خدمات%20مكتب%20العشماوي." target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ padding: "1rem 2.5rem", fontSize: "1.2rem" }}>تواصل معنا الآن</a>
         </div>
       </section>
     </div>

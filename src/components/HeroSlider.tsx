@@ -129,9 +129,9 @@ export default function HeroSlider() {
           </p>
           
           <div className="flex gap-md flex-wrap justify-center" style={{ marginTop: "0" }}>
-            <Link href="/contact" className="btn btn-primary" style={{ padding: "1rem 2rem", fontSize: "1.1rem" }}>
+            <a href="https://wa.me/201155729429?text=مرحباً،%20أود%20الاستفسار%20عن%20خدمات%20مكتب%20العشماوي." target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ padding: "1rem 2rem", fontSize: "1.1rem" }}>
               طلب استشارة مجانية
-            </Link>
+            </a>
             <Link href="/services" className="btn" style={{ padding: "1rem 2rem", fontSize: "1.1rem", background: "#FFFFFF", border: "1px solid #FFFFFF", color: "var(--color-accent)", borderRadius: "var(--border-radius-sm)", fontWeight: "bold" }}>
               اكتشف خدماتنا
             </Link>

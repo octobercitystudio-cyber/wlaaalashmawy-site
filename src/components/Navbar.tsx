@@ -84,7 +84,7 @@ export default function Navbar() {
 
         {/* CTA & Actions (Left side in RTL) */}
         <div style={{ justifySelf: "end" }} className="flex gap-md items-center">
-          <Link href="/contact" className="btn btn-primary" style={{ padding: "0.5rem 1.5rem", fontSize: "1rem" }}>استشارة</Link>
+          <a href="https://wa.me/201155729429?text=مرحباً،%20أود%20الاستفسار%20عن%20خدمات%20مكتب%20العشماوي." target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ padding: "0.5rem 1.5rem", fontSize: "1rem" }}>استشارة</a>
           <button style={{ color: "var(--color-primary)", fontWeight: "bold", border: "1px solid var(--color-border)", padding: "0.3rem 0.6rem", borderRadius: "4px", background: "transparent" }}>EN</button>
         </div>
 
