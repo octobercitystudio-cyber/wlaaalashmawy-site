@@ -44,13 +44,40 @@ export default function ArticlesPage() {
 
   const [selectedTab, setSelectedTab] = useState('الكل');
   const [selectedArticleId, setSelectedArticleId] = useState(articles[0].id);
+  const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredArticles = selectedTab === 'الكل' ? articles : articles.filter(a => a.category === selectedTab);
+  const filteredArticles = articles.filter(a => {
+    const matchesTab = selectedTab === 'الكل' || a.category === selectedTab;
+    const matchesSearch = a.title.includes(searchQuery);
+    return matchesTab && matchesSearch;
+  });
+
   const selectedArticle = articles.find(a => a.id === selectedArticleId);
 
   const handleTabChange = (tab: string) => {
     setSelectedTab(tab);
-    const newFiltered = tab === 'الكل' ? articles : articles.filter(a => a.category === tab);
+    const newFiltered = articles.filter(a => {
+      const matchesTab = tab === 'الكل' || a.category === tab;
+      const matchesSearch = a.title.includes(searchQuery);
+      return matchesTab && matchesSearch;
+    });
+    if (newFiltered.length > 0) {
+      if (!newFiltered.find(a => a.id === selectedArticleId)) {
+        setSelectedArticleId(newFiltered[0].id);
+      }
+    } else {
+      setSelectedArticleId(0);
+    }
+  };
+
+  const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+    const newFiltered = articles.filter(a => {
+      const matchesTab = selectedTab === 'الكل' || a.category === selectedTab;
+      const matchesSearch = a.title.includes(query);
+      return matchesTab && matchesSearch;
+    });
     if (newFiltered.length > 0) {
       if (!newFiltered.find(a => a.id === selectedArticleId)) {
         setSelectedArticleId(newFiltered[0].id);
@@ -88,7 +115,34 @@ export default function ArticlesPage() {
         <div className="articles-layout">
           {/* Right Column: Titles List */}
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-            <h3 style={{ fontSize: "1.5rem", color: "var(--color-primary)", marginBottom: "1rem" }}>أحدث المقالات</h3>
+            <h3 style={{ fontSize: "1.5rem", color: "var(--color-primary)" }}>أحدث المقالات</h3>
+            
+            {/* Search Input */}
+            <div style={{ position: "relative", marginBottom: "1rem" }}>
+              <input 
+                type="text" 
+                placeholder="ابحث باسم المقال..." 
+                value={searchQuery}
+                onChange={handleSearchChange}
+                style={{
+                  width: "100%",
+                  padding: "0.8rem 1rem",
+                  paddingRight: "2.5rem",
+                  borderRadius: "8px",
+                  border: "1px solid var(--color-border)",
+                  outline: "none",
+                  fontSize: "1rem"
+                }}
+              />
+              <svg 
+                width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--color-text-muted)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
+                style={{ position: "absolute", right: "0.8rem", top: "50%", transform: "translateY(-50%)" }}
+              >
+                <circle cx="11" cy="11" r="8"></circle>
+                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+              </svg>
+            </div>
+
             {filteredArticles.length > 0 ? filteredArticles.map((article) => (
               <button 
                 key={article.id}
@@ -118,7 +172,7 @@ export default function ArticlesPage() {
                 </div>
               </button>
             )) : (
-              <p style={{ color: "var(--color-text-muted)" }}>لا توجد مقالات مسجلة.</p>
+              <p style={{ color: "var(--color-text-muted)" }}>لا توجد مقالات مطابقة للبحث.</p>
             )}
           </div>
 
