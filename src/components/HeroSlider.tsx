@@ -62,11 +62,11 @@ export default function HeroSlider() {
         ))}
       </div>
 
-      {/* Dark Overlay for Text Readability */}
+      {/* Dark Blue Overlay to cool down the image colors */}
       <div style={{
         position: "absolute",
         top: 0, left: 0, right: 0, bottom: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.4)", // Lighter Translucent Black Overlay
+        backgroundColor: "rgba(0, 40, 90, 0.5)", // Stronger blue overlay to shift colors away from yellow/red
         zIndex: 2
       }} />
       
