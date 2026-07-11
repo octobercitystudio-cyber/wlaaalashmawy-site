@@ -4,8 +4,11 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { servicesData } from "@/data/services";
 
+import { usePathname } from "next/navigation";
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -14,6 +17,11 @@ export default function Navbar() {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const isActive = (path: string) => {
+    if (path === '/') return pathname === '/';
+    return pathname.startsWith(path);
+  };
 
   return (
     <nav style={{ 
@@ -51,10 +59,10 @@ export default function Navbar() {
         {/* Desktop Menu (Center) */}
         <div style={{ justifySelf: "center" }}>
           <ul className="flex gap-lg items-center">
-            <li><Link href="/" style={{ fontWeight: 600, color: "var(--color-primary)" }}>الرئيسية</Link></li>
-            <li><Link href="/about" style={{ fontWeight: 600, color: "var(--color-primary)" }}>من نحن</Link></li>
+            <li><Link href="/" className={`nav-link ${isActive('/') ? 'active' : ''}`}>الرئيسية</Link></li>
+            <li><Link href="/about" className={`nav-link ${isActive('/about') ? 'active' : ''}`}>من نحن</Link></li>
             <li className="nav-dropdown">
-              <Link href="/services" style={{ fontWeight: 600, color: "var(--color-primary)", display: "flex", alignItems: "center", gap: "0.2rem" }}>
+              <Link href="/services" className={`nav-link ${isActive('/services') ? 'active' : ''}`} style={{ display: "flex", alignItems: "center", gap: "0.2rem" }}>
                 خدماتنا
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                   <polyline points="6 9 12 15 18 9"></polyline>
@@ -68,9 +76,9 @@ export default function Navbar() {
                 ))}
               </div>
             </li>
-            <li><Link href="/sectors" style={{ fontWeight: 600, color: "var(--color-primary)" }}>القطاعات</Link></li>
-            <li><Link href="/articles" style={{ fontWeight: 600, color: "var(--color-primary)" }}>المقالات</Link></li>
-            <li><Link href="/contact" style={{ fontWeight: 600, color: "var(--color-primary)" }}>تواصل معنا</Link></li>
+            <li><Link href="/sectors" className={`nav-link ${isActive('/sectors') ? 'active' : ''}`}>القطاعات</Link></li>
+            <li><Link href="/articles" className={`nav-link ${isActive('/articles') ? 'active' : ''}`}>المقالات</Link></li>
+            <li><Link href="/contact" className={`nav-link ${isActive('/contact') ? 'active' : ''}`}>تواصل معنا</Link></li>
           </ul>
         </div>
 
