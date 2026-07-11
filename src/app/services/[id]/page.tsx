@@ -163,9 +163,9 @@ export default async function ServicePage({ params }: { params: Promise<{ id: st
           <div style={{ marginTop: "4rem", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: "1.5rem" }}>
             <h3 style={{ fontSize: "1.5rem", color: "var(--color-primary)", fontWeight: "bold" }}>هل تبحث عن استشارة مخصصة لأعمالك؟</h3>
             <div className="flex gap-md justify-center">
-              <Link href="/contact" className="btn btn-primary" style={{ padding: "1rem 2.5rem", fontSize: "1.1rem" }}>
+              <a href="https://wa.me/201155729429?text=مرحباً،%20أود%20الاستفسار%20عن%20خدمات%20مكتب%20العشماوي." target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ padding: "1rem 2.5rem", fontSize: "1.1rem" }}>
                 تواصل معنا الآن
-              </Link>
+              </a>
               <Link href="/services" className="btn btn-secondary" style={{ padding: "1rem 2.5rem", fontSize: "1.1rem" }}>
                 العودة للخدمات
               </Link>
