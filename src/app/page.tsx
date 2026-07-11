@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import HeroSlider from "@/components/HeroSlider";
 import ServicesCarousel from "@/components/ServicesCarousel";
