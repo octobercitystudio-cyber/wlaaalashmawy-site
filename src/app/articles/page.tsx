@@ -35,9 +35,25 @@ export default function ArticlesPage() {
     }
   ];
 
+  const categories = ['الكل', ...Array.from(new Set(articles.map(a => a.category)))];
+
+  const [selectedTab, setSelectedTab] = useState('الكل');
   const [selectedArticleId, setSelectedArticleId] = useState(articles[0].id);
 
+  const filteredArticles = selectedTab === 'الكل' ? articles : articles.filter(a => a.category === selectedTab);
   const selectedArticle = articles.find(a => a.id === selectedArticleId);
+
+  const handleTabChange = (tab: string) => {
+    setSelectedTab(tab);
+    const newFiltered = tab === 'الكل' ? articles : articles.filter(a => a.category === tab);
+    if (newFiltered.length > 0) {
+      if (!newFiltered.find(a => a.id === selectedArticleId)) {
+        setSelectedArticleId(newFiltered[0].id);
+      }
+    } else {
+      setSelectedArticleId(0);
+    }
+  };
 
   return (
     <div className="animate-fade-in" style={{ flex: 1, padding: "var(--spacing-xl) 0" }}>
@@ -45,7 +61,7 @@ export default function ArticlesPage() {
         .articles-layout {
           display: flex;
           flex-direction: column;
-          gap: 2rem;
+          gap: 3rem;
         }
         @media (min-width: 768px) {
           .articles-layout {
@@ -67,7 +83,7 @@ export default function ArticlesPage() {
           {/* Right Column: Titles List */}
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
             <h3 style={{ fontSize: "1.5rem", color: "var(--color-primary)", marginBottom: "1rem" }}>أحدث المقالات</h3>
-            {articles.map((article) => (
+            {filteredArticles.map((article) => (
               <button 
                 key={article.id}
                 onClick={() => setSelectedArticleId(article.id)}
@@ -86,20 +102,41 @@ export default function ArticlesPage() {
                 <h4 style={{ 
                   fontSize: "1.1rem", 
                   color: selectedArticleId === article.id ? "var(--color-accent)" : "var(--color-primary)", 
-                  marginBottom: "0.5rem" 
+                  marginBottom: "0.5rem",
+                  lineHeight: "1.4"
                 }}>
                   {article.title}
                 </h4>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>{article.date}</span>
-                  <span style={{ fontSize: "0.8rem", background: "rgba(0, 0, 0, 0.05)", padding: "0.1rem 0.5rem", borderRadius: "10px" }}>{article.category}</span>
                 </div>
               </button>
             ))}
           </div>
 
           {/* Left Column: Article Content */}
-          <div className="premium-card" style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)", padding: "3rem", borderRadius: "12px", minHeight: "500px" }}>
+          <div style={{ minHeight: "500px", padding: "0 1rem" }}>
+            {/* Tabs */}
+            <div className="flex gap-sm mb-lg" style={{ flexWrap: "wrap", borderBottom: "1px solid var(--color-border)", paddingBottom: "1.5rem" }}>
+              {categories.map(cat => (
+                <button 
+                  key={cat} 
+                  onClick={() => handleTabChange(cat)}
+                  style={{
+                    padding: "0.5rem 1.5rem",
+                    borderRadius: "30px",
+                    background: selectedTab === cat ? "var(--color-accent)" : "transparent",
+                    color: selectedTab === cat ? "#fff" : "var(--color-text-main)",
+                    fontWeight: selectedTab === cat ? "bold" : "normal",
+                    transition: "all 0.3s ease",
+                    border: selectedTab === cat ? "1px solid var(--color-accent)" : "1px solid var(--color-border)",
+                  }}
+                >
+                  {cat}
+                </button>
+              ))}
+            </div>
+
             {selectedArticle ? (
               <div className="animate-fade-in" key={selectedArticle.id}>
                 <div className="flex gap-md items-center mb-md" style={{ marginBottom: "1.5rem" }}>
@@ -109,22 +146,26 @@ export default function ArticlesPage() {
                   <span style={{ fontSize: "1rem", color: "var(--color-text-muted)" }}>{selectedArticle.date}</span>
                 </div>
                 
-                <h2 style={{ fontSize: "2.2rem", color: "var(--color-primary)", marginBottom: "1.5rem", lineHeight: "1.4" }}>
+                <h2 style={{ fontSize: "2.4rem", color: "var(--color-primary)", marginBottom: "1.5rem", lineHeight: "1.4" }}>
                   {selectedArticle.title}
                 </h2>
                 
-                <div style={{ width: "60px", height: "4px", background: "var(--color-accent)", marginBottom: "2rem", borderRadius: "2px" }}></div>
+                <div style={{ width: "80px", height: "4px", background: "var(--color-accent)", marginBottom: "2.5rem", borderRadius: "2px" }}></div>
                 
                 <p style={{ fontSize: "1.2rem", lineHeight: "2.2", color: "var(--color-text-main)", opacity: 0.9 }}>
                   {selectedArticle.content}
                 </p>
 
-                <div style={{ marginTop: "4rem", paddingTop: "2rem", borderTop: "1px solid var(--color-border)", textAlign: "center" }}>
+                <div style={{ marginTop: "4rem", paddingTop: "2rem", borderTop: "1px solid var(--color-border)" }}>
                   <h4 style={{ marginBottom: "1rem", color: "var(--color-primary)" }}>هل لديك استفسار بخصوص هذا الموضوع؟</h4>
-                  <a href="https://wa.me/201155729429?text=مرحباً،%20أود%20الاستفسار%20بخصوص%20المقال:%20" target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ padding: "0.8rem 2rem" }}>تواصل معنا</a>
+                  <a href={`https://wa.me/201155729429?text=${encodeURIComponent("مرحباً، أود الاستفسار بخصوص المقال: " + selectedArticle.title)}`} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ padding: "0.8rem 2rem" }}>تواصل معنا عبر واتساب</a>
                 </div>
               </div>
-            ) : null}
+            ) : (
+              <div style={{ textAlign: "center", padding: "3rem", color: "var(--color-text-muted)" }}>
+                لا توجد مقالات في هذا القسم حالياً.
+              </div>
+            )}
           </div>
         </div>
       </div>
