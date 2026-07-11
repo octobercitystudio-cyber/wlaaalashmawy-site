@@ -60,7 +60,7 @@ export default function AnimatedStat({ target, suffix = "", prefix = "", display
   const displayCount = displayAsK && count >= 1000 ? (count / 1000) + "k" : count;
 
   return (
-    <div ref={elementRef} className="flex flex-col items-center justify-center gap-sm text-center" style={{ background: "var(--color-bg-body)", padding: "1.5rem", borderRadius: "8px", border: "1px solid var(--color-border)", minHeight: "150px" }}>
+    <div ref={elementRef} className="flex flex-col items-center justify-center gap-sm text-center" style={{ background: "var(--color-bg-body)", padding: "1.5rem", borderRadius: "8px", border: "2px solid var(--color-accent)", minHeight: "150px" }}>
       <h2 style={{ fontSize: "2.8rem", margin: 0, lineHeight: 1, color: "var(--color-accent)", fontWeight: "bold" }}>
         {prefix}{displayCount}{suffix}
       </h2>
