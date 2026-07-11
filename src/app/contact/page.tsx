@@ -34,10 +34,51 @@ export default function ContactPage() {
       {/* Main Content */}
       <section className="py-xl" style={{ backgroundColor: "var(--color-bg-body)" }}>
         <div className="container">
-          <div className="grid grid-cols-1 md-grid-cols-2 gap-xl">
+          
+          {/* Top Row: Contact Info Cards */}
+          <div className="grid grid-cols-1 md-grid-cols-3 gap-lg mb-xl">
+            <div className="premium-card animate-fade-in-up" style={{ animationDelay: "0.1s", background: "var(--color-bg-card)", border: "1px solid var(--color-border)", padding: "2rem", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: "1rem", borderRadius: "12px" }}>
+              <div style={{ width: "70px", height: "70px", borderRadius: "50%", background: "rgba(0, 91, 171, 0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <svg width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+              </div>
+              <div>
+                <h3 style={{ fontSize: "1.4rem", color: "#FFFFFF", marginBottom: "0.5rem" }}>اتصل بنا</h3>
+                <p dir="ltr" style={{ color: "var(--color-text-muted)", fontSize: "1.1rem" }}>+20 10 000 0000</p>
+                <p dir="ltr" style={{ color: "var(--color-text-muted)", fontSize: "1.1rem" }}>+966 50 000 0000</p>
+              </div>
+            </div>
+
+            <div className="premium-card animate-fade-in-up" style={{ animationDelay: "0.2s", background: "var(--color-bg-card)", border: "1px solid var(--color-border)", padding: "2rem", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: "1rem", borderRadius: "12px" }}>
+              <div style={{ width: "70px", height: "70px", borderRadius: "50%", background: "rgba(0, 91, 171, 0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <svg width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+              </div>
+              <div>
+                <h3 style={{ fontSize: "1.4rem", color: "#FFFFFF", marginBottom: "0.5rem" }}>البريد الإلكتروني</h3>
+                <p style={{ color: "var(--color-text-muted)", fontSize: "1.1rem" }}>info@alashmawy-cpa.com</p>
+                <p style={{ color: "var(--color-text-muted)", fontSize: "1.1rem" }}>support@alashmawy-cpa.com</p>
+              </div>
+            </div>
+
+            <div className="premium-card animate-fade-in-up" style={{ animationDelay: "0.3s", background: "var(--color-bg-card)", border: "1px solid var(--color-border)", padding: "2rem", display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", gap: "1rem", borderRadius: "12px" }}>
+              <div style={{ width: "70px", height: "70px", borderRadius: "50%", background: "rgba(0, 91, 171, 0.1)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                <svg width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+              </div>
+              <div>
+                <h3 style={{ fontSize: "1.4rem", color: "#FFFFFF", marginBottom: "0.5rem" }}>المقر الرئيسي</h3>
+                <p style={{ color: "var(--color-text-muted)", fontSize: "1.1rem", lineHeight: "1.6" }}>
+                  القاهرة، التجمع الخامس<br />
+                  منطقة الأعمال المركزية
+                </p>
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom Row: Form and Map Side by Side */}
+          <div className="grid grid-cols-1 md-grid-cols-2 gap-lg items-stretch">
             
             {/* Right: Contact Form */}
             <div className="premium-card animate-fade-in-up" style={{ 
+              animationDelay: "0.4s",
               background: "var(--color-bg-card)", 
               border: "1px solid var(--color-border)",
               padding: "3rem 2rem",
@@ -72,7 +113,7 @@ export default function ContactPage() {
                 
                 <div>
                   <label style={{ display: "block", marginBottom: "0.8rem", color: "var(--color-text-main)", fontWeight: "600" }}>كيف يمكننا مساعدتك؟ *</label>
-                  <textarea rows={6} style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(0,0,0,0.2)", color: "#FFF", outline: "none", resize: "vertical", transition: "all 0.3s ease" }} placeholder="اكتب رسالتك أو استفسارك هنا بالتفصيل..." required />
+                  <textarea rows={5} style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(0,0,0,0.2)", color: "#FFF", outline: "none", resize: "vertical", transition: "all 0.3s ease" }} placeholder="اكتب رسالتك أو استفسارك هنا بالتفصيل..." required />
                 </div>
                 
                 <button type="button" className="btn btn-primary" style={{ marginTop: "1rem", width: "100%", padding: "1.2rem", fontSize: "1.2rem", fontWeight: "bold", borderRadius: "8px" }}>
@@ -81,56 +122,6 @@ export default function ContactPage() {
               </form>
             </div>
 
-            {/* Left: Contact Info & Map */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-              <div className="grid grid-cols-1 gap-md">
-                <div className="premium-card animate-fade-in-up" style={{ animationDelay: "0.1s", background: "var(--color-bg-card)", border: "1px solid var(--color-border)", padding: "2rem", display: "flex", alignItems: "flex-start", gap: "1.5rem", borderRadius: "12px" }}>
-                  <div style={{ width: "60px", height: "60px", borderRadius: "50%", background: "rgba(0, 91, 171, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                  </div>
-                  <div>
-                    <h3 style={{ fontSize: "1.3rem", color: "#FFFFFF", marginBottom: "0.5rem" }}>اتصل بنا</h3>
-                    <p dir="ltr" style={{ color: "var(--color-text-muted)", fontSize: "1.1rem", marginBottom: "0.3rem" }}>+20 10 000 0000</p>
-                    <p dir="ltr" style={{ color: "var(--color-text-muted)", fontSize: "1.1rem" }}>+966 50 000 0000</p>
-                  </div>
-                </div>
-
-                <div className="premium-card animate-fade-in-up" style={{ animationDelay: "0.2s", background: "var(--color-bg-card)", border: "1px solid var(--color-border)", padding: "2rem", display: "flex", alignItems: "flex-start", gap: "1.5rem", borderRadius: "12px" }}>
-                  <div style={{ width: "60px", height: "60px", borderRadius: "50%", background: "rgba(0, 91, 171, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                  </div>
-                  <div>
-                    <h3 style={{ fontSize: "1.3rem", color: "#FFFFFF", marginBottom: "0.5rem" }}>البريد الإلكتروني</h3>
-                    <p style={{ color: "var(--color-text-muted)", fontSize: "1.1rem", marginBottom: "0.3rem" }}>info@alashmawy-cpa.com</p>
-                    <p style={{ color: "var(--color-text-muted)", fontSize: "1.1rem" }}>support@alashmawy-cpa.com</p>
-                  </div>
-                </div>
-
-                <div className="premium-card animate-fade-in-up" style={{ animationDelay: "0.3s", background: "var(--color-bg-card)", border: "1px solid var(--color-border)", padding: "2rem", display: "flex", alignItems: "flex-start", gap: "1.5rem", borderRadius: "12px" }}>
-                  <div style={{ width: "60px", height: "60px", borderRadius: "50%", background: "rgba(0, 91, 171, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                  </div>
-                  <div>
-                    <h3 style={{ fontSize: "1.3rem", color: "#FFFFFF", marginBottom: "0.5rem" }}>المقر الرئيسي</h3>
-                    <p style={{ color: "var(--color-text-muted)", fontSize: "1.1rem", lineHeight: "1.6" }}>
-                      جمهورية مصر العربية<br />
-                      القاهرة، التجمع الخامس<br />
-                      منطقة الأعمال المركزية
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              {/* Map */}
-              <div className="premium-card animate-fade-in-up" style={{ animationDelay: "0.4s", padding: "1rem", background: "var(--color-bg-card)", border: "1px solid var(--color-border)", borderRadius: "12px", height: "100%", minHeight: "300px" }}>
-                <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d110502.77443152503!2d31.332306349999998!3d30.0443878!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583fa60b21beeb%3A0x79dfb296e8423bba!2sCairo%2C%20Cairo%20Governorate%2C%20Egypt!5e0!3m2!1sen!2s!4v1718000000000!5m2!1sen!2s" 
-                  width="100%" 
-                  height="100%" 
-                  style={{ border: 0, borderRadius: "8px" }} 
-                  allowFullScreen={true} 
-                  loading="lazy" 
-                  referrerPolicy="no-referrer-when-downgrade">
                 </iframe>
               </div>
             </div>
