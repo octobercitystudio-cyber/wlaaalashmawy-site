@@ -1,13 +1,60 @@
+"use client";
+
+import React, { useState } from 'react';
+import Link from 'next/link';
+
 export default function ArticlesPage() {
   const articles = [
-    { title: "تأثير ضريبة القيمة المضافة على المشاريع الصغيرة", date: "١٥ مايو ٢٠٢٦", category: "الضرائب", excerpt: "كيف يمكن للشركات الصغيرة والمتوسطة التكيف مع أنظمة ضريبة القيمة المضافة لضمان الامتثال المستمر دون التأثير سلباً على السيولة النقدية؟" },
-    { title: "أهمية مسك الدفاتر للشركات الناشئة", date: "٣ أبريل ٢٠٢٦", category: "نصائح مالية", excerpt: "العديد من رواد الأعمال يتجاهلون أهمية مسك الدفاتر في بداياتهم، مما يؤدي إلى تراكمات مالية صعبة. تعرف على الفوائد الجوهرية للبدء مبكراً." },
-    { title: "معايير المحاسبة الدولية IFRS وتطبيقها", date: "٢٠ فبراير ٢٠٢٦", category: "المراجعة", excerpt: "نظرة شاملة على كيفية تحول الشركات المحلية لتبني معايير التقارير المالية الدولية (IFRS) والفوائد المرجوة من هذا التحول." },
-    { title: "كيف تستعد لنهاية السنة المالية؟", date: "١٠ ديسمبر ٢٠٢٥", category: "إدارة مالية", excerpt: "خطوات عملية وفعالة يجب على المدراء الماليين والمحاسبين اتخاذها لضمان إغلاق السنة المالية بنجاح وبدون أي مفاجآت." }
+    { 
+      id: 1,
+      title: "تأثير ضريبة القيمة المضافة على المشاريع الصغيرة", 
+      date: "١٥ مايو ٢٠٢٦", 
+      category: "الضرائب", 
+      content: "تعتبر ضريبة القيمة المضافة تحدياً وفرصة في الوقت ذاته للمشاريع الصغيرة. من ناحية، تتطلب الالتزام بتسجيل دقيق للحسابات، ومن ناحية أخرى تساعد على تنظيم الدورة المالية للمشروع. أهم الخطوات التي يجب اتخاذها تشمل تحديث النظم المحاسبية، تدريب الموظفين، وضمان وجود سيولة نقدية كافية لتغطية الالتزامات الضريبية الدورية. كما يُنصح دائماً بالاستعانة بمستشار ضريبي لتجنب الغرامات والمشاكل القانونية التي قد تنشأ عن سوء الفهم لتطبيق القوانين الجديدة."
+    },
+    { 
+      id: 2,
+      title: "أهمية مسك الدفاتر للشركات الناشئة", 
+      date: "٣ أبريل ٢٠٢٦", 
+      category: "نصائح مالية", 
+      content: "في خضم التركيز على تطوير المنتج وجذب العملاء، قد يغفل مؤسسو الشركات الناشئة عن مسك الدفاتر بشكل منتظم. هذا الإهمال قد يؤدي إلى فقدان السيطرة على التدفقات النقدية وعدم القدرة على تقييم الأداء المالي بدقة. البدء بممارسات محاسبية سليمة من اليوم الأول يضمن لك شفافية مالية، ويسهل عليك لاحقاً الحصول على التمويل من المستثمرين أو البنوك، حيث تعتبر السجلات المالية الدقيقة من أهم المتطلبات لجهات التمويل."
+    },
+    { 
+      id: 3,
+      title: "معايير المحاسبة الدولية IFRS وتطبيقها", 
+      date: "٢٠ فبراير ٢٠٢٦", 
+      category: "المراجعة", 
+      content: "مع التوجه العالمي نحو توحيد المعايير المالية، أصبح التحول إلى معايير IFRS ضرورة للشركات التي تطمح للنمو وجذب استثمارات أجنبية. يساهم هذا التحول في تحسين جودة التقارير المالية، وزيادة الشفافية والموثوقية، وتسهيل المقارنة بين أداء الشركات على المستوى الدولي. يتطلب هذا الانتقال تخطيطاً دقيقاً، وتعديلاً في السياسات المحاسبية، وبرامج تدريبية للكوادر المالية، ولكنه في النهاية يضع الشركة في موقف تنافسي أقوى."
+    },
+    { 
+      id: 4,
+      title: "كيف تستعد لنهاية السنة المالية؟", 
+      date: "١٠ ديسمبر ٢٠٢٥", 
+      category: "إدارة مالية", 
+      content: "يعتبر إغلاق السنة المالية من أكثر الأوقات حرجاً للإدارات المالية. لضمان سير العملية بسلاسة، يجب البدء مبكراً بمراجعة وتسوية الحسابات، جرد المخزون، والتأكد من تسجيل جميع الإيرادات والمصروفات. من الضروري أيضاً مراجعة القوانين الضريبية والتأكد من الامتثال الكامل لها قبل إعداد الإقرارات النهائية. الاستعداد الجيد والتنظيم المسبق هما المفتاح لتجنب الضغوطات في اللحظات الأخيرة."
+    }
   ];
+
+  const [selectedArticleId, setSelectedArticleId] = useState(articles[0].id);
+
+  const selectedArticle = articles.find(a => a.id === selectedArticleId);
 
   return (
     <div className="animate-fade-in" style={{ flex: 1, padding: "var(--spacing-xl) 0" }}>
+      <style dangerouslySetInnerHTML={{ __html: `
+        .articles-layout {
+          display: flex;
+          flex-direction: column;
+          gap: 2rem;
+        }
+        @media (min-width: 768px) {
+          .articles-layout {
+            display: grid;
+            grid-template-columns: 1fr 2.5fr; /* Right column 1 fraction, Left column 2.5 fractions */
+            align-items: start;
+          }
+        }
+      `}} />
       <div className="container">
         <div className="text-center mb-xl">
           <h1 className="text-gold" style={{ fontSize: "3rem", marginBottom: "var(--spacing-md)" }}>المقالات والمدونة</h1>
@@ -16,18 +63,69 @@ export default function ArticlesPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md-grid-cols-2 gap-lg">
-          {articles.map((article, index) => (
-            <div key={index} className="premium-card flex flex-col gap-sm" style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)", transition: "transform 0.3s" }}>
-              <div className="flex justify-between items-center" style={{ marginBottom: "0.5rem" }}>
-                <span style={{ background: "rgba(197, 160, 89, 0.1)", color: "var(--color-accent)", padding: "0.2rem 0.8rem", borderRadius: "20px", fontSize: "0.85rem", fontWeight: "bold" }}>{article.category}</span>
-                <span style={{ fontSize: "0.9rem", color: "var(--color-text-muted)" }}>{article.date}</span>
+        <div className="articles-layout">
+          {/* Right Column: Titles List */}
+          <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+            <h3 style={{ fontSize: "1.5rem", color: "var(--color-primary)", marginBottom: "1rem" }}>أحدث المقالات</h3>
+            {articles.map((article) => (
+              <button 
+                key={article.id}
+                onClick={() => setSelectedArticleId(article.id)}
+                style={{ 
+                  textAlign: "right",
+                  padding: "1.2rem",
+                  background: selectedArticleId === article.id ? "rgba(0, 91, 171, 0.05)" : "var(--color-bg-card)",
+                  border: "1px solid",
+                  borderColor: selectedArticleId === article.id ? "var(--color-accent)" : "var(--color-border)",
+                  borderRadius: "8px",
+                  cursor: "pointer",
+                  transition: "all 0.3s ease",
+                  borderRight: selectedArticleId === article.id ? "4px solid var(--color-accent)" : "1px solid var(--color-border)"
+                }}
+              >
+                <h4 style={{ 
+                  fontSize: "1.1rem", 
+                  color: selectedArticleId === article.id ? "var(--color-accent)" : "var(--color-primary)", 
+                  marginBottom: "0.5rem" 
+                }}>
+                  {article.title}
+                </h4>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <span style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>{article.date}</span>
+                  <span style={{ fontSize: "0.8rem", background: "rgba(0, 0, 0, 0.05)", padding: "0.1rem 0.5rem", borderRadius: "10px" }}>{article.category}</span>
+                </div>
+              </button>
+            ))}
+          </div>
+
+          {/* Left Column: Article Content */}
+          <div className="premium-card" style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)", padding: "3rem", borderRadius: "12px", minHeight: "500px" }}>
+            {selectedArticle ? (
+              <div className="animate-fade-in" key={selectedArticle.id}>
+                <div className="flex gap-md items-center mb-md" style={{ marginBottom: "1.5rem" }}>
+                  <span style={{ background: "rgba(0, 91, 171, 0.1)", color: "var(--color-accent)", padding: "0.4rem 1.2rem", borderRadius: "20px", fontSize: "0.95rem", fontWeight: "bold" }}>
+                    {selectedArticle.category}
+                  </span>
+                  <span style={{ fontSize: "1rem", color: "var(--color-text-muted)" }}>{selectedArticle.date}</span>
+                </div>
+                
+                <h2 style={{ fontSize: "2.2rem", color: "var(--color-primary)", marginBottom: "1.5rem", lineHeight: "1.4" }}>
+                  {selectedArticle.title}
+                </h2>
+                
+                <div style={{ width: "60px", height: "4px", background: "var(--color-accent)", marginBottom: "2rem", borderRadius: "2px" }}></div>
+                
+                <p style={{ fontSize: "1.2rem", lineHeight: "2.2", color: "var(--color-text-main)", opacity: 0.9 }}>
+                  {selectedArticle.content}
+                </p>
+
+                <div style={{ marginTop: "4rem", paddingTop: "2rem", borderTop: "1px solid var(--color-border)", textAlign: "center" }}>
+                  <h4 style={{ marginBottom: "1rem", color: "var(--color-primary)" }}>هل لديك استفسار بخصوص هذا الموضوع؟</h4>
+                  <a href="https://wa.me/201155729429?text=مرحباً،%20أود%20الاستفسار%20بخصوص%20المقال:%20" target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ padding: "0.8rem 2rem" }}>تواصل معنا</a>
+                </div>
               </div>
-              <h3 style={{ fontSize: "1.4rem", color: "var(--color-primary)", margin: "0.5rem 0" }}>{article.title}</h3>
-              <p style={{ opacity: 0.8, lineHeight: 1.7, flex: 1 }}>{article.excerpt}</p>
-              <button className="btn btn-secondary" style={{ alignSelf: "flex-start", marginTop: "1rem", padding: "0.5rem 1.5rem", background: "transparent", border: "1px solid var(--color-accent)", color: "var(--color-accent)" }}>اقرأ المزيد</button>
-            </div>
-          ))}
+            ) : null}
+          </div>
         </div>
       </div>
     </div>
