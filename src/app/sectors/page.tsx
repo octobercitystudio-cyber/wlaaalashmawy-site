@@ -39,7 +39,7 @@ export default function SectorsPage() {
           <div className="grid grid-cols-1 md-grid-cols-3 gap-lg">
             {sectorsData.map((sector) => {
               return (
-                <div key={sector.id} className="premium-card text-center" style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)", display: "flex", flexDirection: "column", padding: 0, overflow: "hidden" }}>
+                <div key={sector.id} className="premium-card text-center" style={{ background: "var(--color-bg-card)", border: "2px solid var(--color-accent)", display: "flex", flexDirection: "column", padding: 0, overflow: "hidden" }}>
                   <div style={{ position: "relative", width: "100%", height: "220px" }}>
                     <Image src={sector.image} alt={sector.title.ar} fill style={{ objectFit: "cover" }} />
                   </div>

@@ -39,7 +39,7 @@ export default function ServicesPage() {
           <div className="grid grid-cols-1 md-grid-cols-3 gap-lg">
             {servicesData.map((service) => {
               return (
-                <div key={service.id} className="premium-card text-center" style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)", display: "flex", flexDirection: "column", padding: 0, overflow: "hidden" }}>
+                <div key={service.id} className="premium-card text-center" style={{ background: "var(--color-bg-card)", border: "2px solid var(--color-accent)", display: "flex", flexDirection: "column", padding: 0, overflow: "hidden" }}>
                   <div style={{ position: "relative", width: "100%", height: "200px" }}>
                     <Image src={service.image} alt={service.title.ar} fill style={{ objectFit: "cover" }} />
                   </div>

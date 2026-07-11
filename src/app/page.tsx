@@ -36,21 +36,21 @@ export default function Home() {
           <p style={{ maxWidth: "600px", margin: "0 auto" }}>رؤية مالية واضحة وحلول استراتيجية مصممة خصيصاً لتلبي تطلعات أعمالك.</p>
         </div>
         <div className="grid grid-cols-1 md-grid-cols-3 gap-lg">
-          <div className="premium-card text-center">
+          <div className="premium-card text-center" style={{ border: "2px solid var(--color-accent)" }}>
             <div style={{ width: "60px", height: "60px", background: "var(--gold-gradient-subtle)", borderRadius: "50%", margin: "0 auto var(--spacing-md)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--color-primary)", fontSize: "1.5rem" }}>
               📊
             </div>
             <h3 style={{ fontSize: "1.5rem", marginBottom: "var(--spacing-sm)" }}>المراجعة والتدقيق</h3>
             <p>عمليات تدقيق مالي دقيقة تضمن الشفافية والموثوقية لقوائمك المالية أمام الجهات المختصة بشفافية تامة.</p>
           </div>
-          <div className="premium-card text-center">
+          <div className="premium-card text-center" style={{ border: "2px solid var(--color-accent)" }}>
             <div style={{ width: "60px", height: "60px", background: "var(--gold-gradient-subtle)", borderRadius: "50%", margin: "0 auto var(--spacing-md)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--color-primary)", fontSize: "1.5rem" }}>
               💼
             </div>
             <h3 style={{ fontSize: "1.5rem", marginBottom: "var(--spacing-sm)" }}>الاستشارات الضريبية</h3>
             <p>تخطيط ضريبي استراتيجي يضمن لك الامتثال الكامل للأنظمة الضريبية وتحقيق أقصى كفاءة مالية.</p>
           </div>
-          <div className="premium-card text-center">
+          <div className="premium-card text-center" style={{ border: "2px solid var(--color-accent)" }}>
             <div style={{ width: "60px", height: "60px", background: "var(--gold-gradient-subtle)", borderRadius: "50%", margin: "0 auto var(--spacing-md)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--color-primary)", fontSize: "1.5rem" }}>
               📝
             </div>
