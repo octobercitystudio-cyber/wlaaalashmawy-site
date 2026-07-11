@@ -6,7 +6,7 @@ export default function ContactPage() {
       {/* Hero Section */}
       <section style={{ 
         paddingTop: "12rem", 
-        paddingBottom: "8rem", 
+        paddingBottom: "4rem", 
         color: "#FFFFFF",
         textAlign: "center",
         position: "relative",
@@ -32,7 +32,7 @@ export default function ContactPage() {
       </section>
 
       {/* Main Content */}
-      <section className="py-xl" style={{ backgroundColor: "var(--color-bg-body)" }}>
+      <section style={{ paddingTop: "2rem", paddingBottom: "6rem", backgroundColor: "var(--color-bg-body)" }}>
         <div className="container">
           
           {/* Intro Text before Contact Info */}
