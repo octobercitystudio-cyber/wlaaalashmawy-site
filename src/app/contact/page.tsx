@@ -35,13 +35,6 @@ export default function ContactPage() {
       <section style={{ paddingTop: "2rem", paddingBottom: "6rem", backgroundColor: "var(--color-bg-body)" }}>
         <div className="container">
           
-          {/* Intro Text before Contact Info */}
-          <div className="text-center mb-xl animate-fade-in">
-            <h2 className="text-gold" style={{ marginBottom: "1rem" }}>نحن هنا لخدمتك</h2>
-            <p style={{ maxWidth: "700px", margin: "0 auto", fontSize: "1.2rem", lineHeight: "1.8", color: "var(--color-text-main)" }}>
-              سواء كنت تبحث عن استشارة مالية، أو ترغب في الاستفسار عن خدماتنا، فإن فريقنا من الخبراء جاهز للرد على جميع تساؤلاتك. يمكنك التواصل معنا مباشرة عبر الأرقام والبيانات الموضحة أدناه.
-            </p>
-          </div>
 
           {/* Form and Map Side by Side */}
           <div className="grid grid-cols-1 md-grid-cols-2 gap-lg items-stretch">
