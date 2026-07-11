@@ -102,8 +102,8 @@ export default function ContactPage() {
                 
                 <div>
                   <label style={{ display: "block", marginBottom: "0.8rem", color: "var(--color-text-main)", fontWeight: "600" }}>نوع الاستشارة</label>
-                  <select defaultValue="" style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid var(--color-border)", background: "#FFFFFF", color: "#000", outline: "none", transition: "all 0.3s ease", appearance: "none", cursor: "pointer", fontWeight: "bold" }}>
-                    <option value="" disabled>اختر الخدمة المطلوبة...</option>
+                  <select style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid var(--color-border)", background: "#FFFFFF", color: "#000", outline: "none", transition: "all 0.3s ease", appearance: "none", cursor: "pointer", fontWeight: "bold" }}>
+                    <option value="" disabled selected>اختر الخدمة المطلوبة...</option>
                     <option style={{ color: "#000" }}>الاستشارات المحاسبية وإعداد التقارير المالية</option>
                     <option style={{ color: "#000" }}>المراجعة وإبداء الرأي المهني</option>
                     <option style={{ color: "#000" }}>الاستشارات والامتثال الضريبي</option>
