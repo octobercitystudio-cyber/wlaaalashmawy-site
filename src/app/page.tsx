@@ -65,12 +65,13 @@ export default function Home() {
               <Link href="/about" className="btn btn-secondary">تعرف علينا أكثر</Link>
             </div>
           </div>
-          <div className="premium-card flex justify-center items-center" style={{ minHeight: "350px", border: "1px solid var(--color-accent)", background: "rgba(5, 25, 55, 0.05)" }}>
-            <div className="text-center">
-              <span style={{ fontSize: "5rem", display: "block", marginBottom: "1rem" }}>🏛️</span>
-              <p style={{ fontSize: "1.5rem", fontWeight: "700", margin: 0, color: "var(--color-text-main)" }}>التميز والاحترافية</p>
-              <p style={{ color: "var(--color-accent)", letterSpacing: "2px", textTransform: "uppercase", fontSize: "0.9rem" }}>أساس عملنا</p>
-            </div>
+          <div className="premium-card flex justify-center items-center" style={{ minHeight: "350px", padding: 0, overflow: "hidden", position: "relative", border: "2px solid var(--color-accent)" }}>
+            <Image 
+              src="/images/afc_office.jpg" 
+              alt="مقر شركة AFC" 
+              fill 
+              style={{ objectFit: "cover" }} 
+            />
           </div>
         </div>
       </section>
