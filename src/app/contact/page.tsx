@@ -102,17 +102,17 @@ export default function ContactPage() {
                 
                 <div>
                   <label style={{ display: "block", marginBottom: "0.8rem", color: "var(--color-text-main)", fontWeight: "600" }}>نوع الاستشارة</label>
-                  <select style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid var(--color-border)", background: "#FFFFFF", color: "#000", outline: "none", transition: "all 0.3s ease", appearance: "none", cursor: "pointer", fontWeight: "bold" }}>
-                    <option value="" disabled selected>اختر الخدمة المطلوبة...</option>
-                    <option style={{ color: "#000" }}>الاستشارات المحاسبية وإعداد التقارير المالية</option>
-                    <option style={{ color: "#000" }}>المراجعة وإبداء الرأي المهني</option>
-                    <option style={{ color: "#000" }}>الاستشارات والامتثال الضريبي</option>
-                    <option style={{ color: "#000" }}>تأسيس الشركات والمنشآت</option>
-                    <option style={{ color: "#000" }}>الإجراءات الضريبية</option>
-                    <option style={{ color: "#000" }}>الفحص الضريبي</option>
-                    <option style={{ color: "#000" }}>إقامات المستثمرين</option>
-                    <option style={{ color: "#000" }}>التراخيص الصناعية</option>
-                    <option style={{ color: "#000" }}>أخرى</option>
+                  <select defaultValue="" required style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid var(--color-border)", background: "#FFFFFF", color: "#000", outline: "none", transition: "all 0.3s ease", appearance: "none", cursor: "pointer", fontWeight: "bold" }}>
+                    <option value="" disabled>اختر الخدمة المطلوبة...</option>
+                    <option value="الاستشارات المحاسبية وإعداد التقارير المالية" style={{ color: "#000" }}>الاستشارات المحاسبية وإعداد التقارير المالية</option>
+                    <option value="المراجعة وإبداء الرأي المهني" style={{ color: "#000" }}>المراجعة وإبداء الرأي المهني</option>
+                    <option value="الاستشارات والامتثال الضريبي" style={{ color: "#000" }}>الاستشارات والامتثال الضريبي</option>
+                    <option value="تأسيس الشركات والمنشآت" style={{ color: "#000" }}>تأسيس الشركات والمنشآت</option>
+                    <option value="الإجراءات الضريبية" style={{ color: "#000" }}>الإجراءات الضريبية</option>
+                    <option value="الفحص الضريبي" style={{ color: "#000" }}>الفحص الضريبي</option>
+                    <option value="إقامات المستثمرين" style={{ color: "#000" }}>إقامات المستثمرين</option>
+                    <option value="التراخيص الصناعية" style={{ color: "#000" }}>التراخيص الصناعية</option>
+                    <option value="أخرى" style={{ color: "#000" }}>أخرى</option>
                   </select>
                 </div>
                 
