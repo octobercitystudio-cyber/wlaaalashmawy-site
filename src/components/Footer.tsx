@@ -30,8 +30,10 @@ export default function Footer() {
           </ul>
         </div>
       </div>
-      <div className="container text-center" style={{ marginTop: "var(--spacing-xl)", paddingTop: "var(--spacing-md)", borderTop: "1px solid rgba(255,255,255,0.2)", opacity: 0.8 }}>
-        <p style={{ margin: 0, fontSize: "0.9rem" }}>© {new Date().getFullYear()} مكتب العشماوي للمحاسبة. جميع الحقوق محفوظة.</p>
+      <div className="container text-center" style={{ marginTop: "var(--spacing-xl)", paddingTop: "var(--spacing-md)", borderTop: "1px solid rgba(255,255,255,0.2)" }}>
+        <p style={{ margin: 0, fontSize: "1rem", color: "#FFFFFF" }}>
+          <span dir="ltr">© {new Date().getFullYear()}</span> مكتب العشماوي للمحاسبة. جميع الحقوق محفوظة.
+        </p>
       </div>
     </footer>
   );
