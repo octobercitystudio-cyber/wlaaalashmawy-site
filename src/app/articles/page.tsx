@@ -9,33 +9,33 @@ export default function ArticlesPage() {
       id: 1,
       title: "تأثير ضريبة القيمة المضافة على المشاريع الصغيرة", 
       date: "١٥ مايو ٢٠٢٦", 
-      category: "الضرائب", 
+      category: "الاستشارات الضريبية", 
       content: "تعتبر ضريبة القيمة المضافة تحدياً وفرصة في الوقت ذاته للمشاريع الصغيرة. من ناحية، تتطلب الالتزام بتسجيل دقيق للحسابات، ومن ناحية أخرى تساعد على تنظيم الدورة المالية للمشروع. أهم الخطوات التي يجب اتخاذها تشمل تحديث النظم المحاسبية، تدريب الموظفين، وضمان وجود سيولة نقدية كافية لتغطية الالتزامات الضريبية الدورية. كما يُنصح دائماً بالاستعانة بمستشار ضريبي لتجنب الغرامات والمشاكل القانونية التي قد تنشأ عن سوء الفهم لتطبيق القوانين الجديدة."
     },
     { 
       id: 2,
       title: "أهمية مسك الدفاتر للشركات الناشئة", 
       date: "٣ أبريل ٢٠٢٦", 
-      category: "نصائح مالية", 
+      category: "الاستشارات المحاسبية", 
       content: "في خضم التركيز على تطوير المنتج وجذب العملاء، قد يغفل مؤسسو الشركات الناشئة عن مسك الدفاتر بشكل منتظم. هذا الإهمال قد يؤدي إلى فقدان السيطرة على التدفقات النقدية وعدم القدرة على تقييم الأداء المالي بدقة. البدء بممارسات محاسبية سليمة من اليوم الأول يضمن لك شفافية مالية، ويسهل عليك لاحقاً الحصول على التمويل من المستثمرين أو البنوك، حيث تعتبر السجلات المالية الدقيقة من أهم المتطلبات لجهات التمويل."
     },
     { 
       id: 3,
       title: "معايير المحاسبة الدولية IFRS وتطبيقها", 
       date: "٢٠ فبراير ٢٠٢٦", 
-      category: "المراجعة", 
+      category: "المراجعة والتدقيق", 
       content: "مع التوجه العالمي نحو توحيد المعايير المالية، أصبح التحول إلى معايير IFRS ضرورة للشركات التي تطمح للنمو وجذب استثمارات أجنبية. يساهم هذا التحول في تحسين جودة التقارير المالية، وزيادة الشفافية والموثوقية، وتسهيل المقارنة بين أداء الشركات على المستوى الدولي. يتطلب هذا الانتقال تخطيطاً دقيقاً، وتعديلاً في السياسات المحاسبية، وبرامج تدريبية للكوادر المالية، ولكنه في النهاية يضع الشركة في موقف تنافسي أقوى."
     },
     { 
       id: 4,
       title: "كيف تستعد لنهاية السنة المالية؟", 
       date: "١٠ ديسمبر ٢٠٢٥", 
-      category: "إدارة مالية", 
+      category: "الاستشارات المالية", 
       content: "يعتبر إغلاق السنة المالية من أكثر الأوقات حرجاً للإدارات المالية. لضمان سير العملية بسلاسة، يجب البدء مبكراً بمراجعة وتسوية الحسابات، جرد المخزون، والتأكد من تسجيل جميع الإيرادات والمصروفات. من الضروري أيضاً مراجعة القوانين الضريبية والتأكد من الامتثال الكامل لها قبل إعداد الإقرارات النهائية. الاستعداد الجيد والتنظيم المسبق هما المفتاح لتجنب الضغوطات في اللحظات الأخيرة."
     }
   ];
 
-  const categories = ['الكل', ...Array.from(new Set(articles.map(a => a.category)))];
+  const categories = ['الكل', 'الاستشارات المحاسبية', 'الاستشارات الضريبية', 'المراجعة والتدقيق', 'تأسيس الشركات', 'الاستشارات المالية'];
 
   const [selectedTab, setSelectedTab] = useState('الكل');
   const [selectedArticleId, setSelectedArticleId] = useState(articles[0].id);
@@ -62,6 +62,7 @@ export default function ArticlesPage() {
           display: flex;
           flex-direction: column;
           gap: 3rem;
+          margin-top: 3rem; /* Added margin to lower the layout from the top section */
         }
         @media (min-width: 768px) {
           .articles-layout {
@@ -83,7 +84,7 @@ export default function ArticlesPage() {
           {/* Right Column: Titles List */}
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
             <h3 style={{ fontSize: "1.5rem", color: "var(--color-primary)", marginBottom: "1rem" }}>أحدث المقالات</h3>
-            {filteredArticles.map((article) => (
+            {filteredArticles.length > 0 ? filteredArticles.map((article) => (
               <button 
                 key={article.id}
                 onClick={() => setSelectedArticleId(article.id)}
@@ -111,7 +112,9 @@ export default function ArticlesPage() {
                   <span style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>{article.date}</span>
                 </div>
               </button>
-            ))}
+            )) : (
+              <p style={{ color: "var(--color-text-muted)" }}>لا توجد مقالات مسجلة.</p>
+            )}
           </div>
 
           {/* Left Column: Article Content */}
@@ -163,7 +166,7 @@ export default function ArticlesPage() {
               </div>
             ) : (
               <div style={{ textAlign: "center", padding: "3rem", color: "var(--color-text-muted)" }}>
-                لا توجد مقالات في هذا القسم حالياً.
+                لا توجد مقالات في هذا القسم حالياً. أضف مقالات جديدة لظهورها هنا.
               </div>
             )}
           </div>
