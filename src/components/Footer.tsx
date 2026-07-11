@@ -12,7 +12,7 @@ export default function Footer() {
         </div>
         <div>
           <h3 style={{ marginBottom: "var(--spacing-md)", fontSize: "1.3rem", color: "#FFFFFF" }}>روابط هامة</h3>
-          <ul className="flex flex-col gap-sm" style={{ opacity: 0.9 }}>
+          <ul className="footer-links flex flex-col gap-sm" style={{ opacity: 0.9 }}>
             <li><Link href="/">الرئيسية</Link></li>
             <li><Link href="/about">من نحن</Link></li>
             <li><Link href="/services">الخدمات المحاسبية</Link></li>

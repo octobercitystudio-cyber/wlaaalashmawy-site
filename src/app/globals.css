@@ -50,6 +50,11 @@ a:hover {
   color: var(--color-accent);
 }
 
+/* Footer specific hover */
+.footer-links a:hover {
+  color: #000000 !important;
+}
+
 ul {
   list-style: none;
 }
