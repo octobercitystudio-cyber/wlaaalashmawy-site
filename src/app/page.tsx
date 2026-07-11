@@ -13,10 +13,10 @@ export default function Home() {
       {/* Stats Section */}
       <section style={{ padding: "var(--spacing-lg) 0", borderTop: "1px solid var(--color-border)", borderBottom: "1px solid var(--color-border)", background: "var(--color-bg-card)" }}>
         <div className="container grid grid-cols-1 md-grid-cols-4 gap-lg">
-          <AnimatedStat target={15} suffix="+" labelLines={<>سنوات<br/>التميز</>} />
-          <AnimatedStat target={500} suffix="+" labelLines={<>عميل<br/>موثوق</>} />
-          <AnimatedStat target={1000} suffix="+" displayAsK={true} labelLines={<>استشارة<br/>ناجحة</>} />
-          <AnimatedStat target={100} suffix="%" labelLines={<>دقة<br/>وشفافية</>} />
+          <AnimatedStat target={15} suffix="+" labelLines="سنوات التميز" />
+          <AnimatedStat target={500} suffix="+" labelLines="عميل موثوق" />
+          <AnimatedStat target={1000} suffix="+" displayAsK={true} labelLines="استشارة ناجحة" />
+          <AnimatedStat target={100} suffix="%" labelLines="دقة وشفافية" />
         </div>
       </section>
 
