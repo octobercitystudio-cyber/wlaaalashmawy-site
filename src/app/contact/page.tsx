@@ -103,11 +103,11 @@ export default function ContactPage() {
                 <div>
                   <label style={{ display: "block", marginBottom: "0.8rem", color: "var(--color-text-main)", fontWeight: "600" }}>نوع الاستشارة</label>
                   <select style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.1)", background: "rgba(0,0,0,0.2)", color: "#FFF", outline: "none", transition: "all 0.3s ease", appearance: "none", cursor: "pointer" }}>
-                    <option style={{ background: "var(--color-bg-card)", color: "#FFF" }}>استشارة ضريبية</option>
-                    <option style={{ background: "var(--color-bg-card)", color: "#FFF" }}>خدمات مراجعة وتدقيق</option>
-                    <option style={{ background: "var(--color-bg-card)", color: "#FFF" }}>مسك الدفاتر المحاسبية</option>
-                    <option style={{ background: "var(--color-bg-card)", color: "#FFF" }}>تأسيس شركات</option>
-                    <option style={{ background: "var(--color-bg-card)", color: "#FFF" }}>استفسار عام</option>
+                    <option style={{ background: "var(--color-bg-card)", color: "var(--color-text-main)" }}>استشارة ضريبية</option>
+                    <option style={{ background: "var(--color-bg-card)", color: "var(--color-text-main)" }}>خدمات مراجعة وتدقيق</option>
+                    <option style={{ background: "var(--color-bg-card)", color: "var(--color-text-main)" }}>مسك الدفاتر المحاسبية</option>
+                    <option style={{ background: "var(--color-bg-card)", color: "var(--color-text-main)" }}>تأسيس شركات</option>
+                    <option style={{ background: "var(--color-bg-card)", color: "var(--color-text-main)" }}>استفسار عام</option>
                   </select>
                 </div>
                 
