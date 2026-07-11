@@ -101,7 +101,7 @@ export default function ContactPage() {
               {/* Map */}
               <div style={{ padding: "0.5rem", background: "var(--color-bg-card)", border: "1px solid var(--color-border)", borderRadius: "12px", height: "300px" }}>
                 <iframe 
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d110502.77443152503!2d31.332306349999998!3d30.0443878!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14583fa60b21beeb%3A0x79dfb296e8423bba!2sCairo%2C%20Cairo%20Governorate%2C%20Egypt!5e0!3m2!1sen!2s!4v1718000000000!5m2!1sen!2s" 
+                  src="https://maps.google.com/maps?q=29.9607581,30.9246025&hl=ar&z=16&output=embed" 
                   width="100%" 
                   height="100%" 
                   style={{ border: 0, borderRadius: "8px" }} 
