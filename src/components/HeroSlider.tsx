@@ -132,7 +132,7 @@ export default function HeroSlider() {
             <Link href="/contact" className="btn btn-primary" style={{ padding: "1rem 2rem", fontSize: "1.1rem" }}>
               طلب استشارة مجانية
             </Link>
-            <Link href="/services" className="btn" style={{ padding: "1rem 2rem", fontSize: "1.1rem", background: "transparent", border: "1px solid #FFFFFF", color: "#FFFFFF", borderRadius: "var(--border-radius-sm)" }}>
+            <Link href="/services" className="btn" style={{ padding: "1rem 2rem", fontSize: "1.1rem", background: "#FFFFFF", border: "1px solid #FFFFFF", color: "var(--color-primary)", borderRadius: "var(--border-radius-sm)", fontWeight: "bold" }}>
               اكتشف خدماتنا
             </Link>
           </div>
