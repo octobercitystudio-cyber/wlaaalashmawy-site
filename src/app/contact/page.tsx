@@ -110,6 +110,8 @@ export default function ContactPage() {
                     <option style={{ color: "#000" }}>تأسيس الشركات والمنشآت</option>
                     <option style={{ color: "#000" }}>الإجراءات الضريبية</option>
                     <option style={{ color: "#000" }}>الفحص الضريبي</option>
+                    <option style={{ color: "#000" }}>إقامات المستثمرين</option>
+                    <option style={{ color: "#000" }}>التراخيص الصناعية</option>
                     <option style={{ color: "#000" }}>أخرى</option>
                   </select>
                 </div>
