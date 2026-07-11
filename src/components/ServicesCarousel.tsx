@@ -1,13 +1,19 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { servicesData } from "@/data/services";
 
 export default function ServicesCarousel() {
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const N = servicesData.length;
+  // Create 5 copies of the data to ensure we never run out of slides during rapid clicks
+  const extendedItems = [...servicesData, ...servicesData, ...servicesData, ...servicesData, ...servicesData];
+  const START_INDEX = N * 2; // Start in the middle of the 5 copies
+  
+  const [currentIndex, setCurrentIndex] = useState(START_INDEX);
   const [itemsToShow, setItemsToShow] = useState(3);
+  const [isTransitioning, setIsTransitioning] = useState(true);
 
   // Responsive items count
   useEffect(() => {
@@ -29,32 +35,43 @@ export default function ServicesCarousel() {
   // Auto-slide logic
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentIndex((prev) => {
-        // If we reach the last possible slide, loop back to start
-        if (prev >= servicesData.length - itemsToShow) {
-          return 0;
-        }
-        return prev + 1;
-      });
+      handleNext();
     }, 4000); // 4 seconds
 
     return () => clearInterval(interval);
-  }, [itemsToShow]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Handle dots click
-  const goToSlide = (index: number) => {
-    setCurrentIndex(index);
+  // Infinite jump logic
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      if (currentIndex >= N * 3) {
+        setIsTransitioning(false);
+        setCurrentIndex(currentIndex - N);
+      } else if (currentIndex <= N) {
+        setIsTransitioning(false);
+        setCurrentIndex(currentIndex + N);
+      }
+    }, 500); // Wait for CSS transition to finish
+
+    return () => clearTimeout(timeout);
+  }, [currentIndex, N]);
+
+  const handleNext = () => {
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => prev + 1);
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : totalSlides - 1));
+    setIsTransitioning(true);
+    setCurrentIndex((prev) => prev - 1);
   };
 
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev < totalSlides - 1 ? prev + 1 : 0));
+  const goToSlide = (realIndex: number) => {
+    setIsTransitioning(true);
+    setCurrentIndex(START_INDEX + realIndex);
   };
 
-  const totalSlides = Math.max(1, servicesData.length - itemsToShow + 1);
+  const activeDot = currentIndex % N;
 
   return (
     <div style={{ position: "relative", padding: "10px 50px" }}>
@@ -114,15 +131,15 @@ export default function ServicesCarousel() {
         <div 
           style={{ 
             display: "flex", 
-            transition: "transform 0.5s ease-in-out", 
+            transition: isTransitioning ? "transform 0.5s ease-in-out" : "none", 
             // In RTL, positive translateX moves the container to the right,
             // revealing items that are rendered to the left.
             transform: `translateX(${currentIndex * (100 / itemsToShow)}%)` 
           }}
         >
-          {servicesData.map((service) => (
+          {extendedItems.map((service, idx) => (
             <div 
-              key={service.id} 
+              key={`${service.id}-${idx}`} 
               style={{ 
                 flex: `0 0 ${100 / itemsToShow}%`, 
                 padding: "0 10px" 
@@ -172,15 +189,15 @@ export default function ServicesCarousel() {
       
       {/* Dots navigation */}
       <div className="flex justify-center items-center gap-sm mt-lg" style={{ direction: "ltr" }}>
-        {Array.from({ length: totalSlides }).map((_, idx) => (
+        {Array.from({ length: N }).map((_, idx) => (
           <button 
             key={idx}
             onClick={() => goToSlide(idx)}
             style={{
-              width: currentIndex === idx ? "30px" : "12px",
+              width: activeDot === idx ? "30px" : "12px",
               height: "12px",
               borderRadius: "6px",
-              backgroundColor: currentIndex === idx ? "var(--color-accent)" : "var(--color-border)",
+              backgroundColor: activeDot === idx ? "var(--color-accent)" : "var(--color-border)",
               transition: "all 0.3s ease",
               border: "none",
               cursor: "pointer",
