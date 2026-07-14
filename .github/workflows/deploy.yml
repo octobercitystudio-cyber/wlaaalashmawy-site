@@ -1,4 +1,4 @@
-name: Deploy to Hostinger
+name: Build and Deploy Static Site
 
 on:
   push:
@@ -6,21 +6,27 @@ on:
       - main
 
 jobs:
-  deploy:
-    name: Build & Deploy
+  build:
     runs-on: ubuntu-latest
     steps:
-      - name: SSH into Hostinger and Deploy
-        uses: appleboy/ssh-action@v1.0.3
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          host: ${{ secrets.HOST_IP }}
-          username: ${{ secrets.HOST_USER }}
-          password: ${{ secrets.HOST_PASSWORD }}
-          port: ${{ secrets.HOST_PORT }}
-          script: |
-            cd public_html
-            sleep 10
-            npm install
-            npm run build
-            npx pm2 restart wlaa-site || npx pm2 start .next/standalone/server.js --name "wlaa-site" --port 3000
-            npx pm2 save
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build static site
+        run: npm run build
+
+      - name: Deploy to production branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
+          publish_branch: production
+          force_orphan: true
