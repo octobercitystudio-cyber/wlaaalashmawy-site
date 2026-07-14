@@ -1,8 +1,5 @@
 import type { Metadata } from "next";
 import { Cairo, Amiri } from "next/font/google";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
-import WhatsAppButton from "@/components/WhatsAppButton";
 import "./globals.css";
 
 const cairo = Cairo({
@@ -31,10 +28,7 @@ export default function RootLayout({
     <html lang="ar" dir="rtl" className={`${cairo.variable} ${amiri.variable}`}>
       <body>
         <main className="flex flex-col min-h-full">
-          <Navbar />
           {children}
-          <Footer />
-          <WhatsAppButton />
         </main>
       </body>
     </html>
