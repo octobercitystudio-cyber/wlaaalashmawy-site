@@ -56,6 +56,15 @@
                     <li class="nav-item mb-2">
                         <a class="nav-link" onclick="switchTab('sectors')">القطاعات</a>
                     </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link" onclick="switchTab('features')">لماذا تختارنا (المميزات)</a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link" onclick="switchTab('stats')">الإحصائيات</a>
+                    </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link" onclick="switchTab('testimonials')">آراء العملاء</a>
+                    </li>
                     
                     <hr class="border-light opacity-50 my-4">
                     <li class="nav-item mb-2">
@@ -203,6 +212,54 @@
                     </div>
                 </div>
 
+                <!-- Features Section -->
+                <div id="sec-features" class="section-container">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2>إدارة المميزات (لماذا تختارنا)</h2>
+                        <button class="btn btn-gold" onclick="showModal('feature')">+ إضافة ميزة</button>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-hover">
+                                <thead><tr><th>العنوان</th><th>الوصف</th><th>الأيقونة</th><th>الإجراءات</th></tr></thead>
+                                <tbody id="features-table"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stats Section -->
+                <div id="sec-stats" class="section-container">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2>إدارة الإحصائيات</h2>
+                        <button class="btn btn-gold" onclick="showModal('stat')">+ إضافة إحصائية</button>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-hover">
+                                <thead><tr><th>العنوان</th><th>القيمة (الرقم)</th><th>الإجراءات</th></tr></thead>
+                                <tbody id="stats-table"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonials Section -->
+                <div id="sec-testimonials" class="section-container">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2>إدارة آراء العملاء</h2>
+                        <button class="btn btn-gold" onclick="showModal('testimonial')">+ إضافة رأي</button>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <table class="table table-hover">
+                                <thead><tr><th>الاسم</th><th>المنصب</th><th>الرأي</th><th>الإجراءات</th></tr></thead>
+                                <tbody id="testimonials-table"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -265,7 +322,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         const API_URL = '/api';
-        let dataStore = { articles: [], services: [], sectors: [] };
+        let dataStore = { articles: [], services: [], sectors: [], features: [], stats: [], testimonials: [] };
         let modal;
 
         document.addEventListener('DOMContentLoaded', () => {
@@ -320,6 +377,9 @@
             loadItems('articles');
             loadItems('services');
             loadItems('sectors');
+            loadItems('features');
+            loadItems('stats');
+            loadItems('testimonials');
         }
 
         async function loadSettings() {
@@ -365,12 +425,24 @@
             const tbody = document.getElementById(`${type}-table`);
             tbody.innerHTML = '';
             dataStore[type].forEach(item => {
-                let extraCol = type === 'articles' ? `<td><span class="badge bg-secondary">${item.category}</span></td>` : 
-                               type === 'services' ? `<td>${item.description.substring(0,30)}...</td>` : '';
+                let columns = '';
+                if(type === 'articles') {
+                    columns = `<td>${item.title}</td><td><span class="badge bg-secondary">${item.category}</span></td>`;
+                } else if(type === 'services') {
+                    columns = `<td>${item.title}</td><td>${item.description ? item.description.substring(0,30) : ''}...</td>`;
+                } else if(type === 'sectors') {
+                    columns = `<td>${item.title}</td>`;
+                } else if(type === 'features') {
+                    columns = `<td>${item.title}</td><td>${item.description ? item.description.substring(0,30) : ''}...</td><td>${item.icon}</td>`;
+                } else if(type === 'stats') {
+                    columns = `<td>${item.title}</td><td>${item.value}</td>`;
+                } else if(type === 'testimonials') {
+                    columns = `<td>${item.name}</td><td>${item.position}</td><td>${item.content ? item.content.substring(0,30) : ''}...</td>`;
+                }
+
                 tbody.innerHTML += `
                     <tr>
-                        <td>${item.title}</td>
-                        ${extraCol}
+                        ${columns}
                         <td>
                             <button class="btn btn-sm btn-primary" onclick="editItem('${type}', ${item.id})">تعديل</button>
                             <button class="btn btn-sm btn-danger" onclick="deleteItem('${type}', ${item.id})">حذف</button>
@@ -385,12 +457,42 @@
             document.getElementById('item-type').value = type;
             document.getElementById('item-title').value = '';
             document.getElementById('item-content').value = '';
+            document.getElementById('item-icon').value = '';
             
             document.getElementById('div-category').style.display = type === 'article' ? 'block' : 'none';
             document.getElementById('div-image').style.display = (type === 'article' || type === 'sector' || type === 'service') ? 'block' : 'none';
-            document.getElementById('div-description').style.display = (type === 'service' || type === 'sector') ? 'block' : 'none';
+            document.getElementById('div-description').style.display = (type === 'service' || type === 'sector' || type === 'feature') ? 'block' : 'none';
+            document.getElementById('div-icon').style.display = type === 'feature' ? 'block' : 'none';
             
-            document.getElementById('modalTitle').innerText = 'إضافة ' + (type==='article'?'مقال':type==='service'?'خدمة':'قطاع');
+            let t = 'إضافة ';
+            if(type==='article') t+='مقال';
+            else if(type==='service') t+='خدمة';
+            else if(type==='sector') t+='قطاع';
+            else if(type==='feature') t+='ميزة';
+            else if(type==='stat') {
+                t+='إحصائية';
+                document.getElementById('lbl-title').innerText = 'العنوان';
+                document.getElementById('div-icon').style.display = 'block';
+                document.getElementById('div-icon').querySelector('label').innerText = 'القيمة (الرقم)';
+                document.getElementById('item-content').parentElement.style.display = 'none';
+            }
+            else if(type==='testimonial') {
+                t+='رأي عميل';
+                document.getElementById('lbl-title').innerText = 'اسم العميل';
+                document.getElementById('div-icon').style.display = 'block';
+                document.getElementById('div-icon').querySelector('label').innerText = 'المنصب';
+                document.getElementById('item-content').parentElement.style.display = 'block';
+                document.getElementById('item-content').parentElement.querySelector('label').innerText = 'نص الرأي';
+            } else {
+                document.getElementById('lbl-title').innerText = 'العنوان';
+                document.getElementById('item-content').parentElement.style.display = 'block';
+                document.getElementById('item-content').parentElement.querySelector('label').innerText = 'المحتوى التفصيلي';
+                if(document.getElementById('div-icon').querySelector('label')) {
+                    document.getElementById('div-icon').querySelector('label').innerText = 'اسم الأيقونة (مثال: FileText, PieChart)';
+                }
+            }
+            
+            document.getElementById('modalTitle').innerText = t;
             modal.show();
         }
 
@@ -400,12 +502,23 @@
             
             showModal(type);
             document.getElementById('item-id').value = item.id;
-            document.getElementById('item-title').value = item.title;
-            document.getElementById('item-content').value = item.content;
+            
+            if(type === 'stat') {
+                document.getElementById('item-title').value = item.title;
+                document.getElementById('item-icon').value = item.value;
+            } else if(type === 'testimonial') {
+                document.getElementById('item-title').value = item.name;
+                document.getElementById('item-icon').value = item.position;
+                document.getElementById('item-content').value = item.content;
+            } else {
+                document.getElementById('item-title').value = item.title;
+                document.getElementById('item-content').value = item.content;
+            }
             
             if(type === 'article') document.getElementById('item-category').value = item.category;
             if(type === 'article' || type === 'sector' || type === 'service') document.getElementById('item-image').value = item.image;
-            if(type === 'service' || type === 'sector') document.getElementById('item-description').value = item.description;
+            if(type === 'service' || type === 'sector' || type === 'feature') document.getElementById('item-description').value = item.description;
+            if(type === 'feature') document.getElementById('item-icon').value = item.icon;
             
             document.getElementById('modalTitle').innerText = 'تعديل';
         }
@@ -415,15 +528,23 @@
             const typePlural = type + 's';
             const id = document.getElementById('item-id').value;
             
-            const data = {
-                id: id,
-                title: document.getElementById('item-title').value,
-                content: document.getElementById('item-content').value
-            };
+            let data = { id: id };
+            if(type === 'stat') {
+                data.title = document.getElementById('item-title').value;
+                data.value = document.getElementById('item-icon').value;
+            } else if(type === 'testimonial') {
+                data.name = document.getElementById('item-title').value;
+                data.position = document.getElementById('item-icon').value;
+                data.content = document.getElementById('item-content').value;
+            } else {
+                data.title = document.getElementById('item-title').value;
+                data.content = document.getElementById('item-content').value;
+            }
             
             if(type === 'article') data.category = document.getElementById('item-category').value;
             if(type === 'article' || type === 'sector' || type === 'service') data.image = document.getElementById('item-image').value;
-            if(type === 'service' || type === 'sector') data.description = document.getElementById('item-description').value;
+            if(type === 'service' || type === 'sector' || type === 'feature') data.description = document.getElementById('item-description').value;
+            if(type === 'feature') data.icon = document.getElementById('item-icon').value;
             
             const method = id ? 'PUT' : 'POST';
             

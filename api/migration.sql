@@ -1,12 +1,64 @@
-1:"$Sreact.fragment"
-2:I[86047,["/_next/static/chunks/05-c3ty_6dwfk.js","/_next/static/chunks/14mrh2-p_w84d.js","/_next/static/chunks/0r7f9r7rl_2yh.js","/_next/static/chunks/1be21-f4pi-wb.js"],"default"]
-3:I[68587,["/_next/static/chunks/05-c3ty_6dwfk.js","/_next/static/chunks/14mrh2-p_w84d.js","/_next/static/chunks/0r7f9r7rl_2yh.js","/_next/static/chunks/1be21-f4pi-wb.js"],"default"]
-4:I[59441,["/_next/static/chunks/05-c3ty_6dwfk.js","/_next/static/chunks/14mrh2-p_w84d.js","/_next/static/chunks/0r7f9r7rl_2yh.js","/_next/static/chunks/1be21-f4pi-wb.js"],"default"]
-11:I[22016,["/_next/static/chunks/05-c3ty_6dwfk.js","/_next/static/chunks/14mrh2-p_w84d.js","/_next/static/chunks/0r7f9r7rl_2yh.js","/_next/static/chunks/1be21-f4pi-wb.js"],""]
-12:I[5500,["/_next/static/chunks/05-c3ty_6dwfk.js","/_next/static/chunks/14mrh2-p_w84d.js","/_next/static/chunks/0r7f9r7rl_2yh.js","/_next/static/chunks/1be21-f4pi-wb.js"],"Image"]
-15:I[97367,["/_next/static/chunks/05-c3ty_6dwfk.js","/_next/static/chunks/14mrh2-p_w84d.js"],"OutletBoundary"]
-16:"$Sreact.suspense"
-5:T1659,في بيئة أعمال تتسم بالتغير المستمر، والتطور المتسارع في المعايير المحاسبية، وزيادة المتطلبات التنظيمية، أصبحت القرارات المالية أكثر تعقيدًا من أي وقت مضى. ولم يعد نجاح المؤسسات يعتمد فقط على إعداد قوائم مالية دقيقة، بل على قدرتها على تفسير المعلومات المالية، وإدارة المخاطر، وتحقيق الامتثال، ودعم القرارات الاستراتيجية التي تحقق النمو المستدام.
+
+CREATE TABLE IF NOT EXISTS sectors (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    image VARCHAR(255) NOT NULL,
+    content TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS services (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    image VARCHAR(255) NOT NULL,
+    content TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS features (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    icon VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS stats (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    value VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS testimonials (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    position VARCHAR(255) NOT NULL,
+    content TEXT,
+    rating INT DEFAULT 5,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Truncate existing data to avoid duplicates during migration
+TRUNCATE TABLE sectors;
+TRUNCATE TABLE services;
+TRUNCATE TABLE features;
+TRUNCATE TABLE stats;
+TRUNCATE TABLE testimonials;
+INSERT INTO sectors (title, description, image, content) VALUES ('التصنيع', 'نقدم حلولاً مالية وضريبية متكاملة لقطاع التصنيع لدعم الكفاءة التشغيلية، وتقليل تكاليف الإنتاج.', '/images/sectors/manufacturing.jpg', '');
+INSERT INTO sectors (title, description, image, content) VALUES ('التجارة', 'دعم مالي واستراتيجي لقطاع التجارة لمواجهة تحديات سلسلة التوريد وتعزيز ربحية المبيعات.', '/images/sectors/trade_retail.jpg', '');
+INSERT INTO sectors (title, description, image, content) VALUES ('الاغذية والمشروبات', 'استشارات متخصصة لضمان كفاءة سلاسل الإمداد، التوافق الضريبي، وإدارة التكاليف المتغيرة بكفاءة عالية.', '/images/sectors/food_beverage.jpg', '');
+INSERT INTO sectors (title, description, image, content) VALUES ('مقاولات عامة', 'خدمات شاملة تشمل إدارة الحسابات المرحلية، تخطيط السيولة المالية، وتخفيف المخاطر التعاقدية للمقاولين.', '/images/sectors/general_contracting.jpg', '');
+INSERT INTO sectors (title, description, image, content) VALUES ('عقارات والتشييد', 'توجيه استراتيجي لمطوري العقارات لتعظيم العائد على الاستثمار، وإدارة التدفقات النقدية للمشاريع الطويلة.', '/images/sectors/real_estate.jpg', '');
+INSERT INTO sectors (title, description, image, content) VALUES ('التعدين والبترول', 'خبرة واسعة في الاستشارات الضريبية والمحاسبية لقطاع التعدين، مع التركيز على الامتثال التنظيمي للموارد.', '/images/sectors/mining_petroleum.jpg', '');
+INSERT INTO sectors (title, description, image, content) VALUES ('التكنولوجيا والاتصالات', 'حلول مبتكرة لدعم النمو السريع، هيكلة الاستثمارات التقنية، والامتثال لمعايير التقارير المالية الدولية.', '/images/sectors/technology_telecom.jpg', '');
+INSERT INTO sectors (title, description, image, content) VALUES ('الصناعات الدوائية', 'دعم مالي دقيق يلبي متطلبات الرقابة الصارمة، ويُحسن ميزانيات البحث والتطوير للصناعات الدوائية.', '/images/sectors/pharmaceutical.jpg', '');
+INSERT INTO sectors (title, description, image, content) VALUES ('الفنادق', 'استراتيجيات مالية مخصصة لقطاع الضيافة تهدف إلى تحسين هوامش الربح وإدارة التكاليف التشغيلية الموسمية.', '/images/sectors/hospitality.jpg', '');
+INSERT INTO sectors (title, description, image, content) VALUES ('المؤسسات التعليمية', 'خدمات تركز على الإدارة المالية المستدامة، التخطيط طويل الأجل، وتطوير البنية التحتية التعليمية.', '/images/sectors/education.jpg', '');
+INSERT INTO sectors (title, description, image, content) VALUES ('المنظمات غير الهادفة للربح', 'ضمان أعلى مستويات الشفافية والحوكمة من خلال تقارير مالية دقيقة وإدارة رشيدة للمنح والتمويل الخيري.', '/images/sectors/non_profit.jpg', '');
+INSERT INTO services (title, description, image, content) VALUES ('الاستشارات المحاسبية وإعداد التقارير المالية', 'نقدم حلولاً محاسبية تساعد المؤسسات على بناء منظومة مالية قوية وتعزيز الشفافية.', '/images/services/accounting.jpg', 'في بيئة أعمال تتسم بالتغير المستمر، والتطور المتسارع في المعايير المحاسبية، وزيادة المتطلبات التنظيمية، أصبحت القرارات المالية أكثر تعقيدًا من أي وقت مضى. ولم يعد نجاح المؤسسات يعتمد فقط على إعداد قوائم مالية دقيقة، بل على قدرتها على تفسير المعلومات المالية، وإدارة المخاطر، وتحقيق الامتثال، ودعم القرارات الاستراتيجية التي تحقق النمو المستدام.
 
 في **AFC – AL-Ashmawy Financial Consulting** نقدم خدمات الاستشارات المحاسبية وإعداد التقارير المالية باعتبارها عنصرًا استراتيجيًا يساعد المؤسسات على بناء منظومة مالية قوية، وتعزيز الشفافية، ورفع جودة التقارير المالية، وترسيخ ثقة المستثمرين والممولين والجهات الرقابية.
 
@@ -43,7 +95,8 @@
 
 ومن خلال الدمج بين الخبرة المهنية، والتحليل المالي، والتطبيق الدقيق للمعايير الدولية، نمكّن المؤسسات من تحسين جودة التقارير المالية، وتعزيز كفاءة الأداء، وتقليل المخاطر، ورفع مستوى الحوكمة، ودعم خطط النمو والتوسع بثقة.
 
-في **AFC** نؤمن بأن المحاسبة ليست مجرد تسجيل للمعاملات، بل هي لغة الأعمال، وأساس الثقة، ومحرك رئيسي لاتخاذ القرارات التي تصنع مستقبل المؤسسات.6:T128f,في **AFC – Ashmawy Financial Consulting** نؤمن بأن المراجعة والاستشارات ليست مجرد خدمات مهنية، بل أدوات استراتيجية لبناء الثقة، وتعزيز الحوكمة، وإدارة المخاطر، ودعم النمو المستدام.
+في **AFC** نؤمن بأن المحاسبة ليست مجرد تسجيل للمعاملات، بل هي لغة الأعمال، وأساس الثقة، ومحرك رئيسي لاتخاذ القرارات التي تصنع مستقبل المؤسسات.');
+INSERT INTO services (title, description, image, content) VALUES ('المراجعة وابداء الرأي المهني', 'أدوات استراتيجية لبناء الثقة، وتعزيز الحوكمة، وإدارة المخاطر، ودعم النمو المستدام.', '/images/services/audit.jpg', 'في **AFC – Ashmawy Financial Consulting** نؤمن بأن المراجعة والاستشارات ليست مجرد خدمات مهنية، بل أدوات استراتيجية لبناء الثقة، وتعزيز الحوكمة، وإدارة المخاطر، ودعم النمو المستدام.
 
 نعمل جنبًا إلى جنب مع عملائنا لفهم طبيعة أعمالهم، وتحليل التحديات التي تواجههم، وتقديم حلول عملية مبنية على أفضل الممارسات العالمية، بما يمكنهم من اتخاذ قرارات واثقة وتحقيق أهدافهم بثبات.
 
@@ -73,7 +126,8 @@
 **ثانيًا: الخدمات الاستشارية**
 نساعد عملاءنا على تحويل التحديات إلى فرص للنمو من خلال تقديم استشارات مالية واستراتيجية مبنية على التحليل والخبرة. وتشمل خدماتنا تطوير الأنظمة المالية، وتحسين الرقابة الداخلية، وإعادة هيكلة الأعمال، ودراسات الجدوى، والتخطيط الضريبي، والتحول إلى المعايير الدولية، وإدارة المخاطر، والاستشارات المالية، بما يساعد المؤسسات على تحقيق أداء مستدام واتخاذ قرارات أكثر فاعلية في بيئة أعمال متغيرة.
 
-لا نكتفي بتقديم الحلول، بل نبني شراكات طويلة الأمد تقوم على الثقة، والتميز المهني، والالتزام بتحقيق قيمة حقيقية ومستدامة لكل عميل.7:T123b,في **AFC – AL-Ashmawy Financial Consulting** نؤمن بأن الضرائب ليست مجرد التزام قانوني، بل عنصر استراتيجي يؤثر بصورة مباشرة في كفاءة الأعمال، والأداء المالي، واستدامة النمو.
+لا نكتفي بتقديم الحلول، بل نبني شراكات طويلة الأمد تقوم على الثقة، والتميز المهني، والالتزام بتحقيق قيمة حقيقية ومستدامة لكل عميل.');
+INSERT INTO services (title, description, image, content) VALUES ('الاستشارات الضريبية والامتثال الضريبي', 'نساعد الشركات على التعامل بثقة مع البيئة الضريبية وضمان الامتثال الكامل للتشريعات.', '/images/services/tax_advisory.jpg', 'في **AFC – AL-Ashmawy Financial Consulting** نؤمن بأن الضرائب ليست مجرد التزام قانوني، بل عنصر استراتيجي يؤثر بصورة مباشرة في كفاءة الأعمال، والأداء المالي، واستدامة النمو.
 
 صُممت خدماتنا الضريبية لمساعدة الشركات على التعامل بثقة مع البيئة الضريبية المتغيرة، مع ضمان الامتثال الكامل للتشريعات واللوائح الضريبية المعمول بها. ونعمل جنبًا إلى جنب مع عملائنا لتطوير حلول ضريبية عملية واستراتيجية تحقق الكفاءة الضريبية، وتحد من المخاطر، وتدعم اتخاذ القرارات التجارية السليمة.
 
@@ -115,7 +169,8 @@
 - الامتثال الضريبي للرواتب والأجور.
 - الهيكلة الضريبية لعمليات الاندماج والاستحواذ.
 
-في **AFC** لا نساعد عملاءنا على الامتثال للقوانين الضريبية فحسب، بل نوفر حلولًا ضريبية استراتيجية تعزز الأداء المالي، وتخفض المخاطر، وتحمي الأعمال، وتدعم تحقيق نمو مستدام في بيئة تشريعية دائمة التطور.8:T12dc,يمثل اختيار الشكل القانوني المناسب للمنشأة أحد أهم القرارات الاستراتيجية التي تؤثر على مستقبل الأعمال، والالتزامات القانونية، والهيكل الضريبي، وآليات الإدارة، وفرص النمو والاستثمار.
+في **AFC** لا نساعد عملاءنا على الامتثال للقوانين الضريبية فحسب، بل نوفر حلولًا ضريبية استراتيجية تعزز الأداء المالي، وتخفض المخاطر، وتحمي الأعمال، وتدعم تحقيق نمو مستدام في بيئة تشريعية دائمة التطور.');
+INSERT INTO services (title, description, image, content) VALUES ('تأسيس الشركات والمنشأت', 'نساعد عملاءنا على اختيار الهيكل القانوني الأنسب وفقًا لطبيعة النشاط والمتطلبات التنظيمية.', '/images/services/company.jpg', 'يمثل اختيار الشكل القانوني المناسب للمنشأة أحد أهم القرارات الاستراتيجية التي تؤثر على مستقبل الأعمال، والالتزامات القانونية، والهيكل الضريبي، وآليات الإدارة، وفرص النمو والاستثمار.
 
 في **AFC – AL Ashmawy Financial Consulting** نقدم خدمات تأسيس الشركات باعتبارها نقطة الانطلاق لبناء كيان قانوني قوي ومستدام، وليس مجرد استكمال للإجراءات الإدارية. ونساعد عملاءنا على اختيار الهيكل القانوني الأنسب وفقًا لطبيعة النشاط، وخطط النمو، وهيكل الملكية، والمتطلبات التنظيمية، بما يضمن تحقيق أعلى مستويات الامتثال والكفاءة التشغيلية.
 
@@ -142,7 +197,8 @@
 
 ### القيمة التي نقدمها
 
-لا يقتصر دورنا على تأسيس شركة، بل نضع الأساس القانوني والمالي والإداري الذي يضمن انطلاق أعمال عملائنا بثقة واستدامة. ومن خلال خبرتنا في القوانين المنظمة للأعمال، والإجراءات التنظيمية، والالتزامات الضريبية، نقدم حلولًا متكاملة تختصر الوقت، وتقلل المخاطر، وتضمن تأسيس الكيان على أسس سليمة تدعم النمو والتوسع في المستقبل.9:T930,تُعد الإجراءات الضريبية مجموعة من الخطوات القانونية والإدارية التي يلتزم بها الممول منذ تأسيس النشاط وحتى تقديم الإقرارات وسداد الضرائب المستحقة، وذلك وفقًا لأحكام القوانين واللوائح الضريبية المعمول بها في جمهورية مصر العربية. وتهدف هذه الإجراءات إلى ضمان الامتثال الضريبي، وتعزيز الشفافية، وتنظيم العلاقة بين الممول ومصلحة الضرائب.
+لا يقتصر دورنا على تأسيس شركة، بل نضع الأساس القانوني والمالي والإداري الذي يضمن انطلاق أعمال عملائنا بثقة واستدامة. ومن خلال خبرتنا في القوانين المنظمة للأعمال، والإجراءات التنظيمية، والالتزامات الضريبية، نقدم حلولًا متكاملة تختصر الوقت، وتقلل المخاطر، وتضمن تأسيس الكيان على أسس سليمة تدعم النمو والتوسع في المستقبل.');
+INSERT INTO services (title, description, image, content) VALUES ('الإجراءات الضريبية', 'نقدم الإجراءات الضريبية الكاملة من تأسيس النشاط وحتى الفحص الضريبي وسداد المستحقات.', '/images/services/tax_procedures.jpg', 'تُعد الإجراءات الضريبية مجموعة من الخطوات القانونية والإدارية التي يلتزم بها الممول منذ تأسيس النشاط وحتى تقديم الإقرارات وسداد الضرائب المستحقة، وذلك وفقًا لأحكام القوانين واللوائح الضريبية المعمول بها في جمهورية مصر العربية. وتهدف هذه الإجراءات إلى ضمان الامتثال الضريبي، وتعزيز الشفافية، وتنظيم العلاقة بين الممول ومصلحة الضرائب.
 
 ### خطوات وإجراءات العمل الضريبي
 
@@ -164,7 +220,8 @@
 - **الرابع عشر:** الربط الضريبي ومراجعة النماذج.
 - **الخامس عشر:** حل النزاعات والطعن الضريبي (اللجان الداخلية ولجان الطعن).
 - **السادس عشر:** حفظ وتوثيق الدفاتر والسجلات والمستندات المحاسبية.
-- **السابع عشر:** تحديث بيانات الممول والالتزام الدائم بكافة التعديلات الضريبية.a:T15ba,تُعد الفحوصات الضريبية من أكثر المراحل حساسية في دورة حياة أي منشأة، حيث قد يترتب عليها فروق ضريبية، وغرامات، وجزاءات، ومنازعات تؤثر على المركز المالي وسمعة المنشأة واستمرارية أعمالها.
+- **السابع عشر:** تحديث بيانات الممول والالتزام الدائم بكافة التعديلات الضريبية.');
+INSERT INTO services (title, description, image, content) VALUES ('الفحص الضريبي', 'نساعد عملاءنا على تقليل المخاطر الضريبية، وتمثيلهم باحترافية أمام مصلحة الضرائب المصرية.', '/images/services/tax_examination.jpg', 'تُعد الفحوصات الضريبية من أكثر المراحل حساسية في دورة حياة أي منشأة، حيث قد يترتب عليها فروق ضريبية، وغرامات، وجزاءات، ومنازعات تؤثر على المركز المالي وسمعة المنشأة واستمرارية أعمالها.
 
 في **AFC – AL Ashmawy Financial Consulting** نؤمن بأن أفضل وسيلة لمواجهة الفحص الضريبي ليست عند بدء الفحص، بل بالاستعداد له مسبقًا من خلال بناء منظومة مالية وضريبية متكاملة تقوم على الامتثال، ودقة البيانات، وسلامة المستندات، والتطبيق الصحيح للتشريعات.
 
@@ -193,13 +250,34 @@
 
 لا يقتصر دورنا على الاستجابة للفحص بعد بدايته، بل نعمل على بناء موقف ضريبي قوي قبل الفحص، وتحليل المخاطر المحتملة، ومعالجة أوجه القصور، وإعداد ملفات دفاع ضريبي احترافية، وتمثيل عملائنا أمام الجهات الضريبية بكفاءة ومهنية.
 
-في AFC نعتبر كل فحص ضريبي فرصة لإثبات قوة منظومة الامتثال لدى عملائنا، وحماية أعمالهم، وتعزيز ثقة المستثمرين والإدارة في سلامة مراكزهم الضريبية.0:{"rsc":["$","$1","c",{"children":[["$","div",null,{"className":"animate-fade-in","style":{"flex":1},"children":[["$","$L2",null,{"settings":[]}],["$","section",null,{"style":{"padding":"var(--spacing-lg) 0","borderTop":"1px solid var(--color-border)","borderBottom":"1px solid var(--color-border)","background":"var(--color-bg-card)"},"children":["$","div",null,{"className":"container grid grid-cols-1 md-grid-cols-4 gap-lg","children":[["$","$L3","1",{"target":15,"suffix":"+","labelLines":"سنوات الخبرة"}],["$","$L3","2",{"target":500,"suffix":"+","labelLines":"عميل سعيد"}],["$","$L3","3",{"target":1000,"suffix":"+","labelLines":"مشروع ناجح"}],["$","$L3","4",{"target":50,"suffix":"+","labelLines":"خبير مالي"}]]}]}],["$","section",null,{"id":"services","className":"container py-xl","children":[["$","div",null,{"className":"text-center mb-lg","children":[["$","h2",null,{"className":"text-gold","children":"خدماتنا الاحترافية"}],["$","p",null,{"style":{"maxWidth":"600px","margin":"0 auto"},"children":"رؤية مالية واضحة وحلول استراتيجية مصممة خصيصاً لتلبي تطلعات أعمالك."}]]}],["$","$L4",null,{"services":[{"id":"accounting-advisory","title":"الاستشارات المحاسبية وإعداد التقارير المالية","description":"نقدم حلولاً محاسبية تساعد المؤسسات على بناء منظومة مالية قوية وتعزيز الشفافية.","content":"$5","image":"/images/services/accounting.jpg","category":"خدمات"},{"id":"audit-advisory","title":"المراجعة وابداء الرأي المهني","description":"أدوات استراتيجية لبناء الثقة، وتعزيز الحوكمة، وإدارة المخاطر، ودعم النمو المستدام.","content":"$6","image":"/images/services/audit.jpg","category":"خدمات"},{"id":"tax-advisory","title":"الاستشارات الضريبية والامتثال الضريبي","description":"نساعد الشركات على التعامل بثقة مع البيئة الضريبية وضمان الامتثال الكامل للتشريعات.","content":"$7","image":"/images/services/tax_advisory.jpg","category":"خدمات"},{"id":"company-formation","title":"تأسيس الشركات والمنشأت","description":"نساعد عملاءنا على اختيار الهيكل القانوني الأنسب وفقًا لطبيعة النشاط والمتطلبات التنظيمية.","content":"$8","image":"/images/services/company.jpg","category":"خدمات"},{"id":"tax-procedures","title":"الإجراءات الضريبية","description":"نقدم الإجراءات الضريبية الكاملة من تأسيس النشاط وحتى الفحص الضريبي وسداد المستحقات.","content":"$9","image":"/images/services/tax_procedures.jpg","category":"خدمات"},{"id":"tax-examination","title":"الفحص الضريبي","description":"نساعد عملاءنا على تقليل المخاطر الضريبية، وتمثيلهم باحترافية أمام مصلحة الضرائب المصرية.","content":"$a","image":"/images/services/tax_examination.jpg","category":"خدمات"},{"id":"investor-residency","title":"إقامات المستثمرين","description":"خدمات متكاملة لاستخراج وتجديد وإدارة إقامات المستثمرين في جمهورية مصر العربية.","content":"نقدم خدمات متكاملة لاستخراج وتجديد وإدارة إقامات المستثمرين في جمهورية مصر العربية، مع توفير الدعم الكامل في جميع مراحل الإجراءات وحتى إصدار الإقامة. كما نقدم الدعم المستمر فيما يتعلق بتجديد الإقامات والالتزام بالمتطلبات التنظيمية، بما يضمن للمستثمرين استقرار أوضاعهم القانونية ويتيح لهم التركيز على تأسيس أعمالهم وتطوير استثماراتهم بثقة ووفقًا للقوانين المصرية.\n\n### وتشمل تلك الخدمات:\n\n- استخراج وتجديد إقامات المستثمرين.\n- استخراج إقامات الشركاء وأعضاء مجالس الإدارة.\n- إصدار وتجديد تصاريح العمل للأجانب.\n- متابعة جميع الإجراءات أمام الجهات الحكومية المختصة.\n- إعداد واعتماد المستندات المطلوبة وإنهاء الإجراءات حتى استلام الإقامة. تتم هذه الخدمات من خلال الجهات المختصة، ومنها مراكز خدمات المستثمرين التابعة للهيئة العامة للاستثمار، التي تقدم أيضًا توصيات منح الإقامة وتجديدها للمستثمرين الأجانب.","image":"/images/services/investor.jpg","category":"خدمات"},{"id":"industrial-licensing","title":"التراخيص الصناعية","description":"خدمات استشارية وتنفيذية متكاملة للحصول على التراخيص الصناعية.","content":"نقدم خدمات استشارية وتنفيذية متكاملة للحصول على التراخيص الصناعية، مع دعم عملائنا في جميع مراحل إصدار الترخيص. وتشمل خدماتنا دراسة متطلبات الترخيص، وإعداد ومراجعة المستندات القانونية والفنية، والتنسيق مع الجهات الحكومية المختصة، ومتابعة الطلبات حتى صدور الموافقات النهائية. كما نقدم الاستشارات المتعلقة بالاشتراطات الصناعية والبيئية ومتطلبات السلامة، بما يضمن الامتثال الكامل للتشريعات المنظمة، وتقليل المخاطر، وتسريع إجراءات بدء أو التوسع في النشاط الصناعي.\n\n### وتشمل خدماتنا:\n\n**أولاً: استخراج رخصة التشغيل**\n- **رخصة بنظام الإخطار:** للأنشطة منخفضة المخاطر، ويتم إصدارها بعد استيفاء المستندات والإقرار بالالتزام بالاشتراطات.\n- **رخصة بنظام المسبق:** للأنشطة عالية المخاطر.\n\n**ثانياً: استخراج السجل الصناعي**\nبعد الحصول على رخصة التشغيل يتم التقدم لاستخراج السجل الصناعي، ليكون المشروع مسجلاً بشكل رسمي ومستوفياً لكافة الاشتراطات.","image":"/images/services/industrial.jpg","category":"خدمات"}]}],"$Lb"]}],"$Lc","$Ld","$Le"]}],["$Lf"],"$L10"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"3MMUVR8em9iTFl0iTzTrP"}
-b:["$","div",null,{"className":"text-center","style":{"marginTop":"var(--spacing-lg)"},"children":["$","$L11",null,{"href":"/services","className":"btn btn-secondary","children":"عرض كل الخدمات"}]}]
-c:["$","section",null,{"id":"about","style":{"padding":"var(--spacing-xl) 0","background":"var(--color-bg-card)"},"children":["$","div",null,{"className":"container grid grid-cols-1 md-grid-cols-2 gap-lg items-center","children":[["$","div",null,{"children":[["$","h2",null,{"className":"text-gold","children":"لماذا تختارنا؟"}],["$","p",null,{"style":{"fontSize":"1.1rem"},"children":"نحن لا نقدم أرقاماً فحسب، بل نقدم رؤية مالية عميقة. من خلال أحدث المنهجيات والتقنيات المحاسبية، نضمن لك الأمان المالي والدقة المتناهية."}],["$","ul",null,{"className":"flex flex-col gap-sm","style":{"marginTop":"var(--spacing-md)"},"children":[["$","li","1",{"className":"flex items-center gap-sm","style":{"fontSize":"1.1rem"},"children":[["$","span",null,{"className":"text-gold","style":{"fontWeight":"bold"},"children":"✦"}]," ","الخبرة الواسعة",": ","فريق من الخبراء المتخصصين في مختلف المجالات المالية والضريبية"]}],["$","li","2",{"className":"flex items-center gap-sm","style":{"fontSize":"1.1rem"},"children":[["$","span",null,{"className":"text-gold","style":{"fontWeight":"bold"},"children":"✦"}]," ","الدقة والموثوقية",": ","نلتزم بأعلى معايير الجودة والدقة في جميع خدماتنا"]}],["$","li","3",{"className":"flex items-center gap-sm","style":{"fontSize":"1.1rem"},"children":[["$","span",null,{"className":"text-gold","style":{"fontWeight":"bold"},"children":"✦"}]," ","حلول متكاملة",": ","نقدم باقة شاملة من الخدمات التي تلبي كافة احتياجات عملائنا"]}],["$","li","4",{"className":"flex items-center gap-sm","style":{"fontSize":"1.1rem"},"children":[["$","span",null,{"className":"text-gold","style":{"fontWeight":"bold"},"children":"✦"}]," ","الالتزام بالوقت",": ","نقدر وقت عملائنا ونلتزم بتقديم خدماتنا في الوقت المحدد"]}]]}],["$","div",null,{"style":{"marginTop":"var(--spacing-md)"},"children":["$","$L11",null,{"href":"/about","className":"btn btn-secondary","children":"تعرف علينا أكثر"}]}]]}],["$","div",null,{"className":"premium-card flex justify-center items-center","style":{"minHeight":"350px","padding":0,"overflow":"hidden","position":"relative","border":"2px solid var(--color-accent)"},"children":["$","$L12",null,{"src":"/images/afc_office.jpg","alt":"مقر شركة AFC","fill":true,"style":{"objectFit":"cover"}}]}]]}]}]
-d:["$","section",null,{"id":"testimonials","className":"container py-xl","children":[["$","div",null,{"className":"text-center mb-lg","children":[["$","h2",null,{"className":"text-gold","children":"آراء شركاء النجاح"}],["$","p",null,{"style":{"maxWidth":"600px","margin":"0 auto"},"children":"نفخر بثقة عملائنا، ونسعى دائماً لتقديم أفضل الخدمات المالية التي تلبي تطلعاتهم وتساهم في نمو أعمالهم."}]]}],["$","div",null,{"className":"flex gap-lg hide-scrollbar","style":{"overflowX":"auto","paddingBottom":"2rem","scrollSnapType":"x mandatory"},"children":[["$","div","1",{"className":"premium-card flex flex-col items-center text-center gap-md","style":{"flex":"0 0 100%","scrollSnapAlign":"center","position":"relative","padding":"3rem 2rem"},"children":[["$","div",null,{"style":{"position":"absolute","top":"10px","right":"20px","fontSize":"8rem","color":"rgba(197, 160, 89, 0.05)","lineHeight":1,"fontFamily":"serif","zIndex":0},"children":"\""}],["$","div",null,{"className":"flex flex-col items-center text-center","style":{"position":"relative","zIndex":1},"children":[["$","div",null,{"style":{"width":"80px","height":"80px","borderRadius":"50%","background":"var(--color-bg-body)","display":"flex","alignItems":"center","justifyContent":"center","color":"var(--color-accent)","fontWeight":"bold","border":"2px solid var(--color-accent)","fontSize":"1.5rem","marginBottom":"0.5rem"},"children":"أم"}],["$","h4",null,{"style":{"margin":0,"color":"var(--color-text-main)","fontSize":"1.2rem"},"children":"أحمد محمود"}],["$","p",null,{"style":{"margin":"0.2rem 0","fontSize":"0.9rem","color":"var(--color-text-muted)"},"children":"المدير التنفيذي لشركة الأفق"}],["$","div",null,{"style":{"color":"#FFD700","letterSpacing":"3px","fontSize":"1.3rem","marginTop":"0.5rem"},"children":["★★★★★",""]}]]}],["$","p",null,{"style":{"opacity":0.9,"position":"relative","zIndex":1,"margin":0,"lineHeight":1.8,"fontSize":"1.15rem","maxWidth":"800px"},"children":["\"","خدمات احترافية وفريق عمل متميز، ساعدونا كثيراً في تحسين الكفاءة المالية لشركتنا.","\""]}]]}],["$","div","2",{"className":"premium-card flex flex-col items-center text-center gap-md","style":{"flex":"0 0 100%","scrollSnapAlign":"center","position":"relative","padding":"3rem 2rem"},"children":[["$","div",null,{"style":{"position":"absolute","top":"10px","right":"20px","fontSize":"8rem","color":"rgba(197, 160, 89, 0.05)","lineHeight":1,"fontFamily":"serif","zIndex":0},"children":"\""}],["$","div",null,{"className":"flex flex-col items-center text-center","style":{"position":"relative","zIndex":1},"children":[["$","div",null,{"style":{"width":"80px","height":"80px","borderRadius":"50%","background":"var(--color-bg-body)","display":"flex","alignItems":"center","justifyContent":"center","color":"var(--color-accent)","fontWeight":"bold","border":"2px solid var(--color-accent)","fontSize":"1.5rem","marginBottom":"0.5rem"},"children":"مع"}],["$","h4",null,{"style":{"margin":0,"color":"var(--color-text-main)","fontSize":"1.2rem"},"children":"محمد علي"}],["$","p",null,{"style":{"margin":"0.2rem 0","fontSize":"0.9rem","color":"var(--color-text-muted)"},"children":"رئيس مجلس إدارة مجموعة النور"}],["$","div",null,{"style":{"color":"#FFD700","letterSpacing":"3px","fontSize":"1.3rem","marginTop":"0.5rem"},"children":["★★★★★",""]}]]}],["$","p",null,{"style":{"opacity":0.9,"position":"relative","zIndex":1,"margin":0,"lineHeight":1.8,"fontSize":"1.15rem","maxWidth":"800px"},"children":["\"","استشاراتهم الضريبية وفرت علينا الكثير من الوقت والجهد، شكراً لكم.","\""]}]]}],["$","div","3",{"className":"premium-card flex flex-col items-center text-center gap-md","style":{"flex":"0 0 100%","scrollSnapAlign":"center","position":"relative","padding":"3rem 2rem"},"children":[["$","div",null,{"style":{"position":"absolute","top":"10px","right":"20px","fontSize":"8rem","color":"rgba(197, 160, 89, 0.05)","lineHeight":1,"fontFamily":"serif","zIndex":0},"children":"\""}],["$","div",null,{"className":"flex flex-col items-center text-center","style":{"position":"relative","zIndex":1},"children":[["$","div",null,{"style":{"width":"80px","height":"80px","borderRadius":"50%","background":"var(--color-bg-body)","display":"flex","alignItems":"center","justifyContent":"center","color":"var(--color-accent)","fontWeight":"bold","border":"2px solid var(--color-accent)","fontSize":"1.5rem","marginBottom":"0.5rem"},"children":"سح"}],["$","h4",null,{"style":{"margin":0,"color":"var(--color-text-main)","fontSize":"1.2rem"},"children":"سارة حسن"}],["$","p",null,{"style":{"margin":"0.2rem 0","fontSize":"0.9rem","color":"var(--color-text-muted)"},"children":"مديرة الحسابات في شركة القمة"}],"$L13"]}],"$L14"]}]]}]]}]
-e:["$","section",null,{"id":"contact","className":"container py-xl text-center","style":{"background":"var(--color-bg-card)","borderRadius":"16px","marginBottom":"var(--spacing-xl)","border":"1px solid var(--color-border)"},"children":["$","div",null,{"className":"mb-lg","children":[["$","h2",null,{"className":"text-gold","children":"ابدأ رحلة النجاح المالي معنا"}],["$","p",null,{"style":{"maxWidth":"600px","margin":"0 auto var(--spacing-md)"},"children":"احجز استشارتك المجانية اليوم، ودع خبراءنا يرشدونك نحو الاستقرار المالي والنمو المستدام."}],["$","a",null,{"href":"https://wa.me/201155729429?text=مرحباً،%20أود%20الاستفسار%20عن%20خدمات%20مكتب%20العشماوي.","target":"_blank","rel":"noopener noreferrer","className":"btn btn-primary","style":{"padding":"1rem 2.5rem","fontSize":"1.2rem"},"children":"تواصل معنا الآن"}]]}]}]
-f:["$","script","script-0",{"src":"/_next/static/chunks/1be21-f4pi-wb.js","async":true}]
-10:["$","$L15",null,{"children":["$","$16",null,{"name":"Next.MetadataOutlet","children":"$@17"}]}]
-13:["$","div",null,{"style":{"color":"#FFD700","letterSpacing":"3px","fontSize":"1.3rem","marginTop":"0.5rem"},"children":["★★★★★",""]}]
-14:["$","p",null,{"style":{"opacity":0.9,"position":"relative","zIndex":1,"margin":0,"lineHeight":1.8,"fontSize":"1.15rem","maxWidth":"800px"},"children":["\"","دقة في المواعيد واحترافية في التعامل، نعتمد عليهم في كافة أعمالنا المالية.","\""]}]
-17:null
+في AFC نعتبر كل فحص ضريبي فرصة لإثبات قوة منظومة الامتثال لدى عملائنا، وحماية أعمالهم، وتعزيز ثقة المستثمرين والإدارة في سلامة مراكزهم الضريبية.');
+INSERT INTO services (title, description, image, content) VALUES ('إقامات المستثمرين', 'خدمات متكاملة لاستخراج وتجديد وإدارة إقامات المستثمرين في جمهورية مصر العربية.', '/images/services/investor.jpg', 'نقدم خدمات متكاملة لاستخراج وتجديد وإدارة إقامات المستثمرين في جمهورية مصر العربية، مع توفير الدعم الكامل في جميع مراحل الإجراءات وحتى إصدار الإقامة. كما نقدم الدعم المستمر فيما يتعلق بتجديد الإقامات والالتزام بالمتطلبات التنظيمية، بما يضمن للمستثمرين استقرار أوضاعهم القانونية ويتيح لهم التركيز على تأسيس أعمالهم وتطوير استثماراتهم بثقة ووفقًا للقوانين المصرية.
+
+### وتشمل تلك الخدمات:
+
+- استخراج وتجديد إقامات المستثمرين.
+- استخراج إقامات الشركاء وأعضاء مجالس الإدارة.
+- إصدار وتجديد تصاريح العمل للأجانب.
+- متابعة جميع الإجراءات أمام الجهات الحكومية المختصة.
+- إعداد واعتماد المستندات المطلوبة وإنهاء الإجراءات حتى استلام الإقامة. تتم هذه الخدمات من خلال الجهات المختصة، ومنها مراكز خدمات المستثمرين التابعة للهيئة العامة للاستثمار، التي تقدم أيضًا توصيات منح الإقامة وتجديدها للمستثمرين الأجانب.');
+INSERT INTO services (title, description, image, content) VALUES ('التراخيص الصناعية', 'خدمات استشارية وتنفيذية متكاملة للحصول على التراخيص الصناعية.', '/images/services/industrial.jpg', 'نقدم خدمات استشارية وتنفيذية متكاملة للحصول على التراخيص الصناعية، مع دعم عملائنا في جميع مراحل إصدار الترخيص. وتشمل خدماتنا دراسة متطلبات الترخيص، وإعداد ومراجعة المستندات القانونية والفنية، والتنسيق مع الجهات الحكومية المختصة، ومتابعة الطلبات حتى صدور الموافقات النهائية. كما نقدم الاستشارات المتعلقة بالاشتراطات الصناعية والبيئية ومتطلبات السلامة، بما يضمن الامتثال الكامل للتشريعات المنظمة، وتقليل المخاطر، وتسريع إجراءات بدء أو التوسع في النشاط الصناعي.
+
+### وتشمل خدماتنا:
+
+**أولاً: استخراج رخصة التشغيل**
+- **رخصة بنظام الإخطار:** للأنشطة منخفضة المخاطر، ويتم إصدارها بعد استيفاء المستندات والإقرار بالالتزام بالاشتراطات.
+- **رخصة بنظام المسبق:** للأنشطة عالية المخاطر.
+
+**ثانياً: استخراج السجل الصناعي**
+بعد الحصول على رخصة التشغيل يتم التقدم لاستخراج السجل الصناعي، ليكون المشروع مسجلاً بشكل رسمي ومستوفياً لكافة الاشتراطات.');
+INSERT INTO features (title, description, icon) VALUES ('الخبرة الواسعة', 'فريق من الخبراء المتخصصين في مختلف المجالات المالية والضريبية', 'BadgeCheck');
+INSERT INTO features (title, description, icon) VALUES ('الدقة والموثوقية', 'نلتزم بأعلى معايير الجودة والدقة في جميع خدماتنا', 'Target');
+INSERT INTO features (title, description, icon) VALUES ('حلول متكاملة', 'نقدم باقة شاملة من الخدمات التي تلبي كافة احتياجات عملائنا', 'Layers');
+INSERT INTO features (title, description, icon) VALUES ('الالتزام بالوقت', 'نقدر وقت عملائنا ونلتزم بتقديم خدماتنا في الوقت المحدد', 'Clock');
+INSERT INTO stats (title, value) VALUES ('سنوات الخبرة', '+15');
+INSERT INTO stats (title, value) VALUES ('عميل سعيد', '+500');
+INSERT INTO stats (title, value) VALUES ('مشروع ناجح', '+1000');
+INSERT INTO stats (title, value) VALUES ('خبير مالي', '+50');
+INSERT INTO testimonials (name, position, content, rating) VALUES ('أحمد محمود', 'المدير التنفيذي لشركة الأفق', 'خدمات احترافية وفريق عمل متميز، ساعدونا كثيراً في تحسين الكفاءة المالية لشركتنا.', 5);
+INSERT INTO testimonials (name, position, content, rating) VALUES ('محمد علي', 'رئيس مجلس إدارة مجموعة النور', 'استشاراتهم الضريبية وفرت علينا الكثير من الوقت والجهد، شكراً لكم.', 5);
+INSERT INTO testimonials (name, position, content, rating) VALUES ('سارة حسن', 'مديرة الحسابات في شركة القمة', 'دقة في المواعيد واحترافية في التعامل، نعتمد عليهم في كافة أعمالنا المالية.', 5);
