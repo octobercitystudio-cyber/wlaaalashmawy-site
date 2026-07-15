@@ -40,7 +40,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./out
           publish_branch: production
-          force_orphan: true
 
       - name: FTP Deploy to Hostinger
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
