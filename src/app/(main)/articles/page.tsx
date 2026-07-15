@@ -5,46 +5,31 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 export default function ArticlesPage() {
-  const articles = [
-    { 
-      id: 1,
-      title: "تأثير ضريبة القيمة المضافة على المشاريع الصغيرة", 
-      date: "١٥ مايو ٢٠٢٦", 
-      category: "الاستشارات الضريبية", 
-      image: "/images/articles/vat_small_business.jpg",
-      content: "تعتبر ضريبة القيمة المضافة تحدياً وفرصة في الوقت ذاته للمشاريع الصغيرة. من ناحية، تتطلب الالتزام بتسجيل دقيق للحسابات، ومن ناحية أخرى تساعد على تنظيم الدورة المالية للمشروع. أهم الخطوات التي يجب اتخاذها تشمل تحديث النظم المحاسبية، تدريب الموظفين، وضمان وجود سيولة نقدية كافية لتغطية الالتزامات الضريبية الدورية. كما يُنصح دائماً بالاستعانة بمستشار ضريبي لتجنب الغرامات والمشاكل القانونية التي قد تنشأ عن سوء الفهم لتطبيق القوانين الجديدة."
-    },
-    { 
-      id: 2,
-      title: "أهمية مسك الدفاتر للشركات الناشئة", 
-      date: "٣ أبريل ٢٠٢٦", 
-      category: "الاستشارات المحاسبية", 
-      image: "/images/articles/bookkeeping_startup.jpg",
-      content: "في خضم التركيز على تطوير المنتج وجذب العملاء، قد يغفل مؤسسو الشركات الناشئة عن مسك الدفاتر بشكل منتظم. هذا الإهمال قد يؤدي إلى فقدان السيطرة على التدفقات النقدية وعدم القدرة على تقييم الأداء المالي بدقة. البدء بممارسات محاسبية سليمة من اليوم الأول يضمن لك شفافية مالية، ويسهل عليك لاحقاً الحصول على التمويل من المستثمرين أو البنوك، حيث تعتبر السجلات المالية الدقيقة من أهم المتطلبات لجهات التمويل."
-    },
-    { 
-      id: 3,
-      title: "معايير المحاسبة الدولية IFRS وتطبيقها", 
-      date: "٢٠ فبراير ٢٠٢٦", 
-      category: "المراجعة والتدقيق", 
-      image: "/images/articles/ifrs_standards.jpg",
-      content: "مع التوجه العالمي نحو توحيد المعايير المالية، أصبح التحول إلى معايير IFRS ضرورة للشركات التي تطمح للنمو وجذب استثمارات أجنبية. يساهم هذا التحول في تحسين جودة التقارير المالية، وزيادة الشفافية والموثوقية، وتسهيل المقارنة بين أداء الشركات على المستوى الدولي. يتطلب هذا الانتقال تخطيطاً دقيقاً، وتعديلاً في السياسات المحاسبية، وبرامج تدريبية للكوادر المالية، ولكنه في النهاية يضع الشركة في موقف تنافسي أقوى."
-    },
-    { 
-      id: 4,
-      title: "كيف تستعد لنهاية السنة المالية؟", 
-      date: "١٠ ديسمبر ٢٠٢٥", 
-      category: "الاستشارات المالية", 
-      image: "/images/articles/financial_year_end.jpg",
-      content: "يعتبر إغلاق السنة المالية من أكثر الأوقات حرجاً للإدارات المالية. لضمان سير العملية بسلاسة، يجب البدء مبكراً بمراجعة وتسوية الحسابات، جرد المخزون، والتأكد من تسجيل جميع الإيرادات والمصروفات. من الضروري أيضاً مراجعة القوانين الضريبية والتأكد من الامتثال الكامل لها قبل إعداد الإقرارات النهائية. الاستعداد الجيد والتنظيم المسبق هما المفتاح لتجنب الضغوطات في اللحظات الأخيرة."
-    }
-  ];
+  const [articles, setArticles] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
 
   const categories = ['الكل', 'الاستشارات المحاسبية', 'الاستشارات الضريبية', 'المراجعة والتدقيق', 'تأسيس الشركات', 'الاستشارات المالية'];
 
   const [selectedTab, setSelectedTab] = useState('الكل');
-  const [selectedArticleId, setSelectedArticleId] = useState(articles[0].id);
+  const [selectedArticleId, setSelectedArticleId] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
+
+  React.useEffect(() => {
+    fetch('/api/articles.php')
+      .then(res => res.json())
+      .then(data => {
+        if(Array.isArray(data)) {
+          setArticles(data);
+          if(data.length > 0) setSelectedArticleId(data[0].id);
+        }
+      })
+      .catch(err => {
+        console.error('Error fetching articles:', err);
+        setError('تعذر تحميل المقالات. يرجى المحاولة لاحقاً.');
+      })
+      .finally(() => setLoading(false));
+  }, []);
 
   const filteredArticles = articles.filter(a => {
     const matchesTab = selectedTab === 'الكل' || a.category === selectedTab;
@@ -143,7 +128,11 @@ export default function ArticlesPage() {
               </svg>
             </div>
 
-            {filteredArticles.length > 0 ? filteredArticles.map((article) => (
+            {loading ? (
+              <p style={{ color: "var(--color-text-muted)" }}>جاري تحميل المقالات...</p>
+            ) : error ? (
+              <p style={{ color: "red" }}>{error}</p>
+            ) : filteredArticles.length > 0 ? filteredArticles.map((article) => (
               <button 
                 key={article.id}
                 onClick={() => setSelectedArticleId(article.id)}
