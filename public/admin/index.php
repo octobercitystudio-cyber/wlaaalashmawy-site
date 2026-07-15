@@ -193,7 +193,14 @@
                     <div class="col-md-3"><div class="card p-4 h-100"><p class="text-muted mb-1 fw-bold">إجمالي المقالات</p><h3 class="fw-bold mb-0" id="stat-articles">--</h3></div></div>
                 </div>
                 <div class="row g-4 mb-4">
-                    <div class="col-12"><div class="card p-4"><h5 class="fw-bold mb-4">أداء الزيارات (آخر 30 يوم)</h5><canvas id="visitsChart" height="80"></canvas></div></div>
+                    <div class="col-12">
+                        <div class="card p-4">
+                            <h5 class="fw-bold mb-4">أداء الزيارات (آخر 30 يوم)</h5>
+                            <div style="position: relative; height: 350px; width: 100%;">
+                                <canvas id="visitsChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="card p-4">
                     <h5 class="fw-bold mb-4">تفاصيل زيارات كل صفحة</h5>
@@ -650,9 +657,31 @@
                 if (stats.page_stats) {
                     const tbody = document.getElementById('detailed-pages-list');
                     tbody.innerHTML = '';
+                    
+                    const pageNames = {
+                        '/': 'الرئيسية',
+                        '/about': 'من نحن',
+                        '/services': 'جميع الخدمات',
+                        '/sectors': 'قطاعات الأعمال',
+                        '/articles': 'المقالات والمدونة',
+                        '/contact': 'اتصل بنا'
+                    };
+
                     stats.page_stats.forEach(page => {
+                        let pageName = page.page_path;
+                        // Format service or sector specific pages
+                        if (pageName.startsWith('/services/')) {
+                            pageName = 'خدمة: ' + pageName.replace('/services/', '').replace(/-/g, ' ');
+                        } else if (pageName.startsWith('/sectors/')) {
+                            pageName = 'قطاع: ' + pageName.replace('/sectors/', '').replace(/-/g, ' ');
+                        } else if (pageName.startsWith('/articles/')) {
+                            pageName = 'مقال: ' + decodeURIComponent(pageName.replace('/articles/', '')).replace(/-/g, ' ');
+                        } else if (pageNames[pageName]) {
+                            pageName = pageNames[pageName];
+                        }
+
                         const tr = document.createElement('tr');
-                        tr.innerHTML = `<td dir="ltr" class="text-start">${page.page_path}</td><td class="fw-bold">${page.total_views}</td><td class="fw-bold text-success">${page.unique_views}</td>`;
+                        tr.innerHTML = `<td class="text-start fw-bold" style="color: var(--primary)">${pageName} <br><small class="text-muted" dir="ltr">${page.page_path}</small></td><td class="fw-bold" style="font-size: 1.1rem">${page.total_views}</td><td class="fw-bold text-success" style="font-size: 1.1rem">${page.unique_views}</td>`;
                         tbody.appendChild(tr);
                     });
                 }
