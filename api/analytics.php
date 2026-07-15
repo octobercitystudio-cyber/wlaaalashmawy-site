@@ -24,33 +24,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'GET') {
         $stmt = $pdo->query("SELECT COUNT(*) as total FROM visits");
         $stats['total_visits'] = $stmt->fetch()['total'];
         
-        // Unique visitors
-        $stmt = $pdo->query("SELECT COUNT(DISTINCT visitor_id) as total FROM visits");
+        // Unique visitors (using IP address)
+        $stmt = $pdo->query("SELECT COUNT(DISTINCT IF(ip_address != '', ip_address, visitor_id)) as total FROM visits");
         $stats['unique_visitors'] = $stmt->fetch()['total'];
         
         // Visits today
         $stmt = $pdo->query("SELECT COUNT(*) as total FROM visits WHERE DATE(visited_at) = CURDATE()");
         $stats['visits_today'] = $stmt->fetch()['total'];
 
-        // Last 7 days chart data
+        // Last 30 days chart data for more extensive tracking
         $stmt = $pdo->query("
             SELECT DATE(visited_at) as date, COUNT(*) as count 
             FROM visits 
-            WHERE visited_at >= DATE_SUB(CURDATE(), INTERVAL 6 DAY)
+            WHERE visited_at >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
             GROUP BY DATE(visited_at)
             ORDER BY date ASC
         ");
         $stats['chart_data'] = $stmt->fetchAll();
         
-        // Top 5 pages
+        // Detailed stats per page
         $stmt = $pdo->query("
-            SELECT page_path, COUNT(*) as count 
+            SELECT page_path, 
+                   COUNT(*) as total_views, 
+                   COUNT(DISTINCT IF(ip_address != '', ip_address, visitor_id)) as unique_views 
             FROM visits 
             GROUP BY page_path 
-            ORDER BY count DESC 
-            LIMIT 5
+            ORDER BY total_views DESC 
         ");
-        $stats['top_pages'] = $stmt->fetchAll();
+        $stats['page_stats'] = $stmt->fetchAll();
 
         // Also return counts of content for the dashboard
         $stats['articles_count'] = $pdo->query("SELECT COUNT(*) as total FROM articles")->fetch()['total'];

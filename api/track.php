@@ -12,11 +12,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $data = json_decode(file_get_contents("php://input"), true);
     $path = $data['path'] ?? '/';
     $visitor = $data['visitor'] ?? 'unknown';
+    // Get IP address
+    $ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '';
+    // If multiple IPs are present, take the first one
+    if (strpos($ip_address, ',') !== false) {
+        $ip_address = explode(',', $ip_address)[0];
+    }
 
     if (!empty($path)) {
         try {
-            $stmt = $pdo->prepare("INSERT INTO visits (page_path, visitor_id) VALUES (?, ?)");
-            $stmt->execute([$path, $visitor]);
+            $stmt = $pdo->prepare("INSERT INTO visits (page_path, visitor_id, ip_address) VALUES (?, ?, ?)");
+            $stmt->execute([$path, $visitor, $ip_address]);
             echo json_encode(['success' => true]);
         } catch (Exception $e) {
             http_response_code(500);
