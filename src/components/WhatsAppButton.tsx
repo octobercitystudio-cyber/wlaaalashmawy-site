@@ -3,7 +3,14 @@
 import React from "react";
 
 export default function WhatsAppButton({ settings = {} }: { settings?: any }) {
-  const phoneNumber = settings.contact_whatsapp || "201155729429";
+  let phone = "201155729429";
+  try {
+    const phones = JSON.parse(settings.contact_phones);
+    if (phones && phones.length > 0) phone = phones[0].replace(/[^0-9]/g, '');
+  } catch(e) {
+    if (settings.contact_phone) phone = settings.contact_phone.replace(/[^0-9]/g, '');
+  }
+  const phoneNumber = phone;
   const message = encodeURIComponent("مرحباً، أود الاستفسار عن خدمات مكتب العشماوي.");
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
 

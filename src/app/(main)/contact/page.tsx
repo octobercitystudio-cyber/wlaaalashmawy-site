@@ -1,100 +1,93 @@
-import Image from "next/image";
-import { fetchSettings } from '@/lib/api';
+import { fetchSettings } from "@/lib/api";
 
 export default async function ContactPage() {
   const settings = await fetchSettings();
-  const email = settings.contact_email || 'info@alashmawy-cpa.com';
-  const phone = settings.contact_phone || '01155729429 - 0238345397';
-  const address = settings.contact_address || 'مكتب 204 الدور الثاني مول اجياد فيو، 6 أكتوبر - الجيزة - مصر';
-  const map_url = settings.contact_map_url || "https://maps.google.com/maps?q=29.9607581,30.9246025&hl=ar&z=16&output=embed";
+  
+  let emails = [];
+  try { emails = JSON.parse(settings.contact_emails); } catch(e) {}
+  if (!emails || emails.length === 0) emails = [settings.contact_email || 'info@alashmawy-cpa.com'];
+
+  let phones = [];
+  try { phones = JSON.parse(settings.contact_phones); } catch(e) {}
+  if (!phones || phones.length === 0) phones = [settings.contact_phone || '01155729429 - 0238345397'];
+
+  const address = settings.contact_address || 'شارع 204 دجلة المعادي بجوار مدرسة فيكتوريا - القاهرة - مصر';
+  
+  // Default map
+  let map_url = settings.contact_map || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3456.634354228498!2d31.2721869!3d29.9611843!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1458380e2270929b%3A0x6d90d81b8cc925e0!2z2YXYr9ix2LPYqSDZgdmK2YPYqtmI2LHZitinINin2YTYrdiv2YrYr9ip!5e0!3m2!1sar!2seg!4v1718228308119!5m2!1sar!2seg";
+  // Extract URL if user pasted the entire iframe tag
+  if (map_url.includes('<iframe') && map_url.includes('src="')) {
+    const match = map_url.match(/src="([^"]+)"/);
+    if (match && match[1]) map_url = match[1];
+  }
 
   return (
-    <main>
-      {/* Hero Section */}
+    <main style={{ minHeight: "100vh", background: "var(--color-bg-subtle)" }}>
+      {/* Header Area */}
       <section style={{ 
-        paddingTop: "12rem", 
-        paddingBottom: "4rem", 
+        padding: "var(--spacing-xl) 0",
+        background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)",
         color: "#FFFFFF",
-        textAlign: "center",
-        position: "relative",
-        overflow: "hidden"
+        textAlign: "center"
       }}>
-        <Image src="/images/contact_hero.jpg" alt="تواصل معنا" fill style={{ objectFit: "cover", zIndex: 0 }} priority />
-        <div style={{
-          position: "absolute",
-          top: 0, left: 0, right: 0, bottom: 0,
-          backgroundColor: "rgba(0, 0, 0, 0.7)",
-          zIndex: 1
-        }}></div>
-
-        <div className="container" style={{ position: "relative", zIndex: 2 }}>
-          <h1 style={{ fontSize: "3.5rem", marginBottom: "1rem", color: "#FFFFFF", fontWeight: "bold", textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>
+        <div className="container">
+          <h1 className="animate-fade-in-up" style={{ fontSize: "3rem", marginBottom: "var(--spacing-md)" }}>
             تواصل معنا
           </h1>
-          <div style={{ width: "80px", height: "4px", backgroundColor: "var(--color-accent)", margin: "0 auto 2rem", boxShadow: "0 2px 5px rgba(0,0,0,0.3)" }}></div>
-          <p style={{ fontSize: "1.3rem", maxWidth: "800px", margin: "0 auto", color: "rgba(255,255,255,0.95)", lineHeight: "1.8", textShadow: "0 2px 5px rgba(0,0,0,0.5)" }}>
-            نسعد دائماً بالإجابة على استفساراتكم وتقديم الدعم اللازم. لا تتردد في التواصل معنا لحجز استشارة مجانية أو لطلب خدماتنا المالية والمحاسبية.
+          <p className="animate-fade-in-up" style={{ animationDelay: "0.2s", fontSize: "1.2rem", maxWidth: "600px", margin: "0 auto", opacity: 0.9 }}>
+            نحن هنا للإجابة على كافة استفساراتكم وتقديم الدعم الذي تحتاجونه. لا تترددوا في التواصل معنا.
           </p>
         </div>
       </section>
 
       {/* Main Content */}
-      <section style={{ paddingTop: "2rem", paddingBottom: "6rem", backgroundColor: "var(--color-bg-body)" }}>
+      <section style={{ padding: "var(--spacing-xl) 0" }}>
         <div className="container">
-          
-
-          {/* Form and Map Side by Side */}
-          <div className="grid grid-cols-1 md-grid-cols-2 gap-lg items-stretch">
-            
+          <div className="grid grid-cols-1 lg-grid-cols-2 gap-xl">
             {/* Right: Contact Form */}
-            <div className="animate-fade-in-up" style={{ 
-              animationDelay: "0.4s",
-              background: "var(--color-bg-card)", 
-              border: "1px solid var(--color-border)",
-              padding: "3rem 2rem",
-              borderRadius: "12px"
-            }}>
-              <h2 style={{ fontSize: "2rem", color: "var(--color-primary)", marginBottom: "0.5rem", fontWeight: "bold" }}>أرسل لنا رسالة</h2>
-              <p style={{ color: "var(--color-text-muted)", marginBottom: "2.5rem", fontSize: "1.1rem" }}>املأ النموذج أدناه وسيقوم فريقنا بالرد عليك في أقرب وقت ممكن.</p>
-              
+            <div className="card animate-fade-in-up" style={{ padding: "var(--spacing-xl)", animationDelay: "0.3s" }}>
+              <h2 style={{ fontSize: "2rem", color: "var(--color-primary)", marginBottom: "var(--spacing-md)" }}>
+                أرسل لنا رسالة
+              </h2>
               <form style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
                 <div className="grid grid-cols-1 md-grid-cols-2 gap-md">
                   <div>
-                    <label style={{ display: "block", marginBottom: "0.8rem", color: "var(--color-text-main)", fontWeight: "600" }}>الاسم الكامل *</label>
+                    <label style={{ display: "block", marginBottom: "0.8rem", color: "var(--color-text-main)", fontWeight: "600" }}>الاسم بالكامل *</label>
                     <input type="text" style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid var(--color-border)", background: "#FFFFFF", color: "#000", outline: "none", transition: "all 0.3s ease" }} placeholder="أدخل اسمك الكريم" required />
                   </div>
                   <div>
                     <label style={{ display: "block", marginBottom: "0.8rem", color: "var(--color-text-main)", fontWeight: "600" }}>البريد الإلكتروني *</label>
-                    <input type="email" style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid var(--color-border)", background: "#FFFFFF", color: "#000", outline: "none", transition: "all 0.3s ease" }} placeholder="example@domain.com" required />
+                    <input type="email" style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid var(--color-border)", background: "#FFFFFF", color: "#000", outline: "none", transition: "all 0.3s ease" }} placeholder="example@email.com" required dir="ltr" />
                   </div>
                 </div>
                 
                 <div>
-                  <label style={{ display: "block", marginBottom: "0.8rem", color: "var(--color-text-main)", fontWeight: "600" }}>نوع الاستشارة</label>
-                  <select defaultValue="placeholder" required style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid var(--color-border)", background: "#FFFFFF", color: "#000", outline: "none", transition: "all 0.3s ease", appearance: "none", cursor: "pointer", fontWeight: "bold" }}>
-                    <option value="placeholder" disabled hidden>اختر الخدمة المطلوبة...</option>
-                    <option value="الاستشارات المحاسبية وإعداد التقارير المالية" style={{ color: "#000" }}>الاستشارات المحاسبية وإعداد التقارير المالية</option>
-                    <option value="المراجعة وإبداء الرأي المهني" style={{ color: "#000" }}>المراجعة وإبداء الرأي المهني</option>
-                    <option value="الاستشارات والامتثال الضريبي" style={{ color: "#000" }}>الاستشارات والامتثال الضريبي</option>
-                    <option value="تأسيس الشركات والمنشآت" style={{ color: "#000" }}>تأسيس الشركات والمنشآت</option>
-                    <option value="الإجراءات الضريبية" style={{ color: "#000" }}>الإجراءات الضريبية</option>
-                    <option value="الفحص الضريبي" style={{ color: "#000" }}>الفحص الضريبي</option>
-                    <option value="إقامات المستثمرين" style={{ color: "#000" }}>إقامات المستثمرين</option>
-                    <option value="التراخيص الصناعية" style={{ color: "#000" }}>التراخيص الصناعية</option>
-                    <option value="أخرى" style={{ color: "#000" }}>أخرى</option>
+                  <label style={{ display: "block", marginBottom: "0.8rem", color: "var(--color-text-main)", fontWeight: "600" }}>رقم الهاتف *</label>
+                  <input type="tel" style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid var(--color-border)", background: "#FFFFFF", color: "#000", outline: "none", transition: "all 0.3s ease" }} placeholder="رقم الهاتف للتواصل" required dir="ltr" />
+                </div>
+
+                <div>
+                  <label style={{ display: "block", marginBottom: "0.8rem", color: "var(--color-text-main)", fontWeight: "600" }}>نوع الاستفسار</label>
+                  <select style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid var(--color-border)", background: "#FFFFFF", color: "#000", outline: "none", appearance: "none" }}>
+                    <option value="استشارات محاسبية">استشارات محاسبية</option>
+                    <option value="استشارات ضريبية">استشارات ضريبية</option>
+                    <option value="تأسيس شركات">تأسيس شركات</option>
+                    <option value="المراجعة والتدقيق">المراجعة والتدقيق</option>
+                    <option value="أخرى">أخرى</option>
                   </select>
                 </div>
                 
                 <div>
                   <label style={{ display: "block", marginBottom: "0.8rem", color: "var(--color-text-main)", fontWeight: "600" }}>كيف يمكننا مساعدتك؟ *</label>
-                  <textarea rows={5} style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid var(--color-border)", background: "#FFFFFF", color: "#000", outline: "none", resize: "vertical", transition: "all 0.3s ease" }} placeholder="اكتب رسالتك أو استفسارك هنا بالتفصيل..." required />
+                  <textarea rows={5} style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid var(--color-border)", background: "#FFFFFF", color: "#000", outline: "none", resize: "vertical", transition: "all 0.3s ease" }} placeholder="اكتب تفاصيل أو استفسارك هنا..." required />
                 </div>
                 
                 <button type="button" className="btn btn-primary" style={{ marginTop: "1rem", width: "100%", padding: "1.2rem", fontSize: "1.2rem", fontWeight: "bold", borderRadius: "8px" }}>
-                  إرسال الطلب الآن
+                  إرسال الرسالة الآن
                 </button>
               </form>
             </div>
+
             {/* Left: Map and Contact Info */}
             <div className="animate-fade-in-up" style={{ animationDelay: "0.5s", display: "flex", flexDirection: "column", gap: "2rem" }}>
               
@@ -111,34 +104,38 @@ export default async function ContactPage() {
                 </iframe>
               </div>
 
-              {/* Contact Info without boxes */}
+              {/* Contact Info */}
               <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem", padding: "0 1rem" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                  <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "rgba(0, 91, 171, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <div style={{ display: "flex", alignItems: "flex-start", gap: "1rem" }}>
+                  <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "rgba(0, 91, 171, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: "5px" }}>
+                    <i className="bi bi-telephone-fill" style={{ color: "var(--color-primary)", fontSize: "1.2rem" }}></i>
                   </div>
                   <div>
-                    <h4 style={{ fontSize: "1.1rem", color: "var(--color-primary)", marginBottom: "0.2rem", fontWeight: "bold" }}>اتصل بنا</h4>
-                    <p dir="ltr" style={{ color: "var(--color-text-main)", fontSize: "1.1rem", fontWeight: "bold" }}>{phone}</p>
+                    <h4 style={{ fontSize: "1.1rem", color: "var(--color-primary)", marginBottom: "0.2rem", fontWeight: "bold" }}>أرقام التواصل</h4>
+                    {phones.map((phone: string, i: number) => (
+                      <p key={`phone-${i}`} dir="ltr" style={{ color: "var(--color-text-main)", fontSize: "1.1rem", fontWeight: "bold", marginBottom: "0.2rem" }}>{phone}</p>
+                    ))}
                   </div>
                 </div>
 
-                <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                  <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "rgba(0, 91, 171, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                <div style={{ display: "flex", alignItems: "flex-start", gap: "1rem" }}>
+                  <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "rgba(0, 91, 171, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: "5px" }}>
+                    <i className="bi bi-envelope-fill" style={{ color: "var(--color-primary)", fontSize: "1.2rem" }}></i>
                   </div>
                   <div>
                     <h4 style={{ fontSize: "1.1rem", color: "var(--color-primary)", marginBottom: "0.2rem", fontWeight: "bold" }}>البريد الإلكتروني</h4>
-                    <p style={{ color: "var(--color-text-main)", fontSize: "1.1rem", fontWeight: "bold" }}>{email}</p>
+                    {emails.map((email: string, i: number) => (
+                      <p key={`email-${i}`} style={{ color: "var(--color-text-main)", fontSize: "1.1rem", fontWeight: "bold", marginBottom: "0.2rem" }}>{email}</p>
+                    ))}
                   </div>
                 </div>
 
-                <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                  <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "rgba(0, 91, 171, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <div style={{ display: "flex", alignItems: "flex-start", gap: "1rem" }}>
+                  <div style={{ width: "40px", height: "40px", borderRadius: "50%", background: "rgba(0, 91, 171, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, marginTop: "5px" }}>
+                    <i className="bi bi-geo-alt-fill" style={{ color: "var(--color-primary)", fontSize: "1.2rem" }}></i>
                   </div>
                   <div>
-                    <h4 style={{ fontSize: "1.1rem", color: "var(--color-primary)", marginBottom: "0.2rem", fontWeight: "bold" }}>المقر الرئيسي</h4>
+                    <h4 style={{ fontSize: "1.1rem", color: "var(--color-primary)", marginBottom: "0.2rem", fontWeight: "bold" }}>العنوان</h4>
                     <p style={{ color: "var(--color-text-main)", fontSize: "1.1rem", fontWeight: "bold", lineHeight: "1.6" }}>
                       {address}
                     </p>
@@ -147,17 +144,31 @@ export default async function ContactPage() {
 
                 {/* Social Media Links */}
                 <div style={{ marginTop: "1rem", paddingTop: "1.5rem", borderTop: "1px solid var(--color-border)" }}>
-                  <h4 style={{ fontSize: "1.1rem", color: "var(--color-primary)", marginBottom: "1rem", fontWeight: "bold" }}>تابعنا على</h4>
-                  <div style={{ display: "flex", gap: "1rem" }}>
+                  <h4 style={{ fontSize: "1.1rem", color: "var(--color-primary)", marginBottom: "1rem", fontWeight: "bold" }}>منصات السوشيال ميديا</h4>
+                  <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
                     {settings.social_facebook && (
-                    <a href={settings.social_facebook} target="_blank" rel="noopener noreferrer" aria-label="Facebook" className="hover:opacity-100" style={{ width: "40px", height: "40px", borderRadius: "12px", background: "#1877F2", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
-                      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    <a href={settings.social_facebook} target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "40px", height: "40px", borderRadius: "12px", background: "#1877F2", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
+                      <i className="bi bi-facebook fs-5"></i>
                     </a>
                     )}
-                    
+                    {settings.social_instagram && (
+                    <a href={settings.social_instagram} target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "40px", height: "40px", borderRadius: "12px", background: "#E4405F", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
+                      <i className="bi bi-instagram fs-5"></i>
+                    </a>
+                    )}
+                    {settings.social_youtube && (
+                    <a href={settings.social_youtube} target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "40px", height: "40px", borderRadius: "12px", background: "#FF0000", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
+                      <i className="bi bi-youtube fs-5"></i>
+                    </a>
+                    )}
                     {settings.social_linkedin && (
-                    <a href={settings.social_linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="hover:opacity-100" style={{ width: "40px", height: "40px", borderRadius: "12px", background: "#0A66C2", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
-                      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    <a href={settings.social_linkedin} target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "40px", height: "40px", borderRadius: "12px", background: "#0A66C2", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
+                      <i className="bi bi-linkedin fs-5"></i>
+                    </a>
+                    )}
+                    {settings.social_tiktok && (
+                    <a href={settings.social_tiktok} target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "40px", height: "40px", borderRadius: "12px", background: "#000000", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
+                      <i className="bi bi-tiktok fs-5"></i>
                     </a>
                     )}
                   </div>
