@@ -15,10 +15,15 @@ const amiri = Amiri({
   weight: ["400", "700"],
 });
 
-export const metadata: Metadata = {
-  title: "مكتب العشماوي للمحاسبة | Al-Ashmawy Accounting",
-  description: "خدمات محاسبية واستشارية متكاملة بطراز عالمي - مكتب العشماوي",
-};
+import { fetchSettings } from "@/lib/api";
+
+export async function generateMetadata(): Promise<Metadata> {
+  const settings = await fetchSettings();
+  return {
+    title: settings.seo_title || "مكتب العشماوي للمحاسبة | Al-Ashmawy Accounting",
+    description: settings.seo_desc || "خدمات محاسبية واستشارية متكاملة بمعايير عالمية - مكتب العشماوي",
+  };
+}
 
 export default function RootLayout({
   children,

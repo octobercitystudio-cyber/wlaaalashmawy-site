@@ -57,9 +57,17 @@ try {
             id INT AUTO_INCREMENT PRIMARY KEY,
             page_path VARCHAR(255) NOT NULL,
             visitor_id VARCHAR(100) NOT NULL,
+            ip_address VARCHAR(45) DEFAULT '',
             visited_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     ");
+
+    // Safely add ip_address column if it doesn't exist
+    try {
+        $pdo->exec("ALTER TABLE visits ADD COLUMN ip_address VARCHAR(45) DEFAULT ''");
+    } catch (PDOException $e) {
+        // Column already exists or other error, ignore
+    }
 
 } catch (PDOException $e) {
     die(json_encode(['error' => 'Database Connection Failed: ' . $e->getMessage()]));

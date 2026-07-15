@@ -141,6 +141,10 @@
                 <div style="width: 70px; height: 70px; background: var(--primary); color: var(--accent); border-radius: 20px; display: inline-flex; align-items: center; justify-content: center; font-size: 32px; margin-bottom: 15px;"><i class="bi bi-shield-lock-fill"></i></div>
                 <h3 class="fw-bold" style="color: var(--primary);">تسجيل الدخول</h3>
             </div>
+            <div class="mb-3">
+                <label class="form-label text-muted fw-bold">اسم المستخدم</label>
+                <input type="text" id="username" class="form-control form-control-lg bg-light border-0" style="border-radius: 10px;" value="admin">
+            </div>
             <div class="mb-4">
                 <label class="form-label text-muted fw-bold">كلمة المرور</label>
                 <input type="password" id="password" class="form-control form-control-lg bg-light border-0" style="border-radius: 10px;">
@@ -155,12 +159,14 @@
         <!-- Sidebar -->
         <div class="sidebar d-flex flex-column">
             <div class="text-center mb-4 mt-2">
-                <h4 class="text-white fw-bold mb-0">وليد العشماوي</h4>
+                <img id="sidebar-logo" src="/images/placeholder.jpg" alt="Logo" style="max-height: 60px; border-radius: 8px; margin-bottom: 10px;">
+                <br>
                 <small class="text-muted" style="color: var(--accent) !important;">إدارة الموقع</small>
             </div>
             
             <ul class="nav flex-column mb-auto">
-                <li class="nav-item"><a class="nav-link-sidebar active" onclick="switchMainTab('home')"><i class="bi bi-house-door-fill"></i> الرئيسية</a></li>
+                <li class="nav-item"><a class="nav-link-sidebar active" onclick="switchMainTab('overview')"><i class="bi bi-graph-up"></i> نظرة عامة</a></li>
+                <li class="nav-item"><a class="nav-link-sidebar" onclick="switchMainTab('home')"><i class="bi bi-house-door-fill"></i> الرئيسية</a></li>
                 <li class="nav-item"><a class="nav-link-sidebar" onclick="switchMainTab('about')"><i class="bi bi-info-circle-fill"></i> من نحن</a></li>
                 <li class="nav-item"><a class="nav-link-sidebar" onclick="switchMainTab('services')"><i class="bi bi-briefcase-fill"></i> الخدمات</a></li>
                 <li class="nav-item"><a class="nav-link-sidebar" onclick="switchMainTab('sectors')"><i class="bi bi-buildings-fill"></i> القطاعات</a></li>
@@ -168,6 +174,7 @@
                 <li class="nav-item"><a class="nav-link-sidebar" onclick="switchMainTab('contact')"><i class="bi bi-telephone-fill"></i> اتصل بنا</a></li>
                 <hr class="border-secondary my-2">
                 <li class="nav-item"><a class="nav-link-sidebar" onclick="switchMainTab('media')"><i class="bi bi-images"></i> مكتبة الصور</a></li>
+                <li class="nav-item"><a class="nav-link-sidebar" onclick="switchMainTab('settings')"><i class="bi bi-gear-fill"></i> الإعدادات</a></li>
             </ul>
             
             <a class="nav-link-sidebar text-danger mt-3" onclick="logout()"><i class="bi bi-box-arrow-right"></i> تسجيل الخروج</a>
@@ -176,31 +183,46 @@
         <!-- Main Content -->
         <div class="main-content">
             
+            <!-- OVERVIEW SECTION -->
+            <div id="sec-overview" class="section-container active">
+                <h2 class="fw-bold mb-4">نظرة عامة</h2>
+                <div class="row g-4 mb-4">
+                    <div class="col-md-3"><div class="card p-4 h-100"><p class="text-muted mb-1 fw-bold">إجمالي الزيارات</p><h3 class="fw-bold mb-0 text-primary" id="stat-total-visits">--</h3></div></div>
+                    <div class="col-md-3"><div class="card p-4 h-100"><p class="text-muted mb-1 fw-bold">الزوار الحقيقيين (IPs)</p><h3 class="fw-bold mb-0 text-success" id="stat-unique-visitors">--</h3></div></div>
+                    <div class="col-md-3"><div class="card p-4 h-100"><p class="text-muted mb-1 fw-bold">زيارات اليوم</p><h3 class="fw-bold mb-0 text-warning" id="stat-visits-today">--</h3></div></div>
+                    <div class="col-md-3"><div class="card p-4 h-100"><p class="text-muted mb-1 fw-bold">إجمالي المقالات</p><h3 class="fw-bold mb-0" id="stat-articles">--</h3></div></div>
+                </div>
+                <div class="row g-4 mb-4">
+                    <div class="col-12"><div class="card p-4"><h5 class="fw-bold mb-4">أداء الزيارات (آخر 30 يوم)</h5><canvas id="visitsChart" height="80"></canvas></div></div>
+                </div>
+                <div class="card p-4">
+                    <h5 class="fw-bold mb-4">تفاصيل زيارات كل صفحة</h5>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>الصفحة / الرابط</th>
+                                <th>إجمالي الزيارات (مرات الفتح)</th>
+                                <th>الزوار الحقيقيين (IPs فريدة)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="detailed-pages-list">
+                            <tr><td colspan="3" class="text-center">جاري التحميل...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
             <!-- HOME SECTION -->
-            <div id="sec-home" class="section-container active">
+            <div id="sec-home" class="section-container">
                 <h2 class="fw-bold mb-4">الرئيسية</h2>
                 <ul class="nav nav-pills mb-4">
-                    <li class="nav-item"><a class="nav-link active" onclick="switchInnerTab('home', 'analytics')"><i class="bi bi-graph-up"></i> نظرة عامة</a></li>
-                    <li class="nav-item"><a class="nav-link" onclick="switchInnerTab('home', 'hero')"><i class="bi bi-card-heading"></i> القسم الترحيبي (Hero)</a></li>
+                    <li class="nav-item"><a class="nav-link active" onclick="switchInnerTab('home', 'hero')"><i class="bi bi-card-heading"></i> القسم الترحيبي (Hero)</a></li>
                     <li class="nav-item"><a class="nav-link" onclick="switchInnerTab('home', 'features')"><i class="bi bi-star-fill"></i> المميزات</a></li>
                     <li class="nav-item"><a class="nav-link" onclick="switchInnerTab('home', 'stats')"><i class="bi bi-bar-chart-fill"></i> أرقام النجاح</a></li>
                     <li class="nav-item"><a class="nav-link" onclick="switchInnerTab('home', 'testimonials')"><i class="bi bi-chat-quote-fill"></i> آراء العملاء</a></li>
                 </ul>
 
-                <div id="home-analytics" class="inner-tab-content active">
-                    <div class="row g-4 mb-4">
-                        <div class="col-md-3"><div class="card p-4 h-100"><p class="text-muted mb-1 fw-bold">الزيارات</p><h3 class="fw-bold mb-0" id="stat-total-visits">--</h3></div></div>
-                        <div class="col-md-3"><div class="card p-4 h-100"><p class="text-muted mb-1 fw-bold">الزوار الفريدين</p><h3 class="fw-bold mb-0" id="stat-unique-visitors">--</h3></div></div>
-                        <div class="col-md-3"><div class="card p-4 h-100"><p class="text-muted mb-1 fw-bold">المقالات</p><h3 class="fw-bold mb-0" id="stat-articles">--</h3></div></div>
-                        <div class="col-md-3"><div class="card p-4 h-100"><p class="text-muted mb-1 fw-bold">الخدمات</p><h3 class="fw-bold mb-0" id="stat-services">--</h3></div></div>
-                    </div>
-                    <div class="row g-4">
-                        <div class="col-md-8"><div class="card p-4"><h5 class="fw-bold mb-4">أداء الزيارات</h5><canvas id="visitsChart" height="100"></canvas></div></div>
-                        <div class="col-md-4"><div class="card p-4"><h5 class="fw-bold mb-4">أعلى الصفحات</h5><div id="top-pages-list"></div></div></div>
-                    </div>
-                </div>
-
-                <div id="home-hero" class="inner-tab-content">
+                <div id="home-hero" class="inner-tab-content active">
                     <div class="card p-4">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <h5 class="fw-bold mb-0">نصوص القسم الترحيبي (أعلى الموقع)</h5>
@@ -371,6 +393,65 @@
                 <div class="card p-4"><div id="media-gallery" class="row g-4"></div></div>
             </div>
 
+            <!-- SETTINGS SECTION -->
+            <div id="sec-settings" class="section-container">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="fw-bold">إعدادات الموقع العامة</h2>
+                    <button class="btn btn-gold" onclick="saveSettingsGroup(['admin_username', 'admin_password', 'site_logo', 'dashboard_language', 'seo_title', 'seo_desc'])"><i class="bi bi-save"></i> حفظ كافة الإعدادات</button>
+                </div>
+                
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <div class="card p-4 mb-4">
+                            <h5 class="fw-bold mb-3"><i class="bi bi-shield-lock text-primary"></i> بيانات الدخول للوحة التحكم</h5>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">اسم المستخدم</label>
+                                <input type="text" class="form-control" id="setting_admin_username" dir="ltr">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">كلمة المرور الجديدة</label>
+                                <input type="text" class="form-control" id="setting_admin_password" dir="ltr">
+                                <small class="text-muted">الرقم السري الافتراضي: Wlaa@2026</small>
+                            </div>
+                        </div>
+
+                        <div class="card p-4">
+                            <h5 class="fw-bold mb-3"><i class="bi bi-gear text-primary"></i> إعدادات اللوحة</h5>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">لغة لوحة التحكم</label>
+                                <select class="form-select" id="setting_dashboard_language">
+                                    <option value="ar">العربية (Arabic)</option>
+                                    <option value="en">الإنجليزية (English) - قريباً</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card p-4 mb-4">
+                            <h5 class="fw-bold mb-3"><i class="bi bi-image text-primary"></i> شعار الموقع (اللوجو)</h5>
+                            <div class="mb-3">
+                                <img id="site-logo-preview" src="/images/placeholder.jpg" class="img-fluid rounded border mb-2" style="max-height:100px;background:#f8f9fa;padding:10px;">
+                                <input type="hidden" id="setting_site_logo">
+                                <button class="btn btn-outline-primary btn-sm w-100" onclick="openMediaPicker('setting_site_logo')"><i class="bi bi-image"></i> تغيير اللوجو</button>
+                            </div>
+                        </div>
+
+                        <div class="card p-4">
+                            <h5 class="fw-bold mb-3"><i class="bi bi-google text-primary"></i> إعدادات السيو (SEO)</h5>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">عنوان الموقع (Meta Title)</label>
+                                <input type="text" class="form-control" id="setting_seo_title" placeholder="مثال: مكتب العشماوي للمحاسبة والمراجعة">
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-bold">وصف الموقع (Meta Description)</label>
+                                <textarea class="form-control" id="setting_seo_desc" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -515,12 +596,13 @@
 
         // Auth
         async function login() {
+            const usr = document.getElementById('username').value;
             const pwd = document.getElementById('password').value;
             try {
-                const res = await fetch(API_URL + '/login.php', { method: 'POST', body: JSON.stringify({ password: pwd }) });
+                const res = await fetch(API_URL + '/login.php', { method: 'POST', body: JSON.stringify({ username: usr, password: pwd }) });
                 const data = await res.json();
                 if(data.token) { localStorage.setItem('token', data.token); showDashboard(); }
-                else { document.getElementById('login-error').innerText = 'كلمة المرور خاطئة'; document.getElementById('login-error').style.display='block'; }
+                else { document.getElementById('login-error').innerText = data.error || 'خطأ في تسجيل الدخول'; document.getElementById('login-error').style.display='block'; }
             } catch(e) { showToast('فشل الاتصال', true); }
         }
         function logout() { localStorage.removeItem('token'); location.reload(); }
@@ -530,6 +612,17 @@
             document.getElementById('dashboard-screen').style.display = 'block';
             loadAllData();
             loadAnalytics();
+            
+            // Listen to logo changes
+            const logoInput = document.getElementById('setting_site_logo');
+            if (logoInput) {
+                logoInput.addEventListener('change', function() {
+                    if(this.value) {
+                        document.getElementById('site-logo-preview').src = this.value;
+                        document.getElementById('sidebar-logo').src = this.value;
+                    }
+                });
+            }
         }
 
         // Analytics
@@ -539,8 +632,8 @@
                 const stats = await res.json();
                 document.getElementById('stat-total-visits').innerText = stats.total_visits || '0';
                 document.getElementById('stat-unique-visitors').innerText = stats.unique_visitors || '0';
+                document.getElementById('stat-visits-today').innerText = stats.visits_today || '0';
                 document.getElementById('stat-articles').innerText = stats.articles_count || '0';
-                document.getElementById('stat-services').innerText = stats.services_count || '0';
                 
                 if(stats.chart_data && document.getElementById('visitsChart')) {
                     if(chartInstance) chartInstance.destroy();
@@ -548,8 +641,19 @@
                         type: 'line',
                         data: {
                             labels: stats.chart_data.map(d=>d.date),
-                            datasets: [{ label: 'الزيارات', data: stats.chart_data.map(d=>d.count), borderColor: '#d4af37', backgroundColor: 'rgba(212, 175, 55, 0.2)', fill: true }]
-                        }
+                            datasets: [{ label: 'الزيارات اليومية', data: stats.chart_data.map(d=>d.count), borderColor: '#d4af37', backgroundColor: 'rgba(212, 175, 55, 0.2)', fill: true, tension: 0.3 }]
+                        },
+                        options: { maintainAspectRatio: false }
+                    });
+                }
+
+                if (stats.page_stats) {
+                    const tbody = document.getElementById('detailed-pages-list');
+                    tbody.innerHTML = '';
+                    stats.page_stats.forEach(page => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `<td dir="ltr" class="text-start">${page.page_path}</td><td class="fw-bold">${page.total_views}</td><td class="fw-bold text-success">${page.unique_views}</td>`;
+                        tbody.appendChild(tr);
                     });
                 }
             } catch (e) {}
@@ -587,13 +691,22 @@
                 const res = await fetch(`${API_URL}/settings.php`, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
                 const s = await res.json();
                 
-                ['hero_title', 'hero_subtitle', 'contact_address', 'contact_map', 'social_facebook', 'social_instagram', 'social_youtube', 'social_linkedin', 'social_tiktok'].forEach(k => {
+                ['hero_title', 'hero_subtitle', 'contact_address', 'contact_map', 'social_facebook', 'social_instagram', 'social_youtube', 'social_linkedin', 'social_tiktok', 'admin_username', 'admin_password', 'dashboard_language', 'seo_title', 'seo_desc'].forEach(k => {
                     if(document.getElementById(`setting_${k}`)) document.getElementById(`setting_${k}`).value = s[k] || '';
                 });
                 
                 ['about_short', 'about_full', 'vision', 'mission'].forEach(k => {
                     if(document.getElementById(`setting_${k}`)) $(`#setting_${k}`).summernote('code', s[k] || '');
                 });
+
+                if (s.site_logo) {
+                    const sl = document.getElementById('setting_site_logo');
+                    if (sl) {
+                        sl.value = s.site_logo;
+                        document.getElementById('site-logo-preview').src = s.site_logo;
+                        document.getElementById('sidebar-logo').src = s.site_logo;
+                    }
+                }
 
                 renderDynamicList('phones-container', s.contact_phones || s.contact_phone, 'phone');
                 renderDynamicList('emails-container', s.contact_emails || s.contact_email, 'email');
