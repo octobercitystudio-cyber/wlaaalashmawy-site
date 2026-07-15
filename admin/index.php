@@ -17,6 +17,7 @@
         .nav-link.active { opacity: 1; font-weight: bold; background: rgba(255,255,255,0.1); border-radius: 8px; }
         .section-container { display: none; }
         .section-container.active { display: block; }
+        .tox-notifications-container { display: none !important; } /* Hide TinyMCE API Warning */
     </style>
 </head>
 <body>
