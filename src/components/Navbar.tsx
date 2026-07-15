@@ -2,13 +2,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
-import { servicesData } from "@/data/services";
-
 import { usePathname } from "next/navigation";
 
-export default function Navbar() {
+export default function Navbar({ settings = {}, services = [] }: { settings?: any, services?: any[] }) {
   const [scrolled, setScrolled] = useState(false);
   const pathname = usePathname();
+  const whatsappNum = settings.contact_whatsapp || '201155729429';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -69,9 +68,9 @@ export default function Navbar() {
                 </svg>
               </Link>
               <div className="nav-dropdown-content">
-                {servicesData.map(service => (
+                {services.map(service => (
                   <Link key={service.id} href={`/services/${service.id}`} className="nav-dropdown-item">
-                    {service.title.ar}
+                    {service.title}
                   </Link>
                 ))}
               </div>
@@ -84,7 +83,7 @@ export default function Navbar() {
 
         {/* CTA & Actions (Left side in RTL) */}
         <div style={{ justifySelf: "end" }} className="flex gap-md items-center">
-          <a href="https://wa.me/201155729429?text=مرحباً،%20أود%20الاستفسار%20عن%20خدمات%20مكتب%20العشماوي." target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ padding: "0.5rem 1.5rem", fontSize: "1rem" }}>استشارة</a>
+          <a href={`https://wa.me/${whatsappNum}?text=${encodeURIComponent("مرحباً، أود الاستفسار عن خدمات مكتب العشماوي.")}`} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ padding: "0.5rem 1.5rem", fontSize: "1rem" }}>استشارة</a>
           <button style={{ color: "var(--color-primary)", fontWeight: "bold", border: "1px solid var(--color-border)", padding: "0.3rem 0.6rem", borderRadius: "4px", background: "transparent" }}>EN</button>
         </div>
 

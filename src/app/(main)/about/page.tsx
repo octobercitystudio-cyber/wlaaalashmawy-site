@@ -1,6 +1,9 @@
 import Image from "next/image";
+import { fetchSettings } from '@/lib/api';
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const settings = await fetchSettings();
+  
   return (
     <main style={{ backgroundColor: "#FAFAFA" }}>
       {/* 1. Hero Title Section */}
@@ -76,16 +79,12 @@ export default function AboutPage() {
           {/* About Text */}
           <div style={{ textAlign: "center", marginBottom: "5rem" }}>
             <h2 style={{ fontSize: "2.5rem", color: "var(--color-primary)", fontWeight: "bold", marginBottom: "2rem" }}>عن الشركة</h2>
-            <div style={{ fontSize: "1.2rem", lineHeight: "2", color: "var(--color-text-main)", opacity: 0.9, textAlign: "justify" }}>
-              <p style={{ marginBottom: "1.5rem" }}>
-                تُعد شركة <strong>"ولاء مجدي العشماوي للمحاسبة القانونية" (AFC)</strong> واحدة من الشركات الرائدة في مصر في مجالات المحاسبة، والمراجعة، والضرائب، والخدمات الاستشارية المالية. تأسست الشركة عام 2024 على يد السيدة ولاء مجدي العشماوي، انطلاقاً من رؤية واضحة تهدف إلى تقديم خدمات مهنية متميزة ترتكز على النزاهة والخبرة وبناء علاقات مستدامة مع العملاء.
-              </p>
-              <p style={{ marginBottom: "1.5rem" }}>
-                في AFC، نضمن لعملائنا أن يتولى تنفيذ كل مهمة فريق من المهنيين المتفانين الملتزمين بأعلى معايير الجودة والتميز. ونحن نتبنى نهجاً متكاملاً يرتكز على فهم عميق للتحديات الفريدة التي تواجه الشركات الصغيرة والمتوسطة، مما يتيح لنا تقديم حلول عملية واستراتيجية تعزز القيمة.
-              </p>
-              <p>
-                صُممت خدماتنا الشاملة لدعم العملاء في كل مرحلة من مراحل رحلة أعمالهم، مما يُمكّنهم من اتخاذ قرارات مدروسة، وتحقيق نمو مستدام، والتركيز على تعظيم القيمة طويلة الأمد لأعمالهم.
-              </p>
+            <div style={{ fontSize: "1.2rem", lineHeight: "2", color: "var(--color-text-main)", opacity: 0.9, textAlign: "justify", whiteSpace: "pre-line" }}>
+              {settings.about_full || `تُعد شركة "ولاء مجدي العشماوي للمحاسبة القانونية" (AFC) واحدة من الشركات الرائدة في مصر في مجالات المحاسبة، والمراجعة، والضرائب، والخدمات الاستشارية المالية. تأسست الشركة عام 2024 على يد السيدة ولاء مجدي العشماوي، انطلاقاً من رؤية واضحة تهدف إلى تقديم خدمات مهنية متميزة ترتكز على النزاهة والخبرة وبناء علاقات مستدامة مع العملاء.
+
+في AFC، نضمن لعملائنا أن يتولى تنفيذ كل مهمة فريق من المهنيين المتفانين الملتزمين بأعلى معايير الجودة والتميز. ونحن نتبنى نهجاً متكاملاً يرتكز على فهم عميق للتحديات الفريدة التي تواجه الشركات الصغيرة والمتوسطة، مما يتيح لنا تقديم حلول عملية واستراتيجية تعزز القيمة.
+
+صُممت خدماتنا الشاملة لدعم العملاء في كل مرحلة من مراحل رحلة أعمالهم، مما يُمكّنهم من اتخاذ قرارات مدروسة، وتحقيق نمو مستدام، والتركيز على تعظيم القيمة طويلة الأمد لأعمالهم.`}
             </div>
           </div>
 
@@ -100,8 +99,8 @@ export default function AboutPage() {
                 </svg>
               </div>
               <h2 style={{ fontSize: "2rem", color: "var(--color-primary)", fontWeight: "bold", marginBottom: "1.5rem" }}>الرؤية</h2>
-              <p style={{ fontSize: "1.15rem", lineHeight: "1.8", color: "var(--color-text-main)", opacity: 0.9, margin: 0 }}>
-                أن نكون الشريك الموثوق والاختيار الأول للشركات التي تبحث عن خدمات محاسبية وضريبية ومراجعة واستشارات مالية استثنائية، من خلال الخبرة والنزاهة والابتكار.
+              <p style={{ fontSize: "1.15rem", lineHeight: "1.8", color: "var(--color-text-main)", opacity: 0.9, margin: 0, whiteSpace: "pre-line" }}>
+                {settings.vision || "أن نكون الشريك الموثوق والاختيار الأول للشركات التي تبحث عن خدمات محاسبية وضريبية ومراجعة واستشارات مالية استثنائية، من خلال الخبرة والنزاهة والابتكار."}
               </p>
             </div>
 
@@ -113,8 +112,8 @@ export default function AboutPage() {
                 </svg>
               </div>
               <h2 style={{ fontSize: "2rem", color: "var(--color-primary)", fontWeight: "bold", marginBottom: "1.5rem" }}>الرسالة</h2>
-              <p style={{ fontSize: "1.15rem", lineHeight: "1.8", color: "var(--color-text-main)", opacity: 0.9, margin: 0 }}>
-                أن نكون القوة الموثوقة وراء نجاح عملائنا، من خلال تقديم حلول ثاقبة، وجودة لا تقبل التنازل، وتوجيه استراتيجي يعزز النمو، ويرسخ الثقة، ويخلق قيمة مستدامة.
+              <p style={{ fontSize: "1.15rem", lineHeight: "1.8", color: "var(--color-text-main)", opacity: 0.9, margin: 0, whiteSpace: "pre-line" }}>
+                {settings.mission || "أن نكون القوة الموثوقة وراء نجاح عملائنا، من خلال تقديم حلول ثاقبة، وجودة لا تقبل التنازل، وتوجيه استراتيجي يعزز النمو، ويرسخ الثقة، ويخلق قيمة مستدامة."}
               </p>
             </div>
           </div>

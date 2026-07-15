@@ -1,8 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-import { servicesData } from "@/data/services";
+import { fetchServices } from '@/lib/api';
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const services = await fetchServices();
+  
   return (
     <main>
       <section style={{ 
@@ -37,15 +39,15 @@ export default function ServicesPage() {
       <section className="py-xl" style={{ backgroundColor: "var(--color-bg-body)" }}>
         <div className="container">
           <div className="grid grid-cols-1 md-grid-cols-3 gap-lg">
-            {servicesData.map((service) => {
+            {services.map((service: any) => {
               return (
                 <div key={service.id} className="premium-card text-center" style={{ background: "var(--color-bg-card)", border: "2px solid var(--color-accent)", display: "flex", flexDirection: "column", padding: 0, overflow: "hidden" }}>
                   <div style={{ position: "relative", width: "100%", height: "200px" }}>
-                    <Image src={service.image} alt={service.title.ar} fill style={{ objectFit: "cover" }} />
+                    <Image src={service.image || '/images/services/accounting.jpg'} alt={service.title} fill style={{ objectFit: "cover" }} />
                   </div>
                   <div style={{ padding: "1.5rem", display: "flex", flexDirection: "column", flexGrow: 1 }}>
-                    <h3 style={{ fontSize: "1.3rem", marginBottom: "var(--spacing-sm)", color: "var(--color-primary)", fontWeight: "bold" }}>{service.title.ar}</h3>
-                    <p style={{ marginBottom: "var(--spacing-md)", flexGrow: 1, color: "var(--color-text-muted)", fontSize: "0.95rem" }}>{service.shortDesc.ar}</p>
+                    <h3 style={{ fontSize: "1.3rem", marginBottom: "var(--spacing-sm)", color: "var(--color-primary)", fontWeight: "bold" }}>{service.title}</h3>
+                    <p style={{ marginBottom: "var(--spacing-md)", flexGrow: 1, color: "var(--color-text-muted)", fontSize: "0.95rem" }}>{service.description}</p>
                     <Link href={`/services/${service.id}`} className="btn btn-secondary" style={{ width: "100%", padding: "0.8rem", marginTop: "auto" }}>
                       عرض التفاصيل
                     </Link>

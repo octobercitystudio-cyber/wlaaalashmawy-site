@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -24,12 +25,14 @@ jobs:
         run: npm install
 
       - name: Build static site
+        env:
+          NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
         run: npm run build
 
-      - name: Inject Database Config
+      - name: Inject Database and Deploy Config
         run: |
           mkdir -p out/api
-          echo "<?php \$db_host='${{ secrets.DB_HOST }}'; \$db_user='${{ secrets.DB_USER }}'; \$db_pass='${{ secrets.DB_PASS }}'; \$db_name='${{ secrets.DB_NAME }}'; ?>" > out/api/config.php
+          echo "<?php \$db_host='${{ secrets.DB_HOST }}'; \$db_user='${{ secrets.DB_USER }}'; \$db_pass='${{ secrets.DB_PASS }}'; \$db_name='${{ secrets.DB_NAME }}'; \$gh_pat='${{ secrets.GH_PAT }}'; \$gh_repo='octobercitystudio-cyber/wlaaalashmawy-site'; ?>" > out/api/config.php
 
       - name: Deploy to production branch
         uses: peaceiris/actions-gh-pages@v3
@@ -38,3 +41,16 @@ jobs:
           publish_dir: ./out
           publish_branch: production
           force_orphan: true
+
+      - name: FTP Deploy to Hostinger
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        if: ${{ env.FTP_SERVER != '' }}
+        env:
+          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          local-dir: ./out/
+          server-dir: /public_html/
+          danger-file-transfer-protocol: ftp

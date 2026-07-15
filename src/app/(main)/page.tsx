@@ -4,11 +4,16 @@ import HeroSlider from "@/components/HeroSlider";
 import ServicesCarousel from "@/components/ServicesCarousel";
 import AnimatedStat from "@/components/AnimatedStat";
 
-export default function Home() {
+import { fetchSettings, fetchServices } from '@/lib/api';
+
+export default async function Home() {
+  const settings = await fetchSettings();
+  const services = await fetchServices();
+
   return (
     <div className="animate-fade-in" style={{ flex: 1 }}>
       {/* Hero Section */}
-      <HeroSlider />
+      <HeroSlider settings={settings} />
 
       {/* Stats Section */}
       <section style={{ padding: "var(--spacing-lg) 0", borderTop: "1px solid var(--color-border)", borderBottom: "1px solid var(--color-border)", background: "var(--color-bg-card)" }}>
@@ -26,7 +31,7 @@ export default function Home() {
           <h2 className="text-gold">خدماتنا الاحترافية</h2>
           <p style={{ maxWidth: "600px", margin: "0 auto" }}>رؤية مالية واضحة وحلول استراتيجية مصممة خصيصاً لتلبي تطلعات أعمالك.</p>
         </div>
-        <ServicesCarousel />
+        <ServicesCarousel services={services} />
         <div className="text-center" style={{ marginTop: "var(--spacing-lg)" }}>
           <Link href="/services" className="btn btn-secondary">عرض كل الخدمات</Link>
         </div>

@@ -5,10 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { servicesData } from "@/data/services";
 
-export default function ServicesCarousel() {
-  const N = servicesData.length;
+export default function ServicesCarousel({ services = [] }: { services?: any[] }) {
+  const data = services.length > 0 ? services : servicesData;
+  const N = data.length;
   // Create 5 copies of the data to ensure we never run out of slides during rapid clicks
-  const extendedItems = [...servicesData, ...servicesData, ...servicesData, ...servicesData, ...servicesData];
+  const extendedItems = [...data, ...data, ...data, ...data, ...data];
   const START_INDEX = N * 2; // Start in the middle of the 5 copies
   
   const [currentIndex, setCurrentIndex] = useState(START_INDEX);
@@ -166,10 +167,10 @@ export default function ServicesCarousel() {
                 </div>
                 <div style={{ padding: "1.5rem", display: "flex", flexDirection: "column", flexGrow: 1 }}>
                   <h3 style={{ fontSize: "1.4rem", marginBottom: "var(--spacing-sm)", color: "var(--color-primary)" }}>
-                    {service.title.ar}
+                    {service.title?.ar || service.title}
                   </h3>
                   <p style={{ fontSize: "0.95rem", marginBottom: "1.5rem", flexGrow: 1 }}>
-                    {service.shortDesc.ar}
+                    {service.description || service.shortDesc?.ar}
                   </p>
                   <div style={{ marginTop: "auto" }}>
                     <Link 

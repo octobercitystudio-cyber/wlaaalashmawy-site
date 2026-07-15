@@ -1,15 +1,17 @@
-import { servicesData } from "@/data/services";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
+import { fetchServices, fetchSettings } from '@/lib/api';
 
 export async function generateStaticParams() {
-  return servicesData.map((service) => ({
-    id: service.id,
+  const services = await fetchServices();
+  return services.map((service: any) => ({
+    id: service.id.toString(),
   }));
 }
 
 const renderContent = (text: string) => {
+  if (!text) return null;
   // Split by double newline to separate paragraphs/sections
   const blocks = text.split('\n\n');
   
@@ -104,17 +106,18 @@ const renderContent = (text: string) => {
 
 export default async function ServicePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const service = servicesData.find((s) => s.id === id);
+  const services = await fetchServices();
+  const settings = await fetchSettings();
+  const service = services.find((s: any) => s.id.toString() === id);
 
   if (!service) {
     notFound();
   }
 
-  // Assuming Arabic by default for now. Later this will be dynamic.
-  const currentLang = "ar"; 
-  const title = service.title[currentLang];
-  const content = service.content[currentLang];
-  const shortDesc = service.shortDesc[currentLang];
+  const title = service.title;
+  const content = service.content;
+  const shortDesc = service.description;
+  const whatsappNum = settings.contact_whatsapp || '201155729429';
 
   return (
     <main style={{ backgroundColor: "var(--color-bg-body)" }}>
@@ -163,7 +166,7 @@ export default async function ServicePage({ params }: { params: Promise<{ id: st
           <div style={{ marginTop: "4rem", textAlign: "center", display: "flex", flexDirection: "column", alignItems: "center", gap: "1.5rem" }}>
             <h3 style={{ fontSize: "1.5rem", color: "var(--color-primary)", fontWeight: "bold" }}>هل تبحث عن استشارة مخصصة لأعمالك؟</h3>
             <div className="flex gap-md justify-center">
-              <a href="https://wa.me/201155729429?text=مرحباً،%20أود%20الاستفسار%20عن%20خدمات%20مكتب%20العشماوي." target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ padding: "1rem 2.5rem", fontSize: "1.1rem" }}>
+              <a href={`https://wa.me/${whatsappNum}?text=${encodeURIComponent("مرحباً، أود الاستفسار عن خدمات مكتب العشماوي.")}`} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ padding: "1rem 2.5rem", fontSize: "1.1rem" }}>
                 تواصل معنا الآن
               </a>
               <Link href="/services" className="btn btn-secondary" style={{ padding: "1rem 2.5rem", fontSize: "1.1rem" }}>

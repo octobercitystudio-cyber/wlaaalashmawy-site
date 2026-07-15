@@ -1,8 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-import { sectorsData } from "@/data/sectors";
+import { fetchSectors } from '@/lib/api';
 
-export default function SectorsPage() {
+export default async function SectorsPage() {
+  const sectors = await fetchSectors();
+  
   return (
     <main>
       <section style={{ 
@@ -37,15 +39,15 @@ export default function SectorsPage() {
       <section className="py-xl" style={{ backgroundColor: "var(--color-bg-body)" }}>
         <div className="container">
           <div className="grid grid-cols-1 md-grid-cols-3 gap-lg">
-            {sectorsData.map((sector) => {
+            {sectors.map((sector: any) => {
               return (
                 <div key={sector.id} className="premium-card text-center" style={{ background: "var(--color-bg-card)", border: "2px solid var(--color-accent)", display: "flex", flexDirection: "column", padding: 0, overflow: "hidden" }}>
                   <div style={{ position: "relative", width: "100%", height: "220px" }}>
-                    <Image src={sector.image} alt={sector.title.ar} fill style={{ objectFit: "cover" }} />
+                    <Image src={sector.image || '/images/sectors/real_estate.jpg'} alt={sector.title} fill style={{ objectFit: "cover" }} />
                   </div>
                   <div style={{ padding: "1.8rem 1.5rem", display: "flex", flexDirection: "column", flexGrow: 1 }}>
-                    <h3 style={{ fontSize: "1.4rem", marginBottom: "var(--spacing-sm)", color: "var(--color-primary)", fontWeight: "bold" }}>{sector.title.ar}</h3>
-                    <p style={{ margin: 0, flexGrow: 1, color: "var(--color-text-muted)", fontSize: "1rem", lineHeight: "1.8" }}>{sector.shortDesc.ar}</p>
+                    <h3 style={{ fontSize: "1.4rem", marginBottom: "var(--spacing-sm)", color: "var(--color-primary)", fontWeight: "bold" }}>{sector.title}</h3>
+                    <p style={{ margin: 0, flexGrow: 1, color: "var(--color-text-muted)", fontSize: "1rem", lineHeight: "1.8" }}>{sector.description}</p>
                   </div>
                 </div>
               );

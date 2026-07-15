@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function HeroSlider() {
+export default function HeroSlider({ settings = {} }: { settings?: any }) {
   const slides = [
     {
       image: "/hero_egypt.jpg",
@@ -101,7 +101,7 @@ export default function HeroSlider() {
             marginBottom: "1rem", 
             textShadow: "0 2px 10px rgba(0,0,0,0.5)" 
           }}>
-            العشماوي للاستشارات المالية
+            {settings.hero_title || 'العشماوي للاستشارات المالية'}
           </h2>
           
           <p style={{ 
@@ -112,7 +112,7 @@ export default function HeroSlider() {
             textShadow: "0 2px 8px rgba(0,0,0,0.5)",
             letterSpacing: "1px"
           }}>
-            للمحاسبة والمراجعة والضرائب
+            {settings.hero_subtitle || 'للمحاسبة والمراجعة والضرائب'}
           </p>
           
           <div style={{ width: "250px", height: "5px", backgroundColor: "#FFFFFF", margin: "0 auto 1.5rem", opacity: 0.9, boxShadow: "0 2px 5px rgba(0,0,0,0.5)", borderRadius: "3px" }}></div>
