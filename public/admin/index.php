@@ -159,8 +159,7 @@
         <!-- Sidebar -->
         <div class="sidebar d-flex flex-column">
             <div class="text-center mb-4 mt-2">
-                <img id="sidebar-logo" src="/images/placeholder.jpg" alt="Logo" style="max-height: 60px; border-radius: 8px; margin-bottom: 10px;">
-                <br>
+                <h2 class="text-white fw-bold mb-0" style="letter-spacing: 2px;">AFC</h2>
                 <small class="text-muted" style="color: var(--accent) !important;">إدارة الموقع</small>
             </div>
             
@@ -404,12 +403,12 @@
             <div id="sec-settings" class="section-container">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2 class="fw-bold">إعدادات الموقع العامة</h2>
-                    <button class="btn btn-gold" onclick="saveSettingsGroup(['admin_username', 'admin_password', 'site_logo', 'dashboard_language', 'seo_title', 'seo_desc'])"><i class="bi bi-save"></i> حفظ كافة الإعدادات</button>
+                    <button class="btn btn-gold" onclick="saveSettingsGroup(['admin_username', 'admin_password', 'seo_title', 'seo_desc'])"><i class="bi bi-save"></i> حفظ كافة الإعدادات</button>
                 </div>
                 
                 <div class="row g-4">
                     <div class="col-md-6">
-                        <div class="card p-4 mb-4">
+                        <div class="card p-4 h-100">
                             <h5 class="fw-bold mb-3"><i class="bi bi-shield-lock text-primary"></i> بيانات الدخول للوحة التحكم</h5>
                             <div class="mb-3">
                                 <label class="form-label fw-bold">اسم المستخدم</label>
@@ -421,30 +420,10 @@
                                 <small class="text-muted">الرقم السري الافتراضي: Wlaa@2026</small>
                             </div>
                         </div>
-
-                        <div class="card p-4">
-                            <h5 class="fw-bold mb-3"><i class="bi bi-gear text-primary"></i> إعدادات اللوحة</h5>
-                            <div class="mb-3">
-                                <label class="form-label fw-bold">لغة لوحة التحكم</label>
-                                <select class="form-select" id="setting_dashboard_language">
-                                    <option value="ar">العربية (Arabic)</option>
-                                    <option value="en">الإنجليزية (English) - قريباً</option>
-                                </select>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="col-md-6">
-                        <div class="card p-4 mb-4">
-                            <h5 class="fw-bold mb-3"><i class="bi bi-image text-primary"></i> شعار الموقع (اللوجو)</h5>
-                            <div class="mb-3">
-                                <img id="site-logo-preview" src="/images/placeholder.jpg" class="img-fluid rounded border mb-2" style="max-height:100px;background:#f8f9fa;padding:10px;">
-                                <input type="hidden" id="setting_site_logo">
-                                <button class="btn btn-outline-primary btn-sm w-100" onclick="openMediaPicker('setting_site_logo')"><i class="bi bi-image"></i> تغيير اللوجو</button>
-                            </div>
-                        </div>
-
-                        <div class="card p-4">
+                        <div class="card p-4 h-100">
                             <h5 class="fw-bold mb-3"><i class="bi bi-google text-primary"></i> إعدادات السيو (SEO)</h5>
                             <div class="mb-3">
                                 <label class="form-label fw-bold">عنوان الموقع (Meta Title)</label>
@@ -619,17 +598,6 @@
             document.getElementById('dashboard-screen').style.display = 'block';
             loadAllData();
             loadAnalytics();
-            
-            // Listen to logo changes
-            const logoInput = document.getElementById('setting_site_logo');
-            if (logoInput) {
-                logoInput.addEventListener('change', function() {
-                    if(this.value) {
-                        document.getElementById('site-logo-preview').src = this.value;
-                        document.getElementById('sidebar-logo').src = this.value;
-                    }
-                });
-            }
         }
 
         // Analytics
@@ -720,22 +688,13 @@
                 const res = await fetch(`${API_URL}/settings.php`, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
                 const s = await res.json();
                 
-                ['hero_title', 'hero_subtitle', 'contact_address', 'contact_map', 'social_facebook', 'social_instagram', 'social_youtube', 'social_linkedin', 'social_tiktok', 'admin_username', 'admin_password', 'dashboard_language', 'seo_title', 'seo_desc'].forEach(k => {
+                ['hero_title', 'hero_subtitle', 'contact_address', 'contact_map', 'social_facebook', 'social_instagram', 'social_youtube', 'social_linkedin', 'social_tiktok', 'admin_username', 'admin_password', 'seo_title', 'seo_desc'].forEach(k => {
                     if(document.getElementById(`setting_${k}`)) document.getElementById(`setting_${k}`).value = s[k] || '';
                 });
                 
                 ['about_short', 'about_full', 'vision', 'mission'].forEach(k => {
                     if(document.getElementById(`setting_${k}`)) $(`#setting_${k}`).summernote('code', s[k] || '');
                 });
-
-                if (s.site_logo) {
-                    const sl = document.getElementById('setting_site_logo');
-                    if (sl) {
-                        sl.value = s.site_logo;
-                        document.getElementById('site-logo-preview').src = s.site_logo;
-                        document.getElementById('sidebar-logo').src = s.site_logo;
-                    }
-                }
 
                 renderDynamicList('phones-container', s.contact_phones || s.contact_phone, 'phone');
                 renderDynamicList('emails-container', s.contact_emails || s.contact_email, 'email');
