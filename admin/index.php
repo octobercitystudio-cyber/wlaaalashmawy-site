@@ -39,31 +39,31 @@
             <div class="col-md-2 sidebar">
                 <h4 class="mb-4 text-warning text-center">اللوحة الإدارية</h4>
                 <ul class="nav flex-column">
-                    <li class="nav-item mb-2">
-                        <a class="nav-link active" onclick="switchTab('settings')">إعدادات الموقع الأساسية</a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a class="nav-link active" onclick="switchTab('settings')">إعدادات ونصوص الموقع</a>
-                    </li>
-                    <li class="nav-item mb-2">
+                    <h6 class="text-light mt-3 mb-2 px-3 fw-bold" style="opacity: 0.6;">إدارة المحتوى (الصفحات)</h6>
+                    <li class="nav-item mb-1">
                         <a class="nav-link" onclick="switchTab('articles')">المقالات</a>
                     </li>
-                    <li class="nav-item mb-2">
+                    <li class="nav-item mb-1">
                         <a class="nav-link" onclick="switchTab('services')">الخدمات</a>
                     </li>
-                    <li class="nav-item mb-2">
+                    <li class="nav-item mb-1">
                         <a class="nav-link" onclick="switchTab('sectors')">القطاعات</a>
                     </li>
-                    <li class="nav-item mb-2">
-                        <a class="nav-link" onclick="switchTab('features')">لماذا تختارنا (المميزات)</a>
+                    <li class="nav-item mb-1">
+                        <a class="nav-link" onclick="switchTab('features')">المميزات (لماذا تختارنا)</a>
                     </li>
-                    <li class="nav-item mb-2">
+                    <li class="nav-item mb-1">
                         <a class="nav-link" onclick="switchTab('stats')">الإحصائيات</a>
                     </li>
-                    <li class="nav-item mb-2">
+                    <li class="nav-item mb-1">
                         <a class="nav-link" onclick="switchTab('testimonials')">آراء العملاء</a>
                     </li>
-                    <li class="nav-item mb-2">
+
+                    <h6 class="text-light mt-4 mb-2 px-3 fw-bold" style="opacity: 0.6;">الإعدادات العامة</h6>
+                    <li class="nav-item mb-1">
+                        <a class="nav-link active" onclick="switchTab('settings')">إعدادات ونصوص الموقع</a>
+                    </li>
+                    <li class="nav-item mb-1">
                         <a class="nav-link" onclick="switchTab('media')">مكتبة الصور</a>
                     </li>
 
@@ -209,19 +209,19 @@
                             <form id="settings-form">
                                 <div class="mb-3">
                                     <label class="form-label text-gold fw-bold">نبذة عن الشركة (في الصفحة الرئيسية)</label>
-                                    <textarea class="form-control" id="setting_about_short" rows="3"></textarea>
+                                    <textarea class="form-control tinymce-settings" id="setting_about_short" rows="3"></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label text-gold fw-bold">عن الشركة (في صفحة من نحن)</label>
-                                    <textarea class="form-control" id="setting_about_full" rows="6"></textarea>
+                                    <textarea class="form-control tinymce-settings" id="setting_about_full" rows="6"></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label text-gold fw-bold">الرؤية</label>
-                                    <textarea class="form-control" id="setting_vision" rows="3"></textarea>
+                                    <textarea class="form-control tinymce-settings" id="setting_vision" rows="3"></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label text-gold fw-bold">الرسالة</label>
-                                    <textarea class="form-control" id="setting_mission" rows="3"></textarea>
+                                    <textarea class="form-control tinymce-settings" id="setting_mission" rows="3"></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label text-gold fw-bold">رقم الهاتف الأساسي</label>
@@ -290,7 +290,10 @@
 
                     <div class="mb-3" id="div-image" style="display:none;">
                         <label>رابط الصورة</label>
-                        <input type="text" class="form-control" id="item-image" value="/images/placeholder.jpg">
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="item-image" value="/images/placeholder.jpg">
+                            <button class="btn btn-outline-secondary" type="button" onclick="openMediaPicker('item-image')">اختر صورة</button>
+                        </div>
                     </div>
 
                     <div class="mb-3" id="div-description" style="display:none;">
@@ -312,32 +315,60 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Media Picker Modal -->
+    <div class="modal fade" id="mediaPickerModal" tabindex="-1" style="z-index: 1060;">
+        <div class="modal-dialog modal-xl modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">اختر صورة من المكتبة</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="media-picker-gallery" class="row g-3">
+                        <div class="col-12 text-center">جاري التحميل...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <script>
         const API_URL = '/api';
         let dataStore = { articles: [], services: [], sectors: [], features: [], stats: [], testimonials: [] };
         let modal;
+        let mediaPickerModal;
+        let mediaPickerTargetInputId = null;
+        let tinyMcePickerCallback = null;
 
         document.addEventListener('DOMContentLoaded', () => {
             modal = new bootstrap.Modal(document.getElementById('genericModal'));
+            mediaPickerModal = new bootstrap.Modal(document.getElementById('mediaPickerModal'));
             if(localStorage.getItem('token')) {
                 showDashboard();
             }
             
-            tinymce.init({
-                selector: '#item-content',
+            const tinymceOptions = {
                 height: 400,
                 directionality: 'rtl',
                 plugins: 'advlist autolink lists link image media charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime table',
                 toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | removeformat',
                 images_upload_url: '/api/upload.php',
                 automatic_uploads: true,
+                content_style: "@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap'); body { font-family: 'Cairo', sans-serif; font-size: 1.1rem; line-height: 1.8; color: #333; }",
                 file_picker_types: 'image media',
+                file_picker_callback: function (callback, value, meta) {
+                    tinyMcePickerCallback = callback;
+                    openMediaPicker(null, true);
+                },
                 setup: function (editor) {
                     editor.on('change', function () {
                         editor.save();
                     });
                 }
-            });
+            };
+            
+            tinymce.init({ ...tinymceOptions, selector: '#item-content' });
+            tinymce.init({ ...tinymceOptions, selector: '.tinymce-settings', height: 250 });
         });
 
         function showDashboard() {
@@ -453,6 +484,42 @@
                     `;
                 });
             } catch(e) { console.error('Error loading media', e); }
+        }
+
+        async function openMediaPicker(targetId, isTinyMCE = false) {
+            mediaPickerTargetInputId = targetId;
+            mediaPickerModal.show();
+            
+            const gallery = document.getElementById('media-picker-gallery');
+            gallery.innerHTML = '<div class="col-12 text-center">جاري التحميل...</div>';
+            try {
+                const res = await fetch(`${API_URL}/media.php`, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+                const files = await res.json();
+                gallery.innerHTML = '';
+                if(files.length === 0) {
+                    gallery.innerHTML = '<div class="col-12 text-center text-muted">لا توجد صور مرفوعة بعد. ارفع صورة أولاً من قسم مكتبة الصور.</div>';
+                    return;
+                }
+                files.forEach(file => {
+                    gallery.innerHTML += `
+                        <div class="col-md-2 col-sm-3 col-4">
+                            <div class="card h-100" style="cursor: pointer;" onclick="selectMediaForPicker('${file.url}', ${isTinyMCE})">
+                                <img src="${file.url}" class="card-img-top" alt="${file.name}" style="height: 100px; object-fit: cover;">
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch(e) { console.error('Error loading media', e); }
+        }
+
+        function selectMediaForPicker(url, isTinyMCE) {
+            if(isTinyMCE && tinyMcePickerCallback) {
+                tinyMcePickerCallback(url, { alt: 'صورة' });
+                tinyMcePickerCallback = null;
+            } else if(mediaPickerTargetInputId) {
+                document.getElementById(mediaPickerTargetInputId).value = url;
+            }
+            mediaPickerModal.hide();
         }
 
         function copyToClipboard(text) {
@@ -611,7 +678,7 @@
             const typePlural = type + 's';
             const id = document.getElementById('item-id').value;
             
-            if(tinymce.get('item-content')) tinymce.triggerSave(); // Ensure textarea has latest content
+            tinymce.triggerSave(); // Ensure all textareas have latest content from TinyMCE
             
             let data = { id: id };
             if(type === 'stat') {

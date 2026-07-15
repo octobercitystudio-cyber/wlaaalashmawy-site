@@ -20,6 +20,32 @@ if ($method == 'OPTIONS') {
     exit;
 }
 
+function compressImage($source, $destination, $quality) {
+    $info = getimagesize($source);
+    if ($info['mime'] == 'image/jpeg') 
+        $image = imagecreatefromjpeg($source);
+    elseif ($info['mime'] == 'image/gif') 
+        $image = imagecreatefromgif($source);
+    elseif ($info['mime'] == 'image/png') 
+        $image = imagecreatefrompng($source);
+    elseif ($info['mime'] == 'image/webp')
+        $image = imagecreatefromwebp($source);
+    else return false;
+
+    // Save image with compression
+    if ($info['mime'] == 'image/png') {
+        // PNG compression is 0-9
+        $pngQuality = ($quality - 100) / 11.111111;
+        $pngQuality = round(abs($pngQuality));
+        imagepng($image, $destination, $pngQuality);
+    } else {
+        imagejpeg($image, $destination, $quality); // Convert to JPEG for best compression if possible, or keep format
+    }
+    
+    imagedestroy($image);
+    return true;
+}
+
 if ($method == 'POST') {
     checkAuth();
     
@@ -29,7 +55,6 @@ if ($method == 'POST') {
         mkdir($uploadDir, 0777, true);
     }
     
-    // Check if it's a TinyMCE upload (uses 'file') or custom upload (uses 'image')
     $fileKey = isset($_FILES['file']) ? 'file' : (isset($_FILES['image']) ? 'image' : null);
     
     if (!$fileKey || $_FILES[$fileKey]['error'] !== UPLOAD_ERR_OK) {
@@ -48,21 +73,23 @@ if ($method == 'POST') {
         exit;
     }
     
-    // Generate a unique filename
-    $filename = uniqid('img_') . '.' . $ext;
+    $filename = uniqid('img_') . '.' . ($ext === 'svg' ? 'svg' : 'jpg'); // Convert to JPG to save space unless SVG
     $targetPath = $uploadDir . $filename;
     
-    if (move_uploaded_file($_FILES[$fileKey]['tmp_name'], $targetPath)) {
-        $url = '/images/uploads/' . $filename;
-        // TinyMCE expects { location: 'url' }
-        echo json_encode([
-            'success' => true,
-            'location' => $url,
-            'url' => $url
-        ]);
+    if ($ext === 'svg') {
+        if (move_uploaded_file($_FILES[$fileKey]['tmp_name'], $targetPath)) {
+            $url = '/images/uploads/' . $filename;
+            echo json_encode(['success' => true, 'location' => $url, 'url' => $url]);
+        }
     } else {
-        http_response_code(500);
-        echo json_encode(['error' => 'Failed to move uploaded file']);
+        // Compress image (75% quality)
+        if (compressImage($_FILES[$fileKey]['tmp_name'], $targetPath, 75)) {
+            $url = '/images/uploads/' . $filename;
+            echo json_encode(['success' => true, 'location' => $url, 'url' => $url]);
+        } else {
+            http_response_code(500);
+            echo json_encode(['error' => 'Failed to compress and save image']);
+        }
     }
 }
 ?>
