@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة التحكم | وليد العشماوي</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; }
         .sidebar { background: #005bab; color: white; min-height: 100vh; padding: 20px; }
@@ -42,10 +43,7 @@
                         <a class="nav-link active" onclick="switchTab('settings')">إعدادات الموقع الأساسية</a>
                     </li>
                     <li class="nav-item mb-2">
-                        <a class="nav-link" onclick="switchTab('about')">صفحة "من نحن"</a>
-                    </li>
-                    <li class="nav-item mb-2">
-                        <a class="nav-link" onclick="switchTab('contact')">صفحة "تواصل معنا"</a>
+                        <a class="nav-link active" onclick="switchTab('settings')">إعدادات ونصوص الموقع</a>
                     </li>
                     <li class="nav-item mb-2">
                         <a class="nav-link" onclick="switchTab('articles')">المقالات</a>
@@ -65,6 +63,10 @@
                     <li class="nav-item mb-2">
                         <a class="nav-link" onclick="switchTab('testimonials')">آراء العملاء</a>
                     </li>
+                    <li class="nav-item mb-2">
+                        <a class="nav-link" onclick="switchTab('media')">مكتبة الصور</a>
+                    </li>
+
                     
                     <hr class="border-light opacity-50 my-4">
                     <li class="nav-item mb-2">
@@ -78,91 +80,9 @@
             
             <div class="col-md-10 p-5">
                 
-                <!-- Settings Section -->
-                <div id="sec-settings" class="section-container active">
-                    <h2>إعدادات الموقع الأساسية</h2>
-                    <div class="card mt-4">
-                        <div class="card-body">
-                            <form id="settings-form">
-                                <div class="mb-3">
-                                    <label>عنوان الصفحة الرئيسية</label>
-                                    <input type="text" class="form-control" id="set-hero-title" name="hero_title">
-                                </div>
-                                <div class="mb-3">
-                                    <label>نص الصفحة الرئيسية الفرعي</label>
-                                    <textarea class="form-control" id="set-hero-sub" name="hero_subtitle" rows="3"></textarea>
-                                </div>
-                                <button type="button" class="btn btn-gold mt-3" onclick="saveSettings()">حفظ الإعدادات</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- About Us Section -->
-                <div id="sec-about" class="section-container">
-                    <h2>إدارة صفحة "من نحن"</h2>
-                    <div class="card mt-4">
-                        <div class="card-body">
-                            <form id="about-form">
-                                <div class="mb-3">
-                                    <label>نص "من نحن" المختصر (يظهر في الرئيسية)</label>
-                                    <textarea class="form-control" id="set-about-short" name="about_short" rows="4"></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label>نص "من نحن" الكامل (يظهر في صفحة من نحن)</label>
-                                    <textarea class="form-control" id="set-about-full" name="about_full" rows="6"></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label>الرؤية</label>
-                                    <textarea class="form-control" id="set-vision" name="vision" rows="3"></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label>الرسالة</label>
-                                    <textarea class="form-control" id="set-mission" name="mission" rows="3"></textarea>
-                                </div>
-                                <button type="button" class="btn btn-gold mt-3" onclick="saveSettings()">حفظ صفحة من نحن</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- Contact Us Section -->
-                <div id="sec-contact" class="section-container">
-                    <h2>إدارة صفحة "تواصل معنا"</h2>
-                    <div class="card mt-4">
-                        <div class="card-body">
-                            <form id="contact-form">
-                                <div class="row">
-                                    <div class="col-md-6 mb-3">
-                                        <label>رقم الهاتف الأساسي</label>
-                                        <input type="text" class="form-control" id="set-phone" name="contact_phone">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label>رقم الواتساب</label>
-                                        <input type="text" class="form-control" id="set-whatsapp" name="contact_whatsapp">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label>البريد الإلكتروني</label>
-                                        <input type="email" class="form-control" id="set-email" name="contact_email">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label>العنوان</label>
-                                        <input type="text" class="form-control" id="set-address" name="contact_address">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label>رابط الفيسبوك</label>
-                                        <input type="text" class="form-control" id="set-facebook" name="social_facebook">
-                                    </div>
-                                    <div class="col-md-6 mb-3">
-                                        <label>رابط لينكد إن</label>
-                                        <input type="text" class="form-control" id="set-linkedin" name="social_linkedin">
-                                    </div>
-                                </div>
-                                <button type="button" class="btn btn-gold mt-3" onclick="saveSettings()">حفظ بيانات التواصل</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
+
 
                 <!-- Articles Section -->
                 <div id="sec-articles" class="section-container">
@@ -260,6 +180,78 @@
                     </div>
                 </div>
 
+                <!-- Media Library Section -->
+                <div id="sec-media" class="section-container">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2>مكتبة الصور</h2>
+                        <div>
+                            <input type="file" id="media-upload-input" style="display: none;" accept="image/*" onchange="handleMediaUpload(this)">
+                            <button class="btn btn-gold" onclick="document.getElementById('media-upload-input').click()">+ رفع صورة جديدة</button>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <div id="media-gallery" class="row g-3">
+                                <!-- Media items will be loaded here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Section -->
+                <div id="sec-settings" class="section-container active">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h2>إعدادات ونصوص الموقع</h2>
+                        <button class="btn btn-gold" onclick="saveSettings()">حفظ الإعدادات</button>
+                    </div>
+                    <div class="card">
+                        <div class="card-body">
+                            <form id="settings-form">
+                                <div class="mb-3">
+                                    <label class="form-label text-gold fw-bold">نبذة عن الشركة (في الصفحة الرئيسية)</label>
+                                    <textarea class="form-control" id="setting_about_short" rows="3"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label text-gold fw-bold">عن الشركة (في صفحة من نحن)</label>
+                                    <textarea class="form-control" id="setting_about_full" rows="6"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label text-gold fw-bold">الرؤية</label>
+                                    <textarea class="form-control" id="setting_vision" rows="3"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label text-gold fw-bold">الرسالة</label>
+                                    <textarea class="form-control" id="setting_mission" rows="3"></textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label text-gold fw-bold">رقم الهاتف الأساسي</label>
+                                    <input type="text" class="form-control" id="setting_contact_phone" dir="ltr" />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label text-gold fw-bold">رقم الواتساب</label>
+                                    <input type="text" class="form-control" id="setting_contact_whatsapp" dir="ltr" />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label text-gold fw-bold">البريد الإلكتروني</label>
+                                    <input type="email" class="form-control" id="setting_contact_email" dir="ltr" />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label text-gold fw-bold">العنوان</label>
+                                    <input type="text" class="form-control" id="setting_contact_address" />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label text-gold fw-bold">رابط الفيسبوك</label>
+                                    <input type="text" class="form-control" id="setting_social_facebook" dir="ltr" />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label text-gold fw-bold">رابط لينكد إن</label>
+                                    <input type="text" class="form-control" id="setting_social_linkedin" dir="ltr" />
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
@@ -330,6 +322,22 @@
             if(localStorage.getItem('token')) {
                 showDashboard();
             }
+            
+            tinymce.init({
+                selector: '#item-content',
+                height: 400,
+                directionality: 'rtl',
+                plugins: 'advlist autolink lists link image media charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime table',
+                toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | removeformat',
+                images_upload_url: '/api/upload.php',
+                automatic_uploads: true,
+                file_picker_types: 'image media',
+                setup: function (editor) {
+                    editor.on('change', function () {
+                        editor.save();
+                    });
+                }
+            });
         });
 
         function showDashboard() {
@@ -364,12 +372,12 @@
             location.reload();
         }
 
-        function switchTab(tabName) {
+        function switchTab(tabId) {
             document.querySelectorAll('.section-container').forEach(el => el.classList.remove('active'));
             document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
             
-            document.getElementById('sec-' + tabName).classList.add('active');
-            event.target.classList.add('active');
+            document.getElementById('sec-' + tabId).classList.add('active');
+            if(tabId === 'media') loadMedia();
         }
 
         async function loadAllData() {
@@ -383,23 +391,24 @@
         }
 
         async function loadSettings() {
-            const res = await fetch(API_URL + '/settings.php');
-            const settings = await res.json();
-            for(let key in settings) {
-                const el = document.querySelector(`[name="${key}"]`);
-                if(el) el.value = settings[key];
-            }
+            try {
+                const res = await fetch(`${API_URL}/settings.php`, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+                const settings = await res.json();
+                for(let key in settings) {
+                    const el = document.getElementById(`setting_${key}`);
+                    if(el) el.value = settings[key];
+                }
+            } catch(e) { console.error('Error loading settings', e); }
         }
 
         async function saveSettings() {
-            const formData1 = new FormData(document.getElementById('settings-form'));
-            const formData2 = new FormData(document.getElementById('about-form'));
-            const formData3 = new FormData(document.getElementById('contact-form'));
-            
             let data = {};
-            for(let [k,v] of formData1.entries()) data[k] = v;
-            for(let [k,v] of formData2.entries()) data[k] = v;
-            for(let [k,v] of formData3.entries()) data[k] = v;
+            // The settings form uses specific IDs mapped to setting keys
+            const keys = ['hero_title', 'hero_subtitle', 'about_short', 'about_full', 'vision', 'mission', 'contact_phone', 'contact_whatsapp', 'contact_email', 'contact_address', 'social_facebook', 'social_linkedin'];
+            keys.forEach(k => {
+                const el = document.getElementById(`setting_${k}`);
+                if(el) data[k] = el.value;
+            });
             
             try {
                 const res = await fetch(API_URL + '/settings.php', {
@@ -410,9 +419,80 @@
                     },
                     body: JSON.stringify(data)
                 });
-                if(res.ok) alert('تم حفظ الإعدادات بنجاح!');
-                else alert('حدث خطأ أثناء الحفظ');
+                if(res.ok) {
+                    alert('تم حفظ الإعدادات بنجاح!');
+                } else {
+                    alert('حدث خطأ أثناء الحفظ');
+                }
             } catch(e) { alert('خطأ في الاتصال'); }
+        }
+
+        async function loadMedia() {
+            const gallery = document.getElementById('media-gallery');
+            gallery.innerHTML = '<div class="col-12 text-center">جاري التحميل...</div>';
+            try {
+                const res = await fetch(`${API_URL}/media.php`, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+                const files = await res.json();
+                gallery.innerHTML = '';
+                if(files.length === 0) {
+                    gallery.innerHTML = '<div class="col-12 text-center text-muted">لا توجد صور مرفوعة بعد.</div>';
+                    return;
+                }
+                files.forEach(file => {
+                    gallery.innerHTML += `
+                        <div class="col-md-3 col-sm-4 col-6">
+                            <div class="card h-100">
+                                <img src="${file.url}" class="card-img-top" alt="${file.name}" style="height: 150px; object-fit: cover;">
+                                <div class="card-body p-2 text-center">
+                                    <small class="d-block text-truncate mb-2" title="${file.name}">${file.name}</small>
+                                    <button class="btn btn-sm btn-outline-primary w-100 mb-1" onclick="copyToClipboard('${file.url}')">نسخ الرابط</button>
+                                    <button class="btn btn-sm btn-outline-danger w-100" onclick="deleteMedia('${file.name}')">حذف</button>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+            } catch(e) { console.error('Error loading media', e); }
+        }
+
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(() => alert('تم نسخ الرابط!'));
+        }
+
+        async function deleteMedia(filename) {
+            if(!confirm('هل أنت متأكد من حذف هذه الصورة؟')) return;
+            try {
+                await fetch(`${API_URL}/media.php?file=${encodeURIComponent(filename)}`, {
+                    method: 'DELETE',
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+                });
+                loadMedia();
+            } catch(e) { alert('خطأ في الحذف'); }
+        }
+
+        async function handleMediaUpload(input) {
+            if(!input.files || input.files.length === 0) return;
+            const file = input.files[0];
+            const formData = new FormData();
+            formData.append('image', file);
+            
+            try {
+                const res = await fetch(`${API_URL}/upload.php`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
+                    body: formData
+                });
+                const data = await res.json();
+                if(data.success) {
+                    alert('تم الرفع بنجاح!');
+                    loadMedia();
+                } else {
+                    alert(data.error || 'خطأ في الرفع');
+                }
+            } catch(e) {
+                alert('خطأ في الرفع');
+            }
+            input.value = '';
         }
 
         async function loadItems(type) {
@@ -456,8 +536,10 @@
             document.getElementById('item-id').value = '';
             document.getElementById('item-type').value = type;
             document.getElementById('item-title').value = '';
-            document.getElementById('item-content').value = '';
             document.getElementById('item-icon').value = '';
+            
+            if(tinymce.get('item-content')) tinymce.get('item-content').setContent('');
+            document.getElementById('item-content').value = '';
             
             document.getElementById('div-category').style.display = type === 'article' ? 'block' : 'none';
             document.getElementById('div-image').style.display = (type === 'article' || type === 'sector' || type === 'service') ? 'block' : 'none';
@@ -512,7 +594,8 @@
                 document.getElementById('item-content').value = item.content;
             } else {
                 document.getElementById('item-title').value = item.title;
-                document.getElementById('item-content').value = item.content;
+                if(tinymce.get('item-content')) tinymce.get('item-content').setContent(item.content || '');
+                document.getElementById('item-content').value = item.content || '';
             }
             
             if(type === 'article') document.getElementById('item-category').value = item.category;
@@ -527,6 +610,8 @@
             const type = document.getElementById('item-type').value;
             const typePlural = type + 's';
             const id = document.getElementById('item-id').value;
+            
+            if(tinymce.get('item-content')) tinymce.triggerSave(); // Ensure textarea has latest content
             
             let data = { id: id };
             if(type === 'stat') {
