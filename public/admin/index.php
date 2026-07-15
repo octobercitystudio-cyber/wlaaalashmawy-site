@@ -72,9 +72,6 @@
 
                     
                     <hr class="border-light opacity-50 my-4">
-                    <li class="nav-item mb-2">
-                        <button class="btn btn-success w-100 mb-2" onclick="deploySite()">🚀 نشر التعديلات للموقع</button>
-                    </li>
                     <li class="nav-item mt-auto">
                         <a class="nav-link text-center text-danger" onclick="logout()">تسجيل الخروج</a>
                     </li>

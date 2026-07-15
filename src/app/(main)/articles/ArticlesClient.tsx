@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
@@ -8,6 +8,22 @@ export default function ArticlesClient({ initialArticles }: { initialArticles: a
   const [articles, setArticles] = useState<any[]>(initialArticles);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
+    fetch(`${apiUrl}/api/articles.php`)
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setArticles(data);
+          // If no article is selected, or if selected article doesn't exist anymore, select the first one
+          if (data.length > 0 && !data.find(a => a.id === selectedArticleId)) {
+             setSelectedArticleId(data[0].id);
+          }
+        }
+      })
+      .catch(err => console.error("Failed to fetch fresh articles", err));
+  }, []);
 
   const categories = ['الكل', 'الاستشارات المحاسبية', 'الاستشارات الضريبية', 'المراجعة والتدقيق', 'تأسيس الشركات', 'الاستشارات المالية'];
 
@@ -195,9 +211,10 @@ export default function ArticlesClient({ initialArticles }: { initialArticles: a
                   </div>
                 )}
                 
-                <p style={{ fontSize: "1.2rem", lineHeight: "2.2", color: "var(--color-text-main)", opacity: 0.9 }}>
-                  {selectedArticle.content}
-                </p>
+                <div 
+                  style={{ fontSize: "1.2rem", lineHeight: "2.2", color: "var(--color-text-main)", opacity: 0.9, textAlign: "justify" }}
+                  dangerouslySetInnerHTML={{ __html: selectedArticle.content }}
+                />
 
                 <div style={{ marginTop: "4rem", paddingTop: "2rem", borderTop: "1px solid var(--color-border)" }}>
                   <h4 style={{ marginBottom: "1rem", color: "var(--color-primary)" }}>هل لديك استفسار بخصوص هذا الموضوع؟</h4>
