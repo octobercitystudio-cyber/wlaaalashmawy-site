@@ -12,22 +12,24 @@ export default function ArticlesClient({ initialArticles }: { initialArticles: a
   const categories = ['الكل', 'الاستشارات المحاسبية', 'الاستشارات الضريبية', 'المراجعة والتدقيق', 'تأسيس الشركات', 'الاستشارات المالية'];
 
   const [selectedTab, setSelectedTab] = useState('الكل');
-  const [selectedArticleId, setSelectedArticleId] = useState(initialArticles.length > 0 ? initialArticles[0].id : 0);
+  const [selectedArticleId, setSelectedArticleId] = useState(initialArticles && initialArticles.length > 0 ? initialArticles[0].id : 0);
   const [searchQuery, setSearchQuery] = useState('');
 
-  const filteredArticles = articles.filter(a => {
+  const safeArticles = Array.isArray(articles) ? articles : [];
+
+  const filteredArticles = safeArticles.filter(a => {
     const matchesTab = selectedTab === 'الكل' || a.category === selectedTab;
-    const matchesSearch = a.title.includes(searchQuery);
+    const matchesSearch = a?.title?.includes(searchQuery);
     return matchesTab && matchesSearch;
   });
 
-  const selectedArticle = articles.find(a => a.id === selectedArticleId);
+  const selectedArticle = safeArticles.find(a => a.id === selectedArticleId);
 
   const handleTabChange = (tab: string) => {
     setSelectedTab(tab);
-    const newFiltered = articles.filter(a => {
+    const newFiltered = safeArticles.filter(a => {
       const matchesTab = tab === 'الكل' || a.category === tab;
-      const matchesSearch = a.title.includes(searchQuery);
+      const matchesSearch = a?.title?.includes(searchQuery);
       return matchesTab && matchesSearch;
     });
     if (newFiltered.length > 0) {
@@ -42,9 +44,9 @@ export default function ArticlesClient({ initialArticles }: { initialArticles: a
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value;
     setSearchQuery(query);
-    const newFiltered = articles.filter(a => {
+    const newFiltered = safeArticles.filter(a => {
       const matchesTab = selectedTab === 'الكل' || a.category === selectedTab;
-      const matchesSearch = a.title.includes(query);
+      const matchesSearch = a?.title?.includes(query);
       return matchesTab && matchesSearch;
     });
     if (newFiltered.length > 0) {

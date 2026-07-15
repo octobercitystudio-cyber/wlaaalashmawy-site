@@ -12,8 +12,10 @@ export async function fetchSettings() {
     });
     clearTimeout(timeoutId);
     if(res.ok) return await res.json();
+    return {};
   } catch (error) {
     console.error("Failed to fetch settings:", error);
+    return {};
   }
   return {};
 }
