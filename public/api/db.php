@@ -52,6 +52,13 @@ try {
             setting_key VARCHAR(100) PRIMARY KEY,
             setting_value TEXT NOT NULL
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+        CREATE TABLE IF NOT EXISTS visits (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            page_path VARCHAR(255) NOT NULL,
+            visitor_id VARCHAR(100) NOT NULL,
+            visited_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     ");
 
 } catch (PDOException $e) {
