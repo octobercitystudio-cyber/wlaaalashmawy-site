@@ -48,9 +48,10 @@ export default async function Home() {
         <div className="container grid grid-cols-1 md-grid-cols-2 gap-lg items-center">
           <div>
             <h2 className="text-gold">لماذا تختارنا؟</h2>
-            <p style={{ fontSize: "1.1rem" }}>
-              {settings.about_short || "نحن لا نقدم أرقاماً فحسب، بل نقدم رؤية مالية عميقة. من خلال أحدث المنهجيات والتقنيات المحاسبية، نضمن لك الأمان المالي والدقة المتناهية."}
-            </p>
+            <div 
+              style={{ fontSize: "1.1rem" }}
+              dangerouslySetInnerHTML={{ __html: settings.about_short || "نحن لا نقدم أرقاماً فحسب، بل نقدم رؤية مالية عميقة. من خلال أحدث المنهجيات والتقنيات المحاسبية، نضمن لك الأمان المالي والدقة المتناهية." }}
+            />
             <ul className="flex flex-col gap-sm" style={{ marginTop: "var(--spacing-md)" }}>
               {features.map((feature: any, index: number) => (
                 <li key={feature.id || index} className="flex items-center gap-sm" style={{ fontSize: "1.1rem" }}>
