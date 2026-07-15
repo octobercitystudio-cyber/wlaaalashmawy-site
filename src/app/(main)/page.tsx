@@ -49,7 +49,7 @@ export default async function Home() {
           <div>
             <h2 className="text-gold">لماذا تختارنا؟</h2>
             <p style={{ fontSize: "1.1rem" }}>
-              نحن لا نقدم أرقاماً فحسب، بل نقدم رؤية مالية عميقة. من خلال أحدث المنهجيات والتقنيات المحاسبية، نضمن لك الأمان المالي والدقة المتناهية.
+              {settings.about_short || "نحن لا نقدم أرقاماً فحسب، بل نقدم رؤية مالية عميقة. من خلال أحدث المنهجيات والتقنيات المحاسبية، نضمن لك الأمان المالي والدقة المتناهية."}
             </p>
             <ul className="flex flex-col gap-sm" style={{ marginTop: "var(--spacing-md)" }}>
               {features.map((feature: any, index: number) => (
@@ -117,7 +117,7 @@ export default async function Home() {
           <p style={{ maxWidth: "600px", margin: "0 auto var(--spacing-md)" }}>
             احجز استشارتك المجانية اليوم، ودع خبراءنا يرشدونك نحو الاستقرار المالي والنمو المستدام.
           </p>
-          <a href="https://wa.me/201155729429?text=مرحباً،%20أود%20الاستفسار%20عن%20خدمات%20مكتب%20العشماوي." target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ padding: "1rem 2.5rem", fontSize: "1.2rem" }}>تواصل معنا الآن</a>
+          <a href={settings.whatsapp ? `https://wa.me/${settings.whatsapp.replace(/[^0-9]/g, '')}?text=مرحباً،%20أود%20الاستفسار%20عن%20خدمات%20مكتب%20العشماوي.` : "https://wa.me/201155729429?text=مرحباً،%20أود%20الاستفسار%20عن%20خدمات%20مكتب%20العشماوي."} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ padding: "1rem 2.5rem", fontSize: "1.2rem" }}>تواصل معنا الآن</a>
         </div>
       </section>
     </div>
