@@ -4,7 +4,13 @@ import { sectorsData } from "@/data/sectors";
 export async function fetchSettings() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://www.afc-cpa.com';
   try {
-    const res = await fetch(`${apiUrl}/api/settings.php`, { cache: 'force-cache' });
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 3000);
+    const res = await fetch(`${apiUrl}/api/settings.php`, { 
+        cache: 'force-cache',
+        signal: controller.signal
+    });
+    clearTimeout(timeoutId);
     if(res.ok) return await res.json();
   } catch (error) {
     console.error("Failed to fetch settings:", error);
@@ -15,7 +21,13 @@ export async function fetchSettings() {
 export async function fetchServices() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://www.afc-cpa.com';
   try {
-    const res = await fetch(`${apiUrl}/api/services.php`, { cache: 'force-cache' });
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 3000);
+    const res = await fetch(`${apiUrl}/api/services.php`, { 
+        cache: 'force-cache',
+        signal: controller.signal
+    });
+    clearTimeout(timeoutId);
     if(res.ok) {
       const data = await res.json();
       if (data && data.length > 0) return data;
@@ -37,7 +49,13 @@ export async function fetchServices() {
 export async function fetchSectors() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://www.afc-cpa.com';
   try {
-    const res = await fetch(`${apiUrl}/api/sectors.php`, { cache: 'force-cache' });
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 3000);
+    const res = await fetch(`${apiUrl}/api/sectors.php`, { 
+        cache: 'force-cache',
+        signal: controller.signal
+    });
+    clearTimeout(timeoutId);
     if(res.ok) {
       const data = await res.json();
       if (data && data.length > 0) return data;
