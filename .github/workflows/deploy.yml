@@ -53,3 +53,8 @@ jobs:
           local-dir: ./out/
           server-dir: /public_html/
           danger-file-transfer-protocol: ftp
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            images/uploads/**
