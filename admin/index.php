@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لوحة التحكم | وليد العشماوي</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css" rel="stylesheet">
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f8f9fa; }
         .sidebar { background: #005bab; color: white; min-height: 100vh; padding: 20px; }
@@ -210,19 +212,19 @@
                             <form id="settings-form">
                                 <div class="mb-3">
                                     <label class="form-label text-gold fw-bold">نبذة عن الشركة (في الصفحة الرئيسية)</label>
-                                    <textarea class="form-control tinymce-settings" id="setting_about_short" rows="3"></textarea>
+                                    <textarea class="form-control summernote-settings" id="setting_about_short" rows="3"></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label text-gold fw-bold">عن الشركة (في صفحة من نحن)</label>
-                                    <textarea class="form-control tinymce-settings" id="setting_about_full" rows="6"></textarea>
+                                    <textarea class="form-control summernote-settings" id="setting_about_full" rows="6"></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label text-gold fw-bold">الرؤية</label>
-                                    <textarea class="form-control tinymce-settings" id="setting_vision" rows="3"></textarea>
+                                    <textarea class="form-control summernote-settings" id="setting_vision" rows="3"></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label text-gold fw-bold">الرسالة</label>
-                                    <textarea class="form-control tinymce-settings" id="setting_mission" rows="3"></textarea>
+                                    <textarea class="form-control summernote-settings" id="setting_mission" rows="3"></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label text-gold fw-bold">رقم الهاتف الأساسي</label>
@@ -339,7 +341,7 @@
         let modal;
         let mediaPickerModal;
         let mediaPickerTargetInputId = null;
-        let tinyMcePickerCallback = null;
+        let activeSummernote = null;
 
         document.addEventListener('DOMContentLoaded', () => {
             modal = new bootstrap.Modal(document.getElementById('genericModal'));
@@ -348,28 +350,36 @@
                 showDashboard();
             }
             
-            const tinymceOptions = {
-                height: 400,
-                directionality: 'rtl',
-                plugins: 'advlist autolink lists link image media charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime table',
-                toolbar: 'undo redo | blocks | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image media | removeformat',
-                images_upload_url: '/api/upload.php',
-                automatic_uploads: true,
-                content_style: "@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap'); body { font-family: 'Cairo', sans-serif; font-size: 1.1rem; line-height: 1.8; color: #333; }",
-                file_picker_types: 'image media',
-                file_picker_callback: function (callback, value, meta) {
-                    tinyMcePickerCallback = callback;
-                    openMediaPicker(null, true);
-                },
-                setup: function (editor) {
-                    editor.on('change', function () {
-                        editor.save();
-                    });
+            const summernoteOptions = {
+                height: 300,
+                direction: 'rtl',
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'italic', 'underline', 'clear']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'customMedia', 'video']],
+                    ['view', ['fullscreen', 'codeview']]
+                ],
+                buttons: {
+                    customMedia: function (context) {
+                        var ui = $.summernote.ui;
+                        var button = ui.button({
+                            contents: '<i class="note-icon-picture"></i>',
+                            tooltip: 'إدراج صورة من المكتبة',
+                            click: function () {
+                                activeSummernote = context;
+                                openMediaPicker(null, true);
+                            }
+                        });
+                        return button.render();
+                    }
                 }
             };
             
-            tinymce.init({ ...tinymceOptions, selector: '#item-content' });
-            tinymce.init({ ...tinymceOptions, selector: '.tinymce-settings', height: 250 });
+            $('#item-content').summernote({ ...summernoteOptions, height: 400 });
+            $('.summernote-settings').summernote({ ...summernoteOptions, height: 250 });
         });
 
         function showDashboard() {
@@ -428,7 +438,13 @@
                 const settings = await res.json();
                 for(let key in settings) {
                     const el = document.getElementById(`setting_${key}`);
-                    if(el) el.value = settings[key];
+                    if(el) {
+                        if (el.classList.contains('summernote-settings')) {
+                            $(el).summernote('code', settings[key]);
+                        } else {
+                            el.value = settings[key];
+                        }
+                    }
                 }
             } catch(e) { console.error('Error loading settings', e); }
         }
@@ -439,7 +455,13 @@
             const keys = ['hero_title', 'hero_subtitle', 'about_short', 'about_full', 'vision', 'mission', 'contact_phone', 'contact_whatsapp', 'contact_email', 'contact_address', 'social_facebook', 'social_linkedin'];
             keys.forEach(k => {
                 const el = document.getElementById(`setting_${k}`);
-                if(el) data[k] = el.value;
+                if(el) {
+                    if (el.classList.contains('summernote-settings')) {
+                        data[k] = $(el).summernote('code');
+                    } else {
+                        data[k] = el.value;
+                    }
+                }
             });
             
             try {
@@ -513,10 +535,10 @@
             } catch(e) { console.error('Error loading media', e); }
         }
 
-        function selectMediaForPicker(url, isTinyMCE) {
-            if(isTinyMCE && tinyMcePickerCallback) {
-                tinyMcePickerCallback(url, { alt: 'صورة' });
-                tinyMcePickerCallback = null;
+        function selectMediaForPicker(url, isEditor) {
+            if(isEditor && activeSummernote) {
+                activeSummernote.invoke('editor.insertImage', url);
+                activeSummernote = null;
             } else if(mediaPickerTargetInputId) {
                 document.getElementById(mediaPickerTargetInputId).value = url;
             }
@@ -606,8 +628,7 @@
             document.getElementById('item-title').value = '';
             document.getElementById('item-icon').value = '';
             
-            if(tinymce.get('item-content')) tinymce.get('item-content').setContent('');
-            document.getElementById('item-content').value = '';
+            $('#item-content').summernote('code', '');
             
             document.getElementById('div-category').style.display = type === 'article' ? 'block' : 'none';
             document.getElementById('div-image').style.display = (type === 'article' || type === 'sector' || type === 'service') ? 'block' : 'none';
@@ -662,8 +683,7 @@
                 document.getElementById('item-content').value = item.content;
             } else {
                 document.getElementById('item-title').value = item.title;
-                if(tinymce.get('item-content')) tinymce.get('item-content').setContent(item.content || '');
-                document.getElementById('item-content').value = item.content || '';
+                $('#item-content').summernote('code', item.content || '');
             }
             
             if(type === 'article') document.getElementById('item-category').value = item.category;
@@ -679,8 +699,6 @@
             const typePlural = type + 's';
             const id = document.getElementById('item-id').value;
             
-            tinymce.triggerSave(); // Ensure all textareas have latest content from TinyMCE
-            
             let data = { id: id };
             if(type === 'stat') {
                 data.title = document.getElementById('item-title').value;
@@ -688,10 +706,10 @@
             } else if(type === 'testimonial') {
                 data.name = document.getElementById('item-title').value;
                 data.position = document.getElementById('item-icon').value;
-                data.content = document.getElementById('item-content').value;
+                data.content = $('#item-content').summernote('code');
             } else {
                 data.title = document.getElementById('item-title').value;
-                data.content = document.getElementById('item-content').value;
+                data.content = $('#item-content').summernote('code');
             }
             
             if(type === 'article') data.category = document.getElementById('item-category').value;
