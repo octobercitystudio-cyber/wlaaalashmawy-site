@@ -7,11 +7,11 @@ export default function Footer({ settings = {}, services = [], lang = "ar" }: { 
   try { emails = JSON.parse(settings.contact_emails); } catch(e) {}
   if (!emails || emails.length === 0) emails = [settings.contact_email || 'info@alashmawy-cpa.com'];
 
-  let phones = [];
+  let phones: string[] = [];
   try { phones = JSON.parse(settings.contact_phones); } catch(e) {}
-  if (!phones || phones.length === 0) phones = [settings.contact_phone || '01155729429 - 0238345397'];
+  if (!phones || phones.length === 0) phones = [settings.contact_phone || '01155729429', '0238345397'];
 
-  const address = (lang === "en" && settings.contact_address_en ? settings.contact_address_en : settings.contact_address) || (lang === "en" ? "204 Degla Maadi, next to Victoria School - Cairo - Egypt" : "شارع 204 دجلة المعادي بجوار مدرسة فيكتوريا - القاهرة - مصر");
+  const address = (lang === "en" && settings.contact_address_en ? settings.contact_address_en : settings.contact_address) || (lang === "en" ? "Office 204, 2nd Floor, Agyad View Mall - 6th of October - Giza - Egypt" : "مكتب 204 الدور الثاني مول اجياد فيو - ٦ اكتوبر - الجيزة - مصر");
   const dict = getDictionary(lang);
   const prefix = lang === "en" ? "/en" : "";
   

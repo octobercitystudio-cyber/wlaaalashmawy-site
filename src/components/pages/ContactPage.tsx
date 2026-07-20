@@ -9,14 +9,14 @@ export default async function ContactPage({ lang = "ar" }: { lang?: Lang }) {
   try { emails = JSON.parse(settings.contact_emails); } catch(e) {}
   if (!emails || emails.length === 0) emails = [settings.contact_email || 'info@alashmawy-cpa.com'];
 
-  let phones = [];
+  let phones: string[] = [];
   try { phones = JSON.parse(settings.contact_phones); } catch(e) {}
-  if (!phones || phones.length === 0) phones = [settings.contact_phone || '01155729429 - 0238345397'];
+  if (!phones || phones.length === 0) phones = [settings.contact_phone || '01155729429', '0238345397'];
 
-  const address = (lang === "en" && settings.contact_address_en ? settings.contact_address_en : settings.contact_address) || 'شارع 204 دجلة المعادي بجوار مدرسة فيكتوريا - القاهرة - مصر';
+  const address = (lang === "en" && settings.contact_address_en ? settings.contact_address_en : settings.contact_address) || (lang === "en" ? "Office 204, 2nd Floor, Agyad View Mall - 6th of October - Giza - Egypt" : "مكتب 204 الدور الثاني مول اجياد فيو - ٦ اكتوبر - الجيزة - مصر");
   
   // Default map
-  let map_url = settings.contact_map || "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3456.634354228498!2d31.2721869!3d29.9611843!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1458380e2270929b%3A0x6d90d81b8cc925e0!2z2YXYr9ix2LPYqSDZgdmK2YPYqtmI2LHZitinINin2YTYrdiv2YrYr9ip!5e0!3m2!1sar!2seg!4v1718228308119!5m2!1sar!2seg";
+  let map_url = settings.contact_map || `https://maps.google.com/maps?q=29.9607581,30.9246025&hl=${lang === "en" ? "en" : "ar"}&z=16&output=embed`;
   // Extract URL if user pasted the entire iframe tag
   if (map_url.includes('<iframe') && map_url.includes('src="')) {
     const match = map_url.match(/src="([^"]+)"/);
