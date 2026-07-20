@@ -36,13 +36,16 @@ elseif ($method == 'POST') {
         exit;
     }
     
-    $stmt = $pdo->prepare("INSERT INTO articles (title, date, category, image, content) VALUES (?, ?, ?, ?, ?)");
+    $stmt = $pdo->prepare("INSERT INTO articles (title, title_en, date, category, category_en, image, content, content_en) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
     $stmt->execute([
         $data['title'],
+        $data['title_en'] ?? '',
         $data['date'] ?? date('d M Y'),
         $data['category'] ?? 'عام',
+        $data['category_en'] ?? 'General',
         $data['image'] ?? '/images/articles/placeholder.jpg',
-        $data['content']
+        $data['content'],
+        $data['content_en'] ?? ''
     ]);
     
     echo json_encode(['success' => true, 'id' => $pdo->lastInsertId()]);
@@ -68,12 +71,15 @@ elseif ($method == 'PUT') {
         exit;
     }
     
-    $stmt = $pdo->prepare("UPDATE articles SET title=?, category=?, image=?, content=? WHERE id=?");
+    $stmt = $pdo->prepare("UPDATE articles SET title=?, title_en=?, category=?, category_en=?, image=?, content=?, content_en=? WHERE id=?");
     $stmt->execute([
         $data['title'],
+        $data['title_en'] ?? '',
         $data['category'],
+        $data['category_en'] ?? '',
         $data['image'],
         $data['content'],
+        $data['content_en'] ?? '',
         $data['id']
     ]);
     echo json_encode(['success' => true]);

@@ -33,11 +33,11 @@ elseif ($method == 'POST') {
         exit;
     }
     
-    $stmt = $pdo->prepare("INSERT INTO stats (title, value) VALUES (?, ?)");
+    $stmt = $pdo->prepare("INSERT INTO stats (title, value, title_en) VALUES (?, ?, ?)");
     $stmt->execute([
         $data['title'],
         $data['value']
-    ]);
+    , $data['title_en'] ?? '']);
     
     echo json_encode(['success' => true, 'id' => $pdo->lastInsertId()]);
 }
@@ -62,11 +62,10 @@ elseif ($method == 'PUT') {
         exit;
     }
     
-    $stmt = $pdo->prepare("UPDATE stats SET title=?, value=? WHERE id=?");
+    $stmt = $pdo->prepare("UPDATE stats SET title=?, value=?, title_en=? WHERE id=?");
     $stmt->execute([
         $data['title'],
-        $data['value'],
-        $data['id']
+        $data['value'], $data['title_en'] ?? '', $data['id']
     ]);
     echo json_encode(['success' => true]);
 }

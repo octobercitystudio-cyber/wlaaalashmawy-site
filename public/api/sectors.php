@@ -36,12 +36,15 @@ elseif ($method == 'POST') {
         exit;
     }
     
-    $stmt = $pdo->prepare("INSERT INTO sectors (title, image, description, content) VALUES (?, ?, ?, ?)");
+    $stmt = $pdo->prepare("INSERT INTO sectors (title, title_en, image, description, description_en, content, content_en) VALUES (?, ?, ?, ?, ?, ?, ?)");
     $stmt->execute([
         $data['title'],
+        $data['title_en'] ?? '',
         $data['image'] ?? '/images/sectors/placeholder.jpg',
         $data['description'] ?? '',
-        $data['content']
+        $data['description_en'] ?? '',
+        $data['content'],
+        $data['content_en'] ?? ''
     ]);
     
     echo json_encode(['success' => true, 'id' => $pdo->lastInsertId()]);
@@ -67,12 +70,15 @@ elseif ($method == 'PUT') {
         exit;
     }
     
-    $stmt = $pdo->prepare("UPDATE sectors SET title=?, image=?, description=?, content=? WHERE id=?");
+    $stmt = $pdo->prepare("UPDATE sectors SET title=?, title_en=?, image=?, description=?, description_en=?, content=?, content_en=? WHERE id=?");
     $stmt->execute([
         $data['title'],
+        $data['title_en'] ?? '',
         $data['image'],
         $data['description'],
+        $data['description_en'] ?? '',
         $data['content'],
+        $data['content_en'] ?? '',
         $data['id']
     ]);
     echo json_encode(['success' => true]);

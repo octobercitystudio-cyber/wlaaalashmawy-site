@@ -5,7 +5,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { servicesData } from "@/data/services";
 
-export default function ServicesCarousel({ services = [] }: { services?: any[] }) {
+import { Lang } from "@/lib/dictionary";
+
+export default function ServicesCarousel({ services = [], lang = "ar" }: { services?: any[], lang?: Lang }) {
   const data = services.length > 0 ? services : servicesData;
   const N = data.length;
   // Create 5 copies of the data to ensure we never run out of slides during rapid clicks
@@ -133,9 +135,9 @@ export default function ServicesCarousel({ services = [] }: { services?: any[] }
           style={{ 
             display: "flex", 
             transition: isTransitioning ? "transform 0.5s ease-in-out" : "none", 
-            // In RTL, positive translateX moves the container to the right,
-            // revealing items that are rendered to the left.
-            transform: `translateX(${currentIndex * (100 / itemsToShow)}%)` 
+            // In RTL, positive translateX moves the container to the right.
+            // In LTR, positive translateX moves the container to the right (offscreen), so we use negative.
+            transform: `translateX(${currentIndex * (100 / itemsToShow) * (lang === "en" ? -1 : 1)}%)` 
           }}
         >
           {extendedItems.map((service, idx) => (
@@ -160,25 +162,25 @@ export default function ServicesCarousel({ services = [] }: { services?: any[] }
                 <div style={{ position: "relative", width: "100%", height: "220px" }}>
                   <Image 
                     src={service.image} 
-                    alt={service.title.ar} 
+                    alt={(lang === "en" && service.title_en ? service.title_en : (service.title?.ar || service.title)) || "Service"} 
                     fill 
                     style={{ objectFit: "cover" }} 
                   />
                 </div>
                 <div style={{ padding: "1.5rem", display: "flex", flexDirection: "column", flexGrow: 1 }}>
                   <h3 style={{ fontSize: "1.4rem", marginBottom: "var(--spacing-sm)", color: "var(--color-primary)" }}>
-                    {service.title?.ar || service.title}
+                    {lang === "en" && service.title_en ? service.title_en : (service.title?.ar || service.title)}
                   </h3>
                   <p style={{ fontSize: "0.95rem", marginBottom: "1.5rem", flexGrow: 1 }}>
-                    {service.description || service.shortDesc?.ar}
+                    {lang === "en" && service.description_en ? service.description_en : (service.description || service.shortDesc?.ar)}
                   </p>
                   <div style={{ marginTop: "auto" }}>
                     <Link 
-                      href={`/services/${service.id}`} 
+                      href={lang === "en" ? `/en/services/${service.id}` : `/services/${service.id}`} 
                       className="btn btn-secondary" 
                       style={{ padding: "0.5rem 1.5rem", fontSize: "0.95rem", width: "100%" }}
                     >
-                      التفاصيل
+                      {lang === "en" ? "Details" : "التفاصيل"}
                     </Link>
                   </div>
                 </div>

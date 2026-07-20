@@ -4,7 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-export default function ArticlesClient({ initialArticles }: { initialArticles: any[] }) {
+import { Lang } from '@/lib/dictionary';
+export default function ArticlesClient({ initialArticles, lang = 'ar' }: { initialArticles: any[], lang?: Lang }) {
   const [articles, setArticles] = useState<any[]>(initialArticles);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -93,22 +94,26 @@ export default function ArticlesClient({ initialArticles }: { initialArticles: a
       `}} />
       <div className="container">
         <div className="text-center mb-xl">
-          <h1 className="text-gold" style={{ fontSize: "3rem", marginBottom: "var(--spacing-md)" }}>المقالات والمدونة</h1>
+          <h1 className="text-gold" style={{ fontSize: "3rem", marginBottom: "var(--spacing-md)" }}>
+            {lang === "en" ? "Blog & Articles" : "المقالات والمدونة"}
+          </h1>
           <p style={{ fontSize: "1.2rem", maxWidth: "800px", margin: "0 auto", color: "var(--color-text-main)", opacity: 0.9 }}>
-            ابقَ على اطلاع دائم بأحدث التطورات في عالم المحاسبة، الضرائب، والأعمال. نقدم لك تحليلات احترافية ونصائح قيمة لدعم مسيرة نجاحك.
+            {lang === "en" 
+              ? "Stay up to date with the latest developments in accounting, tax, and business. We offer professional insights and valuable tips to support your success." 
+              : "ابقَ على اطلاع دائم بأحدث التطورات في عالم المحاسبة، الضرائب، والأعمال. نقدم لك تحليلات احترافية ونصائح قيمة لدعم مسيرة نجاحك."}
           </p>
         </div>
 
         <div className="articles-layout">
           {/* Right Column: Titles List */}
           <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-            <h3 style={{ fontSize: "1.5rem", color: "var(--color-primary)" }}>أحدث المقالات</h3>
+            <h3 style={{ fontSize: "1.5rem", color: "var(--color-primary)" }}>{lang === "en" ? "Latest Articles" : "أحدث المقالات"}</h3>
             
             {/* Search Input */}
             <div style={{ position: "relative", marginBottom: "1rem" }}>
               <input 
                 type="text" 
-                placeholder="ابحث باسم المقال..." 
+                placeholder={lang === "en" ? "Search articles..." : "ابحث باسم المقال..."} 
                 value={searchQuery}
                 onChange={handleSearchChange}
                 style={{
@@ -131,7 +136,7 @@ export default function ArticlesClient({ initialArticles }: { initialArticles: a
             </div>
 
             {loading ? (
-              <p style={{ color: "var(--color-text-muted)" }}>جاري تحميل المقالات...</p>
+              <p style={{ color: "var(--color-text-muted)" }}>{lang === "en" ? "Loading articles..." : "جاري تحميل المقالات..."}</p>
             ) : error ? (
               <p style={{ color: "red" }}>{error}</p>
             ) : filteredArticles.length > 0 ? filteredArticles.map((article) => (
@@ -156,14 +161,14 @@ export default function ArticlesClient({ initialArticles }: { initialArticles: a
                   marginBottom: "0.5rem",
                   lineHeight: "1.4"
                 }}>
-                  {article.title}
+                  {lang === "en" && article.title_en ? article.title_en : article.title}
                 </h4>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>{article.date}</span>
                 </div>
               </button>
             )) : (
-              <p style={{ color: "var(--color-text-muted)" }}>لا توجد مقالات مطابقة للبحث.</p>
+              <p style={{ color: "var(--color-text-muted)" }}>{lang === "en" ? "No matching articles found." : "لا توجد مقالات مطابقة للبحث."}</p>
             )}
           </div>
 
@@ -217,13 +222,13 @@ export default function ArticlesClient({ initialArticles }: { initialArticles: a
                 />
 
                 <div style={{ marginTop: "4rem", paddingTop: "2rem", borderTop: "1px solid var(--color-border)" }}>
-                  <h4 style={{ marginBottom: "1rem", color: "var(--color-primary)" }}>هل لديك استفسار بخصوص هذا الموضوع؟</h4>
-                  <a href={`https://wa.me/201155729429?text=${encodeURIComponent("مرحباً، أود الاستفسار بخصوص المقال: " + selectedArticle.title)}`} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ padding: "0.8rem 2rem" }}>تواصل معنا عبر واتساب</a>
+                  <h4 style={{ marginBottom: "1rem", color: "var(--color-primary)" }}>{lang === "en" ? "Have a question about this topic?" : "هل لديك استفسار بخصوص هذا الموضوع؟"}</h4>
+                  <a href={`https://wa.me/201155729429?text=${encodeURIComponent((lang === "en" ? "Hello, I would like to inquire about the article: " : "مرحباً، أود الاستفسار بخصوص المقال: ") + (lang === "en" && selectedArticle.title_en ? selectedArticle.title_en : selectedArticle.title))}`} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ padding: "0.8rem 2rem" }}>{lang === "en" ? "Contact us via WhatsApp" : "تواصل معنا عبر واتساب"}</a>
                 </div>
               </div>
             ) : (
               <div style={{ textAlign: "center", padding: "3rem", color: "var(--color-text-muted)" }}>
-                لا توجد مقالات في هذا القسم حالياً. أضف مقالات جديدة لظهورها هنا.
+                {lang === "en" ? "No articles in this section yet." : "لا توجد مقالات في هذا القسم حالياً. أضف مقالات جديدة لظهورها هنا."}
               </div>
             )}
           </div>

@@ -2,22 +2,30 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 
-export default function HeroSlider({ settings = {} }: { settings?: any }) {
+import { Lang } from "@/lib/dictionary";
+
+export default function HeroSlider({ settings = {}, lang = "ar" }: { settings?: any, lang?: Lang }) {
   const slides = [
     {
       image: "/hero_egypt.jpg",
-      title: "امتداد إقليمي بخبرات محلية عريقة",
-      subtitle: "مكتب العشماوي يقدم حلولاً مالية وضريبية مخصصة تواكب نمو استثماراتكم في السوق المصري، مدعومة بخبرات تمتد لسنوات."
+      title: lang === "en" ? "Regional Extension with Deep Local Expertise" : "امتداد إقليمي بخبرات محلية عريقة",
+      subtitle: lang === "en" 
+        ? "Al-Ashmawy office offers customized financial and tax solutions that keep pace with the growth of your investments in the Egyptian market, backed by years of experience." 
+        : "مكتب العشماوي يقدم حلولاً مالية وضريبية مخصصة تواكب نمو استثماراتكم في السوق المصري، مدعومة بخبرات تمتد لسنوات."
     },
     {
       image: "/hero_ksa.jpg",
-      title: "شريكك المالي الموثوق في المملكة",
-      subtitle: "نقدم حلولاً محاسبية وضريبية تواكب رؤية السعودية 2030 وتدعم نمو وازدهار أعمالك في المملكة بأعلى المعايير."
+      title: lang === "en" ? "Your Trusted Financial Partner in the Kingdom" : "شريكك المالي الموثوق في المملكة",
+      subtitle: lang === "en"
+        ? "We offer accounting and tax solutions that align with Saudi Vision 2030 and support the growth and prosperity of your business in the Kingdom with the highest standards."
+        : "نقدم حلولاً محاسبية وضريبية تواكب رؤية السعودية 2030 وتدعم نمو وازدهار أعمالك في المملكة بأعلى المعايير."
     },
     {
       image: "/hero_uae.jpg",
-      title: "رؤية استراتيجية لأسواق المال والأعمال",
-      subtitle: "خبرات عالمية في تأسيس، إدارة، وتدقيق الحسابات للشركات والمستثمرين في الإمارات العربية المتحدة، لضمان استقرارك المالي."
+      title: lang === "en" ? "Strategic Vision for Business Markets" : "رؤية استراتيجية لأسواق المال والأعمال",
+      subtitle: lang === "en"
+        ? "Global expertise in establishing, managing, and auditing accounts for companies and investors in the UAE, ensuring your financial stability."
+        : "خبرات عالمية في تأسيس، إدارة، وتدقيق الحسابات للشركات والمستثمرين في الإمارات العربية المتحدة، لضمان استقرارك المالي."
     }
   ];
 
@@ -101,7 +109,7 @@ export default function HeroSlider({ settings = {} }: { settings?: any }) {
             marginBottom: "1rem", 
             textShadow: "0 2px 10px rgba(0,0,0,0.5)" 
           }}>
-            {settings.hero_title || 'العشماوي للاستشارات المالية'}
+            {(lang === "en" && settings.hero_title_en ? settings.hero_title_en : settings.hero_title) || (lang === "en" ? 'Al-Ashmawy Financial Consulting' : 'العشماوي للاستشارات المالية')}
           </h2>
           
           <p style={{ 
@@ -112,7 +120,7 @@ export default function HeroSlider({ settings = {} }: { settings?: any }) {
             textShadow: "0 2px 8px rgba(0,0,0,0.5)",
             letterSpacing: "1px"
           }}>
-            {settings.hero_subtitle || 'للمحاسبة والمراجعة والضرائب'}
+            {(lang === "en" && settings.hero_subtitle_en ? settings.hero_subtitle_en : settings.hero_subtitle) || (lang === "en" ? 'Accounting, Audit and Tax Services' : 'للمحاسبة والمراجعة والضرائب')}
           </p>
           
           <div style={{ width: "250px", height: "5px", backgroundColor: "#FFFFFF", margin: "0 auto 1.5rem", opacity: 0.9, boxShadow: "0 2px 5px rgba(0,0,0,0.5)", borderRadius: "3px" }}></div>
@@ -130,10 +138,10 @@ export default function HeroSlider({ settings = {} }: { settings?: any }) {
           
           <div className="flex gap-md flex-wrap justify-center" style={{ marginTop: "0" }}>
             <a href="https://wa.me/201155729429?text=مرحباً،%20أود%20الاستفسار%20عن%20خدمات%20مكتب%20العشماوي." target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ padding: "1rem 2rem", fontSize: "1.1rem" }}>
-              طلب استشارة مجانية
+              {lang === "en" ? "Request Free Consultation" : "طلب استشارة مجانية"}
             </a>
-            <Link href="/services" className="btn" style={{ padding: "1rem 2rem", fontSize: "1.1rem", background: "#FFFFFF", border: "1px solid #FFFFFF", color: "var(--color-accent)", borderRadius: "var(--border-radius-sm)", fontWeight: "bold" }}>
-              اكتشف خدماتنا
+            <Link href={lang === "en" ? "/en/services" : "/services"} className="btn" style={{ padding: "1rem 2rem", fontSize: "1.1rem", background: "#FFFFFF", border: "1px solid #FFFFFF", color: "var(--color-accent)", borderRadius: "var(--border-radius-sm)", fontWeight: "bold" }}>
+              {lang === "en" ? "Discover Our Services" : "اكتشف خدماتنا"}
             </Link>
           </div>
           

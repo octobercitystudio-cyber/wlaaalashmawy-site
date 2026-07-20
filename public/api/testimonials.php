@@ -33,13 +33,13 @@ elseif ($method == 'POST') {
         exit;
     }
     
-    $stmt = $pdo->prepare("INSERT INTO testimonials (name, position, content, rating) VALUES (?, ?, ?, ?)");
+    $stmt = $pdo->prepare("INSERT INTO testimonials (name, position, content, rating, name_en, position_en, content_en) VALUES (?, ?, ?, ?, ?, ?, ?)");
     $stmt->execute([
         $data['name'],
         $data['position'] ?? '',
         $data['content'],
         $data['rating'] ?? 5
-    ]);
+    , $data['name_en'] ?? '', $data['position_en'] ?? '', $data['content_en'] ?? '']);
     
     echo json_encode(['success' => true, 'id' => $pdo->lastInsertId()]);
 }
@@ -64,13 +64,12 @@ elseif ($method == 'PUT') {
         exit;
     }
     
-    $stmt = $pdo->prepare("UPDATE testimonials SET name=?, position=?, content=?, rating=? WHERE id=?");
+    $stmt = $pdo->prepare("UPDATE testimonials SET name=?, position=?, content=?, rating=?, name_en=?, position_en=?, content_en=? WHERE id=?");
     $stmt->execute([
         $data['name'],
         $data['position'],
         $data['content'],
-        $data['rating'] ?? 5,
-        $data['id']
+        $data['rating'] ?? 5, $data['name_en'] ?? '', $data['position_en'] ?? '', $data['content_en'] ?? '', $data['id']
     ]);
     echo json_encode(['success' => true]);
 }

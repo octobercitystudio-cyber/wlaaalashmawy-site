@@ -1,7 +1,9 @@
-import ArticlesClient from './ArticlesClient';
+import ArticlesClient from "@/components/ArticlesClient";
 
 // This function runs at build time to fetch the articles for SEO
-export default async function ArticlesPage() {
+import { Lang } from "@/lib/dictionary";
+
+export default async function ArticlesPage({ lang = "ar" }: { lang?: Lang }) {
   let initialArticles = [];
   try {
     // We use NEXT_PUBLIC_API_URL provided during build by GitHub Actions
@@ -27,5 +29,5 @@ export default async function ArticlesPage() {
     console.error("Failed to fetch articles at build time:", error);
   }
 
-  return <ArticlesClient initialArticles={initialArticles} />;
+  return <ArticlesClient initialArticles={initialArticles} lang={lang} />;
 }

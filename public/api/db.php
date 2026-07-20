@@ -23,28 +23,37 @@ try {
         CREATE TABLE IF NOT EXISTS articles (
             id INT AUTO_INCREMENT PRIMARY KEY,
             title VARCHAR(255) NOT NULL,
+            title_en VARCHAR(255) DEFAULT '',
             date VARCHAR(50) NOT NULL,
             category VARCHAR(100) NOT NULL,
+            category_en VARCHAR(100) DEFAULT '',
             image VARCHAR(255) DEFAULT '',
             content TEXT NOT NULL,
+            content_en TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
         CREATE TABLE IF NOT EXISTS services (
             id INT AUTO_INCREMENT PRIMARY KEY,
             title VARCHAR(255) NOT NULL,
+            title_en VARCHAR(255) DEFAULT '',
             image VARCHAR(255) DEFAULT '',
             description TEXT NOT NULL,
+            description_en TEXT,
             content TEXT NOT NULL,
+            content_en TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
         CREATE TABLE IF NOT EXISTS sectors (
             id INT AUTO_INCREMENT PRIMARY KEY,
             title VARCHAR(255) NOT NULL,
+            title_en VARCHAR(255) DEFAULT '',
             image VARCHAR(255) DEFAULT '',
             description TEXT NOT NULL,
+            description_en TEXT,
             content TEXT NOT NULL,
+            content_en TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -63,11 +72,19 @@ try {
     ");
 
     // Safely add ip_address column if it doesn't exist
+    try { $pdo->exec("ALTER TABLE visits ADD COLUMN ip_address VARCHAR(45) DEFAULT ''"); } catch (PDOException $e) {}
+    
+    // Safely add english columns if they don't exist
     try {
-        $pdo->exec("ALTER TABLE visits ADD COLUMN ip_address VARCHAR(45) DEFAULT ''");
-    } catch (PDOException $e) {
-        // Column already exists or other error, ignore
-    }
+        $pdo->exec("ALTER TABLE features ADD COLUMN title_en VARCHAR(255) DEFAULT '', ADD COLUMN description_en TEXT");
+        $pdo->exec("ALTER TABLE stats ADD COLUMN title_en VARCHAR(255) DEFAULT ''");
+        $pdo->exec("ALTER TABLE testimonials ADD COLUMN name_en VARCHAR(255) DEFAULT '', ADD COLUMN position_en VARCHAR(255) DEFAULT '', ADD COLUMN content_en TEXT");
+    } catch (PDOException $e) {}
+    try {
+        $pdo->exec("ALTER TABLE articles ADD COLUMN title_en VARCHAR(255) DEFAULT '', ADD COLUMN category_en VARCHAR(100) DEFAULT '', ADD COLUMN content_en TEXT");
+        $pdo->exec("ALTER TABLE services ADD COLUMN title_en VARCHAR(255) DEFAULT '', ADD COLUMN description_en TEXT, ADD COLUMN content_en TEXT");
+        $pdo->exec("ALTER TABLE sectors ADD COLUMN title_en VARCHAR(255) DEFAULT '', ADD COLUMN description_en TEXT, ADD COLUMN content_en TEXT");
+    } catch (PDOException $e) {}
 
 } catch (PDOException $e) {
     die(json_encode(['error' => 'Database Connection Failed: ' . $e->getMessage()]));
