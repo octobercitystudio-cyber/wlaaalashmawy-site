@@ -7,7 +7,7 @@ export default async function ContactPage({ lang = "ar" }: { lang?: Lang }) {
   
   let emails = [];
   try { emails = JSON.parse(settings.contact_emails); } catch(e) {}
-  if (!emails || emails.length === 0) emails = [settings.contact_email || 'info@alashmawy-cpa.com'];
+  if (!emails || emails.length === 0) emails = [settings.contact_email || 'info@afc-cpa.com'];
 
   let phones: string[] = [];
   try { phones = JSON.parse(settings.contact_phones); } catch(e) {}

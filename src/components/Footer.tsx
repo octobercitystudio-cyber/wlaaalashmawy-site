@@ -5,7 +5,7 @@ import { getDictionary, Lang } from "@/lib/dictionary";
 export default function Footer({ settings = {}, services = [], lang = "ar" }: { settings?: any, services?: any[], lang?: Lang }) {
   let emails = [];
   try { emails = JSON.parse(settings.contact_emails); } catch(e) {}
-  if (!emails || emails.length === 0) emails = [settings.contact_email || 'info@alashmawy-cpa.com'];
+  if (!emails || emails.length === 0) emails = [settings.contact_email || 'info@afc-cpa.com'];
 
   let phones: string[] = [];
   try { phones = JSON.parse(settings.contact_phones); } catch(e) {}
@@ -87,7 +87,7 @@ export default function Footer({ settings = {}, services = [], lang = "ar" }: { 
       </div>
       <div className="container text-center" style={{ marginTop: "var(--spacing-xl)", paddingTop: "var(--spacing-md)", borderTop: "1px solid rgba(255,255,255,0.2)" }}>
         <p style={{ margin: 0, fontSize: "1rem", color: "#FFFFFF" }}>
-          <span dir="ltr">© {new Date().getFullYear()}</span> جميع الحقوق محفوظة لمكتب AFC.
+          <span dir="ltr">© {new Date().getFullYear()}</span> {lang === "en" ? "All rights reserved to www.afc-cpa.com" : "جميع الحقوق محفوظة لموقع www.afc-cpa.com"}
         </p>
       </div>
     </footer>
