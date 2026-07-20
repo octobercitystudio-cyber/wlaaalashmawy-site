@@ -232,20 +232,11 @@
                     <div class="card p-4">
                         <div class="d-flex justify-content-between align-items-center mb-4">
                             <h5 class="fw-bold mb-0">نصوص القسم الترحيبي (أعلى الموقع)</h5>
-                            <button class="btn btn-gold" onclick="saveSettingsGroup(['hero_title', 'hero_subtitle', 'about_short'])">حفظ التعديلات</button>
+                            <button class="btn btn-gold" onclick="saveSettingsGroup(['hero_title', 'hero_subtitle', 'about_short', 'hero_title_en', 'hero_subtitle_en', 'about_short_en'])">حفظ التعديلات</button>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">العنوان الرئيسي</label>
-                            <input type="text" class="form-control" id="setting_hero_title">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">العنوان الفرعي</label>
-                            <input type="text" class="form-control" id="setting_hero_subtitle">
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label fw-bold">نبذة مختصرة (تحت العنوان)</label>
-                            <textarea class="form-control summernote-settings" id="setting_about_short"></textarea>
-                        </div>
+                        <div class="row g-3 mb-3"><div class="col-md-6"><label class="form-label fw-bold">العنوان الرئيسي (عربي)</label><input type="text" class="form-control" id="setting_hero_title"></div><div class="col-md-6"><label class="form-label fw-bold">العنوان الرئيسي (English)</label><input type="text" class="form-control" id="setting_hero_title_en" dir="ltr"></div></div>
+                        <div class="row g-3 mb-3"><div class="col-md-6"><label class="form-label fw-bold">العنوان الفرعي (عربي)</label><input type="text" class="form-control" id="setting_hero_subtitle"></div><div class="col-md-6"><label class="form-label fw-bold">العنوان الفرعي (English)</label><input type="text" class="form-control" id="setting_hero_subtitle_en" dir="ltr"></div></div>
+                        <div class="row g-3 mb-3"><div class="col-md-6"><label class="form-label fw-bold">نبذة مختصرة (عربي)</label><textarea class="form-control summernote-settings" id="setting_about_short"></textarea></div><div class="col-md-6"><label class="form-label fw-bold">نبذة مختصرة (English)</label><textarea class="form-control summernote-settings-en" id="setting_about_short_en"></textarea></div></div>
                     </div>
                 </div>
 
@@ -284,7 +275,7 @@
             <div id="sec-about" class="section-container">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2 class="fw-bold">من نحن</h2>
-                    <button class="btn btn-gold" onclick="saveSettingsGroup(['about_full', 'vision', 'mission'])">حفظ تعديلات "من نحن"</button>
+                    <button class="btn btn-gold" onclick="saveSettingsGroup(['about_full', 'vision', 'mission', 'about_full_en', 'vision_en', 'mission_en'])">حفظ التعديلات</button>
                 </div>
                 <ul class="nav nav-pills mb-4">
                     <li class="nav-item"><a class="nav-link active" onclick="switchInnerTab('about', 'main')">من نحن (التفاصيل)</a></li>
@@ -292,15 +283,9 @@
                     <li class="nav-item"><a class="nav-link" onclick="switchInnerTab('about', 'mission')">الرسالة</a></li>
                 </ul>
 
-                <div id="about-main" class="inner-tab-content active">
-                    <div class="card p-4"><textarea class="form-control summernote-settings" id="setting_about_full"></textarea></div>
-                </div>
-                <div id="about-vision" class="inner-tab-content">
-                    <div class="card p-4"><textarea class="form-control summernote-settings" id="setting_vision"></textarea></div>
-                </div>
-                <div id="about-mission" class="inner-tab-content">
-                    <div class="card p-4"><textarea class="form-control summernote-settings" id="setting_mission"></textarea></div>
-                </div>
+                <div id="about-main" class="inner-tab-content active"><div class="card p-4 mb-3"><label class="fw-bold mb-2">التفاصيل (عربي)</label><textarea class="form-control summernote-settings" id="setting_about_full"></textarea></div><div class="card p-4"><label class="fw-bold mb-2">التفاصيل (English)</label><textarea class="form-control summernote-settings-en" id="setting_about_full_en"></textarea></div></div>
+                <div id="about-vision" class="inner-tab-content"><div class="card p-4 mb-3"><label class="fw-bold mb-2">الرؤية (عربي)</label><textarea class="form-control summernote-settings" id="setting_vision"></textarea></div><div class="card p-4"><label class="fw-bold mb-2">الرؤية (English)</label><textarea class="form-control summernote-settings-en" id="setting_vision_en"></textarea></div></div>
+                <div id="about-mission" class="inner-tab-content"><div class="card p-4 mb-3"><label class="fw-bold mb-2">الرسالة (عربي)</label><textarea class="form-control summernote-settings" id="setting_mission"></textarea></div><div class="card p-4"><label class="fw-bold mb-2">الرسالة (English)</label><textarea class="form-control summernote-settings-en" id="setting_mission_en"></textarea></div></div>
             </div>
 
             <!-- SERVICES SECTION -->
@@ -334,7 +319,7 @@
             <div id="sec-contact" class="section-container">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2 class="fw-bold">اتصل بنا</h2>
-                    <button class="btn btn-gold" onclick="saveContactSettings()"><i class="bi bi-save"></i> حفظ جميع بيانات التواصل</button>
+                    <button class="btn btn-gold" onclick="saveContactSettings()">حفظ كافة بيانات التواصل</button>
                 </div>
                 <ul class="nav nav-pills mb-4">
                     <li class="nav-item"><a class="nav-link active" onclick="switchInnerTab('contact', 'socials')"><i class="bi bi-share"></i> السوشيال ميديا</a></li>
@@ -373,11 +358,15 @@
                 </div>
 
                 <div id="contact-address" class="inner-tab-content">
-                    <div class="card p-4">
-                        <label class="form-label fw-bold">العنوان التفصيلي</label>
-                        <textarea class="form-control" id="setting_contact_address" rows="3"></textarea>
-                    </div>
-                </div>
+<div class="card p-4 mb-3">
+<label class="form-label fw-bold">العنوان (عربي)</label>
+<textarea class="form-control" id="setting_contact_address" rows="3"></textarea>
+</div>
+<div class="card p-4">
+<label class="form-label fw-bold">العنوان (English)</label>
+<textarea class="form-control" id="setting_contact_address_en" rows="3" dir="ltr"></textarea>
+</div>
+</div>
 
                 <div id="contact-location" class="inner-tab-content">
                     <div class="card p-4">
@@ -403,7 +392,7 @@
             <div id="sec-settings" class="section-container">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2 class="fw-bold">إعدادات الموقع العامة</h2>
-                    <button class="btn btn-gold" onclick="saveSettingsGroup(['admin_username', 'admin_password', 'seo_title', 'seo_desc'])"><i class="bi bi-save"></i> حفظ كافة الإعدادات</button>
+                    <button class="btn btn-gold" onclick="saveSettingsGroup(['admin_username', 'admin_password', 'seo_title', 'seo_desc', 'seo_title_en', 'seo_desc_en'])">حفظ كافة الإعدادات</button>
                 </div>
                 
                 <div class="row g-4">
@@ -426,13 +415,21 @@
                         <div class="card p-4 h-100">
                             <h5 class="fw-bold mb-3"><i class="bi bi-google text-primary"></i> إعدادات السيو (SEO)</h5>
                             <div class="mb-3">
-                                <label class="form-label fw-bold">عنوان الموقع (Meta Title)</label>
-                                <input type="text" class="form-control" id="setting_seo_title" placeholder="مثال: مكتب العشماوي للمحاسبة والمراجعة">
-                            </div>
+<label class="form-label fw-bold">عنوان الموقع (عربي) Meta Title</label>
+<input type="text" class="form-control" id="setting_seo_title">
+</div>
+<div class="mb-3">
+<label class="form-label fw-bold">عنوان الموقع (English) Meta Title</label>
+<input type="text" class="form-control" id="setting_seo_title_en" dir="ltr">
+</div>
                             <div class="mb-3">
-                                <label class="form-label fw-bold">وصف الموقع (Meta Description)</label>
-                                <textarea class="form-control" id="setting_seo_desc" rows="3"></textarea>
-                            </div>
+<label class="form-label fw-bold">وصف الموقع (عربي) Meta Description</label>
+<textarea class="form-control" id="setting_seo_desc" rows="3"></textarea>
+</div>
+<div class="mb-3">
+<label class="form-label fw-bold">وصف الموقع (English) Meta Description</label>
+<textarea class="form-control" id="setting_seo_desc_en" rows="3" dir="ltr"></textarea>
+</div>
                         </div>
                     </div>
                 </div>
@@ -446,7 +443,7 @@
         <div class="modal-dialog modal-xl modal-dialog-centered">
             <div class="modal-content border-0 shadow-lg" style="border-radius: 16px;">
                 <div class="modal-header bg-light border-0 px-4 py-3">
-                    <h5 class="modal-title fw-bold" id="modalTitle">إضافة</h5>
+                    <h5 class="modal-title fw-bold" id="modalTitle">إضافة عنصر</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body px-4 py-4">
@@ -455,31 +452,50 @@
                     
                     <div class="row g-4">
                         <div class="col-md-8">
-                            <div class="mb-4">
-                                <label id="lbl-title" class="form-label fw-bold">العنوان</label>
-                                <input type="text" class="form-control form-control-lg bg-light" id="item-title">
-                            </div>
-                            <div class="mb-4" id="div-description" style="display:none;">
-                                <label class="form-label fw-bold">وصف قصير</label>
-                                <textarea class="form-control bg-light" id="item-description" rows="3"></textarea>
-                            </div>
-                            <div class="mb-0">
-                                <label class="form-label fw-bold">المحتوى</label>
-                                <textarea class="form-control" id="item-content" rows="6"></textarea>
+                            <ul class="nav nav-tabs mb-3" id="langTabs" role="tablist">
+                                <li class="nav-item" role="presentation"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#ar-pane" type="button" role="tab">العربية (AR)</button></li>
+                                <li class="nav-item" role="presentation"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#en-pane" type="button" role="tab" dir="ltr">English (EN)</button></li>
+                            </ul>
+                            
+                            <div class="tab-content" id="langTabsContent">
+                                <div class="tab-pane fade show active" id="ar-pane" role="tabpanel">
+                                    <div class="mb-4">
+                                        <label id="lbl-title" class="form-label fw-bold">العنوان (بالعربية)</label>
+                                        <input type="text" class="form-control form-control-lg bg-light" id="item-title">
+                                    </div>
+                                    <div class="mb-4" id="div-description" style="display:none;">
+                                        <label class="form-label fw-bold">وصف قصير (بالعربية)</label>
+                                        <textarea class="form-control bg-light" id="item-description" rows="3"></textarea>
+                                    </div>
+                                    <div class="mb-0">
+                                        <label class="form-label fw-bold">المحتوى (بالعربية)</label>
+                                        <textarea class="form-control" id="item-content" rows="6"></textarea>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="en-pane" role="tabpanel" dir="ltr">
+                                    <div class="mb-4">
+                                        <label id="lbl-title-en" class="form-label fw-bold">Title (English)</label>
+                                        <input type="text" class="form-control form-control-lg bg-light" id="item-title_en">
+                                    </div>
+                                    <div class="mb-4" id="div-description-en" style="display:none;">
+                                        <label class="form-label fw-bold">Short Description (English)</label>
+                                        <textarea class="form-control bg-light" id="item-description_en" rows="3"></textarea>
+                                    </div>
+                                    <div class="mb-0">
+                                        <label class="form-label fw-bold">Content (English)</label>
+                                        <textarea class="form-control" id="item-content_en" rows="6"></textarea>
+                                    </div>
+                                </div>
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="card bg-light p-3 border-0 h-100">
                                 <div class="mb-3" id="div-category" style="display:none;">
-                                    <label class="form-label fw-bold">القسم</label>
-                                    <select class="form-select" id="item-category">
-                                        <option>الاستشارات المحاسبية</option>
-                                        <option>الاستشارات الضريبية</option>
-                                        <option>المراجعة والتدقيق</option>
-                                        <option>تأسيس الشركات</option>
-                                        <option>الاستشارات المالية</option>
-                                    </select>
+                                    <label class="form-label fw-bold">القسم (العربية)</label>
+                                    <input type="text" class="form-control mb-2" id="item-category" placeholder="مثال: مقالات ضريبية">
+                                    <label class="form-label fw-bold mt-2">Category (English)</label>
+                                    <input type="text" class="form-control" id="item-category_en" placeholder="e.g. Tax Articles" dir="ltr">
                                 </div>
                                 <div class="mb-3" id="div-icon" style="display:none;">
                                     <label class="form-label fw-bold">القيمة / الأيقونة</label>
@@ -537,7 +553,7 @@
             mediaPickerModal = new bootstrap.Modal(document.getElementById('mediaPickerModal'));
             if(localStorage.getItem('token')) showDashboard();
             
-            const summernoteOptions = {
+            const summernoteOptionsAR = {
                 height: 300, direction: 'rtl',
                 toolbar: [
                     ['style', ['style', 'bold', 'italic', 'clear']],
@@ -555,7 +571,9 @@
                     }
                 }
             };
-            $('#item-content, .summernote-settings').summernote(summernoteOptions);
+            const summernoteOptionsEN = { ...summernoteOptionsAR, direction: 'ltr' };
+            $('#item-content, .summernote-settings').summernote(summernoteOptionsAR);
+            $('#item-content_en, .summernote-settings-en').summernote(summernoteOptionsEN);
 
             document.getElementById('item-image').addEventListener('change', function() {
                 document.getElementById('item-image-preview').src = this.value;
@@ -688,11 +706,11 @@
                 const res = await fetch(`${API_URL}/settings.php`, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
                 const s = await res.json();
                 
-                ['hero_title', 'hero_subtitle', 'contact_address', 'contact_map', 'social_facebook', 'social_instagram', 'social_youtube', 'social_linkedin', 'social_tiktok', 'admin_username', 'admin_password', 'seo_title', 'seo_desc'].forEach(k => {
+                ['hero_title', 'hero_subtitle', 'hero_title_en', 'hero_subtitle_en', 'contact_address', 'contact_address_en', 'contact_map', 'social_facebook', 'social_instagram', 'social_youtube', 'social_linkedin', 'social_tiktok', 'admin_username', 'admin_password', 'seo_title', 'seo_desc', 'seo_title_en', 'seo_desc_en'].forEach(k => {
                     if(document.getElementById(`setting_${k}`)) document.getElementById(`setting_${k}`).value = s[k] || '';
                 });
                 
-                ['about_short', 'about_full', 'vision', 'mission'].forEach(k => {
+                ['about_short', 'about_full', 'vision', 'mission', 'about_short_en', 'about_full_en', 'vision_en', 'mission_en'].forEach(k => {
                     if(document.getElementById(`setting_${k}`)) $(`#setting_${k}`).summernote('code', s[k] || '');
                 });
 
@@ -767,19 +785,20 @@
 
         function showModal(type) {
             document.getElementById('item-id').value = ''; document.getElementById('item-type').value = type;
-            ['title','icon','description'].forEach(id => document.getElementById(`item-${id}`).value = '');
+            ['title','icon','description', 'title_en', 'description_en'].forEach(id => { if(document.getElementById(`item-${id}`)) document.getElementById(`item-${id}`).value = ''; });
             document.getElementById('item-image').value = '/images/placeholder.jpg'; document.getElementById('item-image-preview').src = '/images/placeholder.jpg';
             $('#item-content').summernote('code', '');
+            $('#item-content_en').summernote('code', '');
             
             document.getElementById('div-category').style.display = type === 'article' ? 'block' : 'none';
-            document.getElementById('div-image').style.display = ['article','sector','service'].includes(type) ? 'block' : 'none';
-            document.getElementById('div-description').style.display = ['service','sector','feature'].includes(type) ? 'block' : 'none';
-            document.getElementById('div-icon').style.display = ['feature','stat','testimonial'].includes(type) ? 'block' : 'none';
+            document.getElementById('div-description').style.display = ['service', 'sector'].includes(type) ? 'block' : 'none';
+            document.getElementById('div-description-en').style.display = ['service', 'sector'].includes(type) ? 'block' : 'none';
+            document.getElementById('div-icon').style.display = type === 'stat' || type === 'testimonial' ? 'block' : 'none';
+            document.getElementById('item-image').parentElement.style.display = type === 'stat' || type === 'testimonial' ? 'none' : 'block';
             
-            let t = 'إضافة';
-            if(type==='stat') { document.getElementById('lbl-title').innerText = 'العنوان'; document.getElementById('div-icon').querySelector('label').innerText = 'القيمة (الرقم)'; document.getElementById('item-content').parentElement.style.display = 'none'; }
-            else if(type==='testimonial') { document.getElementById('lbl-title').innerText = 'اسم العميل'; document.getElementById('div-icon').querySelector('label').innerText = 'المنصب'; document.getElementById('item-content').parentElement.style.display = 'block'; }
-            else { document.getElementById('lbl-title').innerText = 'العنوان'; document.getElementById('item-content').parentElement.style.display = 'block'; if(document.getElementById('div-icon').querySelector('label')) document.getElementById('div-icon').querySelector('label').innerText = 'اسم الأيقونة'; }
+            if(type === 'stat' || type === 'testimonial') { document.getElementById('item-content').parentElement.style.display = type==='testimonial' ? 'block' : 'none'; document.getElementById('item-content_en').parentElement.style.display = type==='testimonial' ? 'block' : 'none'; document.getElementById('lbl-title').innerText = type==='stat'?'الرقم/العنوان':'اسم العميل'; if(document.getElementById('div-icon').querySelector('label')) document.getElementById('div-icon').querySelector('label').innerText = type==='stat'?'القيمة (أو أيقونة)':'الوظيفة/الشركة'; }
+            else { document.getElementById('lbl-title').innerText = 'العنوان';
+              if(document.getElementById('lbl-title-en')) document.getElementById('lbl-title-en').innerText = 'Title (English)'; document.getElementById('item-content').parentElement.style.display = 'block'; document.getElementById('item-content_en').parentElement.style.display = 'block'; if(document.getElementById('div-icon').querySelector('label')) document.getElementById('div-icon').querySelector('label').innerText = 'رمز الأيقونة'; }
             
             modal.show();
         }
@@ -790,27 +809,59 @@
             showModal(type);
             document.getElementById('item-id').value = item.id;
             
-            if(type === 'stat') { document.getElementById('item-title').value = item.title; document.getElementById('item-icon').value = item.value; }
-            else if(type === 'testimonial') { document.getElementById('item-title').value = item.name; document.getElementById('item-icon').value = item.position; $('#item-content').summernote('code', item.content); }
-            else { document.getElementById('item-title').value = item.title; $('#item-content').summernote('code', item.content); }
+            if(type === 'stat') { document.getElementById('item-title').value = item.title; document.getElementById('item-title_en').value = item.title_en || ''; document.getElementById('item-icon').value = item.value; }
+            else if(type === 'testimonial') { document.getElementById('item-title').value = item.name; document.getElementById('item-title_en').value = item.name_en || ''; document.getElementById('item-icon').value = item.position; document.getElementById('item-category_en').value = item.position_en || ''; $('#item-content').summernote('code', item.content); $('#item-content_en').summernote('code', item.content_en || ''); }
+            else { 
+                document.getElementById('item-title').value = item.title; $('#item-content').summernote('code', item.content); 
+                document.getElementById('item-title_en').value = item.title_en || ''; $('#item-content_en').summernote('code', item.content_en || '');
+            }
             
-            if(type === 'article') document.getElementById('item-category').value = item.category;
-            if(['article','sector','service'].includes(type)) { document.getElementById('item-image').value = item.image; document.getElementById('item-image-preview').src = item.image; }
-            if(['service','sector','feature'].includes(type)) document.getElementById('item-description').value = item.description;
-            if(type === 'feature') document.getElementById('item-icon').value = item.icon;
+            if(type === 'article') {
+                document.getElementById('item-category').value = item.category;
+                document.getElementById('item-category_en').value = item.category_en || '';
+            }
+            if(['service', 'sector'].includes(type)) {
+                document.getElementById('item-description').value = item.description;
+                document.getElementById('item-description_en').value = item.description_en || '';
+            }
+            if(item.image) { document.getElementById('item-image').value = item.image; document.getElementById('item-image-preview').src = item.image; }
         }
 
         async function saveItem() {
-            const type = document.getElementById('item-type').value, typePlural = type + 's', id = document.getElementById('item-id').value;
+            const id = document.getElementById('item-id').value;
+            const type = document.getElementById('item-type').value;
+            const typePlural = type + 's';
             let data = { id: id };
-            if(type === 'stat') { data.title = document.getElementById('item-title').value; data.value = document.getElementById('item-icon').value; }
-            else if(type === 'testimonial') { data.name = document.getElementById('item-title').value; data.position = document.getElementById('item-icon').value; data.content = $('#item-content').summernote('code'); }
-            else { data.title = document.getElementById('item-title').value; data.content = $('#item-content').summernote('code'); }
+            if(type === 'stat') { 
+                data.title = document.getElementById('item-title').value; 
+                data.value = document.getElementById('item-icon').value; 
+            }
+            else if(type === 'testimonial') { 
+                data.name = document.getElementById('item-title').value; 
+                data.position = document.getElementById('item-icon').value; 
+                data.content = $('#item-content').summernote('code'); 
+            }
+            else { 
+                data.title = document.getElementById('item-title').value; 
+                data.title_en = document.getElementById('item-title_en') ? document.getElementById('item-title_en').value : ''; 
+                data.content = $('#item-content').summernote('code'); 
+                data.content_en = $('#item-content_en').length ? $('#item-content_en').summernote('code') : ''; 
+            }
             
-            if(type === 'article') data.category = document.getElementById('item-category').value;
+            if(type === 'article') { 
+                data.category = document.getElementById('item-category').value; 
+                data.category_en = document.getElementById('item-category_en') ? document.getElementById('item-category_en').value : ''; 
+            }
+            if(['service', 'sector'].includes(type)) { 
+                data.description = document.getElementById('item-description').value; 
+                data.description_en = document.getElementById('item-description_en') ? document.getElementById('item-description_en').value : ''; 
+            }
+            
             if(['article','sector','service'].includes(type)) data.image = document.getElementById('item-image').value;
-            if(['service','sector','feature'].includes(type)) data.description = document.getElementById('item-description').value;
-            if(type === 'feature') data.icon = document.getElementById('item-icon').value;
+            if(type === 'feature') {
+                data.icon = document.getElementById('item-icon').value;
+                data.description = document.getElementById('item-description').value;
+            }
             
             try {
                 await fetch(`${API_URL}/${typePlural}.php`, { method: id ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('token') }, body: JSON.stringify(data) });
