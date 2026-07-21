@@ -36,9 +36,9 @@ export async function fetchServices() {
         return data.map((item: any, index: number) => {
           const fallback = servicesData[index];
           if (fallback) {
-            item.title_en = fallback.title.en;
-            item.description_en = fallback.shortDesc.en;
-            item.content_en = fallback.content ? fallback.content.en : '';
+            item.title_en = item.title_en || fallback.title.en;
+            item.description_en = item.description_en || fallback.shortDesc.en;
+            item.content_en = item.content_en || (fallback.content ? fallback.content.en : '');
           }
           return item;
         });
@@ -77,9 +77,9 @@ export async function fetchSectors() {
         return data.map((item: any, index: number) => {
           const fallback = sectorsData[index];
           if (fallback) {
-            item.title_en = fallback.title.en;
-            item.description_en = fallback.shortDesc.en;
-            item.content_en = fallback.content ? fallback.content.en : '';
+            item.title_en = item.title_en || fallback.title.en;
+            item.description_en = item.description_en || fallback.shortDesc.en;
+            item.content_en = item.content_en || (fallback.content ? fallback.content.en : '');
           }
           return item;
         });

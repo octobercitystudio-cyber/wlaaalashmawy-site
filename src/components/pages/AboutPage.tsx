@@ -59,14 +59,7 @@ export default async function AboutPage({ lang = "ar" }: { lang?: Lang }) {
               flexDirection: "column",
               padding: "2rem"
             }}>
-              {/* Fallback SVG for Chairman */}
-              <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="#999" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" style={{ marginBottom: "1rem" }}>
-                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                <circle cx="12" cy="7" r="4"></circle>
-              </svg>
-              <p style={{ color: "#777", fontSize: "0.9rem", margin: 0 }}>{lang === "en" ? "Chairman Image Placeholder (chairman.jpg)" : "مساحة مخصصة لصورة رئيس مجلس الإدارة (chairman.jpg)"}</p>
-              {/* Real image to be uncommented later */}
-              {/* <Image src="/images/chairman.jpg" alt="السيدة ولاء مجدي العشماوي - رئيس مجلس الإدارة" fill style={{ objectFit: "cover" }} /> */}
+              <Image src="/images/chairman.jpg" alt="السيدة ولاء مجدي العشماوي - رئيس مجلس الإدارة" fill style={{ objectFit: "cover" }} />
             </div>
             <div style={{ marginTop: "1.5rem" }}>
               <h3 style={{ fontSize: "2rem", color: "var(--color-primary)", fontWeight: "bold", marginBottom: "0.5rem" }}>

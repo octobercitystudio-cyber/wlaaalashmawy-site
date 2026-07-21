@@ -499,7 +499,9 @@
                                 </div>
                                 <div class="mb-3" id="div-icon" style="display:none;">
                                     <label class="form-label fw-bold">القيمة / الأيقونة</label>
-                                    <input type="text" class="form-control" id="item-icon" dir="ltr">
+                                    <input type="text" class="form-control mb-2" id="item-icon" dir="ltr">
+                                    <label class="form-label fw-bold mt-2" id="lbl-icon-en">Value / Position (English)</label>
+                                    <input type="text" class="form-control" id="item-icon_en" dir="ltr">
                                 </div>
                                 <div class="mb-3" id="div-image" style="display:none;">
                                     <label class="form-label fw-bold">الصورة البارزة</label>
@@ -791,14 +793,14 @@
             $('#item-content_en').summernote('code', '');
             
             document.getElementById('div-category').style.display = type === 'article' ? 'block' : 'none';
-            document.getElementById('div-description').style.display = ['service', 'sector'].includes(type) ? 'block' : 'none';
-            document.getElementById('div-description-en').style.display = ['service', 'sector'].includes(type) ? 'block' : 'none';
-            document.getElementById('div-icon').style.display = type === 'stat' || type === 'testimonial' ? 'block' : 'none';
+            document.getElementById('div-description').style.display = ['service', 'sector', 'feature'].includes(type) ? 'block' : 'none';
+            document.getElementById('div-description-en').style.display = ['service', 'sector', 'feature'].includes(type) ? 'block' : 'none';
+            document.getElementById('div-icon').style.display = ['stat', 'testimonial', 'feature'].includes(type) ? 'block' : 'none';
             document.getElementById('item-image').parentElement.style.display = type === 'stat' || type === 'testimonial' ? 'none' : 'block';
             
-            if(type === 'stat' || type === 'testimonial') { document.getElementById('item-content').parentElement.style.display = type==='testimonial' ? 'block' : 'none'; document.getElementById('item-content_en').parentElement.style.display = type==='testimonial' ? 'block' : 'none'; document.getElementById('lbl-title').innerText = type==='stat'?'الرقم/العنوان':'اسم العميل'; if(document.getElementById('div-icon').querySelector('label')) document.getElementById('div-icon').querySelector('label').innerText = type==='stat'?'القيمة (أو أيقونة)':'الوظيفة/الشركة'; }
+            if(type === 'stat' || type === 'testimonial') { document.getElementById('item-content').parentElement.style.display = type==='testimonial' ? 'block' : 'none'; document.getElementById('item-content_en').parentElement.style.display = type==='testimonial' ? 'block' : 'none'; document.getElementById('lbl-title').innerText = type==='stat'?'الرقم/العنوان':'اسم العميل'; if(document.getElementById('lbl-title-en')) document.getElementById('lbl-title-en').innerText = type==='stat'?'Value / Title (English)':'Client Name (English)'; if(document.getElementById('div-icon').querySelector('label')) document.getElementById('div-icon').querySelector('label').innerText = type==='stat'?'القيمة (أو أيقونة)':'الوظيفة/الشركة'; if(document.getElementById('lbl-icon-en')) document.getElementById('lbl-icon-en').innerText = type==='stat'?'Value (English)':'Position/Company (English)'; }
             else { document.getElementById('lbl-title').innerText = 'العنوان';
-              if(document.getElementById('lbl-title-en')) document.getElementById('lbl-title-en').innerText = 'Title (English)'; document.getElementById('item-content').parentElement.style.display = 'block'; document.getElementById('item-content_en').parentElement.style.display = 'block'; if(document.getElementById('div-icon').querySelector('label')) document.getElementById('div-icon').querySelector('label').innerText = 'رمز الأيقونة'; }
+              if(document.getElementById('lbl-title-en')) document.getElementById('lbl-title-en').innerText = 'Title (English)'; document.getElementById('item-content').parentElement.style.display = 'block'; document.getElementById('item-content_en').parentElement.style.display = 'block'; if(document.getElementById('div-icon').querySelector('label')) document.getElementById('div-icon').querySelector('label').innerText = 'رمز الأيقونة'; if(document.getElementById('lbl-icon-en')) document.getElementById('lbl-icon-en').innerText = 'Icon Code (English)'; }
             
             modal.show();
         }
@@ -809,8 +811,8 @@
             showModal(type);
             document.getElementById('item-id').value = item.id;
             
-            if(type === 'stat') { document.getElementById('item-title').value = item.title; document.getElementById('item-title_en').value = item.title_en || ''; document.getElementById('item-icon').value = item.value; }
-            else if(type === 'testimonial') { document.getElementById('item-title').value = item.name; document.getElementById('item-title_en').value = item.name_en || ''; document.getElementById('item-icon').value = item.position; document.getElementById('item-category_en').value = item.position_en || ''; $('#item-content').summernote('code', item.content); $('#item-content_en').summernote('code', item.content_en || ''); }
+            if(type === 'stat') { document.getElementById('item-title').value = item.title; document.getElementById('item-title_en').value = item.title_en || ''; document.getElementById('item-icon').value = item.value; if(document.getElementById('item-icon_en')) document.getElementById('item-icon_en').value = item.value_en || ''; }
+            else if(type === 'testimonial') { document.getElementById('item-title').value = item.name; document.getElementById('item-title_en').value = item.name_en || ''; document.getElementById('item-icon').value = item.position; if(document.getElementById('item-icon_en')) document.getElementById('item-icon_en').value = item.position_en || ''; $('#item-content').summernote('code', item.content); $('#item-content_en').summernote('code', item.content_en || ''); }
             else { 
                 document.getElementById('item-title').value = item.title; $('#item-content').summernote('code', item.content); 
                 document.getElementById('item-title_en').value = item.title_en || ''; $('#item-content_en').summernote('code', item.content_en || '');
@@ -820,9 +822,14 @@
                 document.getElementById('item-category').value = item.category;
                 document.getElementById('item-category_en').value = item.category_en || '';
             }
-            if(['service', 'sector'].includes(type)) {
+            if(['service', 'sector', 'feature'].includes(type)) {
                 document.getElementById('item-description').value = item.description;
                 document.getElementById('item-description_en').value = item.description_en || '';
+            }
+            if(type === 'feature') {
+                document.getElementById('item-icon').value = item.icon;
+                document.getElementById('item-content').parentElement.style.display = 'none';
+                document.getElementById('item-content_en').parentElement.style.display = 'none';
             }
             if(item.image) { document.getElementById('item-image').value = item.image; document.getElementById('item-image-preview').src = item.image; }
         }
@@ -834,12 +841,17 @@
             let data = { id: id };
             if(type === 'stat') { 
                 data.title = document.getElementById('item-title').value; 
+                data.title_en = document.getElementById('item-title_en') ? document.getElementById('item-title_en').value : '';
                 data.value = document.getElementById('item-icon').value; 
+                data.value_en = document.getElementById('item-icon_en') ? document.getElementById('item-icon_en').value : '';
             }
             else if(type === 'testimonial') { 
                 data.name = document.getElementById('item-title').value; 
+                data.name_en = document.getElementById('item-title_en') ? document.getElementById('item-title_en').value : '';
                 data.position = document.getElementById('item-icon').value; 
+                data.position_en = document.getElementById('item-icon_en') ? document.getElementById('item-icon_en').value : '';
                 data.content = $('#item-content').summernote('code'); 
+                data.content_en = $('#item-content_en').length ? $('#item-content_en').summernote('code') : '';
             }
             else { 
                 data.title = document.getElementById('item-title').value; 
@@ -861,6 +873,7 @@
             if(type === 'feature') {
                 data.icon = document.getElementById('item-icon').value;
                 data.description = document.getElementById('item-description').value;
+                data.description_en = document.getElementById('item-description_en') ? document.getElementById('item-description_en').value : '';
             }
             
             try {
