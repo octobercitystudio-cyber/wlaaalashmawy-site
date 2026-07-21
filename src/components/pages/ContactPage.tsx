@@ -179,19 +179,6 @@ export default async function ContactPage({ lang = "ar" }: { lang?: Lang }) {
                   </div>
                 </div>
               </div>
-
-              {/* Map */}
-              <div style={{ padding: "0.5rem", background: "var(--color-bg-card)", border: "1px solid var(--color-border)", borderRadius: "12px", height: "300px" }}>
-                <iframe 
-                  src={map_url}
-                  width="100%" 
-                  height="100%" 
-                  style={{ border: 0, borderRadius: "8px" }} 
-                  allowFullScreen={true} 
-                  loading="lazy" 
-                  referrerPolicy="no-referrer-when-downgrade">
-                </iframe>
-              </div>
             </div>
           </div>
         </div>
