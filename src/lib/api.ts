@@ -5,7 +5,7 @@ export async function fetchSettings() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://www.afc-cpa.com';
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 8000);
+    const timeoutId = setTimeout(() => controller.abort(), 1500);
     const res = await fetch(`${apiUrl}/api/settings.php`, { 
         cache: 'force-cache',
         signal: controller.signal
@@ -24,7 +24,7 @@ export async function fetchServices() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://www.afc-cpa.com';
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 8000);
+    const timeoutId = setTimeout(() => controller.abort(), 1500);
     const res = await fetch(`${apiUrl}/api/services.php`, { 
         cache: 'force-cache',
         signal: controller.signal
@@ -65,7 +65,7 @@ export async function fetchSectors() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://www.afc-cpa.com';
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 8000);
+    const timeoutId = setTimeout(() => controller.abort(), 1500);
     const res = await fetch(`${apiUrl}/api/sectors.php`, { 
         cache: 'force-cache',
         signal: controller.signal
@@ -110,7 +110,7 @@ export async function fetchFeatures() {
 
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 8000);
+    const timeoutId = setTimeout(() => controller.abort(), 1500);
     const res = await fetch(`${apiUrl}/api/features.php`, { 
         cache: 'force-cache',
         signal: controller.signal
@@ -143,7 +143,7 @@ export async function fetchStats() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://www.afc-cpa.com';
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 8000);
+    const timeoutId = setTimeout(() => controller.abort(), 1500);
     const res = await fetch(`${apiUrl}/api/stats.php`, { 
         cache: 'force-cache',
         signal: controller.signal
