@@ -45,9 +45,9 @@ export default async function ContactPage({ lang = "ar" }: { lang?: Lang }) {
       {/* Main Content */}
       <section style={{ padding: "var(--spacing-xl) 0" }}>
         <div className="container">
-          <div className="grid grid-cols-1 lg-grid-cols-2 gap-xl">
+          <div className="grid grid-cols-1 lg-grid-cols-2 gap-xl" style={{ alignItems: "start" }}>
             {/* Right: Contact Form */}
-            <div className="animate-fade-in-up" style={{ padding: "var(--spacing-xl) 0", animationDelay: "0.3s" }}>
+            <div className="animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
               <div style={{ background: "var(--color-bg-card)", padding: "2.5rem", borderRadius: "16px", boxShadow: "0 10px 30px rgba(0,0,0,0.05)", border: "1px solid var(--color-border)" }}>
                 <h2 style={{ fontSize: "2.2rem", color: "var(--color-primary)", marginBottom: "var(--spacing-md)", fontWeight: "bold" }}>
                   {lang === "en" ? "Send a Message" : "أرسل لنا رسالة"}
@@ -93,7 +93,7 @@ export default async function ContactPage({ lang = "ar" }: { lang?: Lang }) {
             </div>
 
             {/* Left: Map and Contact Info */}
-            <div className="animate-fade-in-up" style={{ animationDelay: "0.5s", display: "flex", flexDirection: "column", gap: "2.5rem", padding: "var(--spacing-xl) 0" }}>
+            <div className="animate-fade-in-up" style={{ animationDelay: "0.5s", display: "flex", flexDirection: "column", gap: "2rem" }}>
               
               {/* Map (Now on top) */}
               <div style={{ padding: "0.5rem", background: "var(--color-bg-card)", border: "1px solid var(--color-border)", borderRadius: "16px", height: "350px", boxShadow: "0 10px 30px rgba(0,0,0,0.05)" }}>
@@ -111,9 +111,9 @@ export default async function ContactPage({ lang = "ar" }: { lang?: Lang }) {
               {/* Contact Info (Now below map) */}
               <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
                 
-                <div style={{ display: "flex", alignItems: "flex-start", gap: "1rem", background: "var(--color-bg-card)", padding: "1.5rem", borderRadius: "12px", border: "1px solid var(--color-border)" }}>
-                  <div style={{ width: "45px", height: "45px", borderRadius: "50%", background: "rgba(0, 91, 171, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <i className="bi bi-telephone-fill" style={{ color: "var(--color-primary)", fontSize: "1.3rem" }}></i>
+                <div style={{ display: "flex", alignItems: "flex-start", gap: "1rem", background: "var(--color-bg-card)", padding: "1.5rem", borderRadius: "12px", border: "1px solid var(--color-border)", boxShadow: "0 4px 15px rgba(0,0,0,0.03)" }}>
+                  <div style={{ fontSize: "1.5rem", display: "flex", alignItems: "center", justifyContent: "center", marginTop: "2px" }}>
+                    📞
                   </div>
                   <div>
                     <h4 style={{ fontSize: "1.1rem", color: "var(--color-primary)", marginBottom: "0.3rem", fontWeight: "bold" }}>{lang === "en" ? "Phone Numbers" : "أرقام التواصل"}</h4>
@@ -123,9 +123,9 @@ export default async function ContactPage({ lang = "ar" }: { lang?: Lang }) {
                   </div>
                 </div>
 
-                <div style={{ display: "flex", alignItems: "flex-start", gap: "1rem", background: "var(--color-bg-card)", padding: "1.5rem", borderRadius: "12px", border: "1px solid var(--color-border)" }}>
-                  <div style={{ width: "45px", height: "45px", borderRadius: "50%", background: "rgba(0, 91, 171, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <i className="bi bi-envelope-fill" style={{ color: "var(--color-primary)", fontSize: "1.3rem" }}></i>
+                <div style={{ display: "flex", alignItems: "flex-start", gap: "1rem", background: "var(--color-bg-card)", padding: "1.5rem", borderRadius: "12px", border: "1px solid var(--color-border)", boxShadow: "0 4px 15px rgba(0,0,0,0.03)" }}>
+                  <div style={{ fontSize: "1.5rem", display: "flex", alignItems: "center", justifyContent: "center", marginTop: "2px" }}>
+                    📧
                   </div>
                   <div>
                     <h4 style={{ fontSize: "1.1rem", color: "var(--color-primary)", marginBottom: "0.3rem", fontWeight: "bold" }}>{lang === "en" ? "Email Address" : "البريد الإلكتروني"}</h4>
@@ -135,9 +135,9 @@ export default async function ContactPage({ lang = "ar" }: { lang?: Lang }) {
                   </div>
                 </div>
 
-                <div style={{ display: "flex", alignItems: "flex-start", gap: "1rem", background: "var(--color-bg-card)", padding: "1.5rem", borderRadius: "12px", border: "1px solid var(--color-border)" }}>
-                  <div style={{ width: "45px", height: "45px", borderRadius: "50%", background: "rgba(0, 91, 171, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                    <i className="bi bi-geo-alt-fill" style={{ color: "var(--color-primary)", fontSize: "1.3rem" }}></i>
+                <div style={{ display: "flex", alignItems: "flex-start", gap: "1rem", background: "var(--color-bg-card)", padding: "1.5rem", borderRadius: "12px", border: "1px solid var(--color-border)", boxShadow: "0 4px 15px rgba(0,0,0,0.03)" }}>
+                  <div style={{ fontSize: "1.5rem", display: "flex", alignItems: "center", justifyContent: "center", marginTop: "2px" }}>
+                    📍
                   </div>
                   <div>
                     <h4 style={{ fontSize: "1.1rem", color: "var(--color-primary)", marginBottom: "0.3rem", fontWeight: "bold" }}>{lang === "en" ? "Address" : "العنوان"}</h4>
@@ -148,8 +148,8 @@ export default async function ContactPage({ lang = "ar" }: { lang?: Lang }) {
                 </div>
 
                 {/* Social Media Links */}
-                <div style={{ marginTop: "1rem", paddingTop: "1.5rem", borderTop: "1px solid var(--color-border)" }}>
-                  <h4 style={{ fontSize: "1.1rem", color: "var(--color-primary)", marginBottom: "1rem", fontWeight: "bold" }}>{lang === "en" ? "Social Media" : "منصات السوشيال ميديا"}</h4>
+                <div style={{ display: "flex", flexDirection: "column", gap: "1rem", background: "var(--color-bg-card)", padding: "1.5rem", borderRadius: "12px", border: "1px solid var(--color-border)", boxShadow: "0 4px 15px rgba(0,0,0,0.03)" }}>
+                  <h4 style={{ fontSize: "1.1rem", color: "var(--color-primary)", margin: 0, fontWeight: "bold" }}>{lang === "en" ? "Social Media" : "منصات السوشيال ميديا"}</h4>
                   <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
                     {settings.social_facebook && (
                     <a href={settings.social_facebook} target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "40px", height: "40px", borderRadius: "12px", background: "#1877F2", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
