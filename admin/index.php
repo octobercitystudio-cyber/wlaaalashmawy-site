@@ -15,7 +15,35 @@
     
     <!-- Summernote -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.20/summernote-lite.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&family=Amiri:wght@400;700&display=swap');
+        
+        body, .form-control, .form-label, .btn, .note-editable {
+            font-family: 'Cairo', sans-serif !important;
+        }
+        
+        /* Match frontend styling */
+        .note-editable {
+            background-color: #FAFAFA !important;
+            color: #1A1A1A !important;
+            font-size: 1.1rem !important;
+            line-height: 1.6 !important;
+        }
+        .note-editable h1, .note-editable h2, .note-editable h3 {
+            font-weight: 700;
+            color: #005BAB; 
+        }
+
+        /* LTR styling for English fields */
+        .summernote-settings-en + .note-editor .note-editable,
+        #setting_hero_title_en, #setting_hero_subtitle_en, #setting_contact_address_en,
+        #setting_seo_desc_en, #item-description_en, #item-content_en {
+            direction: ltr !important;
+            text-align: left !important;
+        }
+    </style>
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
     
     <!-- Chart.js -->
@@ -708,16 +736,38 @@
                 const res = await fetch(`${API_URL}/settings.php`, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
                 const s = await res.json();
                 
+                const defaults = {
+                    hero_title: "نساعدك على تحقيق أهدافك المالية بنجاح",
+                    hero_title_en: "We help you achieve your financial goals successfully",
+                    hero_subtitle: "حلول محاسبية مبتكرة وموثوقة لشركتك",
+                    hero_subtitle_en: "Innovative and reliable accounting solutions for your company",
+                    about_short: "نقدم لك أفضل الخدمات المحاسبية والاستشارية بخبرة تمتد لسنوات.",
+                    about_short_en: "We offer you the best accounting and consulting services with years of experience.",
+                    about_full: "نحن مؤسسة رائدة في مجال الاستشارات المحاسبية والضريبية. نسعى دائماً لتقديم الأفضل لعملائنا.",
+                    about_full_en: "We are a leading firm in accounting and tax consulting. We always strive to provide the best for our clients.",
+                    vision: "أن نكون الخيار الأول والشركة الرائدة في تقديم الخدمات المحاسبية في المنطقة.",
+                    vision_en: "To be the first choice and leading company in providing accounting services in the region.",
+                    mission: "تقديم حلول مالية دقيقة وشفافة تساعد الشركات على النمو وتحقيق أهدافها الاستراتيجية.",
+                    mission_en: "Providing accurate and transparent financial solutions that help companies grow and achieve their strategic goals.",
+                    contact_address: "مكتب 204 الدور الثاني مول اجياد فيو - ٦ اكتوبر - الجيزة - مصر",
+                    contact_address_en: "Office 204, 2nd Floor, Agyad View Mall - 6th of October - Giza - Egypt",
+                    contact_map: "https://maps.google.com/maps?q=29.9607581,30.9246025&hl=ar&z=16&output=embed",
+                    seo_title: "شركة الاستشارات المحاسبية",
+                    seo_title_en: "AFC",
+                    seo_desc: "شريكك الموثوق في تقديم حلول محاسبية وضريبية متكاملة لضمان نجاح واستدامة أعمالك.",
+                    seo_desc_en: "Your trusted partner in providing comprehensive accounting and tax solutions."
+                };
+                
                 ['hero_title', 'hero_subtitle', 'hero_title_en', 'hero_subtitle_en', 'contact_address', 'contact_address_en', 'contact_map', 'social_facebook', 'social_instagram', 'social_youtube', 'social_linkedin', 'social_tiktok', 'admin_username', 'admin_password', 'seo_title', 'seo_desc', 'seo_title_en', 'seo_desc_en'].forEach(k => {
-                    if(document.getElementById(`setting_${k}`)) document.getElementById(`setting_${k}`).value = s[k] || '';
+                    if(document.getElementById(`setting_${k}`)) document.getElementById(`setting_${k}`).value = s[k] || defaults[k] || '';
                 });
                 
                 ['about_short', 'about_full', 'vision', 'mission', 'about_short_en', 'about_full_en', 'vision_en', 'mission_en'].forEach(k => {
-                    if(document.getElementById(`setting_${k}`)) $(`#setting_${k}`).summernote('code', s[k] || '');
+                    if(document.getElementById(`setting_${k}`)) $(`#setting_${k}`).summernote('code', s[k] || defaults[k] || '');
                 });
 
-                renderDynamicList('phones-container', s.contact_phones || s.contact_phone, 'phone');
-                renderDynamicList('emails-container', s.contact_emails || s.contact_email, 'email');
+                renderDynamicList('phones-container', s.contact_phones || s.contact_phone || JSON.stringify(['01155729429', '0238345397']), 'phone');
+                renderDynamicList('emails-container', s.contact_emails || s.contact_email || JSON.stringify(['info@afc-cpa.com']), 'email');
 
             } catch(e) {}
         }
