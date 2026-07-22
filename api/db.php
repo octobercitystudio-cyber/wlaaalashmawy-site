@@ -62,6 +62,36 @@ try {
             setting_value TEXT NOT NULL
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+        CREATE TABLE IF NOT EXISTS features (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            title VARCHAR(255) NOT NULL,
+            title_en VARCHAR(255) DEFAULT '',
+            description TEXT NOT NULL,
+            description_en TEXT,
+            icon VARCHAR(100) DEFAULT 'Target',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+        CREATE TABLE IF NOT EXISTS stats (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            title VARCHAR(255) NOT NULL,
+            title_en VARCHAR(255) DEFAULT '',
+            value VARCHAR(100) NOT NULL,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+        CREATE TABLE IF NOT EXISTS testimonials (
+            id INT AUTO_INCREMENT PRIMARY KEY,
+            name VARCHAR(255) NOT NULL,
+            name_en VARCHAR(255) DEFAULT '',
+            position VARCHAR(255) DEFAULT '',
+            position_en VARCHAR(255) DEFAULT '',
+            content TEXT NOT NULL,
+            content_en TEXT,
+            rating INT DEFAULT 5,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
         CREATE TABLE IF NOT EXISTS visits (
             id INT AUTO_INCREMENT PRIMARY KEY,
             page_path VARCHAR(255) NOT NULL,

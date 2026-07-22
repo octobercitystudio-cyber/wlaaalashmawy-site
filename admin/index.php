@@ -207,6 +207,28 @@
             <a class="nav-link-sidebar text-danger mt-3" onclick="logout()"><i class="bi bi-box-arrow-right"></i> تسجيل الخروج</a>
         </div>
         
+        <script>
+        // Seed Mock Data Function
+        async function seedMockData() {
+            if(!confirm('هل أنت متأكد من رغبتك في ضخ البيانات الافتراضية إلى قاعدة البيانات؟ هذه العملية مخصصة للمرة الأولى فقط عند إنشاء جداول فارغة.')) return;
+            
+            try {
+                showToast('جاري تعبئة قاعدة البيانات...', 'info');
+                const res = await fetch(`${API_URL}/seed.php`);
+                const data = await res.json();
+                
+                if(data.success) {
+                    showToast('تمت تعبئة قاعدة البيانات بنجاح!', 'success');
+                    setTimeout(() => location.reload(), 2000);
+                } else {
+                    showToast('حدث خطأ: ' + data.error, 'danger');
+                }
+            } catch (e) {
+                showToast('تعذر الاتصال بالخادم لضخ البيانات.', 'danger');
+            }
+        }
+        </script>
+
         <!-- Main Content -->
         <div class="main-content">
             
@@ -458,6 +480,14 @@
 <label class="form-label fw-bold">وصف الموقع (English) Meta Description</label>
 <textarea class="form-control" id="setting_seo_desc_en" rows="3" dir="ltr"></textarea>
 </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-12 mt-2">
+                        <div class="card p-4 border-primary shadow-sm" style="background-color: #f8fbff;">
+                            <h5 class="fw-bold mb-3 text-primary"><i class="bi bi-database-fill-down"></i> تعبئة قاعدة البيانات (للمرة الأولى فقط)</h5>
+                            <p class="text-muted mb-3">استخدم هذا الزر لضخ جميع النصوص، الخدمات، القطاعات والمميزات الافتراضية داخل جداول قاعدة البيانات الخاصة بالاستضافة في حال كانت فارغة. هذا سيتيح لك إمكانية التعديل عليها مباشرة من لوحة التحكم بدلاً من إضافتها من الصفر.</p>
+                            <button class="btn btn-primary" style="width:fit-content" onclick="seedMockData()"><i class="bi bi-cloud-arrow-down"></i> تعبئة البيانات الأساسية الآن</button>
                         </div>
                     </div>
                 </div>
