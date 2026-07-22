@@ -36,10 +36,10 @@ export default async function ContactPage({ lang = "ar" }: { lang?: Lang }) {
         textAlign: "center"
       }}>
         <div className="container" style={{ paddingTop: "2rem" }}>
-          <h1 className="animate-fade-in-up" style={{ fontSize: "3rem", marginBottom: "var(--spacing-md)", fontWeight: "bold" }}>
+          <h1 className="animate-fade-in-up" style={{ fontSize: "3rem", marginBottom: "var(--spacing-md)", fontWeight: "bold", color: "#FFFFFF" }}>
             {lang === "en" ? "Contact Us" : "تواصل معنا"}
           </h1>
-          <p className="animate-fade-in-up" style={{ animationDelay: "0.2s", fontSize: "1.2rem", maxWidth: "600px", margin: "0 auto", opacity: 0.9 }}>
+          <p className="animate-fade-in-up" style={{ animationDelay: "0.2s", fontSize: "1.3rem", maxWidth: "600px", margin: "0 auto", opacity: 1, color: "#FFFFFF", fontWeight: "bold", textShadow: "0 2px 4px rgba(0,0,0,0.5)" }}>
             {lang === "en" ? "We are here to answer all your inquiries and provide the support you need. Don't hesitate to reach out to us." : "نحن هنا للإجابة على كافة استفساراتكم وتقديم الدعم الذي تحتاجونه. لا تترددوا في التواصل معنا."}
           </p>
         </div>
