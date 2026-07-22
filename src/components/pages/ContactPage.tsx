@@ -27,12 +27,15 @@ export default async function ContactPage({ lang = "ar" }: { lang?: Lang }) {
     <main style={{ minHeight: "100vh", background: "var(--color-bg-subtle)" }}>
       {/* Header Area */}
       <section style={{ 
-        padding: "var(--spacing-xl) 0",
-        background: "linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%)",
+        padding: "8rem 0 6rem 0",
+        background: "linear-gradient(rgba(0, 48, 92, 0.85), rgba(0, 48, 92, 0.85)), url('/images/contact_hero.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
         color: "#FFFFFF",
         textAlign: "center"
       }}>
-        <div className="container" style={{ paddingTop: "5rem" }}>
+        <div className="container" style={{ paddingTop: "2rem" }}>
           <h1 className="animate-fade-in-up" style={{ fontSize: "3rem", marginBottom: "var(--spacing-md)", fontWeight: "bold" }}>
             {lang === "en" ? "Contact Us" : "تواصل معنا"}
           </h1>
