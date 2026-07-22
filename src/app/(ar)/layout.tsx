@@ -22,8 +22,8 @@ const amiri = Amiri({
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await fetchSettings();
   return {
-    title: settings.seo_title || "???? ???????? ????????",
-    description: settings.seo_desc || "???? ????????",
+    title: "AFC",
+    description: settings.seo_desc || "شريكك الموثوق في تقديم حلول محاسبية وضريبية متكاملة لضمان نجاح واستدامة أعمالك.",
   };
 }
 

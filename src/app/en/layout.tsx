@@ -15,8 +15,8 @@ const inter = Inter({
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await fetchSettings();
   return {
-    title: settings.seo_title_en || "Al-Ashmawy Accounting",
-    description: settings.seo_desc_en || "Al-Ashmawy",
+    title: "AFC",
+    description: settings.seo_desc_en || "Your trusted partner in providing comprehensive accounting and tax solutions.",
   };
 }
 
