@@ -66,6 +66,32 @@ try {
         $pdo->prepare("INSERT INTO sectors (title, title_en, description, description_en, content, content_en, image) VALUES (?, ?, ?, ?, '', '', ?)")->execute(["المنظمات غير الهادفة للربح", "Non-Profit Organizations", "ضمان أعلى مستويات الشفافية والحوكمة من خلال تقارير مالية دقيقة وإدارة رشيدة للمنح والتمويل الخيري.", "Ensuring high transparency and governance through accurate financial reporting and prudent grant management.", "/images/sectors/non_profit.jpg"]);
     }
 
+    
+    // Settings
+    $settingsToSeed = [
+        'about_full_en' => "\"Wlaa Magdy Al-Ashmawy for Legal Accounting\" (AFC) is one of the leading firms in Egypt in the fields of accounting, auditing, taxation, and financial advisory services. Founded in 2024 by Ms. Wlaa Magdy Al-Ashmawy, the firm was built on a clear vision aimed at providing outstanding professional services based on integrity, expertise, and building sustainable relationships with clients.<br/><br/>At AFC, we ensure our clients that every engagement is handled by a team of dedicated professionals committed to the highest standards of quality and excellence. We adopt an integrated approach rooted in a deep understanding of the unique challenges facing small and medium-sized enterprises (SMEs), allowing us to provide practical and strategic solutions that enhance value.<br/><br/>Our comprehensive services are designed to support clients at every stage of their business journey, empowering them to make informed decisions, achieve sustainable growth, and focus on maximizing the long-term value of their business.",
+        'about_full' => "تُعد شركة \"ولاء مجدي العشماوي للمحاسبة القانونية\" (AFC) واحدة من الشركات الرائدة في مصر في مجالات المحاسبة، والمراجعة، والضرائب، والخدمات الاستشارية المالية. تأسست الشركة عام 2024 على يد السيدة ولاء مجدي العشماوي، انطلاقاً من رؤية واضحة تهدف إلى تقديم خدمات مهنية متميزة ترتكز على النزاهة والخبرة وبناء علاقات مستدامة مع العملاء.<br/><br/>في AFC، نضمن لعملائنا أن يتولى تنفيذ كل مهمة فريق من المهنيين المتفانين الملتزمين بأعلى معايير الجودة والتميز. ونحن نتبنى نهجاً متكاملاً يرتكز على فهم عميق للتحديات الفريدة التي تواجه الشركات الصغيرة والمتوسطة، مما يتيح لنا تقديم حلول عملية واستراتيجية تعزز القيمة.<br/><br/>صُممت خدماتنا الشاملة لدعم العملاء في كل مرحلة من مراحل رحلة أعمالهم، مما يُمكّنهم من اتخاذ قرارات مدروسة، وتحقيق نمو مستدام، والتركيز على تعظيم القيمة طويلة الأمد لأعمالهم.",
+        'vision_en' => "To be the trusted partner and first choice for companies seeking exceptional accounting, tax, auditing, and financial advisory services, through expertise, integrity, and innovation.",
+        'vision' => "أن نكون الشريك الموثوق والاختيار الأول للشركات التي تبحث عن خدمات محاسبية وضريبية ومراجعة واستشارات مالية استثنائية، من خلال الخبرة والنزاهة والابتكار.",
+        'mission_en' => "To be the reliable force behind our clients' success by delivering insightful solutions, uncompromising quality, and strategic guidance that fosters growth, builds trust, and creates sustainable value.",
+        'mission' => "أن نكون القوة الموثوقة وراء نجاح عملائنا، من خلال تقديم حلول ثاقبة، وجودة لا تقبل التنازل، وتوجيه استراتيجي يعزز النمو، ويرسخ الثقة، ويخلق قيمة مستدامة.",
+        'contact_address_en' => "Office 204, 2nd Floor, Agyad View Mall - 6th of October - Giza - Egypt",
+        'contact_address' => "مكتب 204 الدور الثاني مول اجياد فيو - ٦ اكتوبر - الجيزة - مصر",
+        'contact_emails' => "[\"info@afc-cpa.com\"]",
+        'contact_phones' => "[\"01155729429\",\"0238345397\"]",
+        'contact_map' => "https://maps.google.com/maps?q=29.9607581,30.9246025&hl=ar&z=16&output=embed",
+        'social_facebook' => "https://facebook.com",
+        'social_instagram' => "https://instagram.com",
+        'social_youtube' => "https://youtube.com",
+        'social_linkedin' => "https://linkedin.com",
+        'social_tiktok' => "https://tiktok.com",
+    ];
+
+    $stmt = $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = setting_value");
+    foreach ($settingsToSeed as $k => $v) {
+        $stmt->execute([$k, $v]);
+    }
+
     $pdo->commit();
     echo json_encode(['success' => true, 'message' => 'Database seeded successfully.']);
 } catch (Exception $e) {
