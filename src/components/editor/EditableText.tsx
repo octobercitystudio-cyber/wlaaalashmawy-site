@@ -14,21 +14,25 @@ interface EditableTextProps {
 }
 
 export function EditableText({ id, value, as: Component = "span", isHtml = false, className = "", style = {} }: EditableTextProps) {
-    const { isEditMode, token } = useVisualEditor();
+    const { isEditMode, token, liveSettings, refreshSettings } = useVisualEditor();
+    
+    // Fallback to static 'value' until liveSettings are fetched
+    const displayValue = liveSettings ? (liveSettings[id] ?? value) : value;
+
     const [isEditing, setIsEditing] = useState(false);
-    const [currentValue, setCurrentValue] = useState(value);
+    const [currentValue, setCurrentValue] = useState(displayValue);
     const [isSaving, setIsSaving] = useState(false);
     const router = useRouter();
 
     useEffect(() => {
-        setCurrentValue(value);
-    }, [value]);
+        setCurrentValue(displayValue);
+    }, [displayValue]);
 
     if (!isEditMode) {
         if (isHtml) {
-            return <Component className={className} style={style} dangerouslySetInnerHTML={{ __html: value || "" }} />;
+            return <Component className={className} style={style} dangerouslySetInnerHTML={{ __html: displayValue || "" }} />;
         }
-        return <Component className={className} style={style}>{value}</Component>;
+        return <Component className={className} style={style}>{displayValue}</Component>;
     }
 
     const handleSave = async () => {
@@ -47,8 +51,8 @@ export function EditableText({ id, value, as: Component = "span", isHtml = false
             
             if (res.ok) {
                 setIsEditing(false);
-                router.refresh();
-                // If it successfully saved, we don't need to revert currentValue 
+                refreshSettings(); // Fetch new data globally
+                // We don't need router.refresh() anymore since liveSettings drives the UI
             } else {
                 alert("فشل في حفظ التعديل: " + (data.error || res.statusText));
             }

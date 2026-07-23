@@ -6,9 +6,16 @@ import { useSearchParams } from "next/navigation";
 interface VisualEditorContextType {
     isEditMode: boolean;
     token: string | null;
+    liveSettings: Record<string, string> | null;
+    refreshSettings: () => void;
 }
 
-const VisualEditorContext = createContext<VisualEditorContextType>({ isEditMode: false, token: null });
+const VisualEditorContext = createContext<VisualEditorContextType>({ 
+    isEditMode: false, 
+    token: null, 
+    liveSettings: null, 
+    refreshSettings: () => {} 
+});
 
 export const useVisualEditor = () => useContext(VisualEditorContext);
 
@@ -19,6 +26,24 @@ function VisualEditorLogic({ children }: { children: React.ReactNode }) {
 
     const [activeToken, setActiveToken] = useState<string | null>(null);
     const [activeEditMode, setActiveEditMode] = useState<boolean>(false);
+    const [liveSettings, setLiveSettings] = useState<Record<string, string> | null>(null);
+
+    const refreshSettings = async () => {
+        try {
+            const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://www.afc-cpa.com";
+            const res = await fetch(`${apiUrl}/api/settings.php`);
+            if (res.ok) {
+                const data = await res.json();
+                setLiveSettings(data);
+            }
+        } catch (e) {
+            console.error("Failed to fetch live settings", e);
+        }
+    };
+
+    useEffect(() => {
+        refreshSettings();
+    }, []);
 
     useEffect(() => {
         let currentToken = token;
@@ -39,7 +64,7 @@ function VisualEditorLogic({ children }: { children: React.ReactNode }) {
     }, [token, isEditMode]);
 
     return (
-        <VisualEditorContext.Provider value={{ isEditMode: activeEditMode, token: activeToken }}>
+        <VisualEditorContext.Provider value={{ isEditMode: activeEditMode, token: activeToken, liveSettings, refreshSettings }}>
             {children}
         </VisualEditorContext.Provider>
     );
