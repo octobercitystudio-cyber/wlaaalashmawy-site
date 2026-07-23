@@ -612,14 +612,6 @@
         let dataStore = { articles: [], services: [], sectors: [], features: [], stats: [], testimonials: [] };
         let modal, mediaPickerModal, chartInstance;
         let mediaPickerTargetInputId = null, activeSummernote = null;
-        let activeIframeField = null;
-
-        window.addEventListener('message', (e) => {
-            if (e.data && e.data.action === 'openMediaPicker') {
-                activeIframeField = e.data;
-                openMediaPicker('IFRAME', false);
-            }
-        });
 
         function showToast(msg, isError = false) {
             const toastEl = document.getElementById('liveToast');
@@ -1023,26 +1015,8 @@
             files.forEach(f => g.innerHTML += `<div class="col-md-2 col-4"><img src="${f.url}" class="img-thumbnail" style="cursor:pointer;height:100px;width:100%;object-fit:cover;" onclick="selectMediaForPicker('${f.url}', ${isEditor})"></div>`);
         }
         function selectMediaForPicker(url, isEditor) {
-            if(isEditor && activeSummernote) {
-                activeSummernote.invoke('editor.insertImage', url);
-            }
-            else if(activeIframeField) {
-                const iframe = document.getElementById('visual-editor-iframe');
-                if (iframe && iframe.contentWindow) {
-                    iframe.contentWindow.postMessage({
-                        action: 'mediaPicked',
-                        url: url,
-                        targetId: activeIframeField.targetId,
-                        table: activeIframeField.table,
-                        entityId: activeIframeField.entityId
-                    }, '*');
-                }
-                activeIframeField = null;
-            }
-            else if(mediaPickerTargetInputId && mediaPickerTargetInputId !== 'IFRAME') { 
-                document.getElementById(mediaPickerTargetInputId).value = url; 
-                document.getElementById(mediaPickerTargetInputId).dispatchEvent(new Event('change')); 
-            }
+            if(isEditor && activeSummernote) activeSummernote.invoke('editor.insertImage', url);
+            else if(mediaPickerTargetInputId) { document.getElementById(mediaPickerTargetInputId).value = url; document.getElementById(mediaPickerTargetInputId).dispatchEvent(new Event('change')); }
             mediaPickerModal.hide();
         }
         async function deleteMedia(filename) {
