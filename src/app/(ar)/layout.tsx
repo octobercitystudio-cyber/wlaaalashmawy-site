@@ -10,7 +10,7 @@ import { fetchSettings, fetchServices } from "@/lib/api";
 const cairo = Cairo({
   variable: "--font-cairo",
   subsets: ["arabic", "latin"],
-  weight: ["300", "400", "600", "700", "800", "900"],
+  weight: ["300", "400", "600", "700"],
 });
 
 const amiri = Amiri({

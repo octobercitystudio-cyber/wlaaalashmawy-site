@@ -1,14 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
-import { fetchServices, fetchSettings } from '@/lib/api';
-import { EditableText } from "@/components/editor/EditableText";
-import { EditableImage } from "@/components/editor/EditableImage";
+import { fetchServices } from '@/lib/api';
 
 import { Lang } from "@/lib/dictionary";
 
 export default async function ServicesPage({ lang = "ar" }: { lang?: Lang }) {
   const services = await fetchServices();
-  const settings = await fetchSettings();
   
   return (
     <main>
@@ -20,12 +17,7 @@ export default async function ServicesPage({ lang = "ar" }: { lang?: Lang }) {
         position: "relative",
         overflow: "hidden"
       }}>
-        <EditableImage 
-          id="services_hero_image" 
-          src={settings.services_hero_image || "/images/services_hero.jpg"} 
-          alt="خدماتنا الاحترافية" 
-          style={{ objectFit: "cover", width: "100%", height: "100%", position: "absolute", inset: 0, zIndex: 0 }} 
-        />
+        <Image src="/images/services_hero.jpg" alt="خدماتنا الاحترافية" fill style={{ objectFit: "cover", zIndex: 0 }} priority />
         {/* Dark Overlay */}
         <div style={{
           position: "absolute",
@@ -42,7 +34,7 @@ export default async function ServicesPage({ lang = "ar" }: { lang?: Lang }) {
             {lang === "en" ? "Our Professional Services" : "خدماتنا الاحترافية"}
           </h1>
           <div style={{ width: "80px", height: "4px", backgroundColor: "var(--color-accent)", margin: "0 auto 2rem", boxShadow: "0 2px 5px rgba(0,0,0,0.3)" }}></div>
-          <p style={{ fontSize: "1.3rem", maxWidth: "800px", margin: "0 auto", color: "rgba(255,255,255,0.95)", lineHeight: "1.8", textShadow: "0 2px 5px rgba(0,0,0,0.5)", fontWeight: "700" }}>
+          <p style={{ fontSize: "1.3rem", maxWidth: "800px", margin: "0 auto", color: "rgba(255,255,255,0.95)", lineHeight: "1.8", textShadow: "0 2px 5px rgba(0,0,0,0.5)" }}>
             {lang === "en" 
               ? "We provide a comprehensive range of financial, accounting, tax, and institutional services to meet all your business needs and ensure sustainable growth." 
               : "نقدم مجموعة متكاملة من الخدمات المالية والمحاسبية والضريبية والمؤسسية لتلبية كافة احتياجات أعمالك وضمان نموها المستدام."}
@@ -57,22 +49,11 @@ export default async function ServicesPage({ lang = "ar" }: { lang?: Lang }) {
               return (
                 <div key={service.id} className="premium-card text-center" style={{ background: "var(--color-bg-card)", border: "2px solid var(--color-accent)", display: "flex", flexDirection: "column", padding: 0, overflow: "hidden" }}>
                   <div style={{ position: "relative", width: "100%", height: "200px" }}>
-                    <EditableImage 
-                      id="image" 
-                      table="services"
-                      entityId={service.id}
-                      src={service.image || '/images/services/accounting.jpg'} 
-                      alt={lang === "en" && service.title_en ? service.title_en : service.title} 
-                      style={{ objectFit: "cover", width: "100%", height: "100%", position: "absolute", inset: 0 }} 
-                    />
+                    <Image src={service.image || '/images/services/accounting.jpg'} alt={lang === "en" && service.title_en ? service.title_en : service.title} fill style={{ objectFit: "cover" }} />
                   </div>
                   <div style={{ padding: "1.5rem", display: "flex", flexDirection: "column", flexGrow: 1 }}>
-                    <h3 style={{ fontSize: "1.3rem", marginBottom: "var(--spacing-sm)", color: "var(--color-primary)", fontWeight: "bold" }}>
-                      <EditableText table="services" entityId={service.id} id={lang === "en" ? "title_en" : "title"} value={lang === "en" && service.title_en ? service.title_en : service.title} />
-                    </h3>
-                    <p style={{ marginBottom: "var(--spacing-md)", flexGrow: 1, color: "var(--color-text-muted)", fontSize: "0.95rem" }}>
-                      <EditableText table="services" entityId={service.id} id={lang === "en" ? "description_en" : "description"} value={lang === "en" && service.description_en ? service.description_en : service.description} />
-                    </p>
+                    <h3 style={{ fontSize: "1.3rem", marginBottom: "var(--spacing-sm)", color: "var(--color-primary)", fontWeight: "bold" }}>{lang === "en" && service.title_en ? service.title_en : service.title}</h3>
+                    <p style={{ marginBottom: "var(--spacing-md)", flexGrow: 1, color: "var(--color-text-muted)", fontSize: "0.95rem" }}>{lang === "en" && service.description_en ? service.description_en : service.description}</p>
                     <Link href={lang === "en" ? `/en/services/${service.id}` : `/services/${service.id}`} className="btn btn-secondary" style={{ width: "100%", padding: "0.8rem", marginTop: "auto" }}>
                       {lang === "en" ? "View Details" : "عرض التفاصيل"}
                     </Link>

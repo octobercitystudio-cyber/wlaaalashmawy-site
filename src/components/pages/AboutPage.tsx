@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { fetchSettings } from '@/lib/api';
 import { EditableText } from "@/components/editor/EditableText";
-import { EditableImage } from "@/components/editor/EditableImage";
 
 import { Lang } from "@/lib/dictionary";
 
@@ -61,25 +60,14 @@ export default async function AboutPage({ lang = "ar" }: { lang?: Lang }) {
               flexDirection: "column",
               padding: "2rem"
             }}>
-              <EditableImage 
-                id="chairman_image" 
-                src={settings.chairman_image || "/images/chairman.jpg"} 
-                alt="السيدة ولاء مجدي العشماوي - رئيس مجلس الإدارة" 
-                style={{ objectFit: "cover", width: "100%", height: "100%", position: "absolute", inset: 0 }} 
-              />
+              <Image src="/images/chairman.jpg" alt="السيدة ولاء مجدي العشماوي - رئيس مجلس الإدارة" fill style={{ objectFit: "cover" }} />
             </div>
             <div style={{ marginTop: "1.5rem" }}>
               <h3 style={{ fontSize: "2rem", color: "var(--color-primary)", fontWeight: "bold", marginBottom: "0.5rem" }}>
-                <EditableText 
-                  id={lang === "en" ? "chairman_name_en" : "chairman_name"}
-                  value={(lang === "en" && settings.chairman_name_en ? settings.chairman_name_en : settings.chairman_name) || (lang === "en" ? "Wlaa Magdy Al-Ashmawy" : "أ. ولاء مجدي العشماوي")}
-                />
+                {lang === "en" ? "Wlaa Magdy Al-Ashmawy" : "أ. ولاء مجدي العشماوي"}
               </h3>
               <p style={{ fontSize: "1.2rem", color: "var(--color-accent)", fontWeight: "bold", margin: 0 }}>
-                <EditableText 
-                  id={lang === "en" ? "chairman_title_en" : "chairman_title"}
-                  value={(lang === "en" && settings.chairman_title_en ? settings.chairman_title_en : settings.chairman_title) || (lang === "en" ? "Founder & Chairman" : "المؤسس ورئيس مجلس الإدارة")}
-                />
+                {lang === "en" ? "Founder & Chairman" : "المؤسس ورئيس مجلس الإدارة"}
               </p>
             </div>
           </div>

@@ -3,7 +3,6 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { EditableImage } from "@/components/editor/EditableImage";
 
 import { getDictionary, Lang } from "@/lib/dictionary";
 
@@ -116,19 +115,17 @@ export default function Navbar({ settings = {}, services = [], lang = "ar" }: { 
         {/* Logo */}
         <div>
           <Link href={`${prefix}/`} onClick={() => setIsMobileMenuOpen(false)}>
-            <div style={{ position: "relative", width: "120px", height: "40px" }}>
-              <EditableImage 
-                id="site_logo" 
-                src={settings?.site_logo || "/logo.png"} 
-                alt="العشماوي للاستشارات المالية" 
-                style={{ 
-                  objectFit: "contain",
-                  width: "100%",
-                  height: "100%",
-                  transition: "all 0.3s ease"
-                }} 
-              />
-            </div>
+            <Image 
+              src="/logo.png" 
+              alt="العشماوي للاستشارات المالية" 
+              width={120} 
+              height={40} 
+              style={{ 
+                objectFit: "contain",
+                transition: "all 0.3s ease"
+              }} 
+              priority
+            />
           </Link>
         </div>
         
