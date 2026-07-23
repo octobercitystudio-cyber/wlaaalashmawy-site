@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useVisualEditor } from "./VisualEditorProvider";
 import { useRouter } from "next/navigation";
 
@@ -19,6 +19,10 @@ export function EditableText({ id, value, as: Component = "span", isHtml = false
     const [currentValue, setCurrentValue] = useState(value);
     const [isSaving, setIsSaving] = useState(false);
     const router = useRouter();
+
+    useEffect(() => {
+        setCurrentValue(value);
+    }, [value]);
 
     if (!isEditMode) {
         if (isHtml) {
@@ -39,15 +43,18 @@ export function EditableText({ id, value, as: Component = "span", isHtml = false
                 },
                 body: JSON.stringify({ [id]: currentValue }),
             });
+            const data = await res.json().catch(() => ({}));
+            
             if (res.ok) {
                 setIsEditing(false);
                 router.refresh();
+                // If it successfully saved, we don't need to revert currentValue 
             } else {
-                alert("فشل في حفظ التعديل");
+                alert("فشل في حفظ التعديل: " + (data.error || res.statusText));
             }
         } catch (error) {
             console.error(error);
-            alert("حدث خطأ أثناء الحفظ");
+            alert("حدث خطأ أثناء الحفظ. يرجى التحقق من اتصالك بالإنترنت أو إعدادات السيرفر.");
         }
         setIsSaving(false);
     };

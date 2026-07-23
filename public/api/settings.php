@@ -8,6 +8,9 @@ $method = $_SERVER['REQUEST_METHOD'];
 function checkAuth() {
     $headers = apache_request_headers();
     $auth = isset($headers['Authorization']) ? $headers['Authorization'] : '';
+    if (empty($auth) && isset($_SERVER['HTTP_AUTHORIZATION'])) {
+        $auth = $_SERVER['HTTP_AUTHORIZATION'];
+    }
     if (strpos($auth, 'Bearer') === false) {
         http_response_code(401);
         echo json_encode(['error' => 'Unauthorized']);
