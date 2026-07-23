@@ -6,6 +6,7 @@ import AnimatedStat from "@/components/AnimatedStat";
 
 import { fetchSettings, fetchServices, fetchFeatures, fetchStats, fetchTestimonials } from '@/lib/api';
 import { EditableText } from "@/components/editor/EditableText";
+import { EditableImage } from "@/components/editor/EditableImage";
 
 import { Lang } from "@/lib/dictionary";
 
@@ -72,7 +73,9 @@ export default async function Home({ lang = "ar" }: { lang?: Lang }) {
             <ul className="flex flex-col gap-sm" style={{ marginTop: "var(--spacing-md)" }}>
               {features.map((feature: any, index: number) => (
                 <li key={feature.id || index} className="flex items-center gap-sm" style={{ fontSize: "1.1rem" }}>
-                  <span className="text-gold" style={{ fontWeight: "bold" }}>✦</span> {(lang === "en" && feature.title_en ? feature.title_en : feature.title)}: {(lang === "en" && feature.description_en ? feature.description_en : feature.description)}
+                  <span className="text-gold" style={{ fontWeight: "bold" }}>✦</span> 
+                  <EditableText table="features" entityId={feature.id} id={lang === "en" ? "title_en" : "title"} value={(lang === "en" && feature.title_en ? feature.title_en : feature.title)} />: 
+                  <EditableText table="features" entityId={feature.id} id={lang === "en" ? "description_en" : "description"} value={(lang === "en" && feature.description_en ? feature.description_en : feature.description)} />
                 </li>
               ))}
             </ul>
@@ -81,11 +84,11 @@ export default async function Home({ lang = "ar" }: { lang?: Lang }) {
             </div>
           </div>
           <div className="premium-card flex justify-center items-center" style={{ minHeight: "350px", padding: 0, overflow: "hidden", position: "relative", border: "2px solid var(--color-accent)" }}>
-            <Image 
-              src="/images/afc_office.jpg" 
+            <EditableImage 
+              id="afc_office_image" 
+              src={settings.afc_office_image || "/images/afc_office.jpg"} 
               alt="مقر شركة AFC" 
-              fill 
-              style={{ objectFit: "cover" }} 
+              style={{ objectFit: "cover", width: "100%", height: "100%", position: "absolute", inset: 0 }} 
             />
           </div>
         </div>
@@ -112,14 +115,14 @@ export default async function Home({ lang = "ar" }: { lang?: Lang }) {
                     <div style={{ width: "80px", height: "80px", borderRadius: "50%", background: "var(--color-bg-body)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--color-accent)", fontWeight: "bold", border: "2px solid var(--color-accent)", fontSize: "1.5rem", marginBottom: "0.5rem" }}>
                       {initials}
                     </div>
-                    <h4 style={{ margin: 0, color: "var(--color-text-main)", fontSize: "1.2rem" }}>{(lang === "en" && testi.name_en ? testi.name_en : testi.name)}</h4>
-                    <p style={{ margin: "0.2rem 0", fontSize: "0.9rem", color: "var(--color-text-muted)" }}>{(lang === "en" && testi.position_en ? testi.position_en : testi.position)}</p>
+                    <h4 style={{ margin: 0, color: "var(--color-text-main)", fontSize: "1.2rem" }}><EditableText table="testimonials" entityId={testi.id} id={lang === "en" ? "name_en" : "name"} value={(lang === "en" && testi.name_en ? testi.name_en : testi.name)} /></h4>
+                    <p style={{ margin: "0.2rem 0", fontSize: "0.9rem", color: "var(--color-text-muted)" }}><EditableText table="testimonials" entityId={testi.id} id={lang === "en" ? "position_en" : "position"} value={(lang === "en" && testi.position_en ? testi.position_en : testi.position)} /></p>
                     <div style={{ color: "#FFD700", letterSpacing: "3px", fontSize: "1.3rem", marginTop: "0.5rem" }}>
                       {'★'.repeat(testi.rating || 5)}{'☆'.repeat(5 - (testi.rating || 5))}
                     </div>
                 </div>
                 <p style={{ opacity: 0.9, position: "relative", zIndex: 1, margin: 0, lineHeight: 1.8, fontSize: "1.15rem", maxWidth: "800px" }}>
-                  "{(lang === "en" && testi.content_en ? testi.content_en : testi.content)}"
+                  "<EditableText table="testimonials" entityId={testi.id} id={lang === "en" ? "content_en" : "content"} value={(lang === "en" && testi.content_en ? testi.content_en : testi.content)} />"
                 </p>
               </div>
             );

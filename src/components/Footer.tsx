@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 import { getDictionary, Lang } from "@/lib/dictionary";
+import { EditableText } from "@/components/editor/EditableText";
 
 export default function Footer({ settings = {}, services = [], lang = "ar" }: { settings?: any, services?: any[], lang?: Lang }) {
   let emails = [];
@@ -19,9 +20,17 @@ export default function Footer({ settings = {}, services = [], lang = "ar" }: { 
     <footer style={{ marginTop: "auto", borderTop: "1px solid var(--color-accent-hover)", padding: "var(--spacing-xl) 0 var(--spacing-md) 0", background: "var(--color-accent-hover)", color: "#FFFFFF" }}>
       <div className="container grid grid-cols-1 md-grid-cols-3 gap-lg">
         <div style={{ textAlign: "center" }}>
-          <h3 style={{ marginBottom: "var(--spacing-sm)", fontSize: "4rem", fontWeight: "900", letterSpacing: "4px", color: "#FFFFFF" }}>AFC</h3>
+          <h3 style={{ marginBottom: "var(--spacing-sm)", fontSize: "4rem", fontWeight: "900", letterSpacing: "4px", color: "#FFFFFF" }}>
+            <EditableText 
+              id={lang === "en" ? "footer_title_en" : "footer_title"} 
+              value={(lang === "en" && settings.footer_title_en ? settings.footer_title_en : settings.footer_title) || "AFC"} 
+            />
+          </h3>
           <p style={{ color: "#FFFFFF", opacity: 0.9, maxWidth: "300px", margin: "0 auto", fontSize: "1.1rem" }}>
-            {lang === "en" ? "Your trusted partner in providing comprehensive accounting and tax solutions to ensure the success and sustainability of your business." : "شريكك الموثوق في تقديم حلول محاسبية وضريبية متكاملة لضمان نجاح واستدامة أعمالك."}
+            <EditableText 
+              id={lang === "en" ? "footer_about_en" : "footer_about"} 
+              value={(lang === "en" && settings.footer_about_en ? settings.footer_about_en : settings.footer_about) || (lang === "en" ? "Your trusted partner in providing comprehensive accounting and tax solutions to ensure the success and sustainability of your business." : "شريكك الموثوق في تقديم حلول محاسبية وضريبية متكاملة لضمان نجاح واستدامة أعمالك.")} 
+            />
           </p>
         </div>
         <div>

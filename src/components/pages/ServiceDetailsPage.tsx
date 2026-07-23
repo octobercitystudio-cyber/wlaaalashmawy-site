@@ -1,6 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { fetchServices, fetchSettings } from "@/lib/api";
+import { EditableText } from "@/components/editor/EditableText";
+import { EditableImage } from "@/components/editor/EditableImage";
 import { Lang } from "@/lib/dictionary";
 
 
@@ -45,7 +47,14 @@ export default async function ServiceDetailsPage({ id, lang = "ar" }: { id: stri
         position: "relative",
         overflow: "hidden"
       }}>
-        <Image src={service.image || "/images/services_hero.jpg"} alt={title} fill style={{ objectFit: "cover", zIndex: 0 }} priority />
+        <EditableImage 
+          id="image" 
+          table="services"
+          entityId={service.id}
+          src={service.image || "/images/services_hero.jpg"} 
+          alt={title} 
+          style={{ objectFit: "cover", width: "100%", height: "100%", position: "absolute", inset: 0, zIndex: 0 }} 
+        />
         <div style={{
           position: "absolute",
           top: 0, left: 0, right: 0, bottom: 0,
@@ -57,7 +66,9 @@ export default async function ServiceDetailsPage({ id, lang = "ar" }: { id: stri
           <Link href={lang === "en" ? "/en/services" : "/services"} style={{ color: "var(--color-accent)", textDecoration: "none", display: "inline-block", marginBottom: "1rem" }}>
             {lang === "en" ? "? Back to Services" : "❯ العودة إلى الخدمات"}
           </Link>
-          <h1 style={{ fontSize: "3.5rem", marginBottom: "1rem", color: "#FFFFFF", fontWeight: "bold" }}>{title}</h1>
+          <h1 style={{ fontSize: "3.5rem", marginBottom: "1rem", color: "#FFFFFF", fontWeight: "bold" }}>
+            <EditableText table="services" entityId={service.id} id={lang === "en" ? "title_en" : "title"} value={title} />
+          </h1>
           <div style={{ width: "80px", height: "4px", backgroundColor: "var(--color-accent)", margin: "0 auto", boxShadow: "0 2px 5px rgba(0,0,0,0.3)" }}></div>
         </div>
       </section>
@@ -68,8 +79,16 @@ export default async function ServiceDetailsPage({ id, lang = "ar" }: { id: stri
             <div 
               className="service-content"
               style={{ fontSize: "1.1rem", lineHeight: "1.8", color: "var(--color-text-main)" }}
-              dangerouslySetInnerHTML={{ __html: parseMarkdown(content) }} 
-            />
+            >
+              <EditableText 
+                table="services" 
+                entityId={service.id} 
+                id={lang === "en" ? "content_en" : "content"} 
+                value={content} 
+                isHtml={true}
+                as="div"
+              />
+            </div>
           </div>
 
           <div className="text-center">

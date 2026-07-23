@@ -1,5 +1,6 @@
 import { fetchSettings } from "@/lib/api";
 import { EditableText } from "@/components/editor/EditableText";
+import { EditableImage } from "@/components/editor/EditableImage";
 
 import { Lang } from "@/lib/dictionary";
 
@@ -28,19 +29,34 @@ export default async function ContactPage({ lang = "ar" }: { lang?: Lang }) {
     <main style={{ minHeight: "100vh", background: "var(--color-bg-subtle)" }}>
       {/* Header Area */}
       <section style={{ 
+        position: "relative",
         padding: "8rem 0 6rem 0",
-        background: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/contact_hero.jpg')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
         color: "#FFFFFF",
-        textAlign: "center"
+        textAlign: "center",
+        overflow: "hidden"
       }}>
-        <div className="container" style={{ paddingTop: "2rem" }}>
+        {/* Background Image Area */}
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, bottom: 0, zIndex: 1 }}>
+          <EditableImage 
+            id="contact_hero_image" 
+            src={settings.contact_hero_image || "/images/contact_hero.jpg"} 
+            alt="Contact Hero" 
+            style={{ objectFit: "cover", width: "100%", height: "100%", position: "absolute", inset: 0 }} 
+          />
+        </div>
+        
+        {/* Overlay */}
+        <div style={{
+          position: "absolute", top: 0, left: 0, right: 0, bottom: 0,
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
+          zIndex: 2
+        }} />
+
+        <div className="container" style={{ paddingTop: "2rem", position: "relative", zIndex: 3 }}>
           <h1 className="animate-fade-in-up" style={{ fontSize: "3rem", marginBottom: "var(--spacing-md)", fontWeight: "bold", color: "#FFFFFF" }}>
             {lang === "en" ? "Contact Us" : "تواصل معنا"}
           </h1>
-          <p className="animate-fade-in-up" style={{ animationDelay: "0.2s", fontSize: "1.3rem", maxWidth: "600px", margin: "0 auto", opacity: 1, color: "#FFFFFF", fontWeight: "bold", textShadow: "0 2px 4px rgba(0,0,0,0.5)" }}>
+          <p className="animate-fade-in-up" style={{ animationDelay: "0.2s", fontSize: "1.3rem", maxWidth: "600px", margin: "0 auto", opacity: 1, color: "#FFFFFF", fontWeight: "700", textShadow: "0 2px 4px rgba(0,0,0,0.5)" }}>
             {lang === "en" ? "We are here to answer all your inquiries and provide the support you need. Don't hesitate to reach out to us." : "نحن هنا للإجابة على كافة استفساراتكم وتقديم الدعم الذي تحتاجونه. لا تترددوا في التواصل معنا."}
           </p>
         </div>

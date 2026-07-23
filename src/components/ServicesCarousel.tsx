@@ -4,6 +4,8 @@ import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { servicesData } from "@/data/services";
+import { EditableImage } from "@/components/editor/EditableImage";
+import { EditableText } from "@/components/editor/EditableText";
 
 import { Lang } from "@/lib/dictionary";
 
@@ -160,19 +162,21 @@ export default function ServicesCarousel({ services = [], lang = "ar" }: { servi
                 }}
               >
                 <div style={{ position: "relative", width: "100%", height: "220px" }}>
-                  <Image 
+                  <EditableImage 
+                    id="image" 
+                    table="services"
+                    entityId={service.id}
                     src={service.image} 
                     alt={(lang === "en" && service.title_en ? service.title_en : (service.title?.ar || service.title)) || "Service"} 
-                    fill 
-                    style={{ objectFit: "cover" }} 
+                    style={{ objectFit: "cover", width: "100%", height: "100%", position: "absolute", inset: 0 }} 
                   />
                 </div>
                 <div style={{ padding: "1.5rem", display: "flex", flexDirection: "column", flexGrow: 1 }}>
                   <h3 style={{ fontSize: "1.4rem", marginBottom: "var(--spacing-sm)", color: "var(--color-primary)" }}>
-                    {lang === "en" && service.title_en ? service.title_en : (service.title?.ar || service.title)}
+                    <EditableText table="services" entityId={service.id} id={lang === "en" ? "title_en" : "title"} value={lang === "en" && service.title_en ? service.title_en : (service.title?.ar || service.title)} />
                   </h3>
                   <p style={{ fontSize: "0.95rem", marginBottom: "1.5rem", flexGrow: 1 }}>
-                    {lang === "en" && service.description_en ? service.description_en : (service.description || service.shortDesc?.ar)}
+                    <EditableText table="services" entityId={service.id} id={lang === "en" ? "description_en" : "description"} value={lang === "en" && service.description_en ? service.description_en : (service.description || service.shortDesc?.ar)} />
                   </p>
                   <div style={{ marginTop: "auto" }}>
                     <Link 

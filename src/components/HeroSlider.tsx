@@ -4,29 +4,33 @@ import Link from "next/link";
 
 import { Lang } from "@/lib/dictionary";
 import { EditableText } from "@/components/editor/EditableText";
+import { EditableImage } from "@/components/editor/EditableImage";
 
 export default function HeroSlider({ settings = {}, lang = "ar" }: { settings?: any, lang?: Lang }) {
   const slides = [
     {
-      image: "/hero_egypt.jpg",
-      title: lang === "en" ? "Regional Extension with Deep Local Expertise" : "امتداد إقليمي بخبرات محلية عريقة",
+      id: 1,
+      image: settings.hero_image_1 || "/hero_egypt.jpg",
+      title: lang === "en" ? (settings.hero_title_1_en || "Regional Extension with Deep Local Expertise") : (settings.hero_title_1 || "امتداد إقليمي بخبرات محلية عريقة"),
       subtitle: lang === "en" 
-        ? "Al-Ashmawy office offers customized financial and tax solutions that keep pace with the growth of your investments in the Egyptian market, backed by years of experience." 
-        : "مكتب العشماوي يقدم حلولاً مالية وضريبية مخصصة تواكب نمو استثماراتكم في السوق المصري، مدعومة بخبرات تمتد لسنوات."
+        ? (settings.hero_subtitle_1_en || "Al-Ashmawy office offers customized financial and tax solutions that keep pace with the growth of your investments in the Egyptian market, backed by years of experience.")
+        : (settings.hero_subtitle_1 || "مكتب العشماوي يقدم حلولاً مالية وضريبية مخصصة تواكب نمو استثماراتكم في السوق المصري، مدعومة بخبرات تمتد لسنوات.")
     },
     {
-      image: "/hero_ksa.jpg",
-      title: lang === "en" ? "Your Trusted Financial Partner in the Kingdom" : "شريكك المالي الموثوق في المملكة",
+      id: 2,
+      image: settings.hero_image_2 || "/hero_ksa.jpg",
+      title: lang === "en" ? (settings.hero_title_2_en || "Your Trusted Financial Partner in the Kingdom") : (settings.hero_title_2 || "شريكك المالي الموثوق في المملكة"),
       subtitle: lang === "en"
-        ? "We offer accounting and tax solutions that align with Saudi Vision 2030 and support the growth and prosperity of your business in the Kingdom with the highest standards."
-        : "نقدم حلولاً محاسبية وضريبية تواكب رؤية السعودية 2030 وتدعم نمو وازدهار أعمالك في المملكة بأعلى المعايير."
+        ? (settings.hero_subtitle_2_en || "We offer accounting and tax solutions that align with Saudi Vision 2030 and support the growth and prosperity of your business in the Kingdom with the highest standards.")
+        : (settings.hero_subtitle_2 || "نقدم حلولاً محاسبية وضريبية تواكب رؤية السعودية 2030 وتدعم نمو وازدهار أعمالك في المملكة بأعلى المعايير.")
     },
     {
-      image: "/hero_uae.jpg",
-      title: lang === "en" ? "Strategic Vision for Business Markets" : "رؤية استراتيجية لأسواق المال والأعمال",
+      id: 3,
+      image: settings.hero_image_3 || "/hero_uae.jpg",
+      title: lang === "en" ? (settings.hero_title_3_en || "Strategic Vision for Business Markets") : (settings.hero_title_3 || "رؤية استراتيجية لأسواق المال والأعمال"),
       subtitle: lang === "en"
-        ? "Global expertise in establishing, managing, and auditing accounts for companies and investors in the UAE, ensuring your financial stability."
-        : "خبرات عالمية في تأسيس، إدارة، وتدقيق الحسابات للشركات والمستثمرين في الإمارات العربية المتحدة، لضمان استقرارك المالي."
+        ? (settings.hero_subtitle_3_en || "Global expertise in establishing, managing, and auditing accounts for companies and investors in the UAE, ensuring your financial stability.")
+        : (settings.hero_subtitle_3 || "خبرات عالمية في تأسيس، إدارة، وتدقيق الحسابات للشركات والمستثمرين في الإمارات العربية المتحدة، لضمان استقرارك المالي.")
     }
   ];
 
@@ -61,13 +65,18 @@ export default function HeroSlider({ settings = {}, lang = "ar" }: { settings?: 
               left: 0,
               right: 0,
               bottom: 0,
-              backgroundImage: `url(${slide.image})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
               opacity: index === currentIndex ? 1 : 0,
-              transition: "opacity 1.5s ease-in-out"
+              transition: "opacity 1.5s ease-in-out",
+              zIndex: index === currentIndex ? 2 : 1
             }}
-          />
+          >
+            <EditableImage 
+              id={`hero_image_${slide.id}`} 
+              src={slide.image} 
+              alt="Hero" 
+              style={{ objectFit: "cover", width: "100%", height: "100%", position: "absolute", inset: 0 }} 
+            />
+          </div>
         ))}
       </div>
 
@@ -98,52 +107,59 @@ export default function HeroSlider({ settings = {}, lang = "ar" }: { settings?: 
             fontWeight: "900", 
             letterSpacing: "4px", 
             marginBottom: "0.5rem", 
-            textShadow: "0 4px 20px rgba(0,0,0,0.6)" 
+            lineHeight: "1.1",
+            textTransform: "uppercase",
+            fontFamily: "'Playfair Display', serif",
+            textShadow: "0 4px 20px rgba(0,0,0,0.5)"
           }}>
-            AFC
+            <EditableText 
+              id={lang === "en" ? "hero_main_title_en" : "hero_main_title"} 
+              value={(lang === "en" && settings.hero_main_title_en ? settings.hero_main_title_en : settings.hero_main_title) || "AFC"} 
+            />
           </h1>
+
+          {/* Render titles and subtitles dynamically for the current slide */}
+          <div style={{ position: "relative", minHeight: "180px", marginTop: "1rem" }}>
+            {slides.map((slide, index) => (
+              <div 
+                key={`text-${index}`}
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  opacity: index === currentIndex ? 1 : 0,
+                  transition: "opacity 1s ease-in-out",
+                  pointerEvents: index === currentIndex ? "auto" : "none"
+                }}
+              >
+                <h2 style={{ 
+                  color: "var(--color-accent)", 
+                  fontSize: "2.8rem", 
+                  fontWeight: "bold",
+                  marginBottom: "1.5rem",
+                  textShadow: "0 2px 10px rgba(0,0,0,0.5)"
+                }}>
+                  <EditableText id={lang === "en" ? `hero_title_${slide.id}_en` : `hero_title_${slide.id}`} value={slide.title} />
+                </h2>
+                
+                <p className="animate-fade-in-up delay-200" style={{ 
+                  color: "#FFFFFF", 
+                  fontSize: "1.3rem", 
+                  maxWidth: "750px", 
+                  margin: "0 auto", 
+                  lineHeight: "1.8",
+                  opacity: "0.95",
+                  fontWeight: "700",
+                  textShadow: "0 2px 10px rgba(0,0,0,0.6)"
+                }}>
+                  <EditableText id={lang === "en" ? `hero_subtitle_${slide.id}_en` : `hero_subtitle_${slide.id}`} value={slide.subtitle} />
+                </p>
+              </div>
+            ))}
+          </div>
           
-          <h2 style={{ 
-            color: "#FFFFFF", 
-            fontSize: "2.8rem", 
-            fontWeight: "700", 
-            marginBottom: "1rem", 
-            textShadow: "0 2px 10px rgba(0,0,0,0.5)" 
-          }}>
-            <EditableText 
-              id={lang === "en" ? "hero_title_en" : "hero_title"}
-              value={(lang === "en" && settings.hero_title_en ? settings.hero_title_en : settings.hero_title) || (lang === "en" ? 'Al-Ashmawy Financial Consulting' : 'العشماوي للاستشارات المالية')}
-            />
-          </h2>
-          
-          <p style={{ 
-            color: "rgba(255,255,255,0.95)", 
-            fontSize: "1.5rem", 
-            fontWeight: "900", 
-            marginBottom: "1.5rem", 
-            textShadow: "0 2px 8px rgba(0,0,0,0.5)",
-            letterSpacing: "1px"
-          }}>
-            <EditableText 
-              id={lang === "en" ? "hero_subtitle_en" : "hero_subtitle"}
-              value={(lang === "en" && settings.hero_subtitle_en ? settings.hero_subtitle_en : settings.hero_subtitle) || (lang === "en" ? 'Accounting, Audit and Tax Services' : 'للمحاسبة والمراجعة والضرائب')}
-            />
-          </p>
-          
-          <div style={{ width: "250px", height: "5px", backgroundColor: "#FFFFFF", margin: "0 auto 1.5rem", opacity: 0.9, boxShadow: "0 2px 5px rgba(0,0,0,0.5)", borderRadius: "3px" }}></div>
-          
-          <p style={{ 
-            color: "#FFFFFF", 
-            fontSize: "2.8rem", 
-            fontWeight: "900", 
-            letterSpacing: "8px", 
-            marginBottom: "1.5rem", 
-            textShadow: "0 2px 8px rgba(0,0,0,0.6)" 
-          }}>
-            EGY / KSA / UAE
-          </p>
-          
-          <div className="flex gap-md flex-wrap justify-center" style={{ marginTop: "0" }}>
+          <div className="flex gap-md flex-wrap justify-center" style={{ marginTop: "2rem" }}>
             <a href="https://wa.me/201155729429?text=مرحباً،%20أود%20الاستفسار%20عن%20خدمات%20مكتب%20العشماوي." target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ padding: "1rem 2rem", fontSize: "1.1rem" }}>
               {lang === "en" ? "Request Free Consultation" : "طلب استشارة مجانية"}
             </a>

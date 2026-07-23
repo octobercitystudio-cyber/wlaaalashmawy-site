@@ -11,13 +11,24 @@ interface EditableTextProps {
     isHtml?: boolean;
     className?: string;
     style?: React.CSSProperties;
+    table?: string;
+    entityId?: number;
 }
 
-export function EditableText({ id, value, as: Component = "span", isHtml = false, className = "", style = {} }: EditableTextProps) {
-    const { isEditMode, token, liveSettings, refreshSettings } = useVisualEditor();
+export function EditableText({ id, value, as: Component = "span", isHtml = false, className = "", style = {}, table, entityId }: EditableTextProps) {
+    const { isEditMode, token, liveSettings, liveEntities, refreshSettings } = useVisualEditor();
     
-    // Fallback to static 'value' until liveSettings are fetched
-    const displayValue = liveSettings ? (liveSettings[id] ?? value) : value;
+    // Fallback to static 'value' until live data is fetched
+    let displayValue = value;
+    if (table && entityId) {
+        if (liveEntities && liveEntities[table] && liveEntities[table][entityId]) {
+            displayValue = liveEntities[table][entityId][id] ?? value;
+        }
+    } else {
+        if (liveSettings) {
+            displayValue = liveSettings[id] ?? value;
+        }
+    }
 
     const [isEditing, setIsEditing] = useState(false);
     const [currentValue, setCurrentValue] = useState(displayValue);
@@ -39,20 +50,28 @@ export function EditableText({ id, value, as: Component = "span", isHtml = false
         setIsSaving(true);
         try {
             const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://www.afc-cpa.com";
-            const res = await fetch(`${apiUrl}/api/settings.php`, {
+            
+            let endpoint = `${apiUrl}/api/settings.php`;
+            let bodyData: any = { [id]: currentValue };
+
+            if (table && entityId) {
+                endpoint = `${apiUrl}/api/update_field.php`;
+                bodyData = { table, id: entityId, field: id, value: currentValue };
+            }
+
+            const res = await fetch(endpoint, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                     ...(token ? { "Authorization": `Bearer ${token}` } : {})
                 },
-                body: JSON.stringify({ [id]: currentValue }),
+                body: JSON.stringify(bodyData),
             });
             const data = await res.json().catch(() => ({}));
             
             if (res.ok) {
                 setIsEditing(false);
                 refreshSettings(); // Fetch new data globally
-                // We don't need router.refresh() anymore since liveSettings drives the UI
             } else {
                 alert("فشل في حفظ التعديل: " + (data.error || res.statusText));
             }

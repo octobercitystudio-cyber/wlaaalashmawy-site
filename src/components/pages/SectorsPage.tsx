@@ -1,11 +1,14 @@
 import Link from "next/link";
 import Image from "next/image";
-import { fetchSectors } from '@/lib/api';
+import { fetchSectors, fetchSettings } from '@/lib/api';
+import { EditableText } from "@/components/editor/EditableText";
+import { EditableImage } from "@/components/editor/EditableImage";
 
 import { Lang } from "@/lib/dictionary";
 
 export default async function SectorsPage({ lang = "ar" }: { lang?: Lang }) {
   const sectors = await fetchSectors();
+  const settings = await fetchSettings();
   
   return (
     <main>
@@ -17,7 +20,12 @@ export default async function SectorsPage({ lang = "ar" }: { lang?: Lang }) {
         position: "relative",
         overflow: "hidden"
       }}>
-        <Image src="/images/services_hero.jpg" alt="" fill style={{ objectFit: "cover", zIndex: 0 }} priority />
+        <EditableImage 
+          id="sectors_hero_image" 
+          src={settings.sectors_hero_image || "/images/services_hero.jpg"} 
+          alt="" 
+          style={{ objectFit: "cover", width: "100%", height: "100%", position: "absolute", inset: 0, zIndex: 0 }} 
+        />
         {/* Dark Overlay */}
         <div style={{
           position: "absolute",
@@ -34,7 +42,7 @@ export default async function SectorsPage({ lang = "ar" }: { lang?: Lang }) {
             {lang === "en" ? "Business Sectors" : "قطاعات الأعمال"}
           </h1>
           <div style={{ width: "80px", height: "4px", backgroundColor: "var(--color-accent)", margin: "0 auto 2rem", boxShadow: "0 2px 5px rgba(0,0,0,0.3)" }}></div>
-          <p style={{ fontSize: "1.3rem", maxWidth: "800px", margin: "0 auto", color: "rgba(255,255,255,0.95)", lineHeight: "1.8", textShadow: "0 2px 5px rgba(0,0,0,0.5)" }}>
+          <p style={{ fontSize: "1.3rem", maxWidth: "800px", margin: "0 auto", color: "rgba(255,255,255,0.95)", lineHeight: "1.8", textShadow: "0 2px 5px rgba(0,0,0,0.5)", fontWeight: "700" }}>
             {lang === "en" 
               ? "We provide deep expertise and specialized financial solutions tailored to meet the unique requirements of various business sectors." 
               : "نقدم خبراتنا المتخصصة وحلولاً مالية مصممة خصيصاً لتلبية التحديات والمتطلبات الفريدة لمختلف قطاعات الأعمال."}
@@ -49,11 +57,22 @@ export default async function SectorsPage({ lang = "ar" }: { lang?: Lang }) {
               return (
                 <div key={sector.id} className="premium-card text-center" style={{ background: "var(--color-bg-card)", border: "2px solid var(--color-accent)", display: "flex", flexDirection: "column", padding: 0, overflow: "hidden" }}>
                   <div style={{ position: "relative", width: "100%", height: "220px" }}>
-                    <Image src={sector.image || '/images/sectors/real_estate.jpg'} alt={lang === "en" && sector.title_en ? sector.title_en : sector.title} fill style={{ objectFit: "cover" }} />
+                    <EditableImage 
+                      id="image" 
+                      table="sectors"
+                      entityId={sector.id}
+                      src={sector.image || '/images/sectors/real_estate.jpg'} 
+                      alt={lang === "en" && sector.title_en ? sector.title_en : sector.title} 
+                      style={{ objectFit: "cover", width: "100%", height: "100%", position: "absolute", inset: 0 }} 
+                    />
                   </div>
                   <div style={{ padding: "1.8rem 1.5rem", display: "flex", flexDirection: "column", flexGrow: 1 }}>
-                    <h3 style={{ fontSize: "1.4rem", marginBottom: "var(--spacing-sm)", color: "var(--color-primary)", fontWeight: "bold" }}>{lang === "en" && sector.title_en ? sector.title_en : sector.title}</h3>
-                    <p style={{ margin: 0, flexGrow: 1, color: "var(--color-text-muted)", fontSize: "1rem", lineHeight: "1.8" }}>{lang === "en" && sector.description_en ? sector.description_en : sector.description}</p>
+                    <h3 style={{ fontSize: "1.4rem", marginBottom: "var(--spacing-sm)", color: "var(--color-primary)", fontWeight: "bold" }}>
+                      <EditableText table="sectors" entityId={sector.id} id={lang === "en" ? "title_en" : "title"} value={lang === "en" && sector.title_en ? sector.title_en : sector.title} />
+                    </h3>
+                    <p style={{ margin: 0, flexGrow: 1, color: "var(--color-text-muted)", fontSize: "1rem", lineHeight: "1.8" }}>
+                      <EditableText table="sectors" entityId={sector.id} id={lang === "en" ? "description_en" : "description"} value={lang === "en" && sector.description_en ? sector.description_en : sector.description} />
+                    </p>
                   </div>
                 </div>
               );
