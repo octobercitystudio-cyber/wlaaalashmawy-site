@@ -34,7 +34,7 @@ export default async function ServicesPage({ lang = "ar" }: { lang?: Lang }) {
             {lang === "en" ? "Our Professional Services" : "خدماتنا الاحترافية"}
           </h1>
           <div style={{ width: "80px", height: "4px", backgroundColor: "var(--color-accent)", margin: "0 auto 2rem", boxShadow: "0 2px 5px rgba(0,0,0,0.3)" }}></div>
-          <p style={{ fontSize: "1.3rem", maxWidth: "800px", margin: "0 auto", color: "rgba(255,255,255,0.95)", lineHeight: "1.8", textShadow: "0 2px 5px rgba(0,0,0,0.5)" }}>
+          <p style={{ fontSize: "1.3rem", maxWidth: "800px", margin: "0 auto", color: "rgba(255,255,255,0.95)", lineHeight: "1.8", textShadow: "0 2px 5px rgba(0,0,0,0.5)", fontWeight: "700" }}>
             {lang === "en" 
               ? "We provide a comprehensive range of financial, accounting, tax, and institutional services to meet all your business needs and ensure sustainable growth." 
               : "نقدم مجموعة متكاملة من الخدمات المالية والمحاسبية والضريبية والمؤسسية لتلبية كافة احتياجات أعمالك وضمان نموها المستدام."}
