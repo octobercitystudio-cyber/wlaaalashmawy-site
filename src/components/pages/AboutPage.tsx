@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { fetchSettings } from '@/lib/api';
+import { EditableText } from "@/components/editor/EditableText";
 
 import { Lang } from "@/lib/dictionary";
 
@@ -74,9 +75,12 @@ export default async function AboutPage({ lang = "ar" }: { lang?: Lang }) {
           {/* About Text */}
           <div style={{ textAlign: "center", marginBottom: "5rem" }}>
             <h2 style={{ fontSize: "2.5rem", color: "var(--color-primary)", fontWeight: "bold", marginBottom: "2rem" }}>{lang === "en" ? "About The Company" : "عن الشركة"}</h2>
-            <div 
+            <EditableText 
+              id={lang === "en" ? "about_full_en" : "about_full"}
+              value={(lang === "en" && settings.about_full_en ? settings.about_full_en : settings.about_full) || (lang === "en" ? `"Wlaa Magdy Al-Ashmawy for Legal Accounting" (AFC) is one of the leading firms in Egypt in the fields of accounting, auditing, taxation, and financial advisory services. Founded in 2024 by Ms. Wlaa Magdy Al-Ashmawy, the firm was built on a clear vision aimed at providing outstanding professional services based on integrity, expertise, and building sustainable relationships with clients.<br/><br/>At AFC, we ensure our clients that every engagement is handled by a team of dedicated professionals committed to the highest standards of quality and excellence. We adopt an integrated approach rooted in a deep understanding of the unique challenges facing small and medium-sized enterprises (SMEs), allowing us to provide practical and strategic solutions that enhance value.<br/><br/>Our comprehensive services are designed to support clients at every stage of their business journey, empowering them to make informed decisions, achieve sustainable growth, and focus on maximizing the long-term value of their business.` : `تُعد شركة "ولاء مجدي العشماوي للمحاسبة القانونية" (AFC) واحدة من الشركات الرائدة في مصر في مجالات المحاسبة، والمراجعة، والضرائب، والخدمات الاستشارية المالية. تأسست الشركة عام 2024 على يد السيدة ولاء مجدي العشماوي، انطلاقاً من رؤية واضحة تهدف إلى تقديم خدمات مهنية متميزة ترتكز على النزاهة والخبرة وبناء علاقات مستدامة مع العملاء.<br/><br/>في AFC، نضمن لعملائنا أن يتولى تنفيذ كل مهمة فريق من المهنيين المتفانين الملتزمين بأعلى معايير الجودة والتميز. ونحن نتبنى نهجاً متكاملاً يرتكز على فهم عميق للتحديات الفريدة التي تواجه الشركات الصغيرة والمتوسطة، مما يتيح لنا تقديم حلول عملية واستراتيجية تعزز القيمة.<br/><br/>صُممت خدماتنا الشاملة لدعم العملاء في كل مرحلة من مراحل رحلة أعمالهم، مما يُمكّنهم من اتخاذ قرارات مدروسة، وتحقيق نمو مستدام، والتركيز على تعظيم القيمة طويلة الأمد لأعمالهم.`)}
+              isHtml={true}
+              as="div"
               style={{ fontSize: "1.2rem", lineHeight: "2", color: "var(--color-text-main)", opacity: 0.9, textAlign: "justify" }}
-              dangerouslySetInnerHTML={{ __html: (lang === "en" && settings.about_full_en ? settings.about_full_en : settings.about_full) || (lang === "en" ? `"Wlaa Magdy Al-Ashmawy for Legal Accounting" (AFC) is one of the leading firms in Egypt in the fields of accounting, auditing, taxation, and financial advisory services. Founded in 2024 by Ms. Wlaa Magdy Al-Ashmawy, the firm was built on a clear vision aimed at providing outstanding professional services based on integrity, expertise, and building sustainable relationships with clients.<br/><br/>At AFC, we ensure our clients that every engagement is handled by a team of dedicated professionals committed to the highest standards of quality and excellence. We adopt an integrated approach rooted in a deep understanding of the unique challenges facing small and medium-sized enterprises (SMEs), allowing us to provide practical and strategic solutions that enhance value.<br/><br/>Our comprehensive services are designed to support clients at every stage of their business journey, empowering them to make informed decisions, achieve sustainable growth, and focus on maximizing the long-term value of their business.` : `تُعد شركة "ولاء مجدي العشماوي للمحاسبة القانونية" (AFC) واحدة من الشركات الرائدة في مصر في مجالات المحاسبة، والمراجعة، والضرائب، والخدمات الاستشارية المالية. تأسست الشركة عام 2024 على يد السيدة ولاء مجدي العشماوي، انطلاقاً من رؤية واضحة تهدف إلى تقديم خدمات مهنية متميزة ترتكز على النزاهة والخبرة وبناء علاقات مستدامة مع العملاء.<br/><br/>في AFC، نضمن لعملائنا أن يتولى تنفيذ كل مهمة فريق من المهنيين المتفانين الملتزمين بأعلى معايير الجودة والتميز. ونحن نتبنى نهجاً متكاملاً يرتكز على فهم عميق للتحديات الفريدة التي تواجه الشركات الصغيرة والمتوسطة، مما يتيح لنا تقديم حلول عملية واستراتيجية تعزز القيمة.<br/><br/>صُممت خدماتنا الشاملة لدعم العملاء في كل مرحلة من مراحل رحلة أعمالهم، مما يُمكّنهم من اتخاذ قرارات مدروسة، وتحقيق نمو مستدام، والتركيز على تعظيم القيمة طويلة الأمد لأعمالهم.`) }}
             />
           </div>
 
@@ -91,9 +95,12 @@ export default async function AboutPage({ lang = "ar" }: { lang?: Lang }) {
                 </svg>
               </div>
               <h2 style={{ fontSize: "2rem", color: "var(--color-primary)", fontWeight: "bold", marginBottom: "1.5rem" }}>{lang === "en" ? "Vision" : "الرؤية"}</h2>
-              <div 
+              <EditableText 
+                id={lang === "en" ? "vision_en" : "vision"}
+                value={(lang === "en" && settings.vision_en ? settings.vision_en : settings.vision) || (lang === "en" ? "To be the trusted partner and first choice for companies seeking exceptional accounting, tax, auditing, and financial advisory services, through expertise, integrity, and innovation." : "أن نكون الشريك الموثوق والاختيار الأول للشركات التي تبحث عن خدمات محاسبية وضريبية ومراجعة واستشارات مالية استثنائية، من خلال الخبرة والنزاهة والابتكار.")}
+                isHtml={true}
+                as="div"
                 style={{ fontSize: "1.15rem", lineHeight: "1.8", color: "var(--color-text-main)", opacity: 0.9, margin: 0 }}
-                dangerouslySetInnerHTML={{ __html: (lang === "en" && settings.vision_en ? settings.vision_en : settings.vision) || (lang === "en" ? "To be the trusted partner and first choice for companies seeking exceptional accounting, tax, auditing, and financial advisory services, through expertise, integrity, and innovation." : "أن نكون الشريك الموثوق والاختيار الأول للشركات التي تبحث عن خدمات محاسبية وضريبية ومراجعة واستشارات مالية استثنائية، من خلال الخبرة والنزاهة والابتكار.") }}
               />
             </div>
 
@@ -105,9 +112,12 @@ export default async function AboutPage({ lang = "ar" }: { lang?: Lang }) {
                 </svg>
               </div>
               <h2 style={{ fontSize: "2rem", color: "var(--color-primary)", fontWeight: "bold", marginBottom: "1.5rem" }}>{lang === "en" ? "Mission" : "الرسالة"}</h2>
-              <div 
+              <EditableText 
+                id={lang === "en" ? "mission_en" : "mission"}
+                value={(lang === "en" && settings.mission_en ? settings.mission_en : settings.mission) || (lang === "en" ? "To be the reliable force behind our clients' success by delivering insightful solutions, uncompromising quality, and strategic guidance that fosters growth, builds trust, and creates sustainable value." : "أن نكون القوة الموثوقة وراء نجاح عملائنا، من خلال تقديم حلول ثاقبة، وجودة لا تقبل التنازل، وتوجيه استراتيجي يعزز النمو، ويرسخ الثقة، ويخلق قيمة مستدامة.")}
+                isHtml={true}
+                as="div"
                 style={{ fontSize: "1.15rem", lineHeight: "1.8", color: "var(--color-text-main)", opacity: 0.9, margin: 0 }}
-                dangerouslySetInnerHTML={{ __html: (lang === "en" && settings.mission_en ? settings.mission_en : settings.mission) || (lang === "en" ? "To be the reliable force behind our clients' success by delivering insightful solutions, uncompromising quality, and strategic guidance that fosters growth, builds trust, and creates sustainable value." : "أن نكون القوة الموثوقة وراء نجاح عملائنا، من خلال تقديم حلول ثاقبة، وجودة لا تقبل التنازل، وتوجيه استراتيجي يعزز النمو، ويرسخ الثقة، ويخلق قيمة مستدامة.") }}
               />
             </div>
           </div>

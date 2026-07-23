@@ -193,6 +193,7 @@
             
             <ul class="nav flex-column mb-auto">
                 <li class="nav-item"><a class="nav-link-sidebar active" onclick="switchMainTab('overview')"><i class="bi bi-graph-up"></i> نظرة عامة</a></li>
+                <li class="nav-item"><a class="nav-link-sidebar" onclick="switchMainTab('visual-editor')"><i class="bi bi-magic"></i> المحرر المرئي (Live Edit)</a></li>
                 <li class="nav-item"><a class="nav-link-sidebar" onclick="switchMainTab('home')"><i class="bi bi-house-door-fill"></i> الرئيسية</a></li>
                 <li class="nav-item"><a class="nav-link-sidebar" onclick="switchMainTab('about')"><i class="bi bi-info-circle-fill"></i> من نحن</a></li>
                 <li class="nav-item"><a class="nav-link-sidebar" onclick="switchMainTab('services')"><i class="bi bi-briefcase-fill"></i> الخدمات</a></li>
@@ -232,6 +233,17 @@
         <!-- Main Content -->
         <div class="main-content">
             
+            <!-- VISUAL EDITOR SECTION -->
+            <div id="sec-visual-editor" class="section-container">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2 class="fw-bold mb-0">المحرر المرئي</h2>
+                    <button class="btn btn-primary" onclick="openVisualEditorInNewTab()"><i class="bi bi-box-arrow-up-right"></i> فتح في نافذة جديدة</button>
+                </div>
+                <div class="card p-0" style="height: calc(100vh - 150px); overflow: hidden; border: 2px solid var(--accent);">
+                    <iframe id="visual-editor-iframe" src="about:blank" style="width: 100%; height: 100%; border: none;"></iframe>
+                </div>
+            </div>
+
             <!-- OVERVIEW SECTION -->
             <div id="sec-overview" class="section-container active">
                 <h2 class="fw-bold mb-4">نظرة عامة</h2>
@@ -649,6 +661,20 @@
             
             if(window.innerWidth <= 768) document.querySelector('.sidebar').classList.remove('show');
             if(tabId === 'media') loadMedia();
+            
+            if(tabId === 'visual-editor') {
+                const token = localStorage.getItem('token');
+                const targetUrl = `/?edit_mode=true&token=${token}`;
+                const iframe = document.getElementById('visual-editor-iframe');
+                if(!iframe.src || iframe.src === 'about:blank' || !iframe.src.includes('edit_mode=true')) {
+                    iframe.src = targetUrl;
+                }
+            }
+        }
+
+        function openVisualEditorInNewTab() {
+            const token = localStorage.getItem('token');
+            window.open(`/?edit_mode=true&token=${token}`, '_blank');
         }
 
         function switchInnerTab(section, innerTab) {

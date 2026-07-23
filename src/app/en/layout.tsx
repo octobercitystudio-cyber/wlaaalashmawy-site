@@ -20,6 +20,8 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+import { VisualEditorProvider } from "@/components/editor/VisualEditorProvider";
+
 export default async function EnLayout({
   children,
 }: Readonly<{
@@ -31,13 +33,15 @@ export default async function EnLayout({
   return (
     <html lang="en" dir="ltr" className={`${inter.variable}`}>
       <body>
-        <ClientTracker />
-        <Navbar settings={settings} services={services} lang="en" />
-        <main className="flex flex-col min-h-full">
-          {children}
-        </main>
-        <Footer settings={settings} services={services} lang="en" />
-        <WhatsAppButton settings={settings} />
+        <VisualEditorProvider>
+          <ClientTracker />
+          <Navbar settings={settings} services={services} lang="en" />
+          <main className="flex flex-col min-h-full">
+            {children}
+          </main>
+          <Footer settings={settings} services={services} lang="en" />
+          <WhatsAppButton settings={settings} />
+        </VisualEditorProvider>
       </body>
     </html>
   );

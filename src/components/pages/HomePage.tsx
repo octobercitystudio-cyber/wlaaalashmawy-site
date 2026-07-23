@@ -5,6 +5,7 @@ import ServicesCarousel from "@/components/ServicesCarousel";
 import AnimatedStat from "@/components/AnimatedStat";
 
 import { fetchSettings, fetchServices, fetchFeatures, fetchStats, fetchTestimonials } from '@/lib/api';
+import { EditableText } from "@/components/editor/EditableText";
 
 import { Lang } from "@/lib/dictionary";
 
@@ -61,9 +62,12 @@ export default async function Home({ lang = "ar" }: { lang?: Lang }) {
         <div className="container grid grid-cols-1 md-grid-cols-2 gap-lg items-center">
           <div>
             <h2 className="text-gold">{lang === "en" ? "Why Choose Us?" : "لماذا تختارنا؟"}</h2>
-            <div 
+            <EditableText 
+              id={lang === "en" ? "about_short_en" : "about_short"}
+              value={(lang === "en" && settings.about_short_en ? settings.about_short_en : settings.about_short) || (lang === "en" ? "We don't just provide numbers, we provide deep financial insight. Through the latest methodologies and accounting technologies, we ensure financial security and infinite precision." : "نحن لا نقدم أرقاماً فحسب، بل نقدم رؤية مالية عميقة. من خلال أحدث المنهجيات والتقنيات المحاسبية، نضمن لك الأمان المالي والدقة المتناهية.")}
+              isHtml={true}
+              as="div"
               style={{ fontSize: "1.1rem" }}
-              dangerouslySetInnerHTML={{ __html: (lang === "en" && settings.about_short_en ? settings.about_short_en : settings.about_short) || (lang === "en" ? "We don't just provide numbers, we provide deep financial insight. Through the latest methodologies and accounting technologies, we ensure financial security and infinite precision." : "نحن لا نقدم أرقاماً فحسب، بل نقدم رؤية مالية عميقة. من خلال أحدث المنهجيات والتقنيات المحاسبية، نضمن لك الأمان المالي والدقة المتناهية.") }}
             />
             <ul className="flex flex-col gap-sm" style={{ marginTop: "var(--spacing-md)" }}>
               {features.map((feature: any, index: number) => (

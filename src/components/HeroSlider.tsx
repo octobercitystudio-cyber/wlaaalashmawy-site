@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 
 import { Lang } from "@/lib/dictionary";
+import { EditableText } from "@/components/editor/EditableText";
 
 export default function HeroSlider({ settings = {}, lang = "ar" }: { settings?: any, lang?: Lang }) {
   const slides = [
@@ -109,7 +110,10 @@ export default function HeroSlider({ settings = {}, lang = "ar" }: { settings?: 
             marginBottom: "1rem", 
             textShadow: "0 2px 10px rgba(0,0,0,0.5)" 
           }}>
-            {(lang === "en" && settings.hero_title_en ? settings.hero_title_en : settings.hero_title) || (lang === "en" ? 'Al-Ashmawy Financial Consulting' : 'العشماوي للاستشارات المالية')}
+            <EditableText 
+              id={lang === "en" ? "hero_title_en" : "hero_title"}
+              value={(lang === "en" && settings.hero_title_en ? settings.hero_title_en : settings.hero_title) || (lang === "en" ? 'Al-Ashmawy Financial Consulting' : 'العشماوي للاستشارات المالية')}
+            />
           </h2>
           
           <p style={{ 
@@ -120,7 +124,10 @@ export default function HeroSlider({ settings = {}, lang = "ar" }: { settings?: 
             textShadow: "0 2px 8px rgba(0,0,0,0.5)",
             letterSpacing: "1px"
           }}>
-            {(lang === "en" && settings.hero_subtitle_en ? settings.hero_subtitle_en : settings.hero_subtitle) || (lang === "en" ? 'Accounting, Audit and Tax Services' : 'للمحاسبة والمراجعة والضرائب')}
+            <EditableText 
+              id={lang === "en" ? "hero_subtitle_en" : "hero_subtitle"}
+              value={(lang === "en" && settings.hero_subtitle_en ? settings.hero_subtitle_en : settings.hero_subtitle) || (lang === "en" ? 'Accounting, Audit and Tax Services' : 'للمحاسبة والمراجعة والضرائب')}
+            />
           </p>
           
           <div style={{ width: "250px", height: "5px", backgroundColor: "#FFFFFF", margin: "0 auto 1.5rem", opacity: 0.9, boxShadow: "0 2px 5px rgba(0,0,0,0.5)", borderRadius: "3px" }}></div>

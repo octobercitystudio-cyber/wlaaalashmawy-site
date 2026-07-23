@@ -1,4 +1,5 @@
 import { fetchSettings } from "@/lib/api";
+import { EditableText } from "@/components/editor/EditableText";
 
 import { Lang } from "@/lib/dictionary";
 
@@ -145,7 +146,10 @@ export default async function ContactPage({ lang = "ar" }: { lang?: Lang }) {
                   <div>
                     <h4 style={{ fontSize: "1.1rem", color: "var(--color-primary)", marginBottom: "0.3rem", fontWeight: "bold" }}>{lang === "en" ? "Address" : "العنوان"}</h4>
                     <p style={{ color: "var(--color-text-main)", fontSize: "1.1rem", fontWeight: "bold", lineHeight: "1.6", margin: "0" }}>
-                      {address}
+                      <EditableText 
+                        id={lang === "en" ? "contact_address_en" : "contact_address"}
+                        value={address}
+                      />
                     </p>
                   </div>
                 </div>

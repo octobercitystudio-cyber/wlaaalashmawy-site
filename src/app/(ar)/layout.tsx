@@ -27,6 +27,8 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+import { VisualEditorProvider } from "@/components/editor/VisualEditorProvider";
+
 export default async function ArLayout({
   children,
 }: Readonly<{
@@ -38,13 +40,15 @@ export default async function ArLayout({
   return (
     <html lang="ar" dir="rtl" className={`${cairo.variable} ${amiri.variable}`}>
       <body>
-        <ClientTracker />
-        <Navbar settings={settings} services={services} lang="ar" />
-        <main className="flex flex-col min-h-full">
-          {children}
-        </main>
-        <Footer settings={settings} services={services} lang="ar" />
-        <WhatsAppButton settings={settings} />
+        <VisualEditorProvider>
+          <ClientTracker />
+          <Navbar settings={settings} services={services} lang="ar" />
+          <main className="flex flex-col min-h-full">
+            {children}
+          </main>
+          <Footer settings={settings} services={services} lang="ar" />
+          <WhatsAppButton settings={settings} />
+        </VisualEditorProvider>
       </body>
     </html>
   );

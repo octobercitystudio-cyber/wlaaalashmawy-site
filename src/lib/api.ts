@@ -7,7 +7,7 @@ export async function fetchSettings() {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 1500);
     const res = await fetch(`${apiUrl}/api/settings.php`, { 
-        cache: 'force-cache',
+        cache: 'no-store',
         signal: controller.signal
     });
     clearTimeout(timeoutId);
