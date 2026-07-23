@@ -773,19 +773,24 @@
                     hero_subtitle_en: "Innovative and reliable accounting solutions for your company",
                     about_short: "نقدم لك أفضل الخدمات المحاسبية والاستشارية بخبرة تمتد لسنوات.",
                     about_short_en: "We offer you the best accounting and consulting services with years of experience.",
-                    about_full: "نحن مؤسسة رائدة في مجال الاستشارات المحاسبية والضريبية. نسعى دائماً لتقديم الأفضل لعملائنا.",
-                    about_full_en: "We are a leading firm in accounting and tax consulting. We always strive to provide the best for our clients.",
-                    vision: "أن نكون الخيار الأول والشركة الرائدة في تقديم الخدمات المحاسبية في المنطقة.",
-                    vision_en: "To be the first choice and leading company in providing accounting services in the region.",
-                    mission: "تقديم حلول مالية دقيقة وشفافة تساعد الشركات على النمو وتحقيق أهدافها الاستراتيجية.",
-                    mission_en: "Providing accurate and transparent financial solutions that help companies grow and achieve their strategic goals.",
+                    about_full: "تُعد شركة \"ولاء مجدي العشماوي للمحاسبة القانونية\" (AFC) واحدة من الشركات الرائدة في مصر في مجالات المحاسبة، والمراجعة، والضرائب، والخدمات الاستشارية المالية. تأسست الشركة عام 2024 على يد السيدة ولاء مجدي العشماوي، انطلاقاً من رؤية واضحة تهدف إلى تقديم خدمات مهنية متميزة ترتكز على النزاهة والخبرة وبناء علاقات مستدامة مع العملاء.<br/><br/>في AFC، نضمن لعملائنا أن يتولى تنفيذ كل مهمة فريق من المهنيين المتفانين الملتزمين بأعلى معايير الجودة والتميز. ونحن نتبنى نهجاً متكاملاً يرتكز على فهم عميق للتحديات الفريدة التي تواجه الشركات الصغيرة والمتوسطة، مما يتيح لنا تقديم حلول عملية واستراتيجية تعزز القيمة.<br/><br/>صُممت خدماتنا الشاملة لدعم العملاء في كل مرحلة من مراحل رحلة أعمالهم، مما يُمكّنهم من اتخاذ قرارات مدروسة، وتحقيق نمو مستدام، والتركيز على تعظيم القيمة طويلة الأمد لأعمالهم.",
+                    about_full_en: "\"Wlaa Magdy Al-Ashmawy for Legal Accounting\" (AFC) is one of the leading firms in Egypt in the fields of accounting, auditing, taxation, and financial advisory services. Founded in 2024 by Ms. Wlaa Magdy Al-Ashmawy, the firm was built on a clear vision aimed at providing outstanding professional services based on integrity, expertise, and building sustainable relationships with clients.<br/><br/>At AFC, we ensure our clients that every engagement is handled by a team of dedicated professionals committed to the highest standards of quality and excellence. We adopt an integrated approach rooted in a deep understanding of the unique challenges facing small and medium-sized enterprises (SMEs), allowing us to provide practical and strategic solutions that enhance value.<br/><br/>Our comprehensive services are designed to support clients at every stage of their business journey, empowering them to make informed decisions, achieve sustainable growth, and focus on maximizing the long-term value of their business.",
+                    vision: "أن نكون الشريك الموثوق والاختيار الأول للشركات التي تبحث عن خدمات محاسبية وضريبية ومراجعة واستشارات مالية استثنائية، من خلال الخبرة والنزاهة والابتكار.",
+                    vision_en: "To be the trusted partner and first choice for companies seeking exceptional accounting, tax, auditing, and financial advisory services, through expertise, integrity, and innovation.",
+                    mission: "أن نكون القوة الموثوقة وراء نجاح عملائنا، من خلال تقديم حلول ثاقبة، وجودة لا تقبل التنازل، وتوجيه استراتيجي يعزز النمو، ويرسخ الثقة، ويخلق قيمة مستدامة.",
+                    mission_en: "To be the reliable force behind our clients' success by delivering insightful solutions, uncompromising quality, and strategic guidance that fosters growth, builds trust, and creates sustainable value.",
                     contact_address: "مكتب 204 الدور الثاني مول اجياد فيو - ٦ اكتوبر - الجيزة - مصر",
                     contact_address_en: "Office 204, 2nd Floor, Agyad View Mall - 6th of October - Giza - Egypt",
                     contact_map: "https://maps.google.com/maps?q=29.9607581,30.9246025&hl=ar&z=16&output=embed",
                     seo_title: "شركة الاستشارات المحاسبية",
                     seo_title_en: "AFC",
                     seo_desc: "شريكك الموثوق في تقديم حلول محاسبية وضريبية متكاملة لضمان نجاح واستدامة أعمالك.",
-                    seo_desc_en: "Your trusted partner in providing comprehensive accounting and tax solutions."
+                    seo_desc_en: "Your trusted partner in providing comprehensive accounting and tax solutions.",
+                    social_facebook: "https://facebook.com",
+                    social_instagram: "https://instagram.com",
+                    social_youtube: "https://youtube.com",
+                    social_linkedin: "https://linkedin.com",
+                    social_tiktok: "https://tiktok.com"
                 };
                 
                 ['hero_title', 'hero_subtitle', 'hero_title_en', 'hero_subtitle_en', 'contact_address', 'contact_address_en', 'contact_map', 'social_facebook', 'social_instagram', 'social_youtube', 'social_linkedin', 'social_tiktok', 'admin_username', 'admin_password', 'seo_title', 'seo_desc', 'seo_title_en', 'seo_desc_en'].forEach(k => {
