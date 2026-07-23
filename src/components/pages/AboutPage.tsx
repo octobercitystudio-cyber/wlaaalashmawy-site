@@ -58,9 +58,9 @@ export default async function AboutPage({ lang = "ar" }: { lang?: Lang }) {
               alignItems: "center",
               justifyContent: "center",
               flexDirection: "column",
-              padding: "2rem"
+              padding: "0"
             }}>
-              <Image src="/images/chairman.jpg" alt="السيدة ولاء مجدي العشماوي - رئيس مجلس الإدارة" fill style={{ objectFit: "cover" }} />
+              <Image src="/images/wlaa-profile.jpg" alt="السيدة ولاء مجدي العشماوي - رئيس مجلس الإدارة" fill style={{ objectFit: "cover" }} />
             </div>
             <div style={{ marginTop: "1.5rem" }}>
               <h3 style={{ fontSize: "2rem", color: "var(--color-primary)", fontWeight: "bold", marginBottom: "0.5rem" }}>
