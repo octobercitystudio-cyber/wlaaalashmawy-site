@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 
 import { Lang } from '@/lib/dictionary';
-export default function ArticlesClient({ initialArticles, lang = 'ar' }: { initialArticles: any[], lang?: Lang }) {
+export default function ArticlesClient({ initialArticles, lang = 'ar', initialArticleId }: { initialArticles: any[], lang?: Lang, initialArticleId?: number }) {
   const [articles, setArticles] = useState<any[]>(initialArticles);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -17,9 +17,9 @@ export default function ArticlesClient({ initialArticles, lang = 'ar' }: { initi
       .then(data => {
         if (Array.isArray(data)) {
           setArticles(data);
-          // If no article is selected, or if selected article doesn't exist anymore, select the first one
+          // If no article is selected, or if selected article doesn't exist anymore, select the first one (or initialArticleId)
           if (data.length > 0 && !data.find(a => a.id === selectedArticleId)) {
-             setSelectedArticleId(data[0].id);
+             setSelectedArticleId(initialArticleId || data[0].id);
           }
         }
       })
@@ -29,7 +29,7 @@ export default function ArticlesClient({ initialArticles, lang = 'ar' }: { initi
   const categories = ['الكل', 'الاستشارات المحاسبية', 'الاستشارات الضريبية', 'المراجعة والتدقيق', 'تأسيس الشركات', 'الاستشارات المالية'];
 
   const [selectedTab, setSelectedTab] = useState('الكل');
-  const [selectedArticleId, setSelectedArticleId] = useState(initialArticles && initialArticles.length > 0 ? initialArticles[0].id : 0);
+  const [selectedArticleId, setSelectedArticleId] = useState(initialArticleId || (initialArticles && initialArticles.length > 0 ? initialArticles[0].id : 0));
   const [searchQuery, setSearchQuery] = useState('');
 
   const safeArticles = Array.isArray(articles) ? articles : [];
@@ -140,10 +140,11 @@ export default function ArticlesClient({ initialArticles, lang = 'ar' }: { initi
             ) : error ? (
               <p style={{ color: "red" }}>{error}</p>
             ) : filteredArticles.length > 0 ? filteredArticles.map((article) => (
-              <button 
+              <Link 
+                href={lang === "en" ? `/en/articles/${article.id}` : `/articles/${article.id}`}
                 key={article.id}
-                onClick={() => setSelectedArticleId(article.id)}
                 style={{ 
+                  display: "block",
                   textAlign: "right",
                   padding: "1.2rem",
                   background: selectedArticleId === article.id ? "rgba(0, 91, 171, 0.05)" : "var(--color-bg-card)",
@@ -152,7 +153,8 @@ export default function ArticlesClient({ initialArticles, lang = 'ar' }: { initi
                   borderRadius: "8px",
                   cursor: "pointer",
                   transition: "all 0.3s ease",
-                  borderRight: selectedArticleId === article.id ? "4px solid var(--color-accent)" : "1px solid var(--color-border)"
+                  borderRight: selectedArticleId === article.id ? "4px solid var(--color-accent)" : "1px solid var(--color-border)",
+                  textDecoration: "none"
                 }}
               >
                 <h4 style={{ 
@@ -166,7 +168,7 @@ export default function ArticlesClient({ initialArticles, lang = 'ar' }: { initi
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>{article.date}</span>
                 </div>
-              </button>
+              </Link>
             )) : (
               <p style={{ color: "var(--color-text-muted)" }}>{lang === "en" ? "No matching articles found." : "لا توجد مقالات مطابقة للبحث."}</p>
             )}

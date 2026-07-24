@@ -3,7 +3,7 @@ import ArticlesClient from "@/components/ArticlesClient";
 // This function runs at build time to fetch the articles for SEO
 import { Lang } from "@/lib/dictionary";
 
-export default async function ArticlesPage({ lang = "ar" }: { lang?: Lang }) {
+export default async function ArticlesPage({ lang = "ar", initialArticleId }: { lang?: Lang, initialArticleId?: number }) {
   let initialArticles = [];
   try {
     // We use NEXT_PUBLIC_API_URL provided during build by GitHub Actions
@@ -21,13 +21,16 @@ export default async function ArticlesPage({ lang = "ar" }: { lang?: Lang }) {
             initialArticles = await res.json();
             if (!Array.isArray(initialArticles)) initialArticles = [];
         }
-    } catch(err) {
-        console.error("Failed to fetch articles:", err);
-        initialArticles = [];
+    } catch(e) {
+        console.error("Fetch failed during build, using empty array for now", e);
     }
   } catch (error) {
-    console.error("Failed to fetch articles at build time:", error);
+    console.error("Failed to fetch articles statically:", error);
   }
 
-  return <ArticlesClient initialArticles={initialArticles} lang={lang} />;
+  return (
+    <main>
+      <ArticlesClient initialArticles={initialArticles} lang={lang} initialArticleId={initialArticleId} />
+    </main>
+  );
 }

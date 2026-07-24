@@ -22,8 +22,12 @@ const amiri = Amiri({
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await fetchSettings();
   return {
-    title: "AFC",
-    description: settings.seo_desc || "شريكك الموثوق في تقديم حلول محاسبية وضريبية متكاملة لضمان نجاح واستدامة أعمالك.",
+    title: {
+      default: "مكتب العشماوي للمحاسبة (AFC) | أ. ولاء مجدي | محاسب قانوني CPA",
+      template: "%s | مكتب العشماوي للمحاسبة (AFC)"
+    },
+    description: settings.seo_desc || "مكتب العشماوي للمحاسبة (AFC) بإدارة أ. ولاء مجدي (CPA). نقدم خدمات محاسبة قانونية، استشارات ضريبية، المراجعة، تأسيس الشركات، وخدمات الرواتب في مصر.",
+    keywords: ["ولاء مجدي", "مكتب العشماوي للمحاسبة", "AFC", "CPA", "شركة محاسبة في مصر", "مكتب محاسبة قانوني", "استشارات ضريبية", "تأسيس شركات"],
   };
 }
 
@@ -40,6 +44,26 @@ export default async function ArLayout({
   return (
     <html lang="ar" dir="rtl" className={`${cairo.variable} ${amiri.variable}`}>
       <body>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": ["LocalBusiness", "AccountingService"],
+          "name": "مكتب العشماوي للمحاسبة (AFC)",
+          "image": "https://www.afc-cpa.com/images/logo.png",
+          "@id": "https://www.afc-cpa.com",
+          "url": "https://www.afc-cpa.com",
+          "telephone": "+201155729429",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "القاهرة",
+            "addressRegion": "القاهرة",
+            "addressCountry": "EG"
+          },
+          "founder": {
+            "@type": "Person",
+            "name": "ولاء مجدي"
+          },
+          "description": "مكتب العشماوي للمحاسبة (AFC) بإدارة أ. ولاء مجدي (CPA). نقدم خدمات محاسبة قانونية، استشارات ضريبية، المراجعة، تأسيس الشركات، وخدمات الرواتب في مصر."
+        })}} />
         <VisualEditorProvider>
           <ClientTracker />
           <Navbar settings={settings} services={services} lang="ar" />

@@ -92,7 +92,7 @@ export default function HeroSlider({ settings = {}, lang = "ar" }: { settings?: 
       }}>
         <div style={{ maxWidth: "800px", width: "100%", textAlign: "center", marginTop: "6rem" }}>
           
-          <h1 style={{ 
+          <div style={{ 
             color: "#FFFFFF", 
             fontSize: "6rem", 
             fontWeight: "900", 
@@ -101,20 +101,21 @@ export default function HeroSlider({ settings = {}, lang = "ar" }: { settings?: 
             textShadow: "0 4px 20px rgba(0,0,0,0.6)" 
           }}>
             AFC
-          </h1>
+          </div>
           
-          <h2 style={{ 
+          <h1 style={{ 
             color: "#FFFFFF", 
-            fontSize: "2.8rem", 
-            fontWeight: "700", 
-            marginBottom: "1rem", 
-            textShadow: "0 2px 10px rgba(0,0,0,0.5)" 
+            fontSize: "3.5rem", 
+            fontWeight: "900", 
+            marginBottom: "0.5rem", 
+            textShadow: "0 2px 8px rgba(0,0,0,0.5)",
+            fontFamily: "var(--font-amiri), serif" 
           }}>
             <EditableText 
               id={lang === "en" ? "hero_title_en" : "hero_title"}
               value={(lang === "en" && settings.hero_title_en ? settings.hero_title_en : settings.hero_title) || (lang === "en" ? 'Al-Ashmawy Financial Consulting' : 'العشماوي للاستشارات المالية')}
             />
-          </h2>
+          </h1>
           
           <p style={{ 
             color: "rgba(255,255,255,0.95)", 

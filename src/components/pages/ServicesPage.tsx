@@ -46,6 +46,22 @@ export default async function ServicesPage({ lang = "ar" }: { lang?: Lang }) {
         <div className="container">
           <div className="grid grid-cols-1 md-grid-cols-3 gap-lg">
             {services.map((service: any) => {
+              const idToSlugMap: Record<number, string> = {
+                1: 'accounting-services',
+                2: 'audit-services',
+                3: 'tax-services',
+                4: 'bookkeeping',
+                5: 'payroll',
+                6: 'company-formation',
+                7: 'financial-consulting',
+                8: 'ifrs',
+                9: 'vat-services',
+                10: 'e-invoice',
+                11: 'e-receipt',
+                12: 'internal-audit'
+              };
+              const slug = idToSlugMap[service.id] || `services/${service.id}`;
+              
               return (
                 <div key={service.id} className="premium-card text-center" style={{ background: "var(--color-bg-card)", border: "2px solid var(--color-accent)", display: "flex", flexDirection: "column", padding: 0, overflow: "hidden" }}>
                   <div style={{ position: "relative", width: "100%", height: "200px" }}>
@@ -54,7 +70,7 @@ export default async function ServicesPage({ lang = "ar" }: { lang?: Lang }) {
                   <div style={{ padding: "1.5rem", display: "flex", flexDirection: "column", flexGrow: 1 }}>
                     <h3 style={{ fontSize: "1.3rem", marginBottom: "var(--spacing-sm)", color: "var(--color-primary)", fontWeight: "bold" }}>{lang === "en" && service.title_en ? service.title_en : service.title}</h3>
                     <p style={{ marginBottom: "var(--spacing-md)", flexGrow: 1, color: "var(--color-text-muted)", fontSize: "0.95rem" }}>{lang === "en" && service.description_en ? service.description_en : service.description}</p>
-                    <Link href={lang === "en" ? `/en/services/${service.id}` : `/services/${service.id}`} className="btn btn-secondary" style={{ width: "100%", padding: "0.8rem", marginTop: "auto" }}>
+                    <Link href={lang === "en" ? `/en/${slug}` : `/${slug}`} className="btn btn-secondary" style={{ width: "100%", padding: "0.8rem", marginTop: "auto" }}>
                       {lang === "en" ? "View Details" : "عرض التفاصيل"}
                     </Link>
                   </div>

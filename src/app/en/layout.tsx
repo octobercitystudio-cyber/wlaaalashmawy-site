@@ -15,8 +15,12 @@ const inter = Inter({
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await fetchSettings();
   return {
-    title: "AFC",
-    description: settings.seo_desc_en || "Your trusted partner in providing comprehensive accounting and tax solutions.",
+    title: {
+      default: "AFC | Accounting, Audit & Tax Services in Egypt | CPA Wlaa Magdy",
+      template: "%s | AFC - Accounting Firm in Egypt"
+    },
+    description: settings.seo_desc_en || "Professional Accounting, Audit, Tax, Bookkeeping, Payroll and Financial Consulting Services in Egypt by CPA Wlaa Magdy. AFC helps businesses stay compliant and grow with confidence.",
+    keywords: ["Accounting Firm Egypt", "Audit Firm Egypt", "Tax Consultants Egypt", "Bookkeeping Services Egypt", "CPA Egypt", "Wlaa Magdy", "AFC"],
   };
 }
 
@@ -33,6 +37,26 @@ export default async function EnLayout({
   return (
     <html lang="en" dir="ltr" className={`${inter.variable}`}>
       <body>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": ["LocalBusiness", "AccountingService"],
+          "name": "AFC - Accounting Firm Egypt",
+          "image": "https://www.afc-cpa.com/images/logo.png",
+          "@id": "https://www.afc-cpa.com",
+          "url": "https://www.afc-cpa.com/en",
+          "telephone": "+201155729429",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Cairo",
+            "addressRegion": "Cairo",
+            "addressCountry": "EG"
+          },
+          "founder": {
+            "@type": "Person",
+            "name": "Wlaa Magdy"
+          },
+          "description": "Professional Accounting, Audit, Tax, Bookkeeping, Payroll and Financial Consulting Services in Egypt by CPA Wlaa Magdy. AFC helps businesses stay compliant and grow with confidence."
+        })}} />
         <VisualEditorProvider>
           <ClientTracker />
           <Navbar settings={settings} services={services} lang="en" />
