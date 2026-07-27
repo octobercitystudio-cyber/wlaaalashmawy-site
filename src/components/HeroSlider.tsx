@@ -42,12 +42,13 @@ export default function HeroSlider({ settings = {}, lang = "ar" }: { settings?: 
   return (
     <section style={{ 
       position: "relative",
-      height: "85vh",
+      minHeight: "85vh",
       width: "100%",
       overflow: "hidden",
       display: "flex",
       alignItems: "center",
-      justifyContent: "center"
+      justifyContent: "center",
+      paddingBottom: "4rem"
     }}>
 
       {/* Background Image Area */}
@@ -90,7 +91,7 @@ export default function HeroSlider({ settings = {}, lang = "ar" }: { settings?: 
         position: "relative",
         width: "100%"
       }}>
-        <div style={{ maxWidth: "800px", width: "100%", textAlign: "center", marginTop: "6rem" }}>
+        <div style={{ maxWidth: "800px", width: "100%", textAlign: "center", marginTop: "3rem", marginBottom: "2rem" }}>
           
           <div style={{ 
             color: "#FFFFFF", 
@@ -109,7 +110,7 @@ export default function HeroSlider({ settings = {}, lang = "ar" }: { settings?: 
             fontWeight: "900", 
             marginBottom: "0.5rem", 
             textShadow: "0 2px 8px rgba(0,0,0,0.5)",
-            fontFamily: "var(--font-amiri), serif" 
+            fontFamily: lang === "en" ? "var(--font-inter), system-ui, sans-serif" : "var(--font-amiri), serif" 
           }}>
             <EditableText 
               id={lang === "en" ? "hero_title_en" : "hero_title"}
@@ -144,7 +145,7 @@ export default function HeroSlider({ settings = {}, lang = "ar" }: { settings?: 
             EGY / KSA / UAE
           </p>
           
-          <div className="flex gap-md flex-wrap justify-center" style={{ marginTop: "0" }}>
+          <div className="flex gap-md flex-wrap justify-center" style={{ marginTop: "0", marginBottom: "3rem" }}>
             <a href="https://wa.me/201155729429?text=مرحباً،%20أود%20الاستفسار%20عن%20خدمات%20مكتب%20العشماوي." target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ padding: "1rem 2rem", fontSize: "1.1rem" }}>
               {lang === "en" ? "Request Free Consultation" : "طلب استشارة مجانية"}
             </a>
@@ -157,7 +158,7 @@ export default function HeroSlider({ settings = {}, lang = "ar" }: { settings?: 
       </div>
 
       {/* Navigation Dots (Moved to Center) */}
-      <div style={{ position: "absolute", bottom: "15px", left: "50%", transform: "translateX(-50%)", display: "flex", justifyContent: "center", gap: "10px", zIndex: 4 }}>
+      <div style={{ position: "absolute", bottom: "18px", left: "50%", transform: "translateX(-50%)", display: "flex", justifyContent: "center", gap: "10px", zIndex: 4 }}>
         {slides.map((_, index) => (
           <button
             key={index}
