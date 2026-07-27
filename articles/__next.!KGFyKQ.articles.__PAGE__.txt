@@ -1,8 +1,8 @@
 1:"$Sreact.fragment"
-2:I[68835,["/_next/static/chunks/2xoim8tscxig2.js","/_next/static/chunks/1wud4rudbiyu-.js","/_next/static/chunks/262t3dbs6j750.js"],"default"]
+2:I[68835,["/_next/static/chunks/2xoim8tscxig2.js","/_next/static/chunks/1wud4rudbiyu-.js","/_next/static/chunks/075ojb-caw8pk.js"],"default"]
 6:I[97367,["/_next/static/chunks/05-c3ty_6dwfk.js","/_next/static/chunks/35ip4ctshr802.js"],"OutletBoundary"]
 7:"$Sreact.suspense"
-3:Tc373,<!--[if gte mso 9]><xml>
+3:Tc3b9,<!--[if gte mso 9]><xml>
  <o:OfficeDocumentSettings>
   <o:AllowPNG/>
  </o:OfficeDocumentSettings>
@@ -661,7 +661,7 @@ mso-hansi-theme-font:minor-latin">عندما تقرر تحويل فكرتك ال
 AR-EG"><span dir="LTR"></span><span dir="LTR"></span>. </span><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;mso-ascii-theme-font:
 minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">يُعد
 القانون رقم 159 لسنة 1981 هو التشريع الأم المنظم لشركات المساهمة،
-الشركات ذات المسؤولية المحدودة، وشركات الشخص الواحد</span><span dir="LTR"></span><span dir="LTR"></span><span dir="LTR" style="mso-bidi-language:AR-EG"><span dir="LTR"></span><span dir="LTR"></span>.</span></b></p>
+الشركات ذات المسؤولية المحدودة، وشركات الشخص الواحد</span><span dir="LTR"></span><span dir="LTR"></span><span dir="LTR" style="mso-bidi-language:AR-EG"><span dir="LTR"></span><span dir="LTR"></span>.<br></span></b><b><span dir="LTR" style="mso-bidi-language:AR-EG"><br></span></b></p>
 
 <p class="MsoNormal" dir="RTL" style="text-align:right;direction:rtl;unicode-bidi:
 embed"><b><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:
@@ -771,7 +771,7 @@ minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">لا
 mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-hansi-font-family:
 Calibri;mso-hansi-theme-font:minor-latin;mso-bidi-language:AR-EG"></span></b></p>
 
-0:{"rsc":["$","$1","c",{"children":[["$","main",null,{"children":["$","$L2",null,{"initialArticles":[{"id":3,"title":"دليلك الشامل لتأسيس الشركات في مصر وفقاً للقانون 159 لسنة 1981 ","date":"27 Jul 2026","category":"تأسيس الشركات","image":"/images/uploads/img_6a6728165d19e.jpg","content":"$3","created_at":"2026-07-27 09:40:30","title_en":"","category_en":"","content_en":""}],"lang":"ar"}]}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"RMxP28FMY8dbc6wRIA_0q"}
-4:["$","script","script-0",{"src":"/_next/static/chunks/262t3dbs6j750.js","async":true}]
+0:{"rsc":["$","$1","c",{"children":[["$","main",null,{"children":["$","$L2",null,{"initialArticles":[{"id":3,"title":"دليلك الشامل لتأسيس الشركات في مصر وفقاً للقانون 159 لسنة 1981 ","date":"27 Jul 2026","category":"تأسيس الشركات","image":"/images/uploads/img_6a672ad303266.jpg","content":"$3","created_at":"2026-07-27 09:40:30","title_en":"","category_en":"","content_en":""}],"lang":"ar"}]}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"6LbaawERwB5fwELPy_0R7"}
+4:["$","script","script-0",{"src":"/_next/static/chunks/075ojb-caw8pk.js","async":true}]
 5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
 8:null

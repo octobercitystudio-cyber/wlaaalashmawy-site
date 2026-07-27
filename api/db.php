@@ -28,6 +28,7 @@ try {
             category VARCHAR(100) NOT NULL,
             category_en VARCHAR(100) DEFAULT '',
             image VARCHAR(255) DEFAULT '',
+            video_url VARCHAR(500) DEFAULT '',
             content TEXT NOT NULL,
             content_en TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -111,7 +112,7 @@ try {
         $pdo->exec("ALTER TABLE testimonials ADD COLUMN name_en VARCHAR(255) DEFAULT '', ADD COLUMN position_en VARCHAR(255) DEFAULT '', ADD COLUMN content_en TEXT");
     } catch (PDOException $e) {}
     try {
-        $pdo->exec("ALTER TABLE articles ADD COLUMN title_en VARCHAR(255) DEFAULT '', ADD COLUMN category_en VARCHAR(100) DEFAULT '', ADD COLUMN content_en TEXT");
+        $pdo->exec("ALTER TABLE articles ADD COLUMN title_en VARCHAR(255) DEFAULT '', ADD COLUMN category_en VARCHAR(100) DEFAULT '', ADD COLUMN content_en TEXT, ADD COLUMN video_url VARCHAR(500) DEFAULT ''");
         $pdo->exec("ALTER TABLE services ADD COLUMN title_en VARCHAR(255) DEFAULT '', ADD COLUMN description_en TEXT, ADD COLUMN content_en TEXT");
         $pdo->exec("ALTER TABLE sectors ADD COLUMN title_en VARCHAR(255) DEFAULT '', ADD COLUMN description_en TEXT, ADD COLUMN content_en TEXT");
     } catch (PDOException $e) {}
