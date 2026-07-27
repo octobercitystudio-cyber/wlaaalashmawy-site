@@ -12,13 +12,13 @@ e:I[68027,[],"default",1]
 :HL["/_next/static/media/291696193ea1e96b-s.p.1zf0xf1cyi65q.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/9ff27b8a0a8f3dc0-s.p.40_3w74kn95bo.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
 :HL["/_next/static/media/d41831e24743a3c1-s.p.08tn9snzkmifr.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
-0:{"P":null,"c":["","articles",""],"q":"","i":false,"f":[[["",{"children":["(ar)",{"children":["articles",{"children":["__PAGE__",{}]}]},"$undefined","$undefined",16]}],[["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/2rt1t3mtb6avm.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/18bcx171wew0j.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/2xoim8tscxig2.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/0wk3sm4lrr64g.js","async":true,"nonce":"$undefined"}]],"$L4"]}],{"children":[["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["$","$1","c",{"children":["$L5",[["$","script","script-0",{"src":"/_next/static/chunks/1r_x91nedxt-m.js","async":true,"nonce":"$undefined"}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],{},null,false,null]},null,false,"$@9"]},null,false,null]},null,false,"$@9"],["$","$1","h",{"children":[null,["$","$La",null,{"children":"$Lb"}],["$","div",null,{"hidden":true,"children":["$","$Lc",null,{"children":["$","$7",null,{"name":"Next.Metadata","children":"$Ld"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],false]],"m":"$undefined","G":["$e",[]],"S":true,"h":null,"s":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"60lNGmmy6_Y1Bivv1bDRl"}
+0:{"P":null,"c":["","articles",""],"q":"","i":false,"f":[[["",{"children":["(ar)",{"children":["articles",{"children":["__PAGE__",{}]}]},"$undefined","$undefined",16]}],[["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/_next/static/chunks/2rt1t3mtb6avm.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/_next/static/chunks/18bcx171wew0j.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","script","script-0",{"src":"/_next/static/chunks/2xoim8tscxig2.js","async":true,"nonce":"$undefined"}],["$","script","script-1",{"src":"/_next/static/chunks/1wud4rudbiyu-.js","async":true,"nonce":"$undefined"}]],"$L4"]}],{"children":[["$","$1","c",{"children":[null,["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["$","$1","c",{"children":["$L5",[["$","script","script-0",{"src":"/_next/static/chunks/262t3dbs6j750.js","async":true,"nonce":"$undefined"}]],["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]]}],{},null,false,null]},null,false,"$@9"]},null,false,null]},null,false,"$@9"],["$","$1","h",{"children":[null,["$","$La",null,{"children":"$Lb"}],["$","div",null,{"hidden":true,"children":["$","$Lc",null,{"children":["$","$7",null,{"name":"Next.Metadata","children":"$Ld"}]}]}],["$","meta",null,{"name":"next-size-adjust","content":""}]]}],false]],"m":"$undefined","G":["$e",[]],"S":true,"h":null,"s":"$undefined","l":"$undefined","p":"$undefined","d":"$undefined","b":"RMxP28FMY8dbc6wRIA_0q"}
 f:[]
 9:"$Wf"
 b:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
-10:I[8867,["/_next/static/chunks/2xoim8tscxig2.js","/_next/static/chunks/0wk3sm4lrr64g.js"],"VisualEditorProvider"]
-11:I[24897,["/_next/static/chunks/2xoim8tscxig2.js","/_next/static/chunks/0wk3sm4lrr64g.js"],"default"]
-12:I[45678,["/_next/static/chunks/2xoim8tscxig2.js","/_next/static/chunks/0wk3sm4lrr64g.js"],"default"]
+10:I[8867,["/_next/static/chunks/2xoim8tscxig2.js","/_next/static/chunks/1wud4rudbiyu-.js"],"VisualEditorProvider"]
+11:I[24897,["/_next/static/chunks/2xoim8tscxig2.js","/_next/static/chunks/1wud4rudbiyu-.js"],"default"]
+12:I[45678,["/_next/static/chunks/2xoim8tscxig2.js","/_next/static/chunks/1wud4rudbiyu-.js"],"default"]
 13:T1659,في بيئة أعمال تتسم بالتغير المستمر، والتطور المتسارع في المعايير المحاسبية، وزيادة المتطلبات التنظيمية، أصبحت القرارات المالية أكثر تعقيدًا من أي وقت مضى. ولم يعد نجاح المؤسسات يعتمد فقط على إعداد قوائم مالية دقيقة، بل على قدرتها على تفسير المعلومات المالية، وإدارة المخاطر، وتحقيق الامتثال، ودعم القرارات الاستراتيجية التي تحقق النمو المستدام.
 
 في **AFC – AL-Ashmawy Financial Consulting** نقدم خدمات الاستشارات المحاسبية وإعداد التقارير المالية باعتبارها عنصرًا استراتيجيًا يساعد المؤسسات على بناء منظومة مالية قوية، وتعزيز الشفافية، ورفع جودة التقارير المالية، وترسيخ ثقة المستثمرين والممولين والجهات الرقابية.
@@ -423,13 +423,782 @@ These services are carried out through the competent authorities, including the 
 
 **Issuing the Industrial Registration Certificate**
 After obtaining the operating license, an application is submitted to issue the Industrial Registration Certificate, ensuring the project is officially registered and fully compliant.4:["$","html",null,{"lang":"ar","dir":"rtl","className":"cairo_eb6f3aa4-module__ax1tUG__variable amiri_2be44b65-module__QFIs9a__variable","children":["$","body",null,{"children":[["$","script",null,{"type":"application/ld+json","dangerouslySetInnerHTML":{"__html":"{\"@context\":\"https://schema.org\",\"@type\":[\"LocalBusiness\",\"AccountingService\"],\"name\":\"مكتب العشماوي للمحاسبة (AFC)\",\"image\":\"https://www.afc-cpa.com/images/logo.png\",\"@id\":\"https://www.afc-cpa.com\",\"url\":\"https://www.afc-cpa.com\",\"telephone\":\"+201155729429\",\"address\":{\"@type\":\"PostalAddress\",\"addressLocality\":\"القاهرة\",\"addressRegion\":\"القاهرة\",\"addressCountry\":\"EG\"},\"founder\":{\"@type\":\"Person\",\"name\":\"ولاء مجدي\"},\"description\":\"مكتب العشماوي للمحاسبة (AFC) بإدارة أ. ولاء مجدي (CPA). نقدم خدمات محاسبة قانونية، استشارات ضريبية، المراجعة، تأسيس الشركات، وخدمات الرواتب في مصر.\"}"}}],["$","$L10",null,{"children":[["$","$L11",null,{}],["$","$L12",null,{"settings":{},"services":[{"id":1,"title":"الاستشارات المحاسبية وإعداد التقارير المالية","image":"/images/services/accounting.jpg","description":"نقدم حلولاً محاسبية تساعد المؤسسات على بناء منظومة مالية قوية وتعزيز الشفافية.","content":"$13","created_at":"2026-07-15 17:15:07","title_en":"Accounting Advisory & Financial Reporting","description_en":"We provide accounting solutions that help organizations build a strong financial framework and enhance transparency.","content_en":"$14"},{"id":2,"title":"المراجعة وابداء الرأي المهني","image":"/images/services/audit.jpg","description":"أدوات استراتيجية لبناء الثقة، وتعزيز الحوكمة، وإدارة المخاطر، ودعم النمو المستدام.","content":"$15","created_at":"2026-07-15 17:15:07","title_en":"Review and Expression of Professional Opinion","description_en":"Strategic instruments for building trust, strengthening governance, and enabling sustainable growth.","content_en":"$16"},{"id":3,"title":"الاستشارات الضريبية والامتثال الضريبي","image":"/images/services/tax_advisory.jpg","description":"نساعد الشركات على التعامل بثقة مع البيئة الضريبية وضمان الامتثال الكامل للتشريعات.","content":"$17","created_at":"2026-07-15 17:15:07","title_en":"Tax Advisory & Compliance","description_en":"Helping organizations confidently navigate the complex tax environment while ensuring full compliance.","content_en":"$18"},{"id":4,"title":"تأسيس الشركات والمنشأت","image":"/images/services/company.jpg","description":"نساعد عملاءنا على اختيار الهيكل القانوني الأنسب وفقًا لطبيعة النشاط والمتطلبات التنظيمية.","content":"$19","created_at":"2026-07-15 17:15:07","title_en":"Company Formation & Corporate Services","description_en":"Helping entrepreneurs and investors establish businesses that are legally sound and strategically positioned.","content_en":"$1a"},{"id":5,"title":"الإجراءات الضريبية","image":"/images/services/tax_procedures.jpg","description":"نقدم الإجراءات الضريبية الكاملة من تأسيس النشاط وحتى الفحص الضريبي وسداد المستحقات.","content":"$1b","created_at":"2026-07-15 17:15:07","title_en":"Tax Procedures","description_en":"Complete tax procedures from business establishment to tax audits and payments.","content_en":"$1c"},{"id":6,"title":"الفحص الضريبي","image":"/images/services/tax_examination.jpg","description":"نساعد عملاءنا على تقليل المخاطر الضريبية، وتمثيلهم باحترافية أمام مصلحة الضرائب المصرية.","content":"$1d","created_at":"2026-07-15 17:15:07","title_en":"Tax Examination & Audit Support","description_en":"Helping clients identify potential tax exposures and representing them throughout the examination process.","content_en":"$1e"},{"id":7,"title":"إقامات المستثمرين","image":"/images/services/investor.jpg","description":"خدمات متكاملة لاستخراج وتجديد وإدارة إقامات المستثمرين في جمهورية مصر العربية.","content":"نقدم خدمات متكاملة لاستخراج وتجديد وإدارة إقامات المستثمرين في جمهورية مصر العربية، مع توفير الدعم الكامل في جميع مراحل الإجراءات وحتى إصدار الإقامة. كما نقدم الدعم المستمر فيما يتعلق بتجديد الإقامات والالتزام بالمتطلبات التنظيمية، بما يضمن للمستثمرين استقرار أوضاعهم القانونية ويتيح لهم التركيز على تأسيس أعمالهم وتطوير استثماراتهم بثقة ووفقًا للقوانين المصرية.\n\n### وتشمل تلك الخدمات:\n\n- استخراج وتجديد إقامات المستثمرين.\n- استخراج إقامات الشركاء وأعضاء مجالس الإدارة.\n- إصدار وتجديد تصاريح العمل للأجانب.\n- متابعة جميع الإجراءات أمام الجهات الحكومية المختصة.\n- إعداد واعتماد المستندات المطلوبة وإنهاء الإجراءات حتى استلام الإقامة. تتم هذه الخدمات من خلال الجهات المختصة، ومنها مراكز خدمات المستثمرين التابعة للهيئة العامة للاستثمار، التي تقدم أيضًا توصيات منح الإقامة وتجديدها للمستثمرين الأجانب.","created_at":"2026-07-15 17:15:07","title_en":"Investor Residency Services","description_en":"End-to-end support for obtaining, renewing, and managing investor residency permits in Egypt.","content_en":"$1f"},{"id":8,"title":"التراخيص الصناعية","image":"/images/services/industrial.jpg","description":"خدمات استشارية وتنفيذية متكاملة للحصول على التراخيص الصناعية.","content":"نقدم خدمات استشارية وتنفيذية متكاملة للحصول على التراخيص الصناعية، مع دعم عملائنا في جميع مراحل إصدار الترخيص. وتشمل خدماتنا دراسة متطلبات الترخيص، وإعداد ومراجعة المستندات القانونية والفنية، والتنسيق مع الجهات الحكومية المختصة، ومتابعة الطلبات حتى صدور الموافقات النهائية. كما نقدم الاستشارات المتعلقة بالاشتراطات الصناعية والبيئية ومتطلبات السلامة، بما يضمن الامتثال الكامل للتشريعات المنظمة، وتقليل المخاطر، وتسريع إجراءات بدء أو التوسع في النشاط الصناعي.\n\n### وتشمل خدماتنا:\n\n**أولاً: استخراج رخصة التشغيل**\n- **رخصة بنظام الإخطار:** للأنشطة منخفضة المخاطر، ويتم إصدارها بعد استيفاء المستندات والإقرار بالالتزام بالاشتراطات.\n- **رخصة بنظام المسبق:** للأنشطة عالية المخاطر.\n\n**ثانياً: استخراج السجل الصناعي**\nبعد الحصول على رخصة التشغيل يتم التقدم لاستخراج السجل الصناعي، ليكون المشروع مسجلاً بشكل رسمي ومستوفياً لكافة الاشتراطات.","created_at":"2026-07-15 17:15:07","title_en":"Industrial Licensing","description_en":"Comprehensive advisory and execution services for obtaining industrial licenses.","content_en":"$20"}],"lang":"ar"}],"$L21","$L22","$L23"]}]]}]}]
-24:I[22016,["/_next/static/chunks/2xoim8tscxig2.js","/_next/static/chunks/0wk3sm4lrr64g.js"],""]
-25:I[48621,["/_next/static/chunks/2xoim8tscxig2.js","/_next/static/chunks/0wk3sm4lrr64g.js"],"default"]
+24:I[22016,["/_next/static/chunks/2xoim8tscxig2.js","/_next/static/chunks/1wud4rudbiyu-.js"],""]
+25:I[48621,["/_next/static/chunks/2xoim8tscxig2.js","/_next/static/chunks/1wud4rudbiyu-.js"],"default"]
 21:["$","main",null,{"className":"flex flex-col min-h-full","children":["$","$L2",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L3",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":"$0:f:0:1:0:props:children:1:props:notFound:0:1:props:style","children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":"$0:f:0:1:0:props:children:1:props:notFound:0:1:props:children:props:children:1:props:style","children":404}],["$","div",null,{"style":"$0:f:0:1:0:props:children:1:props:notFound:0:1:props:children:props:children:2:props:style","children":["$","h2",null,{"style":"$0:f:0:1:0:props:children:1:props:notFound:0:1:props:children:props:children:2:props:children:props:style","children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]}]
 22:["$","footer",null,{"style":{"marginTop":"auto","borderTop":"1px solid var(--color-accent-hover)","padding":"var(--spacing-xl) 0 var(--spacing-md) 0","background":"var(--color-accent-hover)","color":"#FFFFFF"},"children":[["$","div",null,{"className":"container grid grid-cols-1 md-grid-cols-3 gap-lg","children":[["$","div",null,{"style":{"textAlign":"center"},"children":[["$","h3",null,{"style":{"marginBottom":"var(--spacing-sm)","fontSize":"4rem","fontWeight":"900","letterSpacing":"4px","color":"#FFFFFF"},"children":"AFC"}],["$","p",null,{"style":{"color":"#FFFFFF","opacity":0.9,"maxWidth":"300px","margin":"0 auto","fontSize":"1.1rem"},"children":"شريكك الموثوق في تقديم حلول محاسبية وضريبية متكاملة لضمان نجاح واستدامة أعمالك."}]]}],["$","div",null,{"children":[["$","h3",null,{"style":{"marginBottom":"var(--spacing-md)","fontSize":"1.3rem","color":"#FFFFFF"},"children":"روابط سريعة"}],["$","ul",null,{"className":"footer-links flex flex-col gap-sm","style":{"opacity":0.9},"children":[["$","li",null,{"children":["$","$L24",null,{"href":"/","children":"الرئيسية"}]}],["$","li",null,{"children":["$","$L24",null,{"href":"/about","children":"من نحن"}]}],["$","li",null,{"children":["$","$L24",null,{"href":"/services","children":"خدماتنا"}]}],["$","li",null,{"children":["$","$L24",null,{"href":"/sectors","children":"القطاعات"}]}],["$","li",null,{"children":["$","$L24",null,{"href":"/articles","children":"المقالات"}]}],["$","li",null,{"children":["$","$L24",null,{"href":"/contact","children":"تواصل معنا"}]}]]}]]}],["$","div",null,{"children":[["$","h3",null,{"style":{"marginBottom":"var(--spacing-md)","fontSize":"1.3rem","color":"#FFFFFF"},"children":"تواصل معنا"}],["$","ul",null,{"className":"footer-links flex flex-col gap-sm","style":{"opacity":0.9},"children":[[["$","li","email-0",{"style":{"display":"flex","alignItems":"center","gap":"0.5rem"},"children":[["$","span",null,{"children":"📧"}],["$","span",null,{"dir":"ltr","children":"info@afc-cpa.com"}]]}]],[["$","li","phone-0",{"style":{"display":"flex","alignItems":"center","gap":"0.5rem"},"children":[["$","span",null,{"children":"📞"}],["$","span",null,{"dir":"ltr","children":"01155729429"}]]}],["$","li","phone-1",{"style":{"display":"flex","alignItems":"center","gap":"0.5rem"},"children":[["$","span",null,{"children":"📞"}],["$","span",null,{"dir":"ltr","children":"0238345397"}]]}]],["$","li",null,{"style":{"display":"flex","alignItems":"flex-start","gap":"0.5rem"},"children":[["$","span",null,{"children":"📍"}],["$","span",null,{"children":"مكتب 204 الدور الثاني مول اجياد فيو - ٦ اكتوبر - الجيزة - مصر"}]]}]]}],["$","div",null,{"style":{"display":"flex","gap":"1rem","marginTop":"1.5rem"},"children":["$undefined","$undefined","$undefined","$undefined","$undefined"]}]]}]]}],["$","div",null,{"className":"container text-center","style":{"marginTop":"var(--spacing-xl)","paddingTop":"var(--spacing-md)","borderTop":"1px solid rgba(255,255,255,0.2)"},"children":["$","p",null,{"style":{"margin":0,"fontSize":"1rem","color":"#FFFFFF"},"children":[["$","span",null,{"dir":"ltr","children":["© ",2026]}]," ","جميع الحقوق محفوظة لموقع www.afc-cpa.com"]}]}]]}]
 23:["$","$L25",null,{"settings":"$4:props:children:props:children:1:props:children:1:props:settings"}]
 26:I[27201,["/_next/static/chunks/05-c3ty_6dwfk.js","/_next/static/chunks/35ip4ctshr802.js"],"IconMark"]
 8:null
 d:[["$","title","0",{"children":"مكتب العشماوي للمحاسبة (AFC) | أ. ولاء مجدي | محاسب قانوني CPA"}],["$","meta","1",{"name":"description","content":"مكتب العشماوي للمحاسبة (AFC) بإدارة أ. ولاء مجدي (CPA). نقدم خدمات محاسبة قانونية، استشارات ضريبية، المراجعة، تأسيس الشركات، وخدمات الرواتب في مصر."}],["$","meta","2",{"name":"keywords","content":"ولاء مجدي,مكتب العشماوي للمحاسبة,AFC,CPA,شركة محاسبة في مصر,مكتب محاسبة قانوني,استشارات ضريبية,تأسيس شركات"}],["$","link","3",{"rel":"icon","href":"/icon.png?icon.3cbiulgfrv0au.png","sizes":"1380x673","type":"image/png"}],["$","$L26","4",{}]]
-27:I[68835,["/_next/static/chunks/2xoim8tscxig2.js","/_next/static/chunks/0wk3sm4lrr64g.js","/_next/static/chunks/1r_x91nedxt-m.js"],"default"]
-5:["$","main",null,{"children":["$","$L27",null,{"initialArticles":[],"lang":"ar","initialArticleId":"$undefined"}]}]
+27:I[68835,["/_next/static/chunks/2xoim8tscxig2.js","/_next/static/chunks/1wud4rudbiyu-.js","/_next/static/chunks/262t3dbs6j750.js"],"default"]
+28:Tc373,<!--[if gte mso 9]><xml>
+ <o:OfficeDocumentSettings>
+  <o:AllowPNG/>
+ </o:OfficeDocumentSettings>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:View>Normal</w:View>
+  <w:Zoom>0</w:Zoom>
+  <w:TrackMoves/>
+  <w:TrackFormatting/>
+  <w:PunctuationKerning/>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:DoNotPromoteQF/>
+  <w:LidThemeOther>EN-US</w:LidThemeOther>
+  <w:LidThemeAsian>X-NONE</w:LidThemeAsian>
+  <w:LidThemeComplexScript>X-NONE</w:LidThemeComplexScript>
+  <w:Compatibility>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+   <w:DontGrowAutofit/>
+   <w:SplitPgBreakAndParaMark/>
+   <w:EnableOpenTypeKerning/>
+   <w:DontFlipMirrorIndents/>
+   <w:OverrideTableStyleHps/>
+   <w:UseFELayout/>
+  </w:Compatibility>
+  <m:mathPr>
+   <m:mathFont m:val="Cambria Math"/>
+   <m:brkBin m:val="before"/>
+   <m:brkBinSub m:val="&#45;-"/>
+   <m:smallFrac m:val="off"/>
+   <m:dispDef/>
+   <m:lMargin m:val="0"/>
+   <m:rMargin m:val="0"/>
+   <m:defJc m:val="centerGroup"/>
+   <m:wrapIndent m:val="1440"/>
+   <m:intLim m:val="subSup"/>
+   <m:naryLim m:val="undOvr"/>
+  </m:mathPr></w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" DefUnhideWhenUsed="false"
+  DefSemiHidden="false" DefQFormat="false" DefPriority="99"
+  LatentStyleCount="376">
+  <w:LsdException Locked="false" Priority="0" QFormat="true" Name="Normal"/>
+  <w:LsdException Locked="false" Priority="9" QFormat="true" Name="heading 1"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="heading 2"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="heading 3"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="heading 4"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="heading 5"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="heading 6"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="heading 7"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="heading 8"/>
+  <w:LsdException Locked="false" Priority="9" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="heading 9"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index 4"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index 5"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index 6"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index 7"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index 8"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index 9"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" Name="toc 1"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" Name="toc 2"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" Name="toc 3"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" Name="toc 4"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" Name="toc 5"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" Name="toc 6"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" Name="toc 7"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" Name="toc 8"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" Name="toc 9"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Normal Indent"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="footnote text"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="annotation text"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="header"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="footer"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="index heading"/>
+  <w:LsdException Locked="false" Priority="35" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="caption"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="table of figures"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="envelope address"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="envelope return"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="footnote reference"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="annotation reference"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="line number"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="page number"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="endnote reference"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="endnote text"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="table of authorities"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="macro"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="toa heading"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Bullet"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Number"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List 4"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List 5"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Bullet 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Bullet 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Bullet 4"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Bullet 5"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Number 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Number 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Number 4"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Number 5"/>
+  <w:LsdException Locked="false" Priority="10" QFormat="true" Name="Title"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Closing"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Signature"/>
+  <w:LsdException Locked="false" Priority="1" SemiHidden="true"
+   UnhideWhenUsed="true" Name="Default Paragraph Font"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Body Text"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Body Text Indent"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Continue"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Continue 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Continue 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Continue 4"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="List Continue 5"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Message Header"/>
+  <w:LsdException Locked="false" Priority="11" QFormat="true" Name="Subtitle"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Salutation"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Date"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Body Text First Indent"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Body Text First Indent 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Note Heading"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Body Text 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Body Text 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Body Text Indent 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Body Text Indent 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Block Text"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Hyperlink"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="FollowedHyperlink"/>
+  <w:LsdException Locked="false" Priority="22" QFormat="true" Name="Strong"/>
+  <w:LsdException Locked="false" Priority="20" QFormat="true" Name="Emphasis"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Document Map"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Plain Text"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="E-mail Signature"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Top of Form"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Bottom of Form"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Normal (Web)"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Acronym"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Address"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Cite"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Code"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Definition"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Keyboard"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Preformatted"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Sample"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Typewriter"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="HTML Variable"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Normal Table"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="annotation subject"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="No List"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Outline List 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Outline List 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Outline List 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Simple 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Simple 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Simple 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Classic 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Classic 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Classic 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Classic 4"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Colorful 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Colorful 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Colorful 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Columns 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Columns 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Columns 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Columns 4"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Columns 5"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Grid 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Grid 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Grid 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Grid 4"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Grid 5"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Grid 6"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Grid 7"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Grid 8"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table List 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table List 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table List 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table List 4"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table List 5"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table List 6"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table List 7"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table List 8"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table 3D effects 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table 3D effects 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table 3D effects 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Contemporary"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Elegant"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Professional"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Subtle 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Subtle 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Web 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Web 2"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Web 3"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Balloon Text"/>
+  <w:LsdException Locked="false" Priority="39" Name="Table Grid"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Table Theme"/>
+  <w:LsdException Locked="false" SemiHidden="true" Name="Placeholder Text"/>
+  <w:LsdException Locked="false" Priority="1" QFormat="true" Name="No Spacing"/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid"/>
+  <w:LsdException Locked="false" Priority="63" Name="Medium Shading 1"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2"/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1"/>
+  <w:LsdException Locked="false" Priority="66" Name="Medium List 2"/>
+  <w:LsdException Locked="false" Priority="67" Name="Medium Grid 1"/>
+  <w:LsdException Locked="false" Priority="68" Name="Medium Grid 2"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading"/>
+  <w:LsdException Locked="false" Priority="72" Name="Colorful List"/>
+  <w:LsdException Locked="false" Priority="73" Name="Colorful Grid"/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 1"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List Accent 1"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 1"/>
+  <w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 1"/>
+  <w:LsdException Locked="false" SemiHidden="true" Name="Revision"/>
+  <w:LsdException Locked="false" Priority="34" QFormat="true"
+   Name="List Paragraph"/>
+  <w:LsdException Locked="false" Priority="29" QFormat="true" Name="Quote"/>
+  <w:LsdException Locked="false" Priority="30" QFormat="true"
+   Name="Intense Quote"/>
+  <w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 1"/>
+  <w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 1"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List Accent 1"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 1"/>
+  <w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 1"/>
+  <w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 1"/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 2"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List Accent 2"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 2"/>
+  <w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 2"/>
+  <w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 2"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List Accent 2"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 2"/>
+  <w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 2"/>
+  <w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 2"/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 3"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List Accent 3"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 3"/>
+  <w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 3"/>
+  <w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 3"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List Accent 3"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 3"/>
+  <w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 3"/>
+  <w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 3"/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 4"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List Accent 4"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 4"/>
+  <w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 4"/>
+  <w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 4"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List Accent 4"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 4"/>
+  <w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 4"/>
+  <w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 4"/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 5"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List Accent 5"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 5"/>
+  <w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 5"/>
+  <w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 5"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List Accent 5"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 5"/>
+  <w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 5"/>
+  <w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 5"/>
+  <w:LsdException Locked="false" Priority="60" Name="Light Shading Accent 6"/>
+  <w:LsdException Locked="false" Priority="61" Name="Light List Accent 6"/>
+  <w:LsdException Locked="false" Priority="62" Name="Light Grid Accent 6"/>
+  <w:LsdException Locked="false" Priority="63" Name="Medium Shading 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="64" Name="Medium Shading 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="65" Name="Medium List 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="66" Name="Medium List 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="67" Name="Medium Grid 1 Accent 6"/>
+  <w:LsdException Locked="false" Priority="68" Name="Medium Grid 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="69" Name="Medium Grid 3 Accent 6"/>
+  <w:LsdException Locked="false" Priority="70" Name="Dark List Accent 6"/>
+  <w:LsdException Locked="false" Priority="71" Name="Colorful Shading Accent 6"/>
+  <w:LsdException Locked="false" Priority="72" Name="Colorful List Accent 6"/>
+  <w:LsdException Locked="false" Priority="73" Name="Colorful Grid Accent 6"/>
+  <w:LsdException Locked="false" Priority="19" QFormat="true"
+   Name="Subtle Emphasis"/>
+  <w:LsdException Locked="false" Priority="21" QFormat="true"
+   Name="Intense Emphasis"/>
+  <w:LsdException Locked="false" Priority="31" QFormat="true"
+   Name="Subtle Reference"/>
+  <w:LsdException Locked="false" Priority="32" QFormat="true"
+   Name="Intense Reference"/>
+  <w:LsdException Locked="false" Priority="33" QFormat="true" Name="Book Title"/>
+  <w:LsdException Locked="false" Priority="37" SemiHidden="true"
+   UnhideWhenUsed="true" Name="Bibliography"/>
+  <w:LsdException Locked="false" Priority="39" SemiHidden="true"
+   UnhideWhenUsed="true" QFormat="true" Name="TOC Heading"/>
+  <w:LsdException Locked="false" Priority="41" Name="Plain Table 1"/>
+  <w:LsdException Locked="false" Priority="42" Name="Plain Table 2"/>
+  <w:LsdException Locked="false" Priority="43" Name="Plain Table 3"/>
+  <w:LsdException Locked="false" Priority="44" Name="Plain Table 4"/>
+  <w:LsdException Locked="false" Priority="45" Name="Plain Table 5"/>
+  <w:LsdException Locked="false" Priority="40" Name="Grid Table Light"/>
+  <w:LsdException Locked="false" Priority="46" Name="Grid Table 1 Light"/>
+  <w:LsdException Locked="false" Priority="47" Name="Grid Table 2"/>
+  <w:LsdException Locked="false" Priority="48" Name="Grid Table 3"/>
+  <w:LsdException Locked="false" Priority="49" Name="Grid Table 4"/>
+  <w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark"/>
+  <w:LsdException Locked="false" Priority="51" Name="Grid Table 6 Colorful"/>
+  <w:LsdException Locked="false" Priority="52" Name="Grid Table 7 Colorful"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="Grid Table 1 Light Accent 1"/>
+  <w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 1"/>
+  <w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 1"/>
+  <w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 1"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="Grid Table 6 Colorful Accent 1"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="Grid Table 7 Colorful Accent 1"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="Grid Table 1 Light Accent 2"/>
+  <w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 2"/>
+  <w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 2"/>
+  <w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 2"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="Grid Table 6 Colorful Accent 2"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="Grid Table 7 Colorful Accent 2"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="Grid Table 1 Light Accent 3"/>
+  <w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 3"/>
+  <w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 3"/>
+  <w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 3"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="Grid Table 6 Colorful Accent 3"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="Grid Table 7 Colorful Accent 3"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="Grid Table 1 Light Accent 4"/>
+  <w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 4"/>
+  <w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 4"/>
+  <w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 4"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="Grid Table 6 Colorful Accent 4"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="Grid Table 7 Colorful Accent 4"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="Grid Table 1 Light Accent 5"/>
+  <w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 5"/>
+  <w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 5"/>
+  <w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 5"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="Grid Table 6 Colorful Accent 5"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="Grid Table 7 Colorful Accent 5"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="Grid Table 1 Light Accent 6"/>
+  <w:LsdException Locked="false" Priority="47" Name="Grid Table 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="48" Name="Grid Table 3 Accent 6"/>
+  <w:LsdException Locked="false" Priority="49" Name="Grid Table 4 Accent 6"/>
+  <w:LsdException Locked="false" Priority="50" Name="Grid Table 5 Dark Accent 6"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="Grid Table 6 Colorful Accent 6"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="Grid Table 7 Colorful Accent 6"/>
+  <w:LsdException Locked="false" Priority="46" Name="List Table 1 Light"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3"/>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4"/>
+  <w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark"/>
+  <w:LsdException Locked="false" Priority="51" Name="List Table 6 Colorful"/>
+  <w:LsdException Locked="false" Priority="52" Name="List Table 7 Colorful"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="List Table 1 Light Accent 1"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 1"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 1"/>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 1"/>
+  <w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 1"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="List Table 6 Colorful Accent 1"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="List Table 7 Colorful Accent 1"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="List Table 1 Light Accent 2"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 2"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 2"/>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 2"/>
+  <w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 2"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="List Table 6 Colorful Accent 2"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="List Table 7 Colorful Accent 2"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="List Table 1 Light Accent 3"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 3"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 3"/>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 3"/>
+  <w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 3"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="List Table 6 Colorful Accent 3"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="List Table 7 Colorful Accent 3"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="List Table 1 Light Accent 4"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 4"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 4"/>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 4"/>
+  <w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 4"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="List Table 6 Colorful Accent 4"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="List Table 7 Colorful Accent 4"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="List Table 1 Light Accent 5"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 5"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 5"/>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 5"/>
+  <w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 5"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="List Table 6 Colorful Accent 5"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="List Table 7 Colorful Accent 5"/>
+  <w:LsdException Locked="false" Priority="46"
+   Name="List Table 1 Light Accent 6"/>
+  <w:LsdException Locked="false" Priority="47" Name="List Table 2 Accent 6"/>
+  <w:LsdException Locked="false" Priority="48" Name="List Table 3 Accent 6"/>
+  <w:LsdException Locked="false" Priority="49" Name="List Table 4 Accent 6"/>
+  <w:LsdException Locked="false" Priority="50" Name="List Table 5 Dark Accent 6"/>
+  <w:LsdException Locked="false" Priority="51"
+   Name="List Table 6 Colorful Accent 6"/>
+  <w:LsdException Locked="false" Priority="52"
+   Name="List Table 7 Colorful Accent 6"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Mention"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Smart Hyperlink"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Hashtag"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Unresolved Mention"/>
+  <w:LsdException Locked="false" SemiHidden="true" UnhideWhenUsed="true"
+   Name="Smart Link"/>
+ </w:LatentStyles>
+</xml><![endif]--><!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:"Table Normal";
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-priority:99;
+	mso-style-parent:"";
+	mso-padding-alt:0in 5.4pt 0in 5.4pt;
+	mso-para-margin-top:0in;
+	mso-para-margin-right:0in;
+	mso-para-margin-bottom:8.0pt;
+	mso-para-margin-left:0in;
+	line-height:115%;
+	mso-pagination:widow-orphan;
+	font-size:12.0pt;
+	font-family:"Calibri",sans-serif;
+	mso-ascii-font-family:Calibri;
+	mso-ascii-theme-font:minor-latin;
+	mso-hansi-font-family:Calibri;
+	mso-hansi-theme-font:minor-latin;
+	mso-bidi-font-family:"Times New Roman";
+	mso-font-kerning:1.0pt;}
+</style>
+<![endif]-->
+
+<p class="MsoNormal" dir="RTL" style="text-align:right;direction:rtl;unicode-bidi:
+embed"><b><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:
+Calibri;mso-ascii-theme-font:minor-latin;mso-hansi-font-family:Calibri;
+mso-hansi-theme-font:minor-latin">عندما تقرر تحويل فكرتك التجارية إلى كيان
+قانوني قائم في مصر، فإن الخطوة الأولى والأهم هي اختيار المظلة القانونية الصحيحة</span><span dir="LTR"></span><span dir="LTR"></span><span dir="LTR" style="mso-bidi-language:
+AR-EG"><span dir="LTR"></span><span dir="LTR"></span>. </span><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;mso-ascii-theme-font:
+minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">يُعد
+القانون رقم 159 لسنة 1981 هو التشريع الأم المنظم لشركات المساهمة،
+الشركات ذات المسؤولية المحدودة، وشركات الشخص الواحد</span><span dir="LTR"></span><span dir="LTR"></span><span dir="LTR" style="mso-bidi-language:AR-EG"><span dir="LTR"></span><span dir="LTR"></span>.</span></b></p>
+
+<p class="MsoNormal" dir="RTL" style="text-align:right;direction:rtl;unicode-bidi:
+embed"><b><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:
+Calibri;mso-ascii-theme-font:minor-latin;mso-hansi-font-family:Calibri;
+mso-hansi-theme-font:minor-latin">لكي تتخذ القرار الاستثماري الأنسب لمشروعك،
+إليك الفروق الجوهرية بين الأشكال القانونية الأكثر طلباً تحت مظلة هذا القانون</span><span dir="LTR"></span><span dir="LTR"></span><span dir="LTR" style="mso-bidi-language:
+AR-EG"><span dir="LTR"></span><span dir="LTR"></span>:</span></b></p>
+
+<p class="MsoNormal" dir="RTL" style="text-align:right;direction:rtl;unicode-bidi:
+embed"><b><span dir="LTR" style="mso-bidi-language:AR-EG">1. </span><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:
+minor-latin">الشركات ذات المسؤولية المحدودة</span><span dir="LTR" style="mso-bidi-language:AR-EG"></span></b></p>
+
+<ul style="margin-top:0in" type="disc"><li class="MsoNormal" dir="RTL" style="margin-right:.5in;margin-left:0in;
+     text-align:right;mso-list:l0 level1 lfo1;tab-stops:list .5in;direction:
+     rtl;unicode-bidi:embed"><b><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;
+     mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-hansi-font-family:
+     Calibri;mso-hansi-theme-font:minor-latin">الأنسب لـ</span><span dir="LTR"></span><span dir="LTR"></span><span dir="LTR" style="mso-bidi-language:
+     AR-EG"><span dir="LTR"></span><span dir="LTR"></span>:</span><span dir="LTR" style="mso-bidi-language:AR-EG"> </span><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;
+     mso-ascii-theme-font:minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:
+     minor-latin">المشروعات الصغيرة والمتوسطة والعائلية</span><span dir="LTR"></span><span dir="LTR"></span><span dir="LTR" style="mso-bidi-language:AR-EG"><span dir="LTR"></span><span dir="LTR"></span>.</span></b></li><li class="MsoNormal" dir="RTL" style="margin-right:.5in;margin-left:0in;
+     text-align:right;mso-list:l0 level1 lfo1;tab-stops:list .5in;direction:
+     rtl;unicode-bidi:embed"><b><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;
+     mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-hansi-font-family:
+     Calibri;mso-hansi-theme-font:minor-latin">المسؤولية</span><span dir="LTR"></span><span dir="LTR"></span><span dir="LTR" style="mso-bidi-language:
+     AR-EG"><span dir="LTR"></span><span dir="LTR"></span>:</span><span dir="LTR" style="mso-bidi-language:AR-EG"> </span><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;
+     mso-ascii-theme-font:minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:
+     minor-latin">تنحصر مسؤولية كل شريك في حدود حصته في رأس المال فقط، مما يحمي
+     أموالك الشخصية</span><span dir="LTR"></span><span dir="LTR"></span><span dir="LTR" style="mso-bidi-language:AR-EG"><span dir="LTR"></span><span dir="LTR"></span>.</span></b></li><li class="MsoNormal" dir="RTL" style="margin-right:.5in;margin-left:0in;
+     text-align:right;mso-list:l0 level1 lfo1;tab-stops:list .5in;direction:
+     rtl;unicode-bidi:embed"><b><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;
+     mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-hansi-font-family:
+     Calibri;mso-hansi-theme-font:minor-latin">الإدارة</span><span dir="LTR"></span><span dir="LTR"></span><span dir="LTR" style="mso-bidi-language:AR-EG"><span dir="LTR"></span><span dir="LTR"></span>:</span><span dir="LTR" style="mso-bidi-language:AR-EG"> </span><span lang="AR-SA" style="font-family:
+     &quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;mso-ascii-theme-font:
+     minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">تتم
+     من خلال مدير أو أكثر (وليس مجلس إدارة معقد)، ولا يوجد حد أدنى إلزامي لرأس
+     المال بموجب التعديلات الأخيرة، مما يجعلها مرنة وسريعة التأسيس</span><span dir="LTR"></span><span dir="LTR"></span><span dir="LTR" style="mso-bidi-language:
+     AR-EG"><span dir="LTR"></span><span dir="LTR"></span>.</span></b></li></ul>
+
+<p class="MsoNormal" dir="RTL" style="text-align:right;direction:rtl;unicode-bidi:
+embed"><b><span dir="LTR" style="mso-bidi-language:AR-EG">2. </span><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:
+minor-latin">شركات المساهمة</span><span dir="LTR" style="mso-bidi-language:
+AR-EG"></span></b></p>
+
+<ul style="margin-top:0in" type="disc"><li class="MsoNormal" dir="RTL" style="margin-right:.5in;margin-left:0in;
+     text-align:right;mso-list:l2 level1 lfo2;tab-stops:list .5in;direction:
+     rtl;unicode-bidi:embed"><b><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;
+     mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-hansi-font-family:
+     Calibri;mso-hansi-theme-font:minor-latin">الأنسب لـ</span><span dir="LTR"></span><span dir="LTR"></span><span dir="LTR" style="mso-bidi-language:
+     AR-EG"><span dir="LTR"></span><span dir="LTR"></span>:</span><span dir="LTR" style="mso-bidi-language:AR-EG"> </span><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;
+     mso-ascii-theme-font:minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:
+     minor-latin">المشروعات الكبرى التي تتطلب رؤوس أموال ضخمة أو تخطط للطرح في
+     البورصة مستقبلاً</span><span dir="LTR"></span><span dir="LTR"></span><span dir="LTR" style="mso-bidi-language:AR-EG"><span dir="LTR"></span><span dir="LTR"></span>.</span></b></li><li class="MsoNormal" dir="RTL" style="margin-right:.5in;margin-left:0in;
+     text-align:right;mso-list:l2 level1 lfo2;tab-stops:list .5in;direction:
+     rtl;unicode-bidi:embed"><b><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;
+     mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-hansi-font-family:
+     Calibri;mso-hansi-theme-font:minor-latin">الهيكل الإداري</span><span dir="LTR"></span><span dir="LTR"></span><span dir="LTR" style="mso-bidi-language:
+     AR-EG"><span dir="LTR"></span><span dir="LTR"></span>:</span><span dir="LTR" style="mso-bidi-language:AR-EG"> </span><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;
+     mso-ascii-theme-font:minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:
+     minor-latin">تعتمد على مجلس إدارة يتكون من 3 أعضاء على الأقل، وتنقسيم
+     حصصها إلى أسهم قابلة للتداول بسهولة</span><span dir="LTR"></span><span dir="LTR"></span><span dir="LTR" style="mso-bidi-language:AR-EG"><span dir="LTR"></span><span dir="LTR"></span>.</span></b></li><li class="MsoNormal" dir="RTL" style="margin-right:.5in;margin-left:0in;
+     text-align:right;mso-list:l2 level1 lfo2;tab-stops:list .5in;direction:
+     rtl;unicode-bidi:embed"><b><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;
+     mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-hansi-font-family:
+     Calibri;mso-hansi-theme-font:minor-latin">رأس المال</span><span dir="LTR"></span><span dir="LTR"></span><span dir="LTR" style="mso-bidi-language:
+     AR-EG"><span dir="LTR"></span><span dir="LTR"></span>:</span><span dir="LTR" style="mso-bidi-language:AR-EG"> </span><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;
+     mso-ascii-theme-font:minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:
+     minor-latin">يشترط القانون حداً أدنى لرأس المال المصدر (يتم سداد جزء منه
+     عند التأسيس)</span><span dir="LTR"></span><span dir="LTR"></span><span dir="LTR" style="mso-bidi-language:AR-EG"><span dir="LTR"></span><span dir="LTR"></span>.</span></b></li></ul>
+
+<p class="MsoNormal" dir="RTL" style="text-align:right;direction:rtl;unicode-bidi:
+embed"><b><span dir="LTR" style="mso-bidi-language:AR-EG">3. </span><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;
+mso-ascii-theme-font:minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:
+minor-latin">شركة الشخص الواحد</span><span dir="LTR" style="mso-bidi-language:
+AR-EG"></span></b></p>
+
+<ul style="margin-top:0in" type="disc"><li class="MsoNormal" dir="RTL" style="margin-right:.5in;margin-left:0in;
+     text-align:right;mso-list:l1 level1 lfo3;tab-stops:list .5in;direction:
+     rtl;unicode-bidi:embed"><b><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;
+     mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-hansi-font-family:
+     Calibri;mso-hansi-theme-font:minor-latin">الأنسب لـ</span><span dir="LTR"></span><span dir="LTR"></span><span dir="LTR" style="mso-bidi-language:
+     AR-EG"><span dir="LTR"></span><span dir="LTR"></span>:</span><span dir="LTR" style="mso-bidi-language:AR-EG"> </span><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;
+     mso-ascii-theme-font:minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:
+     minor-latin">المستثمر الفردي الذي يرغب في فصل ذمته المالية الشخصية عن عمله
+     التجاري</span><span dir="LTR"></span><span dir="LTR"></span><span dir="LTR" style="mso-bidi-language:AR-EG"><span dir="LTR"></span><span dir="LTR"></span>.</span></b></li><li class="MsoNormal" dir="RTL" style="margin-right:.5in;margin-left:0in;
+     text-align:right;mso-list:l1 level1 lfo3;tab-stops:list .5in;direction:
+     rtl;unicode-bidi:embed"><b><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;
+     mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-hansi-font-family:
+     Calibri;mso-hansi-theme-font:minor-latin">الميزة التنافسية</span><span dir="LTR"></span><span dir="LTR"></span><span dir="LTR" style="mso-bidi-language:
+     AR-EG"><span dir="LTR"></span><span dir="LTR"></span>:</span><span dir="LTR" style="mso-bidi-language:AR-EG"> </span><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;
+     mso-ascii-theme-font:minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:
+     minor-latin">تمنحك مزايا شركات الأموال وصلاحيات الإدارة الكاملة دون الحاجة
+     لوجود شركاء آخرين</span><span dir="LTR"></span><span dir="LTR"></span><span dir="LTR" style="mso-bidi-language:AR-EG"><span dir="LTR"></span><span dir="LTR"></span>.</span></b></li></ul>
+
+<p class="MsoNormal" dir="RTL" style="text-align:right;direction:rtl;unicode-bidi:
+embed"><b><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:
+Calibri;mso-ascii-theme-font:minor-latin;mso-hansi-font-family:Calibri;
+mso-hansi-theme-font:minor-latin">كيف يدعمك مكتبنا؟</span><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;mso-ascii-theme-font:
+minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">
+تحديد الشكل القانوني لشركتك هو حجر الأساس لنجاحها المالي والضريبي</span><span dir="LTR"></span><span dir="LTR"></span><span dir="LTR" style="mso-bidi-language:
+AR-EG"><span dir="LTR"></span><span dir="LTR"></span>. </span><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;mso-ascii-theme-font:
+minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">في </span><span dir="LTR" style="mso-bidi-language:AR-EG">AFC</span><span lang="AR-SA" style="font-family:&quot;Arial&quot;,sans-serif;mso-ascii-font-family:Calibri;mso-ascii-theme-font:
+minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">لا
+نكتفي بإجراءات التأسيس الورقية، بل ندرس طبيعة نشاطك ومخطط نموك لنختار لك الكيان
+الأنسب الذي يحمي استثماراتك ويوفر لك أفضل ميزة ضريبية</span><span dir="LTR"></span><span dir="LTR"></span><span dir="LTR" style="mso-bidi-language:AR-EG"><span dir="LTR"></span><span dir="LTR"></span>.</span><span lang="AR-EG" style="font-family:&quot;Arial&quot;,sans-serif;
+mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-hansi-font-family:
+Calibri;mso-hansi-theme-font:minor-latin;mso-bidi-language:AR-EG"></span></b></p>
+
+5:["$","main",null,{"children":["$","$L27",null,{"initialArticles":[{"id":3,"title":"دليلك الشامل لتأسيس الشركات في مصر وفقاً للقانون 159 لسنة 1981 ","date":"27 Jul 2026","category":"تأسيس الشركات","image":"/images/uploads/img_6a6728165d19e.jpg","content":"$28","created_at":"2026-07-27 09:40:30","title_en":"","category_en":"","content_en":""}],"lang":"ar","initialArticleId":"$undefined"}]}]
