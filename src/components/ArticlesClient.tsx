@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 
 import { Lang } from '@/lib/dictionary';
@@ -84,6 +83,14 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
           gap: 3rem;
           margin-top: 3rem; /* Added margin to lower the layout from the top section */
         }
+        .article-body-content > *:first-child,
+        .article-body-content p:first-child,
+        .article-body-content h1:first-child,
+        .article-body-content h2:first-child,
+        .article-body-content h3:first-child,
+        .article-body-content h4:first-child {
+          margin-top: 0 !important;
+        }
         @media (min-width: 768px) {
           .articles-layout {
             display: grid;
@@ -140,11 +147,12 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
             ) : error ? (
               <p style={{ color: "red" }}>{error}</p>
             ) : filteredArticles.length > 0 ? filteredArticles.map((article) => (
-              <Link 
-                href={lang === "en" ? `/en/articles/${article.id}` : `/articles/${article.id}`}
+              <button 
                 key={article.id}
+                onClick={() => setSelectedArticleId(article.id)}
                 style={{ 
                   display: "block",
+                  width: "100%",
                   textAlign: "right",
                   padding: "1.2rem",
                   background: selectedArticleId === article.id ? "rgba(0, 91, 171, 0.05)" : "var(--color-bg-card)",
@@ -153,8 +161,7 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
                   borderRadius: "8px",
                   cursor: "pointer",
                   transition: "all 0.3s ease",
-                  borderRight: selectedArticleId === article.id ? "4px solid var(--color-accent)" : "1px solid var(--color-border)",
-                  textDecoration: "none"
+                  borderRight: selectedArticleId === article.id ? "4px solid var(--color-accent)" : "1px solid var(--color-border)"
                 }}
               >
                 <h4 style={{ 
@@ -168,7 +175,14 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <span style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>{article.date}</span>
                 </div>
-              </Link>
+                <a 
+                  href={lang === "en" ? `/en/articles/${article.id}` : `/articles/${article.id}`}
+                  style={{ display: "none" }}
+                  aria-hidden="true"
+                >
+                  {article.title}
+                </a>
+              </button>
             )) : (
               <p style={{ color: "var(--color-text-muted)" }}>{lang === "en" ? "No matching articles found." : "لا توجد مقالات مطابقة للبحث."}</p>
             )}
@@ -199,27 +213,28 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
 
             {selectedArticle ? (
               <div className="animate-fade-in" key={selectedArticle.id}>
-                <div className="flex gap-md items-center mb-md" style={{ marginBottom: "1.5rem" }}>
+                <div className="flex gap-md items-center mb-md" style={{ marginBottom: "0.8rem" }}>
                   <span style={{ background: "rgba(0, 91, 171, 0.1)", color: "var(--color-accent)", padding: "0.4rem 1.2rem", borderRadius: "20px", fontSize: "0.95rem", fontWeight: "bold" }}>
                     {selectedArticle.category}
                   </span>
                   <span style={{ fontSize: "1rem", color: "var(--color-text-muted)" }}>{selectedArticle.date}</span>
                 </div>
                 
-                <h2 style={{ fontSize: "2.4rem", color: "var(--color-primary)", marginBottom: "1.5rem", lineHeight: "1.4" }}>
+                <h2 style={{ fontSize: "2.2rem", color: "var(--color-primary)", marginBottom: "0.4rem", lineHeight: "1.3" }}>
                   {selectedArticle.title}
                 </h2>
                 
-                <div style={{ width: "80px", height: "4px", background: "var(--color-accent)", marginBottom: "2.5rem", borderRadius: "2px" }}></div>
+                <div style={{ width: "60px", height: "3px", background: "var(--color-accent)", marginBottom: "1rem", borderRadius: "2px" }}></div>
                 
                 {selectedArticle.image && (
-                  <div style={{ position: "relative", width: "100%", height: "400px", marginBottom: "2.5rem", borderRadius: "12px", overflow: "hidden" }}>
+                  <div style={{ position: "relative", width: "100%", height: "380px", marginBottom: "1.2rem", borderRadius: "12px", overflow: "hidden" }}>
                     <Image src={selectedArticle.image} alt={selectedArticle.title} fill style={{ objectFit: "cover" }} />
                   </div>
                 )}
                 
                 <div 
-                  style={{ fontSize: "1.2rem", lineHeight: "2.2", color: "var(--color-text-main)", opacity: 0.9, textAlign: "justify" }}
+                  className="article-body-content"
+                  style={{ fontSize: "1.15rem", lineHeight: "2.1", color: "var(--color-text-main)", opacity: 0.9, textAlign: "justify" }}
                   dangerouslySetInnerHTML={{ __html: selectedArticle.content }}
                 />
 
