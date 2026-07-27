@@ -118,8 +118,8 @@ export default function Navbar({ settings = {}, services = [], lang = "ar" }: { 
             <Image 
               src="/logo.png" 
               alt="العشماوي للاستشارات المالية" 
-              width={190} 
-              height={60} 
+              width={150} 
+              height={48} 
               style={{ 
                 objectFit: "contain",
                 transition: "all 0.3s ease"
