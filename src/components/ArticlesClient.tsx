@@ -4,10 +4,14 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 
 import { Lang } from '@/lib/dictionary';
+import { servicesData } from '@/data/services';
+
 export default function ArticlesClient({ initialArticles, lang = 'ar', initialArticleId }: { initialArticles: any[], lang?: Lang, initialArticleId?: number }) {
   const [articles, setArticles] = useState<any[]>(initialArticles);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [customCategories, setCustomCategories] = useState<{ar: string, en: string}[]>([]);
+  const [servicesList, setServicesList] = useState<any[]>([]);
 
   useEffect(() => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
@@ -16,22 +20,83 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
       .then(data => {
         if (Array.isArray(data)) {
           setArticles(data);
-          // If no article is selected, or if selected article doesn't exist anymore, select the first one (or initialArticleId)
           if (data.length > 0 && !data.find(a => a.id === selectedArticleId)) {
              setSelectedArticleId(initialArticleId || data[0].id);
           }
         }
       })
       .catch(err => console.error("Failed to fetch fresh articles", err));
+
+    fetch(`${apiUrl}/api/settings.php`)
+      .then(res => res.json())
+      .then(s => {
+        if (s.article_categories) {
+          try {
+            const parsed = JSON.parse(s.article_categories);
+            if (Array.isArray(parsed)) setCustomCategories(parsed);
+          } catch (e) {}
+        }
+      })
+      .catch(() => {});
+
+    fetch(`${apiUrl}/api/services.php`)
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) setServicesList(data);
+      })
+      .catch(() => {});
   }, []);
 
-  const categories = ['الكل', 'الاستشارات المحاسبية', 'الاستشارات الضريبية', 'المراجعة والتدقيق', 'تأسيس الشركات', 'الاستشارات المالية'];
+  const safeArticles = Array.isArray(articles) ? articles : [];
+
+  const allCategoryNames = React.useMemo(() => {
+    const catsMap = new Map<string, { ar: string, en: string }>();
+    const defaults = [
+      { ar: 'الاستشارات المحاسبية', en: 'Accounting Advisory' },
+      { ar: 'الاستشارات الضريبية', en: 'Tax Advisory' },
+      { ar: 'المراجعة والتدقيق', en: 'Audit & Assurance' },
+      { ar: 'تأسيس الشركات', en: 'Company Formation' },
+      { ar: 'الاستشارات المالية', en: 'Financial Advisory' }
+    ];
+    defaults.forEach(c => catsMap.set(c.ar.trim(), c));
+    servicesData.forEach(s => {
+      if (s && s.title && s.title.ar) {
+        if (!catsMap.has(s.title.ar.trim())) {
+          catsMap.set(s.title.ar.trim(), { ar: s.title.ar.trim(), en: (s.title.en || s.title.ar).trim() });
+        }
+      }
+    });
+    servicesList.forEach(s => {
+      if (s && s.title && typeof s.title === 'string') {
+        if (!catsMap.has(s.title.trim())) {
+          catsMap.set(s.title.trim(), { ar: s.title.trim(), en: (s.title_en || s.title).trim() });
+        }
+      }
+    });
+    customCategories.forEach(c => {
+      if (c && c.ar) catsMap.set(c.ar.trim(), { ar: c.ar.trim(), en: (c.en || c.ar).trim() });
+    });
+    safeArticles.forEach(a => {
+      if (a.category && a.category.trim() && !catsMap.has(a.category.trim())) {
+        catsMap.set(a.category.trim(), { ar: a.category.trim(), en: (a.category_en || a.category).trim() });
+      }
+    });
+    return Array.from(catsMap.values());
+  }, [customCategories, safeArticles, servicesList]);
+
+  const getYouTubeEmbedUrl = (url?: string) => {
+    if (!url) return null;
+    let videoId = '';
+    if (url.includes('youtu.be/')) videoId = url.split('youtu.be/')[1].split('?')[0].split('&')[0];
+    else if (url.includes('watch?v=')) videoId = url.split('watch?v=')[1].split('&')[0];
+    else if (url.includes('embed/')) videoId = url.split('embed/')[1].split('?')[0].split('&')[0];
+    else if (url.includes('shorts/')) videoId = url.split('shorts/')[1].split('?')[0].split('&')[0];
+    return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+  };
 
   const [selectedTab, setSelectedTab] = useState('الكل');
   const [selectedArticleId, setSelectedArticleId] = useState(initialArticleId || (initialArticles && initialArticles.length > 0 ? initialArticles[0].id : 0));
   const [searchQuery, setSearchQuery] = useState('');
-
-  const safeArticles = Array.isArray(articles) ? articles : [];
 
   const filteredArticles = safeArticles.filter(a => {
     const matchesTab = selectedTab === 'الكل' || a.category === selectedTab;
@@ -192,21 +257,35 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
           <div style={{ minHeight: "500px", padding: "0 1rem" }}>
             {/* Tabs */}
             <div className="flex gap-sm mb-lg" style={{ flexWrap: "wrap", borderBottom: "1px solid var(--color-border)", paddingBottom: "1.5rem" }}>
-              {categories.map(cat => (
+              <button 
+                onClick={() => handleTabChange('الكل')}
+                style={{
+                  padding: "0.5rem 1.5rem",
+                  borderRadius: "30px",
+                  background: selectedTab === 'الكل' ? "var(--color-accent)" : "transparent",
+                  color: selectedTab === 'الكل' ? "#fff" : "var(--color-text-main)",
+                  fontWeight: selectedTab === 'الكل' ? "bold" : "normal",
+                  transition: "all 0.3s ease",
+                  border: selectedTab === 'الكل' ? "1px solid var(--color-accent)" : "1px solid var(--color-border)",
+                }}
+              >
+                {lang === 'en' ? 'All' : 'الكل'}
+              </button>
+              {allCategoryNames.map(cat => (
                 <button 
-                  key={cat} 
-                  onClick={() => handleTabChange(cat)}
+                  key={cat.ar} 
+                  onClick={() => handleTabChange(cat.ar)}
                   style={{
                     padding: "0.5rem 1.5rem",
                     borderRadius: "30px",
-                    background: selectedTab === cat ? "var(--color-accent)" : "transparent",
-                    color: selectedTab === cat ? "#fff" : "var(--color-text-main)",
-                    fontWeight: selectedTab === cat ? "bold" : "normal",
+                    background: selectedTab === cat.ar ? "var(--color-accent)" : "transparent",
+                    color: selectedTab === cat.ar ? "#fff" : "var(--color-text-main)",
+                    fontWeight: selectedTab === cat.ar ? "bold" : "normal",
                     transition: "all 0.3s ease",
-                    border: selectedTab === cat ? "1px solid var(--color-accent)" : "1px solid var(--color-border)",
+                    border: selectedTab === cat.ar ? "1px solid var(--color-accent)" : "1px solid var(--color-border)",
                   }}
                 >
-                  {cat}
+                  {lang === 'en' ? (cat.en || cat.ar) : cat.ar}
                 </button>
               ))}
             </div>
@@ -215,18 +294,27 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
               <div className="animate-fade-in" key={selectedArticle.id}>
                 <div className="flex gap-md items-center mb-md" style={{ marginBottom: "0.8rem" }}>
                   <span style={{ background: "rgba(0, 91, 171, 0.1)", color: "var(--color-accent)", padding: "0.4rem 1.2rem", borderRadius: "20px", fontSize: "0.95rem", fontWeight: "bold" }}>
-                    {selectedArticle.category}
+                    {lang === 'en' ? (selectedArticle.category_en || allCategoryNames.find(c => c.ar === selectedArticle.category)?.en || selectedArticle.category) : selectedArticle.category}
                   </span>
                   <span style={{ fontSize: "1rem", color: "var(--color-text-muted)" }}>{selectedArticle.date}</span>
                 </div>
                 
                 <h2 style={{ fontSize: "2.2rem", color: "var(--color-primary)", marginBottom: "0.4rem", lineHeight: "1.3" }}>
-                  {selectedArticle.title}
+                  {lang === 'en' && selectedArticle.title_en ? selectedArticle.title_en : selectedArticle.title}
                 </h2>
                 
                 <div style={{ width: "60px", height: "3px", background: "var(--color-accent)", marginBottom: "1rem", borderRadius: "2px" }}></div>
                 
-                {selectedArticle.image && (
+                {selectedArticle.video_url && getYouTubeEmbedUrl(selectedArticle.video_url) ? (
+                  <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, overflow: "hidden", maxWidth: "100%", marginBottom: "1.5rem", borderRadius: "12px", boxShadow: "0 4px 15px rgba(0,0,0,0.1)" }}>
+                    <iframe 
+                      src={getYouTubeEmbedUrl(selectedArticle.video_url)!} 
+                      style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: 0 }} 
+                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                      allowFullScreen 
+                    />
+                  </div>
+                ) : selectedArticle.image && (
                   <div style={{ position: "relative", width: "100%", height: "380px", marginBottom: "1.2rem", borderRadius: "12px", overflow: "hidden" }}>
                     <Image src={selectedArticle.image} alt={selectedArticle.title} fill style={{ objectFit: "cover" }} />
                   </div>
@@ -235,7 +323,7 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
                 <div 
                   className="article-body-content"
                   style={{ fontSize: "1.15rem", lineHeight: "2.1", color: "var(--color-text-main)", opacity: 0.9, textAlign: "justify" }}
-                  dangerouslySetInnerHTML={{ __html: selectedArticle.content }}
+                  dangerouslySetInnerHTML={{ __html: lang === 'en' && selectedArticle.content_en ? selectedArticle.content_en : selectedArticle.content }}
                 />
 
                 <div style={{ marginTop: "4rem", paddingTop: "2rem", borderTop: "1px solid var(--color-border)" }}>

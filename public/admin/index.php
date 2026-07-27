@@ -372,7 +372,10 @@
             <div id="sec-articles" class="section-container">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2 class="fw-bold">المدونة والمقالات</h2>
-                    <button class="btn btn-gold" onclick="showModal('article')"><i class="bi bi-plus-lg"></i> إضافة مقال</button>
+                    <div>
+                        <button class="btn btn-outline-primary me-2" onclick="openCategoriesModal()"><i class="bi bi-tags"></i> إدارة أقسام المقالات</button>
+                        <button class="btn btn-gold" onclick="showModal('article')"><i class="bi bi-plus-lg"></i> إضافة مقال</button>
+                    </div>
                 </div>
                 <div class="card p-4"><table class="table"><thead><tr><th>العنوان</th><th>القسم</th><th>إجراءات</th></tr></thead><tbody id="articles-table"></tbody></table></div>
             </div>
@@ -562,10 +565,15 @@
                         <div class="col-md-4">
                             <div class="card bg-light p-3 border-0 h-100">
                                 <div class="mb-3" id="div-category" style="display:none;">
-                                    <label class="form-label fw-bold">القسم (العربية)</label>
-                                    <input type="text" class="form-control mb-2" id="item-category" placeholder="مثال: مقالات ضريبية">
-                                    <label class="form-label fw-bold mt-2">Category (English)</label>
-                                    <input type="text" class="form-control" id="item-category_en" placeholder="e.g. Tax Articles" dir="ltr">
+                                    <label class="form-label fw-bold">اختر قسم المقال</label>
+                                    <select class="form-select mb-2" id="item-category-select" onchange="onCategorySelectChange()">
+                                    </select>
+                                    <div id="custom-category-inputs" style="display:none; background: #f8f9fa; border: 1px dashed #ced4da; padding: 12px; border-radius: 8px; margin-top: 10px;">
+                                        <label class="form-label fw-bold text-primary mb-1" style="font-size:0.85rem;">اسم القسم الجديد (بالعربية)</label>
+                                        <input type="text" class="form-control mb-2 form-control-sm" id="item-category" placeholder="مثال: مقالات ضريبية">
+                                        <label class="form-label fw-bold text-primary mb-1" style="font-size:0.85rem;">New Category Name (English)</label>
+                                        <input type="text" class="form-control form-control-sm" id="item-category_en" placeholder="e.g. Tax Articles" dir="ltr">
+                                    </div>
                                 </div>
                                 <div class="mb-3" id="div-icon" style="display:none;">
                                     <label class="form-label fw-bold">القيمة / الأيقونة</label>
@@ -574,10 +582,23 @@
                                     <input type="text" class="form-control" id="item-icon_en" dir="ltr">
                                 </div>
                                 <div class="mb-3" id="div-image" style="display:none;">
-                                    <label class="form-label fw-bold">الصورة البارزة</label>
-                                    <img id="item-image-preview" src="/images/placeholder.jpg" class="img-fluid rounded mb-2" style="height:120px;width:100%;object-fit:cover;">
+                                    <label class="form-label fw-bold">الصورة البارزة (أو صورة اليوتيوب)</label>
+                                    <img id="item-image-preview" src="/images/placeholder.jpg" class="img-fluid rounded mb-2" style="height:140px;width:100%;object-fit:cover;">
                                     <input type="hidden" id="item-image" value="/images/placeholder.jpg">
-                                    <button class="btn btn-outline-primary w-100 btn-sm" type="button" onclick="openMediaPicker('item-image')"><i class="bi bi-image"></i> اختيار صورة</button>
+                                    <div class="d-flex gap-2 mb-2">
+                                        <button class="btn btn-outline-primary flex-grow-1 btn-sm" type="button" onclick="openMediaPicker('item-image')"><i class="bi bi-images"></i> اختيار من المكتبة</button>
+                                        <button class="btn btn-gold flex-grow-1 btn-sm" type="button" onclick="document.getElementById('direct-article-img-upload').click()"><i class="bi bi-upload"></i> رفع صورة مباشرة</button>
+                                        <input type="file" id="direct-article-img-upload" accept="image/*" style="display:none;" onchange="handleDirectArticleImageUpload(this)">
+                                    </div>
+                                    <button class="btn btn-outline-danger w-100 btn-sm" type="button" onclick="removeArticleImage()" title="حذف الصورة وبدون صورة"><i class="bi bi-trash"></i> بدون صورة (أو الاعتماد على اليوتيوب)</button>
+                                </div>
+                                <div class="mb-3" id="div-video" style="display:none;">
+                                    <label class="form-label fw-bold"><i class="bi bi-youtube text-danger"></i> رابط يوتيوب (يظهر مكان الصورة ومصغرة اليوتيوب)</label>
+                                    <input type="text" class="form-control mb-1" id="item-video" placeholder="https://www.youtube.com/watch?v=XXXXX" dir="ltr" oninput="onYoutubeUrlInput()">
+                                    <div class="d-flex justify-content-between align-items-center mt-1">
+                                        <small class="text-muted" style="font-size:0.75rem;">يتم إدراج مصغرة اليوتيوب وعرض الفيديو مكان الصورة</small>
+                                        <button class="btn btn-outline-danger btn-sm py-0" type="button" onclick="useYoutubeThumbnail()" style="font-size:0.75rem;"><i class="bi bi-image"></i> استخدام صورة اليوتيوب</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -586,6 +607,37 @@
                 <div class="modal-footer border-0 px-4 py-3 bg-light">
                     <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">إلغاء</button>
                     <button type="button" class="btn btn-gold px-5" onclick="saveItem()"><i class="bi bi-save"></i> حفظ</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Categories Management Modal -->
+    <div class="modal fade" id="categoriesModal" tabindex="-1" style="z-index: 1060;">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg">
+                <div class="modal-header bg-light border-0">
+                    <h5 class="modal-title fw-bold"><i class="bi bi-tags text-primary"></i> إدارة أقسام المقالات</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body p-4">
+                    <div class="bg-light p-3 rounded mb-4">
+                        <h6 class="fw-bold mb-3">إضافة قسم جديد</h6>
+                        <div class="row g-2">
+                            <div class="col-md-6">
+                                <input type="text" id="new-cat-ar" class="form-control" placeholder="اسم القسم (عربي)">
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" id="new-cat-en" class="form-control" placeholder="Name (English)" dir="ltr">
+                            </div>
+                            <div class="col-12 mt-2">
+                                <button type="button" class="btn btn-gold w-100 btn-sm" onclick="addNewCategoryFromModal()"><i class="bi bi-plus-circle"></i> إضافة القسم</button>
+                            </div>
+                        </div>
+                    </div>
+                    <h6 class="fw-bold mb-2">الأقسام الحالية</h6>
+                    <ul class="list-group list-group-flush border rounded" id="categories-list-modal" style="max-height: 250px; overflow-y: auto;">
+                    </ul>
                 </div>
             </div>
         </div>
@@ -610,8 +662,9 @@
     <script>
         const API_URL = '/api';
         let dataStore = { articles: [], services: [], sectors: [], features: [], stats: [], testimonials: [] };
-        let modal, mediaPickerModal, chartInstance;
+        let modal, mediaPickerModal, categoriesModal, chartInstance;
         let mediaPickerTargetInputId = null, activeSummernote = null;
+        let savedArticleCategories = [];
 
         function showToast(msg, isError = false) {
             const toastEl = document.getElementById('liveToast');
@@ -623,6 +676,7 @@
         document.addEventListener('DOMContentLoaded', () => {
             modal = new bootstrap.Modal(document.getElementById('genericModal'));
             mediaPickerModal = new bootstrap.Modal(document.getElementById('mediaPickerModal'));
+            categoriesModal = new bootstrap.Modal(document.getElementById('categoriesModal'));
             if(localStorage.getItem('token')) showDashboard();
             
             const summernoteOptionsAR = {
@@ -631,14 +685,70 @@
                     ['style', ['style', 'bold', 'italic', 'clear']],
                     ['color', ['color']],
                     ['para', ['ul', 'ol', 'paragraph']],
-                    ['insert', ['link', 'customMedia']],
+                    ['insert', ['link', 'customMedia', 'customUpload', 'video', 'customYoutube']],
                     ['view', ['codeview']]
                 ],
                 buttons: {
                     customMedia: function (context) {
                         return $.summernote.ui.button({
-                            contents: '<i class="bi bi-image"></i> صورة',
+                            contents: '<i class="bi bi-image"></i> مكتبة الصور',
                             click: function () { activeSummernote = context; openMediaPicker(null, true); }
+                        }).render();
+                    },
+                    customUpload: function (context) {
+                        return $.summernote.ui.button({
+                            contents: '<i class="bi bi-upload"></i> رفع مباشر',
+                            click: function () {
+                                const input = document.createElement('input');
+                                input.type = 'file';
+                                input.accept = 'image/*';
+                                input.onchange = async () => {
+                                    if (!input.files || !input.files[0]) return;
+                                    showToast('جاري رفع الصورة للمقال...', 'info');
+                                    const formData = new FormData();
+                                    formData.append('image', input.files[0]);
+                                    try {
+                                        const res = await fetch(`${API_URL}/upload.php`, {
+                                            method: 'POST',
+                                            headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
+                                            body: formData
+                                        });
+                                        const data = await res.json();
+                                        const imgUrl = data.url || (data.filename ? `/images/${data.filename}` : '');
+                                        if (imgUrl) {
+                                            context.invoke('editor.insertImage', imgUrl);
+                                            showToast('تم إدراج الصورة بنجاح!');
+                                            loadMedia();
+                                        } else {
+                                            showToast(data.error || 'فشل رفع الصورة', true);
+                                        }
+                                    } catch (e) {
+                                        showToast('حدث خطأ أثناء الرفع', true);
+                                    }
+                                };
+                                input.click();
+                            }
+                        }).render();
+                    },
+                    customYoutube: function (context) {
+                        return $.summernote.ui.button({
+                            contents: '<i class="bi bi-youtube text-danger"></i> يوتيوب',
+                            click: function () {
+                                const url = prompt('قم بلصق رابط فيديو اليوتيوب هنا (YouTube Link):');
+                                if (url) {
+                                    let videoId = '';
+                                    if (url.includes('youtu.be/')) videoId = url.split('youtu.be/')[1].split('?')[0].split('&')[0];
+                                    else if (url.includes('watch?v=')) videoId = url.split('watch?v=')[1].split('&')[0];
+                                    else if (url.includes('embed/')) videoId = url.split('embed/')[1].split('?')[0].split('&')[0];
+                                    else if (url.includes('shorts/')) videoId = url.split('shorts/')[1].split('?')[0].split('&')[0];
+                                    if (videoId) {
+                                        const embedHtml = `<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;max-width:100%;margin:20px 0;border-radius:12px;"><iframe src="https://www.youtube.com/embed/${videoId}" style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" allowfullscreen></iframe></div><p><br></p>`;
+                                        context.invoke('editor.pasteHTML', embedHtml);
+                                    } else {
+                                        alert('رابط يوتيوب غير صالح. يرجى التأكد من الرابط.');
+                                    }
+                                }
+                            }
                         }).render();
                     }
                 }
@@ -791,6 +901,9 @@
             try {
                 const res = await fetch(`${API_URL}/settings.php`, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
                 const s = await res.json();
+                if (s.article_categories) {
+                    try { savedArticleCategories = JSON.parse(s.article_categories); } catch(e) { savedArticleCategories = []; }
+                }
                 
                 const defaults = {
                     hero_title: "نساعدك على تحقيق أهدافك المالية بنجاح",
@@ -896,6 +1009,214 @@
             });
         }
 
+        function removeArticleImage() {
+            document.getElementById('item-image').value = '';
+            document.getElementById('item-image-preview').src = '/images/placeholder.jpg';
+        }
+
+        function extractYoutubeId(url) {
+            if (!url) return '';
+            if (url.includes('youtu.be/')) return url.split('youtu.be/')[1].split('?')[0].split('&')[0];
+            if (url.includes('watch?v=')) return url.split('watch?v=')[1].split('&')[0];
+            if (url.includes('embed/')) return url.split('embed/')[1].split('?')[0].split('&')[0];
+            if (url.includes('shorts/')) return url.split('shorts/')[1].split('?')[0].split('&')[0];
+            return '';
+        }
+
+        function onYoutubeUrlInput() {
+            const url = document.getElementById('item-video').value;
+            const videoId = extractYoutubeId(url);
+            const currentImg = document.getElementById('item-image').value;
+            if (videoId && (!currentImg || currentImg === '' || currentImg === '/images/placeholder.jpg' || currentImg === '/images/articles/placeholder.jpg')) {
+                const thumbUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+                document.getElementById('item-image').value = thumbUrl;
+                document.getElementById('item-image-preview').src = thumbUrl;
+            }
+        }
+
+        function useYoutubeThumbnail() {
+            const url = document.getElementById('item-video').value;
+            const videoId = extractYoutubeId(url);
+            if (videoId) {
+                const thumbUrl = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+                document.getElementById('item-image').value = thumbUrl;
+                document.getElementById('item-image-preview').src = thumbUrl;
+                showToast('تم اعتماد صورة اليوتيوب المصغرة كصورة بارزة للمقال بنجاح');
+            } else {
+                showToast('يرجى إدخال رابط يوتيوب صحيح أولاً', true);
+            }
+        }
+
+        async function handleDirectArticleImageUpload(input) {
+            if (!input.files || !input.files[0]) return;
+            showToast('جاري رفع الصورة...', 'info');
+            const formData = new FormData();
+            formData.append('image', input.files[0]);
+            try {
+                const res = await fetch(`${API_URL}/upload.php`, {
+                    method: 'POST',
+                    headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` },
+                    body: formData
+                });
+                const data = await res.json();
+                if (data.url || (res.ok && data.success !== false)) {
+                    const imgUrl = data.url || (data.filename ? `/images/${data.filename}` : '');
+                    if (imgUrl) {
+                        document.getElementById('item-image').value = imgUrl;
+                        document.getElementById('item-image-preview').src = imgUrl;
+                        showToast('تم رفع الصورة واعتمادها بنجاح!');
+                        loadMedia();
+                    } else {
+                        showToast('فشل في استلام رابط الصورة المرفوعة', true);
+                    }
+                } else {
+                    showToast(data.error || 'فشل رفع الصورة', true);
+                }
+            } catch (e) {
+                showToast('حدث خطأ أثناء الرفع', true);
+            }
+            input.value = '';
+        }
+
+        function getMergedArticleCategories() {
+            const catsMap = new Map();
+            const defaults = [
+                { ar: 'الاستشارات المحاسبية', en: 'Accounting Advisory' },
+                { ar: 'الاستشارات الضريبية', en: 'Tax Advisory' },
+                { ar: 'المراجعة والتدقيق', en: 'Audit & Assurance' },
+                { ar: 'تأسيس الشركات', en: 'Company Formation' },
+                { ar: 'الاستشارات المالية', en: 'Financial Advisory' }
+            ];
+            defaults.forEach(c => catsMap.set(c.ar.trim(), c));
+            if (dataStore['services']) {
+                dataStore['services'].forEach(s => {
+                    if (s && s.title && s.title.trim()) {
+                        if (!catsMap.has(s.title.trim())) {
+                            catsMap.set(s.title.trim(), { ar: s.title.trim(), en: (s.title_en || s.title).trim() });
+                        }
+                    }
+                });
+            }
+            savedArticleCategories.forEach(c => {
+                if (c && c.ar) catsMap.set(c.ar.trim(), { ar: c.ar.trim(), en: (c.en || c.ar).trim() });
+            });
+            if (dataStore['articles']) {
+                dataStore['articles'].forEach(a => {
+                    if (a.category && a.category.trim()) {
+                        if (!catsMap.has(a.category.trim())) {
+                            catsMap.set(a.category.trim(), { ar: a.category.trim(), en: (a.category_en || a.category).trim() });
+                        }
+                    }
+                });
+            }
+            return Array.from(catsMap.values());
+        }
+
+        function openCategoriesModal() {
+            renderCategoriesModalList();
+            if (!categoriesModal) categoriesModal = new bootstrap.Modal(document.getElementById('categoriesModal'));
+            categoriesModal.show();
+        }
+
+        function renderCategoriesModalList() {
+            const list = document.getElementById('categories-list-modal');
+            const cats = getMergedArticleCategories();
+            if (cats.length === 0) {
+                list.innerHTML = '<li class="list-group-item text-muted text-center py-3">لا توجد أقسام حالياً</li>';
+                return;
+            }
+            list.innerHTML = cats.map((c, idx) => `
+                <li class="list-group-item d-flex justify-content-between align-items-center py-2">
+                    <div>
+                        <span class="fw-bold">${c.ar}</span>
+                        <span class="text-muted ms-2 small" dir="ltr">(${c.en})</span>
+                    </div>
+                    <button class="btn btn-sm btn-outline-danger" onclick="deleteArticleCategory('${c.ar.replace(/'/g, "\\'")}')" title="حذف القسم"><i class="bi bi-trash"></i></button>
+                </li>
+            `).join('');
+        }
+
+        async function addNewCategoryFromModal() {
+            const ar = document.getElementById('new-cat-ar').value.trim();
+            const en = document.getElementById('new-cat-en').value.trim() || ar;
+            if (!ar) { showToast('يرجى إدخال اسم القسم بالعربية', true); return; }
+            
+            await saveNewCategoryToSettings(ar, en);
+            document.getElementById('new-cat-ar').value = '';
+            document.getElementById('new-cat-en').value = '';
+            renderCategoriesModalList();
+            showToast('تمت إضافة القسم بنجاح');
+        }
+
+        async function saveNewCategoryToSettings(ar, en) {
+            if (!ar) return;
+            const cats = getMergedArticleCategories();
+            if (!cats.some(c => c.ar === ar)) {
+                cats.push({ ar: ar, en: en || ar });
+            } else {
+                return;
+            }
+            savedArticleCategories = cats;
+            await fetch(API_URL + '/settings.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('token') },
+                body: JSON.stringify({ article_categories: JSON.stringify(savedArticleCategories) })
+            });
+        }
+
+        async function deleteArticleCategory(arName) {
+            if (!confirm(`هل أنت متأكد من حذف القسم "${arName}"؟\nملاحظة: المقالات المرتبطة بهذا القسم لن تُحذف ولكن يفضل تعديل قسمها إذا رغبت.`)) return;
+            savedArticleCategories = getMergedArticleCategories().filter(c => c.ar !== arName);
+            await fetch(API_URL + '/settings.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('token') },
+                body: JSON.stringify({ article_categories: JSON.stringify(savedArticleCategories) })
+            });
+            renderCategoriesModalList();
+            showToast('تم حذف القسم بنجاح');
+        }
+
+        function populateCategorySelect(selectedAr = '', selectedEn = '') {
+            const sel = document.getElementById('item-category-select');
+            if (!sel) return;
+            const cats = getMergedArticleCategories();
+            let html = '<option value="">-- اختر قسم المقال --</option>';
+            let matched = false;
+            cats.forEach((c, idx) => {
+                const isSel = (selectedAr && c.ar === selectedAr) ? 'selected' : '';
+                if (isSel) matched = true;
+                html += `<option value="${idx}" data-ar="${c.ar}" data-en="${c.en}" ${isSel}>${c.ar} (${c.en})</option>`;
+            });
+            if (selectedAr && !matched) {
+                html += `<option value="custom_sel" data-ar="${selectedAr}" data-en="${selectedEn}" selected>${selectedAr} (${selectedEn || selectedAr})</option>`;
+                matched = true;
+            }
+            html += `<option value="new" class="fw-bold text-primary">+ إضافة قسم جديد...</option>`;
+            sel.innerHTML = html;
+            
+            if (!selectedAr && cats.length > 0) {
+                sel.selectedIndex = 1;
+            }
+            onCategorySelectChange();
+        }
+
+        function onCategorySelectChange() {
+            const sel = document.getElementById('item-category-select');
+            if (!sel) return;
+            if (sel.value === 'new') {
+                document.getElementById('custom-category-inputs').style.display = 'block';
+                document.getElementById('item-category').value = '';
+                document.getElementById('item-category_en').value = '';
+            } else if (sel.value !== '' && sel.value !== 'custom_sel') {
+                document.getElementById('custom-category-inputs').style.display = 'none';
+                const opt = sel.options[sel.selectedIndex];
+                document.getElementById('item-category').value = opt.getAttribute('data-ar') || '';
+                document.getElementById('item-category_en').value = opt.getAttribute('data-en') || '';
+            } else {
+                document.getElementById('custom-category-inputs').style.display = 'none';
+            }
+        }
+
         function showModal(type) {
             document.getElementById('item-id').value = ''; document.getElementById('item-type').value = type;
             ['title','icon','description', 'title_en', 'description_en'].forEach(id => { if(document.getElementById(`item-${id}`)) document.getElementById(`item-${id}`).value = ''; });
@@ -904,6 +1225,8 @@
             $('#item-content_en').summernote('code', '');
             
             document.getElementById('div-category').style.display = type === 'article' ? 'block' : 'none';
+            if (document.getElementById('div-video')) document.getElementById('div-video').style.display = type === 'article' ? 'block' : 'none';
+            if (type === 'article') { populateCategorySelect(); if (document.getElementById('item-video')) document.getElementById('item-video').value = ''; }
             document.getElementById('div-description').style.display = ['service', 'sector', 'feature'].includes(type) ? 'block' : 'none';
             document.getElementById('div-description-en').style.display = ['service', 'sector', 'feature'].includes(type) ? 'block' : 'none';
             document.getElementById('div-icon').style.display = ['stat', 'testimonial', 'feature'].includes(type) ? 'block' : 'none';
@@ -930,8 +1253,8 @@
             }
             
             if(type === 'article') {
-                document.getElementById('item-category').value = item.category;
-                document.getElementById('item-category_en').value = item.category_en || '';
+                populateCategorySelect(item.category, item.category_en);
+                if (document.getElementById('item-video')) document.getElementById('item-video').value = item.video_url || '';
             }
             if(['service', 'sector', 'feature'].includes(type)) {
                 document.getElementById('item-description').value = item.description;
@@ -974,6 +1297,10 @@
             if(type === 'article') { 
                 data.category = document.getElementById('item-category').value; 
                 data.category_en = document.getElementById('item-category_en') ? document.getElementById('item-category_en').value : ''; 
+                data.video_url = document.getElementById('item-video') ? document.getElementById('item-video').value : '';
+                if (document.getElementById('item-category-select') && document.getElementById('item-category-select').value === 'new') {
+                    saveNewCategoryToSettings(data.category, data.category_en);
+                }
             }
             if(['service', 'sector'].includes(type)) { 
                 data.description = document.getElementById('item-description').value; 
@@ -981,6 +1308,12 @@
             }
             
             if(['article','sector','service'].includes(type)) data.image = document.getElementById('item-image').value;
+            if (type === 'article') {
+                const vidId = extractYoutubeId(data.video_url);
+                if (vidId && (!data.image || data.image === '' || data.image === '/images/placeholder.jpg' || data.image === '/images/articles/placeholder.jpg')) {
+                    data.image = `https://img.youtube.com/vi/${vidId}/hqdefault.jpg`;
+                }
+            }
             if(type === 'feature') {
                 data.icon = document.getElementById('item-icon').value;
                 data.description = document.getElementById('item-description').value;
