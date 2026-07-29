@@ -771,7 +771,7 @@ minor-latin;mso-hansi-font-family:Calibri;mso-hansi-theme-font:minor-latin">لا
 mso-ascii-font-family:Calibri;mso-ascii-theme-font:minor-latin;mso-hansi-font-family:
 Calibri;mso-hansi-theme-font:minor-latin;mso-bidi-language:AR-EG"></span></b></p>
 
-0:{"rsc":["$","$1","c",{"children":[["$","main",null,{"children":["$","$L2",null,{"initialArticles":[{"id":3,"title":"دليلك الشامل لتأسيس الشركات في مصر وفقاً للقانون 159 لسنة 1981 ","date":"27 Jul 2026","category":"تأسيس الشركات","image":"/images/uploads/img_6a672ad303266.jpg","content":"$3","created_at":"2026-07-27 09:40:30","title_en":"","category_en":"","content_en":""}],"lang":"en"}]}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"3hLkSAh25ph6NTlVvwyFl"}
+0:{"rsc":["$","$1","c",{"children":[["$","main",null,{"children":["$","$L2",null,{"initialArticles":[{"id":3,"title":"دليلك الشامل لتأسيس الشركات في مصر وفقاً للقانون 159 لسنة 1981 ","date":"27 Jul 2026","category":"تأسيس الشركات","image":"/images/uploads/img_6a672ad303266.jpg","content":"$3","created_at":"2026-07-27 09:40:30","title_en":"","category_en":"","content_en":""}],"lang":"en"}]}],["$L4"],"$L5"]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"WWBVsGP_VphEHvdXPfl32"}
 4:["$","script","script-0",{"src":"/_next/static/chunks/075ojb-caw8pk.js","async":true}]
 5:["$","$L6",null,{"children":["$","$7",null,{"name":"Next.MetadataOutlet","children":"$@8"}]}]
 8:null
