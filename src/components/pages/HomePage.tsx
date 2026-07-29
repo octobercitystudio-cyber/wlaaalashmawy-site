@@ -61,7 +61,7 @@ export default async function Home({ lang = "ar" }: { lang?: Lang }) {
       <section id="about" style={{ padding: "var(--spacing-xl) 0", background: "var(--color-bg-card)" }}>
         <div className="container grid grid-cols-1 md-grid-cols-2 gap-lg items-center">
           <div>
-            <h2 className="text-gold">{lang === "en" ? "Why Choose Us?" : "لماذا تختارنا؟"}</h2>
+            <h2 className="text-gold">{lang === "en" ? "Why Choose AFC?" : "لماذا تختار AFC؟"}</h2>
             <EditableText 
               id={lang === "en" ? "about_short_en" : "about_short"}
               value={(lang === "en" && settings.about_short_en ? settings.about_short_en : settings.about_short) || (lang === "en" ? "We don't just provide numbers, we provide deep financial insight. Through the latest methodologies and accounting technologies, we ensure financial security and infinite precision." : "نحن لا نقدم أرقاماً فحسب، بل نقدم رؤية مالية عميقة. من خلال أحدث المنهجيات والتقنيات المحاسبية، نضمن لك الأمان المالي والدقة المتناهية.")}
