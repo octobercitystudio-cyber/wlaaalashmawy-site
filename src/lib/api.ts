@@ -155,10 +155,10 @@ export async function fetchStats() {
   } catch {}
   
   return [
-    { id: 1, title: "عام التأسيس", title_en: "Founded", value: "2024" },
-    { id: 2, title: "خدمات متخصصة", title_en: "Specialized Services", value: "8" },
-    { id: 3, title: "قطاعًا نخدمه", title_en: "Sectors Served", value: "11" },
-    { id: 4, title: "لغات الموقع", title_en: "Website Languages", value: "2" }
+    { id: 1, title: "سنوات من الخبرة", title_en: "Years of Experience", value: "+15" },
+    { id: 2, title: "عملاء نخدمهم", title_en: "Clients Served", value: "+500" },
+    { id: 3, title: "خبير استشاري", title_en: "Expert Consultants", value: "+50" },
+    { id: 4, title: "نسبة رضا العملاء", title_en: "Client Satisfaction", value: "100%" }
   ];
 }
 
