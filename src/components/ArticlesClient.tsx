@@ -70,39 +70,15 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
   );
 
   const allCategoryNames = React.useMemo(() => {
-    const catsMap = new Map<string, { ar: string, en: string }>();
-    const defaults = [
-      { ar: 'الاستشارات المحاسبية', en: 'Accounting Advisory' },
-      { ar: 'الاستشارات الضريبية', en: 'Tax Advisory' },
-      { ar: 'المراجعة والتدقيق', en: 'Audit & Assurance' },
-      { ar: 'تأسيس الشركات', en: 'Company Formation' },
-      { ar: 'الاستشارات المالية', en: 'Financial Advisory' }
+    return [
+      { ar: 'محاسبة', en: 'Accounting' },
+      { ar: 'مراجعة', en: 'Audit' },
+      { ar: 'ضرايب', en: 'Taxes' },
+      { ar: 'تاسيس الشركات والمنشات', en: 'Company Formation' },
+      { ar: 'إقامات مستثمرين', en: 'Investor Residency' },
+      { ar: 'تراخيص صناعيه', en: 'Industrial Licensing' }
     ];
-    defaults.forEach(c => catsMap.set(c.ar.trim(), c));
-    servicesData.forEach(s => {
-      if (s && s.title && s.title.ar) {
-        if (!catsMap.has(s.title.ar.trim())) {
-          catsMap.set(s.title.ar.trim(), { ar: s.title.ar.trim(), en: (s.title.en || s.title.ar).trim() });
-        }
-      }
-    });
-    servicesList.forEach(s => {
-      if (s && s.title && typeof s.title === 'string') {
-        if (!catsMap.has(s.title.trim())) {
-          catsMap.set(s.title.trim(), { ar: s.title.trim(), en: (s.title_en || s.title).trim() });
-        }
-      }
-    });
-    customCategories.forEach(c => {
-      if (c && c.ar) catsMap.set(c.ar.trim(), { ar: c.ar.trim(), en: (c.en || c.ar).trim() });
-    });
-    safeArticles.forEach(a => {
-      if (a.category && a.category.trim() && !catsMap.has(a.category.trim())) {
-        catsMap.set(a.category.trim(), { ar: a.category.trim(), en: (a.category_en || a.category).trim() });
-      }
-    });
-    return Array.from(catsMap.values());
-  }, [customCategories, safeArticles, servicesList]);
+  }, []);
 
   const getYouTubeEmbedUrl = (url?: string) => {
     if (!url) return null;
