@@ -7,10 +7,16 @@ export default function ClientTracker() {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Generate a simple anonymous visitor ID and store in localStorage
+    // Generate an anonymous browser identifier. It is used only for aggregate
+    // visit counts and can be removed by clearing this site's browser storage.
     let visitorId = localStorage.getItem('visitor_id');
     if (!visitorId) {
-      visitorId = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+      visitorId =
+        typeof crypto.randomUUID === 'function'
+          ? crypto.randomUUID()
+          : Array.from(crypto.getRandomValues(new Uint8Array(16)))
+              .map((byte) => byte.toString(16).padStart(2, '0'))
+              .join('');
       localStorage.setItem('visitor_id', visitorId);
     }
 

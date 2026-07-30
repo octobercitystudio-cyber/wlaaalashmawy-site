@@ -7,7 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "seed": "tsx prisma/seed.ts"
+    "test": "node scripts/run-tests.mjs",
+    "typecheck": "tsc --noEmit",
+    "check": "npm run lint -- --max-warnings=0 && npm run test && npm run typecheck && npm run build",
+    "optimize:images": "node scripts/optimize-images.mjs"
   },
   "dependencies": {
     "bootstrap-icons": "^1.13.1",

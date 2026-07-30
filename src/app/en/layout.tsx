@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { fetchSettings, fetchServices } from "@/lib/api";
+import { normalizeWhatsAppNumber, parseSettingList } from "@/lib/contact";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -15,13 +16,36 @@ const inter = Inter({
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await fetchSettings();
+  const title = settings.seo_title_en || "AFC | Accounting, Audit & Tax Services in Egypt";
+  const description = settings.seo_desc_en || "AFC provides professional accounting, audit, tax, company formation and financial advisory services in Egypt.";
   return {
+    metadataBase: new URL("https://www.afc-cpa.com"),
     title: {
-      default: "AFC | Accounting, Audit & Tax Services in Egypt | CPA Wlaa Magdy",
-      template: "%s | AFC - Accounting Firm in Egypt"
+      default: title,
+      template: "%s | AFC"
     },
-    description: settings.seo_desc_en || "Professional Accounting, Audit, Tax, Bookkeeping, Payroll and Financial Consulting Services in Egypt by CPA Wlaa Magdy. AFC helps businesses stay compliant and grow with confidence.",
+    description,
     keywords: ["Accounting Firm Egypt", "Audit Firm Egypt", "Tax Consultants Egypt", "Bookkeeping Services Egypt", "CPA Egypt", "Wlaa Magdy", "AFC"],
+    alternates: {
+      canonical: "/en/",
+      languages: { ar: "/", en: "/en/" },
+    },
+    openGraph: {
+      type: "website",
+      locale: "en_US",
+      alternateLocale: ["ar_EG"],
+      url: "/en/",
+      siteName: "AFC",
+      title,
+      description,
+      images: [{ url: "/hero_egypt.jpg", width: 1376, height: 768, alt: title }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: ["/hero_egypt.jpg"],
+    },
   };
 }
 
@@ -34,36 +58,42 @@ export default async function EnLayout({
 }>) {
   const settings = await fetchSettings();
   const services = await fetchServices();
+  const phones = parseSettingList(settings.contact_phones);
+  const telephone = normalizeWhatsAppNumber(
+    settings.contact_whatsapp || settings.whatsapp || phones[0],
+  );
+  const address = settings.contact_address_en || "Office 204, 2nd Floor, Agyad View Mall, 6th of October, Giza, Egypt";
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@type": ["LocalBusiness", "AccountingService"],
+    name: "AFC Financial Consulting",
+    image: "https://www.afc-cpa.com/Logo.png",
+    logo: "https://www.afc-cpa.com/Logo.png",
+    "@id": "https://www.afc-cpa.com/#business",
+    url: "https://www.afc-cpa.com/en/",
+    telephone: `+${telephone}`,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: address,
+      addressLocality: "6th of October",
+      addressRegion: "Giza",
+      addressCountry: "EG",
+    },
+    founder: { "@type": "Person", name: "Wlaa Magdy Al-Ashmawy" },
+    description: "Accounting, audit, tax and financial advisory services for companies and investors.",
+  };
 
   return (
     <html lang="en" dir="ltr" className={`${inter.variable}`}>
       <body>
-        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-          "@context": "https://schema.org",
-          "@type": ["LocalBusiness", "AccountingService"],
-          "name": "AFC - Accounting Firm Egypt",
-          "image": "https://www.afc-cpa.com/images/logo.png",
-          "@id": "https://www.afc-cpa.com",
-          "url": "https://www.afc-cpa.com/en",
-          "telephone": "+201155729429",
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "Cairo",
-            "addressRegion": "Cairo",
-            "addressCountry": "EG"
-          },
-          "founder": {
-            "@type": "Person",
-            "name": "Wlaa Magdy"
-          },
-          "description": "Professional Accounting, Audit, Tax, Bookkeeping, Payroll and Financial Consulting Services in Egypt by CPA Wlaa Magdy. AFC helps businesses stay compliant and grow with confidence."
-        })}} />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
+        <a className="skip-link" href="#main-content">Skip to main content</a>
         <VisualEditorProvider>
           <ClientTracker />
           <Navbar settings={settings} services={services} lang="en" />
-          <main className="flex flex-col min-h-full">
+          <div id="main-content" className="flex flex-col min-h-full">
             {children}
-          </main>
+          </div>
           <Footer settings={settings} services={services} lang="en" />
           <WhatsAppButton settings={settings} />
         </VisualEditorProvider>

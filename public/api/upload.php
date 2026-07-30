@@ -1,95 +1,110 @@
 <?php
-header('Access-Control-Allow-Origin: *');
+
+require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/auth.php';
+
 header('Access-Control-Allow-Methods: POST, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization');
+api_handle_options('POST, OPTIONS');
 
-$method = $_SERVER['REQUEST_METHOD'];
-
-function checkAuth() {
-    $headers = apache_request_headers();
-    $auth = isset($headers['Authorization']) ? $headers['Authorization'] : '';
-    if (strpos($auth, 'Bearer') === false) {
-        http_response_code(401);
-        echo json_encode(['error' => 'Unauthorized']);
-        exit;
-    }
+if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'POST') {
+    header('Allow: POST, OPTIONS');
+    api_json_response(['error' => 'Method not allowed'], 405);
 }
 
-if ($method == 'OPTIONS') {
-    http_response_code(200);
-    exit;
+api_require_auth($pdo);
+
+$uploadDir = __DIR__ . '/../images/uploads/';
+if (!is_dir($uploadDir) && !mkdir($uploadDir, 0755, true)) {
+    api_json_response(['error' => 'Upload directory is unavailable'], 500);
 }
 
-function compressImage($source, $destination, $quality) {
-    $info = getimagesize($source);
-    if ($info['mime'] == 'image/jpeg') 
-        $image = imagecreatefromjpeg($source);
-    elseif ($info['mime'] == 'image/gif') 
-        $image = imagecreatefromgif($source);
-    elseif ($info['mime'] == 'image/png') 
-        $image = imagecreatefrompng($source);
-    elseif ($info['mime'] == 'image/webp')
-        $image = imagecreatefromwebp($source);
-    else return false;
-
-    // Save image with compression
-    if ($info['mime'] == 'image/png') {
-        // PNG compression is 0-9
-        $pngQuality = ($quality - 100) / 11.111111;
-        $pngQuality = round(abs($pngQuality));
-        imagepng($image, $destination, $pngQuality);
-    } else {
-        imagejpeg($image, $destination, $quality); // Convert to JPEG for best compression if possible, or keep format
-    }
-    
-    imagedestroy($image);
-    return true;
+// Apache defense in depth for old files that may already exist in this directory.
+$accessRules = <<<'HTACCESS'
+Options -Indexes -ExecCGI
+<FilesMatch "\.(php[0-9]?|phtml|phar|cgi|pl|py|sh|svg|svgz)$">
+    Require all denied
+</FilesMatch>
+HTACCESS;
+if (!file_exists($uploadDir . '.htaccess')) {
+    @file_put_contents($uploadDir . '.htaccess', $accessRules, LOCK_EX);
 }
 
-if ($method == 'POST') {
-    checkAuth();
-    
-    $uploadDir = __DIR__ . '/../images/uploads/';
-    
-    if (!file_exists($uploadDir)) {
-        mkdir($uploadDir, 0777, true);
-    }
-    
-    $fileKey = isset($_FILES['file']) ? 'file' : (isset($_FILES['image']) ? 'image' : null);
-    
-    if (!$fileKey || $_FILES[$fileKey]['error'] !== UPLOAD_ERR_OK) {
-        http_response_code(400);
-        echo json_encode(['error' => 'No file uploaded or upload error']);
-        exit;
-    }
-    
-    $fileInfo = pathinfo($_FILES[$fileKey]['name']);
-    $ext = strtolower($fileInfo['extension']);
-    $allowedExts = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg'];
-    
-    if (!in_array($ext, $allowedExts)) {
-        http_response_code(400);
-        echo json_encode(['error' => 'Invalid file extension']);
-        exit;
-    }
-    
-    $filename = uniqid('img_') . '.' . ($ext === 'svg' ? 'svg' : 'jpg'); // Convert to JPG to save space unless SVG
-    $targetPath = $uploadDir . $filename;
-    
-    if ($ext === 'svg') {
-        if (move_uploaded_file($_FILES[$fileKey]['tmp_name'], $targetPath)) {
-            $url = '/images/uploads/' . $filename;
-            echo json_encode(['success' => true, 'location' => $url, 'url' => $url]);
-        }
-    } else {
-        // Compress image (75% quality)
-        if (compressImage($_FILES[$fileKey]['tmp_name'], $targetPath, 75)) {
-            $url = '/images/uploads/' . $filename;
-            echo json_encode(['success' => true, 'location' => $url, 'url' => $url]);
-        } else {
-            http_response_code(500);
-            echo json_encode(['error' => 'Failed to compress and save image']);
-        }
-    }
+$fileKey = isset($_FILES['file']) ? 'file' : (isset($_FILES['image']) ? 'image' : null);
+if ($fileKey === null || !isset($_FILES[$fileKey]['error'])) {
+    api_json_response(['error' => 'No file was uploaded'], 400);
 }
-?>
+
+$file = $_FILES[$fileKey];
+if ((int) $file['error'] !== UPLOAD_ERR_OK || !is_uploaded_file($file['tmp_name'])) {
+    api_json_response(['error' => 'Upload failed'], 400);
+}
+
+$maxBytes = 5 * 1024 * 1024;
+if ((int) $file['size'] <= 0 || (int) $file['size'] > $maxBytes) {
+    api_json_response(['error' => 'Image must be no larger than 5 MB'], 413);
+}
+
+$finfo = new finfo(FILEINFO_MIME_TYPE);
+$mime = (string) $finfo->file($file['tmp_name']);
+$allowed = [
+    'image/jpeg' => ['extension' => 'jpg', 'loader' => 'imagecreatefromjpeg'],
+    'image/png' => ['extension' => 'png', 'loader' => 'imagecreatefrompng'],
+    'image/webp' => ['extension' => 'webp', 'loader' => 'imagecreatefromwebp']
+];
+
+// SVG and all non-raster formats are intentionally rejected.
+if (!isset($allowed[$mime])) {
+    api_json_response(['error' => 'Only JPEG, PNG and WebP images are allowed'], 415);
+}
+
+$imageInfo = @getimagesize($file['tmp_name']);
+if ($imageInfo === false || ($imageInfo['mime'] ?? '') !== $mime) {
+    api_json_response(['error' => 'The uploaded file is not a valid image'], 415);
+}
+
+$width = (int) $imageInfo[0];
+$height = (int) $imageInfo[1];
+if ($width < 1 || $height < 1 || $width > 8000 || $height > 8000 || ($width * $height) > 25000000) {
+    api_json_response(['error' => 'Image dimensions are not allowed'], 422);
+}
+
+$loader = $allowed[$mime]['loader'];
+if (!function_exists($loader)) {
+    api_json_response(['error' => 'Image processing is unavailable'], 503);
+}
+
+$image = @$loader($file['tmp_name']);
+if ($image === false) {
+    api_json_response(['error' => 'Unable to decode the image'], 415);
+}
+
+$extension = $allowed[$mime]['extension'];
+$filename = 'img_' . bin2hex(random_bytes(16)) . '.' . $extension;
+$targetPath = $uploadDir . $filename;
+$saved = false;
+
+if ($mime === 'image/jpeg') {
+    $saved = imagejpeg($image, $targetPath, 82);
+} elseif ($mime === 'image/png') {
+    imagealphablending($image, false);
+    imagesavealpha($image, true);
+    $saved = imagepng($image, $targetPath, 7);
+} elseif ($mime === 'image/webp' && function_exists('imagewebp')) {
+    $saved = imagewebp($image, $targetPath, 82);
+}
+
+imagedestroy($image);
+
+if (!$saved || !is_file($targetPath)) {
+    @unlink($targetPath);
+    api_json_response(['error' => 'Unable to save the image'], 500);
+}
+
+@chmod($targetPath, 0644);
+$url = '/images/uploads/' . $filename;
+api_json_response([
+    'success' => true,
+    'location' => $url,
+    'url' => $url
+], 201);

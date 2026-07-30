@@ -1,66 +1,74 @@
 <?php
+
 require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/auth.php';
+
 header('Access-Control-Allow-Methods: GET, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization');
+api_handle_options('GET, OPTIONS');
 
-if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-    http_response_code(200);
-    exit;
+if (($_SERVER['REQUEST_METHOD'] ?? '') !== 'GET') {
+    header('Allow: GET, OPTIONS');
+    api_json_response(['error' => 'Method not allowed'], 405);
 }
 
-$headers = apache_request_headers();
-$auth = isset($headers['Authorization']) ? $headers['Authorization'] : '';
-if (strpos($auth, 'Bearer') === false) {
-    http_response_code(401);
-    echo json_encode(['error' => 'Unauthorized']);
-    exit;
+api_require_auth($pdo);
+
+try {
+    $stats = [];
+
+    $stats['total_visits'] = (int) $pdo
+        ->query('SELECT COUNT(*) FROM visits')
+        ->fetchColumn();
+
+    $stats['unique_visitors'] = (int) $pdo
+        ->query('SELECT COUNT(DISTINCT visitor_id) FROM visits')
+        ->fetchColumn();
+
+    $stats['visits_today'] = (int) $pdo
+        ->query('SELECT COUNT(*) FROM visits WHERE DATE(visited_at) = UTC_DATE()')
+        ->fetchColumn();
+
+    $stmt = $pdo->query(
+        'SELECT DATE(visited_at) AS date, COUNT(*) AS count
+         FROM visits
+         WHERE visited_at >= DATE_SUB(UTC_DATE(), INTERVAL 30 DAY)
+         GROUP BY DATE(visited_at)
+         ORDER BY date ASC'
+    );
+    $stats['chart_data'] = array_map(function ($row) {
+        return [
+            'date' => (string) $row['date'],
+            'count' => (int) $row['count']
+        ];
+    }, $stmt->fetchAll());
+
+    $stmt = $pdo->query(
+        'SELECT page_path,
+                COUNT(*) AS total_views,
+                COUNT(DISTINCT visitor_id) AS unique_views
+         FROM visits
+         GROUP BY page_path
+         ORDER BY total_views DESC
+         LIMIT 100'
+    );
+    $stats['page_stats'] = array_map(function ($row) {
+        return [
+            'page_path' => (string) $row['page_path'],
+            'total_views' => (int) $row['total_views'],
+            'unique_views' => (int) $row['unique_views']
+        ];
+    }, $stmt->fetchAll());
+
+    $stats['articles_count'] = (int) $pdo
+        ->query('SELECT COUNT(*) FROM articles')
+        ->fetchColumn();
+    $stats['services_count'] = (int) $pdo
+        ->query('SELECT COUNT(*) FROM services')
+        ->fetchColumn();
+
+    api_json_response($stats);
+} catch (Throwable $e) {
+    error_log('Analytics query failed: ' . $e->getMessage());
+    api_json_response(['error' => 'Unable to load analytics'], 500);
 }
-
-if ($_SERVER['REQUEST_METHOD'] == 'GET') {
-    try {
-        $stats = [];
-        
-        // Total visits
-        $stmt = $pdo->query("SELECT COUNT(*) as total FROM visits");
-        $stats['total_visits'] = $stmt->fetch()['total'];
-        
-        // Unique visitors (using IP address)
-        $stmt = $pdo->query("SELECT COUNT(DISTINCT IF(ip_address != '', ip_address, visitor_id)) as total FROM visits");
-        $stats['unique_visitors'] = $stmt->fetch()['total'];
-        
-        // Visits today
-        $stmt = $pdo->query("SELECT COUNT(*) as total FROM visits WHERE DATE(visited_at) = CURDATE()");
-        $stats['visits_today'] = $stmt->fetch()['total'];
-
-        // Last 30 days chart data for more extensive tracking
-        $stmt = $pdo->query("
-            SELECT DATE(visited_at) as date, COUNT(*) as count 
-            FROM visits 
-            WHERE visited_at >= DATE_SUB(CURDATE(), INTERVAL 30 DAY)
-            GROUP BY DATE(visited_at)
-            ORDER BY date ASC
-        ");
-        $stats['chart_data'] = $stmt->fetchAll();
-        
-        // Detailed stats per page
-        $stmt = $pdo->query("
-            SELECT page_path, 
-                   COUNT(*) as total_views, 
-                   COUNT(DISTINCT IF(ip_address != '', ip_address, visitor_id)) as unique_views 
-            FROM visits 
-            GROUP BY page_path 
-            ORDER BY total_views DESC 
-        ");
-        $stats['page_stats'] = $stmt->fetchAll();
-
-        // Also return counts of content for the dashboard
-        $stats['articles_count'] = $pdo->query("SELECT COUNT(*) as total FROM articles")->fetch()['total'];
-        $stats['services_count'] = $pdo->query("SELECT COUNT(*) as total FROM services")->fetch()['total'];
-        
-        echo json_encode($stats);
-    } catch (Exception $e) {
-        http_response_code(500);
-        echo json_encode(['error' => 'Database error: ' . $e->getMessage()]);
-    }
-}
-?>

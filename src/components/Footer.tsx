@@ -1,19 +1,28 @@
 import Link from "next/link";
 
 import { getDictionary, Lang } from "@/lib/dictionary";
+import { normalizeSocialUrl, parseSettingList } from "@/lib/contact";
 
-export default function Footer({ settings = {}, services = [], lang = "ar" }: { settings?: any, services?: any[], lang?: Lang }) {
-  let emails = [];
-  try { emails = JSON.parse(settings.contact_emails); } catch(e) {}
-  if (!emails || emails.length === 0) emails = [settings.contact_email || 'info@afc-cpa.com'];
-
-  let phones: string[] = [];
-  try { phones = JSON.parse(settings.contact_phones); } catch(e) {}
-  if (!phones || phones.length === 0) phones = [settings.contact_phone || '01155729429', '0238345397'];
+export default function Footer({ settings = {}, lang = "ar" }: { settings?: any, services?: any[], lang?: Lang }) {
+  const emails = parseSettingList(settings.contact_emails, [
+    settings.contact_email || "info@afc-cpa.com",
+  ]);
+  const phones = parseSettingList(settings.contact_phones, [
+    settings.contact_phone || "01155729429",
+    "0238345397",
+  ]);
 
   const address = (lang === "en" && settings.contact_address_en ? settings.contact_address_en : settings.contact_address) || (lang === "en" ? "Office 204, 2nd Floor, Agyad View Mall - 6th of October - Giza - Egypt" : "مكتب 204 الدور الثاني مول اجياد فيو - ٦ اكتوبر - الجيزة - مصر");
   const dict = getDictionary(lang);
   const prefix = lang === "en" ? "/en" : "";
+  const socialLinks = {
+    facebook: normalizeSocialUrl(settings.social_facebook, "facebook"),
+    instagram: normalizeSocialUrl(settings.social_instagram, "instagram"),
+    youtube: normalizeSocialUrl(settings.social_youtube, "youtube"),
+    linkedin: normalizeSocialUrl(settings.social_linkedin, "linkedin"),
+    tiktok: normalizeSocialUrl(settings.social_tiktok, "tiktok"),
+  };
+  const hasSocialLinks = Object.values(socialLinks).some(Boolean);
   
   return (
     <footer style={{ marginTop: "auto", borderTop: "1px solid var(--color-accent-hover)", padding: "var(--spacing-xl) 0 var(--spacing-md) 0", background: "var(--color-accent-hover)", color: "#FFFFFF" }}>
@@ -33,6 +42,7 @@ export default function Footer({ settings = {}, services = [], lang = "ar" }: { 
             <li><Link href={`${prefix}/sectors`}>{dict.sectors}</Link></li>
             <li><Link href={`${prefix}/articles`}>{dict.articles}</Link></li>
             <li><Link href={`${prefix}/contact`}>{dict.contact}</Link></li>
+            <li><Link href={`${prefix}/privacy`}>{lang === "en" ? "Privacy Policy" : "سياسة الخصوصية"}</Link></li>
           </ul>
         </div>
         <div>
@@ -41,13 +51,13 @@ export default function Footer({ settings = {}, services = [], lang = "ar" }: { 
             {emails.map((email: string, i: number) => (
               <li key={`email-${i}`} style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                 <span>📧</span> 
-                <span dir="ltr">{email}</span>
+                <a href={`mailto:${email}`} dir="ltr">{email}</a>
               </li>
             ))}
             {phones.map((phone: string, i: number) => (
               <li key={`phone-${i}`} style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                 <span>📞</span> 
-                <span dir="ltr">{phone}</span>
+                <a href={`tel:${phone.replace(/[^\d+]/g, "")}`} dir="ltr">{phone}</a>
               </li>
             ))}
             <li style={{ display: "flex", alignItems: "flex-start", gap: "0.5rem" }}>
@@ -56,33 +66,33 @@ export default function Footer({ settings = {}, services = [], lang = "ar" }: { 
             </li>
           </ul>
           
-          <div style={{ display: "flex", gap: "1rem", marginTop: "1.5rem" }}>
-            {settings.social_facebook && (
-            <a href={settings.social_facebook} target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "36px", height: "36px", borderRadius: "10px", background: "#1877F2", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
+          {hasSocialLinks && <div style={{ display: "flex", gap: "1rem", marginTop: "1.5rem" }}>
+            {socialLinks.facebook && (
+            <a href={socialLinks.facebook} aria-label="Facebook" target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "44px", height: "44px", borderRadius: "10px", background: "#1877F2", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
               <i className="bi bi-facebook"></i>
             </a>
             )}
-            {settings.social_instagram && (
-            <a href={settings.social_instagram} target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "36px", height: "36px", borderRadius: "10px", background: "#E4405F", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
+            {socialLinks.instagram && (
+            <a href={socialLinks.instagram} aria-label="Instagram" target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "44px", height: "44px", borderRadius: "10px", background: "#E4405F", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
               <i className="bi bi-instagram"></i>
             </a>
             )}
-            {settings.social_youtube && (
-            <a href={settings.social_youtube} target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "36px", height: "36px", borderRadius: "10px", background: "#FF0000", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
+            {socialLinks.youtube && (
+            <a href={socialLinks.youtube} aria-label="YouTube" target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "44px", height: "44px", borderRadius: "10px", background: "#FF0000", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
               <i className="bi bi-youtube"></i>
             </a>
             )}
-            {settings.social_linkedin && (
-            <a href={settings.social_linkedin} target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "36px", height: "36px", borderRadius: "10px", background: "#0A66C2", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
+            {socialLinks.linkedin && (
+            <a href={socialLinks.linkedin} aria-label="LinkedIn" target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "44px", height: "44px", borderRadius: "10px", background: "#0A66C2", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
               <i className="bi bi-linkedin"></i>
             </a>
             )}
-            {settings.social_tiktok && (
-            <a href={settings.social_tiktok} target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "36px", height: "36px", borderRadius: "10px", background: "#000000", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
+            {socialLinks.tiktok && (
+            <a href={socialLinks.tiktok} aria-label="TikTok" target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "44px", height: "44px", borderRadius: "10px", background: "#000000", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
               <i className="bi bi-tiktok"></i>
             </a>
             )}
-          </div>
+          </div>}
         </div>
       </div>
       <div className="container text-center" style={{ marginTop: "var(--spacing-xl)", paddingTop: "var(--spacing-md)", borderTop: "1px solid rgba(255,255,255,0.2)" }}>

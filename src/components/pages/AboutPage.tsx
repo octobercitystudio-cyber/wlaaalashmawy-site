@@ -13,21 +13,21 @@ export default async function AboutPage({ lang = "ar" }: { lang?: Lang }) {
       <section style={{ 
         paddingTop: "12rem", 
         paddingBottom: "5rem", 
-        backgroundColor: "var(--color-primary)", 
+        backgroundColor: "#06192D",
+        background: "radial-gradient(circle at 18% 18%, rgba(0, 91, 171, 0.42) 0%, rgba(0, 91, 171, 0) 34%), radial-gradient(circle at 82% 112%, rgba(42, 139, 205, 0.34) 0%, rgba(42, 139, 205, 0) 42%), linear-gradient(135deg, #06192D 0%, #082C4C 52%, #075A94 100%)",
         color: "#FFFFFF",
         textAlign: "center",
         position: "relative",
-        overflow: "hidden"
+        overflow: "hidden",
+        boxShadow: "inset 0 -1px 0 rgba(94, 180, 235, 0.22)"
       }}>
         {/* Abstract Background Element */}
         <div style={{
           position: "absolute",
-          top: "-50%",
-          right: "-10%",
-          width: "600px",
-          height: "600px",
-          background: "radial-gradient(circle, rgba(0,91,171,0.4) 0%, rgba(26,26,26,0) 70%)",
-          borderRadius: "50%",
+          inset: 0,
+          background: "repeating-linear-gradient(118deg, rgba(255, 255, 255, 0.055) 0, rgba(255, 255, 255, 0.055) 1px, transparent 1px, transparent 68px)",
+          opacity: 0.34,
+          pointerEvents: "none",
           zIndex: 0
         }}></div>
 
@@ -37,55 +37,88 @@ export default async function AboutPage({ lang = "ar" }: { lang?: Lang }) {
         </div>
       </section>
 
-      {/* 2. Content Section (Stacked Layout) */}
+      {/* 2. Company & Chairman */}
       <section className="py-xl" style={{ backgroundColor: "var(--color-bg-body)" }}>
-        <div className="container" style={{ maxWidth: "900px" }}>
-          
-          {/* Founder Image (Centered) */}
-          <div style={{ textAlign: "center", marginBottom: "4rem", marginTop: "-8rem", position: "relative", zIndex: 10 }}>
-            <div style={{ 
-              position: "relative", 
-              width: "100%", 
-              maxWidth: "350px", 
-              aspectRatio: "3/4", 
-              margin: "0 auto", 
-              borderRadius: "20px", 
-              overflow: "hidden", 
-              boxShadow: "0 20px 40px rgba(0,0,0,0.15)",
-              border: "6px solid white",
-              backgroundColor: "#e0e0e0",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              flexDirection: "column",
-              padding: "0"
-            }}>
-              <Image src="/images/wlaa-profile.jpg" alt="السيدة ولاء مجدي العشماوي - رئيس مجلس الإدارة" fill style={{ objectFit: "cover" }} />
+        <div className="container" style={{ maxWidth: "1200px" }}>
+          <div
+            className="about-leadership"
+            data-lang={lang}
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 340px), 1fr))",
+              gap: "clamp(2.5rem, 6vw, 5rem)",
+              alignItems: "start",
+              marginBottom: "5rem",
+              direction: lang === "en" ? "rtl" : "ltr",
+            }}
+          >
+            {/* Chairman Portrait */}
+            <div
+              className="about-leadership__portrait"
+              dir={lang === "en" ? "ltr" : "rtl"}
+              style={{
+                width: "100%",
+                maxWidth: "360px",
+                marginInline: "auto",
+                textAlign: "center",
+              }}
+            >
+              <div
+                className="about-leadership__image"
+                style={{
+                  position: "relative",
+                  width: "100%",
+                  aspectRatio: "3 / 4",
+                  overflow: "hidden",
+                  border: "6px solid #FFFFFF",
+                  borderRadius: "20px",
+                  backgroundColor: "#E0E0E0",
+                  boxShadow: "0 20px 40px rgba(0, 0, 0, 0.15)",
+                }}
+              >
+                <Image
+                  src="/images/wlaa-profile.jpg"
+                  alt="السيدة ولاء مجدي العشماوي - رئيس مجلس الإدارة"
+                  fill
+                  sizes="(max-width: 899px) 82vw, 360px"
+                  style={{ objectFit: "cover" }}
+                />
+              </div>
+              <div className="about-leadership__identity" style={{ marginTop: "1.5rem" }}>
+                <h3 style={{ fontSize: "2rem", color: "var(--color-primary)", fontWeight: "bold", marginBottom: "0.5rem" }}>
+                  {lang === "en" ? "Wlaa Magdy Al-Ashmawy" : "أ. ولاء مجدي العشماوي"}
+                </h3>
+                <p style={{ fontSize: "1.2rem", color: "var(--color-accent)", fontWeight: "bold", margin: 0 }}>
+                  {lang === "en" ? "Founder & Chairman" : "المؤسس ورئيس مجلس الإدارة"}
+                </p>
+              </div>
             </div>
-            <div style={{ marginTop: "1.5rem" }}>
-              <h3 style={{ fontSize: "2rem", color: "var(--color-primary)", fontWeight: "bold", marginBottom: "0.5rem" }}>
-                {lang === "en" ? "Wlaa Magdy Al-Ashmawy" : "أ. ولاء مجدي العشماوي"}
-              </h3>
-              <p style={{ fontSize: "1.2rem", color: "var(--color-accent)", fontWeight: "bold", margin: 0 }}>
-                {lang === "en" ? "Founder & Chairman" : "المؤسس ورئيس مجلس الإدارة"}
-              </p>
-            </div>
-          </div>
 
-          {/* About Text */}
-          <div style={{ textAlign: "center", marginBottom: "5rem" }}>
-            <h2 style={{ fontSize: "2.5rem", color: "var(--color-primary)", fontWeight: "bold", marginBottom: "2rem" }}>{lang === "en" ? "About The Company" : "عن الشركة"}</h2>
-            <EditableText 
-              id={lang === "en" ? "about_full_en" : "about_full"}
-              value={(lang === "en" && settings.about_full_en ? settings.about_full_en : settings.about_full) || (lang === "en" ? `"Wlaa Magdy Al-Ashmawy for Legal Accounting" (AFC) is one of the leading firms in Egypt in the fields of accounting, auditing, taxation, and financial advisory services. Founded in 2024 by Ms. Wlaa Magdy Al-Ashmawy, the firm was built on a clear vision aimed at providing outstanding professional services based on integrity, expertise, and building sustainable relationships with clients.<br/><br/>At AFC, we ensure our clients that every engagement is handled by a team of dedicated professionals committed to the highest standards of quality and excellence. We adopt an integrated approach rooted in a deep understanding of the unique challenges facing small and medium-sized enterprises (SMEs), allowing us to provide practical and strategic solutions that enhance value.<br/><br/>Our comprehensive services are designed to support clients at every stage of their business journey, empowering them to make informed decisions, achieve sustainable growth, and focus on maximizing the long-term value of their business.` : `تُعد شركة "ولاء مجدي العشماوي للمحاسبة القانونية" (AFC) واحدة من الشركات الرائدة في مصر في مجالات المحاسبة، والمراجعة، والضرائب، والخدمات الاستشارية المالية. تأسست الشركة عام 2024 على يد السيدة ولاء مجدي العشماوي، انطلاقاً من رؤية واضحة تهدف إلى تقديم خدمات مهنية متميزة ترتكز على النزاهة والخبرة وبناء علاقات مستدامة مع العملاء.<br/><br/>في AFC، نضمن لعملائنا أن يتولى تنفيذ كل مهمة فريق من المهنيين المتفانين الملتزمين بأعلى معايير الجودة والتميز. ونحن نتبنى نهجاً متكاملاً يرتكز على فهم عميق للتحديات الفريدة التي تواجه الشركات الصغيرة والمتوسطة، مما يتيح لنا تقديم حلول عملية واستراتيجية تعزز القيمة.<br/><br/>صُممت خدماتنا الشاملة لدعم العملاء في كل مرحلة من مراحل رحلة أعمالهم، مما يُمكّنهم من اتخاذ قرارات مدروسة، وتحقيق نمو مستدام، والتركيز على تعظيم القيمة طويلة الأمد لأعمالهم.`)}
-              isHtml={true}
-              as="div"
-              style={{ fontSize: "1.2rem", lineHeight: "2", color: "var(--color-text-main)", opacity: 0.9, textAlign: "justify" }}
-            />
+            {/* About Text */}
+            <div
+              className="about-leadership__copy"
+              dir={lang === "en" ? "ltr" : "rtl"}
+              style={{
+                minWidth: 0,
+                textAlign: lang === "en" ? "left" : "right",
+              }}
+            >
+              <h2 style={{ fontSize: "2.5rem", color: "var(--color-primary)", fontWeight: "bold", marginBottom: "2rem" }}>{lang === "en" ? "About The Company" : "عن الشركة"}</h2>
+              <EditableText
+                id={lang === "en" ? "about_full_en" : "about_full"}
+                value={(lang === "en" && settings.about_full_en ? settings.about_full_en : settings.about_full) || (lang === "en" ? `"Wlaa Magdy Al-Ashmawy for Legal Accounting" (AFC) is one of the leading firms in Egypt in the fields of accounting, auditing, taxation, and financial advisory services. Founded in 2024 by Ms. Wlaa Magdy Al-Ashmawy, the firm was built on a clear vision aimed at providing outstanding professional services based on integrity, expertise, and building sustainable relationships with clients.<br/><br/>At AFC, we ensure our clients that every engagement is handled by a team of dedicated professionals committed to the highest standards of quality and excellence. We adopt an integrated approach rooted in a deep understanding of the unique challenges facing small and medium-sized enterprises (SMEs), allowing us to provide practical and strategic solutions that enhance value.<br/><br/>Our comprehensive services are designed to support clients at every stage of their business journey, empowering them to make informed decisions, achieve sustainable growth, and focus on maximizing the long-term value of their business.` : `تُعد شركة "ولاء مجدي العشماوي للمحاسبة القانونية" (AFC) واحدة من الشركات الرائدة في مصر في مجالات المحاسبة، والمراجعة، والضرائب، والخدمات الاستشارية المالية. تأسست الشركة عام 2024 على يد السيدة ولاء مجدي العشماوي، انطلاقاً من رؤية واضحة تهدف إلى تقديم خدمات مهنية متميزة ترتكز على النزاهة والخبرة وبناء علاقات مستدامة مع العملاء.<br/><br/>في AFC، نضمن لعملائنا أن يتولى تنفيذ كل مهمة فريق من المهنيين المتفانين الملتزمين بأعلى معايير الجودة والتميز. ونحن نتبنى نهجاً متكاملاً يرتكز على فهم عميق للتحديات الفريدة التي تواجه الشركات الصغيرة والمتوسطة، مما يتيح لنا تقديم حلول عملية واستراتيجية تعزز القيمة.<br/><br/>صُممت خدماتنا الشاملة لدعم العملاء في كل مرحلة من مراحل رحلة أعمالهم، مما يُمكّنهم من اتخاذ قرارات مدروسة، وتحقيق نمو مستدام، والتركيز على تعظيم القيمة طويلة الأمد لأعمالهم.`)}
+                isHtml={true}
+                as="div"
+                style={{ fontSize: "1.2rem", fontWeight: 400, lineHeight: "2", color: "var(--color-text-main)", opacity: 0.9 }}
+              />
+            </div>
           </div>
 
           {/* Vision & Mission */}
-          <div className="grid grid-cols-1 md-grid-cols-2 gap-lg">
+          <div
+            className="grid grid-cols-1 md-grid-cols-2 gap-lg"
+            style={{ maxWidth: "900px", marginInline: "auto" }}
+          >
             {/* Vision */}
             <div className="premium-card flex flex-col justify-center" style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)", padding: "3rem 2rem", borderRadius: "16px", textAlign: "center", boxShadow: "0 10px 30px rgba(0,0,0,0.05)", height: "100%" }}>
               <div style={{ width: "80px", height: "80px", borderRadius: "50%", backgroundColor: "rgba(212, 175, 55, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1.5rem" }}>
@@ -100,7 +133,7 @@ export default async function AboutPage({ lang = "ar" }: { lang?: Lang }) {
                 value={(lang === "en" && settings.vision_en ? settings.vision_en : settings.vision) || (lang === "en" ? "To be the trusted partner and first choice for companies seeking exceptional accounting, tax, auditing, and financial advisory services, through expertise, integrity, and innovation." : "أن نكون الشريك الموثوق والاختيار الأول للشركات التي تبحث عن خدمات محاسبية وضريبية ومراجعة واستشارات مالية استثنائية، من خلال الخبرة والنزاهة والابتكار.")}
                 isHtml={true}
                 as="div"
-                style={{ fontSize: "1.15rem", lineHeight: "1.8", color: "var(--color-text-main)", opacity: 0.9, margin: 0 }}
+                style={{ fontSize: "1.15rem", fontWeight: 400, lineHeight: "1.8", color: "var(--color-text-main)", opacity: 0.9, margin: 0 }}
               />
             </div>
 
@@ -117,7 +150,7 @@ export default async function AboutPage({ lang = "ar" }: { lang?: Lang }) {
                 value={(lang === "en" && settings.mission_en ? settings.mission_en : settings.mission) || (lang === "en" ? "To be the reliable force behind our clients' success by delivering insightful solutions, uncompromising quality, and strategic guidance that fosters growth, builds trust, and creates sustainable value." : "أن نكون القوة الموثوقة وراء نجاح عملائنا، من خلال تقديم حلول ثاقبة، وجودة لا تقبل التنازل، وتوجيه استراتيجي يعزز النمو، ويرسخ الثقة، ويخلق قيمة مستدامة.")}
                 isHtml={true}
                 as="div"
-                style={{ fontSize: "1.15rem", lineHeight: "1.8", color: "var(--color-text-main)", opacity: 0.9, margin: 0 }}
+                style={{ fontSize: "1.15rem", fontWeight: 400, lineHeight: "1.8", color: "var(--color-text-main)", opacity: 0.9, margin: 0 }}
               />
             </div>
           </div>

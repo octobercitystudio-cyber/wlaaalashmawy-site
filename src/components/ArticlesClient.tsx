@@ -2,39 +2,56 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 import { Lang } from '@/lib/dictionary';
 import { servicesData } from '@/data/services';
+import { sanitizeHtml } from '@/lib/sanitizeHtml';
+import { normalizeWhatsAppNumber, parseSettingList } from '@/lib/contact';
 
 export default function ArticlesClient({ initialArticles, lang = 'ar', initialArticleId }: { initialArticles: any[], lang?: Lang, initialArticleId?: number }) {
   const [articles, setArticles] = useState<any[]>(initialArticles);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(initialArticles.length === 0);
   const [error, setError] = useState('');
   const [customCategories, setCustomCategories] = useState<{ar: string, en: string}[]>([]);
   const [servicesList, setServicesList] = useState<any[]>([]);
+  const [whatsappNumber, setWhatsappNumber] = useState("201155729429");
+  const [selectedTab, setSelectedTab] = useState('الكل');
+  const [selectedArticleId, setSelectedArticleId] = useState<number | string>(
+    initialArticleId || (initialArticles.length > 0 ? initialArticles[0].id : 0),
+  );
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
     fetch(`${apiUrl}/api/articles.php`)
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error("Unable to load articles");
+        return res.json();
+      })
       .then(data => {
         if (Array.isArray(data)) {
           setArticles(data);
-          if (data.length > 0 && !data.find(a => a.id === selectedArticleId)) {
-             setSelectedArticleId(initialArticleId || data[0].id);
-          }
+          setSelectedArticleId((current) =>
+            data.find((article) => Number(article.id) === Number(current))
+              ? current
+              : initialArticleId || data[0]?.id || 0,
+          );
         }
       })
-      .catch(err => console.error("Failed to fetch fresh articles", err));
+      .catch(() => setError(lang === "en" ? "Unable to load the latest articles." : "تعذر تحميل أحدث المقالات."))
+      .finally(() => setLoading(false));
 
     fetch(`${apiUrl}/api/settings.php`)
       .then(res => res.json())
       .then(s => {
+        const phones = parseSettingList(s.contact_phones);
+        setWhatsappNumber(normalizeWhatsAppNumber(s.contact_whatsapp || s.whatsapp || phones[0]));
         if (s.article_categories) {
           try {
             const parsed = JSON.parse(s.article_categories);
             if (Array.isArray(parsed)) setCustomCategories(parsed);
-          } catch (e) {}
+          } catch {}
         }
       })
       .catch(() => {});
@@ -45,9 +62,12 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
         if (Array.isArray(data)) setServicesList(data);
       })
       .catch(() => {});
-  }, []);
+  }, [initialArticleId, lang]);
 
-  const safeArticles = Array.isArray(articles) ? articles : [];
+  const safeArticles = React.useMemo(
+    () => (Array.isArray(articles) ? articles : []),
+    [articles],
+  );
 
   const allCategoryNames = React.useMemo(() => {
     const catsMap = new Map<string, { ar: string, en: string }>();
@@ -91,26 +111,26 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
     else if (url.includes('watch?v=')) videoId = url.split('watch?v=')[1].split('&')[0];
     else if (url.includes('embed/')) videoId = url.split('embed/')[1].split('?')[0].split('&')[0];
     else if (url.includes('shorts/')) videoId = url.split('shorts/')[1].split('?')[0].split('&')[0];
-    return videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+    return /^[A-Za-z0-9_-]{6,20}$/.test(videoId)
+      ? `https://www.youtube.com/embed/${videoId}`
+      : null;
   };
-
-  const [selectedTab, setSelectedTab] = useState('الكل');
-  const [selectedArticleId, setSelectedArticleId] = useState(initialArticleId || (initialArticles && initialArticles.length > 0 ? initialArticles[0].id : 0));
-  const [searchQuery, setSearchQuery] = useState('');
 
   const filteredArticles = safeArticles.filter(a => {
     const matchesTab = selectedTab === 'الكل' || a.category === selectedTab;
-    const matchesSearch = a?.title?.includes(searchQuery);
+    const localizedTitle = lang === "en" ? (a.title_en || a.title || "") : (a.title || "");
+    const matchesSearch = localizedTitle.toLocaleLowerCase().includes(searchQuery.toLocaleLowerCase());
     return matchesTab && matchesSearch;
   });
 
-  const selectedArticle = safeArticles.find(a => a.id === selectedArticleId);
+  const selectedArticle = safeArticles.find(a => Number(a.id) === Number(selectedArticleId));
 
   const handleTabChange = (tab: string) => {
     setSelectedTab(tab);
     const newFiltered = safeArticles.filter(a => {
       const matchesTab = tab === 'الكل' || a.category === tab;
-      const matchesSearch = a?.title?.includes(searchQuery);
+      const localizedTitle = lang === "en" ? (a.title_en || a.title || "") : (a.title || "");
+      const matchesSearch = localizedTitle.toLocaleLowerCase().includes(searchQuery.toLocaleLowerCase());
       return matchesTab && matchesSearch;
     });
     if (newFiltered.length > 0) {
@@ -127,7 +147,8 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
     setSearchQuery(query);
     const newFiltered = safeArticles.filter(a => {
       const matchesTab = selectedTab === 'الكل' || a.category === selectedTab;
-      const matchesSearch = a?.title?.includes(query);
+      const localizedTitle = lang === "en" ? (a.title_en || a.title || "") : (a.title || "");
+      const matchesSearch = localizedTitle.toLocaleLowerCase().includes(query.toLocaleLowerCase());
       return matchesTab && matchesSearch;
     });
     if (newFiltered.length > 0) {
@@ -212,42 +233,36 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
             ) : error ? (
               <p style={{ color: "red" }}>{error}</p>
             ) : filteredArticles.length > 0 ? filteredArticles.map((article) => (
-              <button 
+              <Link
                 key={article.id}
+                href={lang === "en" ? `/en/articles/${article.id}` : `/articles/${article.id}`}
                 onClick={() => setSelectedArticleId(article.id)}
                 style={{ 
                   display: "block",
                   width: "100%",
-                  textAlign: "right",
+                  textAlign: lang === "en" ? "left" : "right",
                   padding: "1.2rem",
-                  background: selectedArticleId === article.id ? "rgba(0, 91, 171, 0.05)" : "var(--color-bg-card)",
+                  background: Number(selectedArticleId) === Number(article.id) ? "rgba(0, 91, 171, 0.05)" : "var(--color-bg-card)",
                   border: "1px solid",
-                  borderColor: selectedArticleId === article.id ? "var(--color-accent)" : "var(--color-border)",
+                  borderColor: Number(selectedArticleId) === Number(article.id) ? "var(--color-accent)" : "var(--color-border)",
                   borderRadius: "8px",
                   cursor: "pointer",
                   transition: "all 0.3s ease",
-                  borderRight: selectedArticleId === article.id ? "4px solid var(--color-accent)" : "1px solid var(--color-border)"
+                  borderInlineStart: Number(selectedArticleId) === Number(article.id) ? "4px solid var(--color-accent)" : "1px solid var(--color-border)"
                 }}
               >
                 <h4 style={{ 
                   fontSize: "1.1rem", 
-                  color: selectedArticleId === article.id ? "var(--color-accent)" : "var(--color-primary)", 
+                  color: Number(selectedArticleId) === Number(article.id) ? "var(--color-accent)" : "var(--color-primary)",
                   marginBottom: "0.5rem",
                   lineHeight: "1.4"
                 }}>
                   {lang === "en" && article.title_en ? article.title_en : article.title}
                 </h4>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>{article.date}</span>
+                  <time style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>{article.date}</time>
                 </div>
-                <a 
-                  href={lang === "en" ? `/en/articles/${article.id}` : `/articles/${article.id}`}
-                  style={{ display: "none" }}
-                  aria-hidden="true"
-                >
-                  {article.title}
-                </a>
-              </button>
+              </Link>
             )) : (
               <p style={{ color: "var(--color-text-muted)" }}>{lang === "en" ? "No matching articles found." : "لا توجد مقالات مطابقة للبحث."}</p>
             )}
@@ -291,12 +306,12 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
             </div>
 
             {selectedArticle ? (
-              <div className="animate-fade-in" key={selectedArticle.id}>
+              <article className="animate-fade-in" key={selectedArticle.id}>
                 <div className="flex gap-md items-center mb-md" style={{ marginBottom: "0.8rem" }}>
                   <span style={{ background: "rgba(0, 91, 171, 0.1)", color: "var(--color-accent)", padding: "0.4rem 1.2rem", borderRadius: "20px", fontSize: "0.95rem", fontWeight: "bold" }}>
                     {lang === 'en' ? (selectedArticle.category_en || allCategoryNames.find(c => c.ar === selectedArticle.category)?.en || selectedArticle.category) : selectedArticle.category}
                   </span>
-                  <span style={{ fontSize: "1rem", color: "var(--color-text-muted)" }}>{selectedArticle.date}</span>
+                  <time style={{ fontSize: "1rem", color: "var(--color-text-muted)" }}>{selectedArticle.date}</time>
                 </div>
                 
                 <h2 style={{ fontSize: "2.2rem", color: "var(--color-primary)", marginBottom: "0.4rem", lineHeight: "1.3" }}>
@@ -309,6 +324,7 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
                   <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, overflow: "hidden", maxWidth: "100%", marginBottom: "1.5rem", borderRadius: "12px", boxShadow: "0 4px 15px rgba(0,0,0,0.1)" }}>
                     <iframe 
                       src={getYouTubeEmbedUrl(selectedArticle.video_url)!} 
+                      title={lang === "en" ? `Video: ${selectedArticle.title_en || selectedArticle.title}` : `فيديو: ${selectedArticle.title}`}
                       style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: 0 }} 
                       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
                       allowFullScreen 
@@ -316,21 +332,21 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
                   </div>
                 ) : selectedArticle.image && (
                   <div style={{ position: "relative", width: "100%", height: "380px", marginBottom: "1.2rem", borderRadius: "12px", overflow: "hidden" }}>
-                    <Image src={selectedArticle.image} alt={selectedArticle.title} fill style={{ objectFit: "cover" }} />
+                    <Image src={selectedArticle.image} alt={lang === "en" ? (selectedArticle.title_en || selectedArticle.title) : selectedArticle.title} fill style={{ objectFit: "cover" }} />
                   </div>
                 )}
                 
                 <div 
                   className="article-body-content"
-                  style={{ fontSize: "1.15rem", lineHeight: "2.1", color: "var(--color-text-main)", opacity: 0.9, textAlign: "justify" }}
-                  dangerouslySetInnerHTML={{ __html: lang === 'en' && selectedArticle.content_en ? selectedArticle.content_en : selectedArticle.content }}
+                  style={{ fontSize: "1.15rem", fontWeight: 400, lineHeight: "2.1", color: "var(--color-text-main)", opacity: 0.9, textAlign: "justify" }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(lang === 'en' && selectedArticle.content_en ? selectedArticle.content_en : selectedArticle.content) }}
                 />
 
                 <div style={{ marginTop: "4rem", paddingTop: "2rem", borderTop: "1px solid var(--color-border)" }}>
                   <h4 style={{ marginBottom: "1rem", color: "var(--color-primary)" }}>{lang === "en" ? "Have a question about this topic?" : "هل لديك استفسار بخصوص هذا الموضوع؟"}</h4>
-                  <a href={`https://wa.me/201155729429?text=${encodeURIComponent((lang === "en" ? "Hello, I would like to inquire about the article: " : "مرحباً، أود الاستفسار بخصوص المقال: ") + (lang === "en" && selectedArticle.title_en ? selectedArticle.title_en : selectedArticle.title))}`} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ padding: "0.8rem 2rem" }}>{lang === "en" ? "Contact us via WhatsApp" : "تواصل معنا عبر واتساب"}</a>
+                  <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent((lang === "en" ? "Hello, I would like to inquire about the article: " : "مرحبًا، أود الاستفسار بخصوص المقال: ") + (lang === "en" && selectedArticle.title_en ? selectedArticle.title_en : selectedArticle.title))}`} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ padding: "0.8rem 2rem" }}>{lang === "en" ? "Contact us via WhatsApp" : "تواصل معنا عبر واتساب"}</a>
                 </div>
-              </div>
+              </article>
             ) : (
               <div style={{ textAlign: "center", padding: "3rem", color: "var(--color-text-muted)" }}>
                 {lang === "en" ? "No articles in this section yet." : "لا توجد مقالات في هذا القسم حالياً. أضف مقالات جديدة لظهورها هنا."}

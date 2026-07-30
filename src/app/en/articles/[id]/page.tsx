@@ -1,17 +1,19 @@
-import type { Metadata, ResolvingMetadata } from "next";
+import type { Metadata } from "next";
 import ArticlesPage from "@/components/pages/ArticlesPage";
 
 type Props = {
   params: Promise<{ id: string }>
 }
 
-export async function generateMetadata({ params }: Props, parent: ResolvingMetadata): Promise<Metadata> {
+export const dynamicParams = false;
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const resolvedParams = await params;
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://www.afc-cpa.com'; 
   let article = null;
   
   try {
-    const res = await fetch(`${apiUrl}/api/articles.php`, { cache: 'no-store' });
+    const res = await fetch(`${apiUrl}/api/articles.php`, { cache: 'force-cache' });
     if(res.ok) {
         const articles = await res.json();
         article = articles.find((a: any) => a.id.toString() === resolvedParams.id);
@@ -23,6 +25,7 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
   if (!article) {
     return {
       title: "Article Not Found | AFC",
+      robots: { index: false, follow: false },
     };
   }
 
@@ -32,13 +35,22 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
   const title = article.title_en || article.title;
 
   return {
-    title: `${title} | AFC Accounting Egypt | CPA Wlaa Magdy`,
+    title,
     description: excerpt,
     keywords: [title, article.category_en || article.category, "Accounting", "Tax", "CPA", "AFC", "Wlaa Magdy"],
     openGraph: {
       title: title,
       description: excerpt,
-      images: [article.image || '/images/hero_egypt_blue.jpg'],
+      type: "article",
+      url: `/en/articles/${resolvedParams.id}/`,
+      images: [article.image || '/hero_egypt.jpg'],
+    },
+    alternates: {
+      canonical: `/en/articles/${resolvedParams.id}/`,
+      languages: {
+        ar: `/articles/${resolvedParams.id}/`,
+        en: `/en/articles/${resolvedParams.id}/`,
+      },
     },
   };
 }
@@ -46,16 +58,16 @@ export async function generateMetadata({ params }: Props, parent: ResolvingMetad
 export async function generateStaticParams() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://www.afc-cpa.com'; 
   try {
-    const res = await fetch(`${apiUrl}/api/articles.php`);
+    const res = await fetch(`${apiUrl}/api/articles.php`, { cache: 'force-cache' });
     if(res.ok) {
         const articles = await res.json();
-        if (articles.length === 0) return [{ id: "1" }];
+        if (articles.length === 0) return [{ id: "0" }];
         return articles.map((article: any) => ({
           id: article.id.toString(),
         }));
     }
-  } catch(e) {}
-  return [{ id: "1" }];
+  } catch {}
+  return [{ id: "0" }];
 }
 
 export default async function Page({ params }: Props) {

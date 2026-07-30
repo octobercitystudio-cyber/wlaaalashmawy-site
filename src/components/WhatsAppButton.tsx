@@ -1,17 +1,21 @@
 "use client";
 
 import React from "react";
+import { usePathname } from "next/navigation";
+import { normalizeWhatsAppNumber, parseSettingList } from "@/lib/contact";
 
 export default function WhatsAppButton({ settings = {} }: { settings?: any }) {
-  let phone = "201155729429";
-  try {
-    const phones = JSON.parse(settings.contact_phones);
-    if (phones && phones.length > 0) phone = phones[0].replace(/[^0-9]/g, '');
-  } catch(e) {
-    if (settings.contact_phone) phone = settings.contact_phone.replace(/[^0-9]/g, '');
-  }
-  const phoneNumber = phone;
-  const message = encodeURIComponent("مرحباً، أود الاستفسار عن خدمات مكتب العشماوي.");
+  const pathname = usePathname();
+  const isEnglish = pathname === "/en" || pathname.startsWith("/en/");
+  const phones = parseSettingList(settings.contact_phones);
+  const phoneNumber = normalizeWhatsAppNumber(
+    settings.contact_whatsapp || settings.whatsapp || phones[0] || settings.contact_phone,
+  );
+  const message = encodeURIComponent(
+    isEnglish
+      ? "Hello, I would like to inquire about AFC services."
+      : "مرحبًا، أود الاستفسار عن خدمات AFC.",
+  );
   const whatsappUrl = `https://wa.me/${phoneNumber}?text=${message}`;
 
   return (
@@ -36,7 +40,7 @@ export default function WhatsAppButton({ settings = {} }: { settings?: any }) {
         transition: "transform 0.3s ease, box-shadow 0.3s ease",
       }}
       className="whatsapp-btn"
-      aria-label="تواصل معنا عبر واتساب"
+      aria-label={isEnglish ? "Contact AFC on WhatsApp" : "تواصل مع AFC عبر واتساب"}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

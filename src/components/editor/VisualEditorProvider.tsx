@@ -22,19 +22,27 @@ export const useVisualEditor = () => useContext(VisualEditorContext);
 function VisualEditorLogic({ children }: { children: React.ReactNode }) {
     const searchParams = useSearchParams();
     const isEditMode = searchParams.get("edit_mode") === "true";
-    const token = searchParams.get("token");
 
     const [activeToken, setActiveToken] = useState<string | null>(null);
     const [activeEditMode, setActiveEditMode] = useState<boolean>(false);
     const [liveSettings, setLiveSettings] = useState<Record<string, string> | null>(null);
 
     const refreshSettings = async () => {
+        if (!activeEditMode || !activeToken) return;
         try {
             const apiUrl = process.env.NEXT_PUBLIC_API_URL || "https://www.afc-cpa.com";
-            const res = await fetch(`${apiUrl}/api/settings.php`);
+            const res = await fetch(`${apiUrl}/api/settings.php`, {
+                headers: { Authorization: `Bearer ${activeToken}` },
+                cache: "no-store",
+            });
             if (res.ok) {
                 const data = await res.json();
                 setLiveSettings(data);
+            } else if (res.status === 401) {
+                sessionStorage.removeItem("admin_token");
+                sessionStorage.removeItem("edit_mode");
+                setActiveToken(null);
+                setActiveEditMode(false);
             }
         } catch (e) {
             console.error("Failed to fetch live settings", e);
@@ -42,16 +50,15 @@ function VisualEditorLogic({ children }: { children: React.ReactNode }) {
     };
 
     useEffect(() => {
-        refreshSettings();
-    }, []);
+        if (activeEditMode && activeToken) refreshSettings();
+    }, [activeEditMode, activeToken]); // eslint-disable-line react-hooks/exhaustive-deps
 
     useEffect(() => {
-        let currentToken = token;
-        if (currentToken) {
-            sessionStorage.setItem("admin_token", currentToken);
-        } else {
-            currentToken = sessionStorage.getItem("admin_token");
-        }
+        const currentToken =
+            localStorage.getItem("token") ||
+            sessionStorage.getItem("admin_token");
+
+        if (currentToken) sessionStorage.setItem("admin_token", currentToken);
         setActiveToken(currentToken);
 
         let currentEditMode = isEditMode;
@@ -60,8 +67,8 @@ function VisualEditorLogic({ children }: { children: React.ReactNode }) {
         } else {
             currentEditMode = sessionStorage.getItem("edit_mode") === "true";
         }
-        setActiveEditMode(currentEditMode);
-    }, [token, isEditMode]);
+        setActiveEditMode(currentEditMode && Boolean(currentToken));
+    }, [isEditMode]);
 
     return (
         <VisualEditorContext.Provider value={{ isEditMode: activeEditMode, token: activeToken, liveSettings, refreshSettings }}>

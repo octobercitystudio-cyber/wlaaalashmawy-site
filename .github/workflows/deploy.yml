@@ -9,9 +9,15 @@ on:
 permissions:
   contents: write
 
+concurrency:
+  group: production-deployment
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      FTP_SERVER: ${{ secrets.FTP_SERVER }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -22,37 +28,77 @@ jobs:
           node-version: '20'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
+
+      - name: Validate source
+        run: |
+          npm run lint -- --max-warnings=0
+          npm run test
+          npm run typecheck
+
+      - name: Validate PHP endpoints
+        run: find public -name '*.php' -print0 | xargs -0 -n1 php -l
 
       - name: Build static site
         env:
           NEXT_PUBLIC_API_URL: ${{ secrets.NEXT_PUBLIC_API_URL }}
         run: npm run build
 
-      - name: Inject Database and Deploy Config
-        run: |
-          mkdir -p out/api
-          echo "<?php \$db_host='${{ secrets.DB_HOST }}'; \$db_user='${{ secrets.DB_USER }}'; \$db_pass='${{ secrets.DB_PASS }}'; \$db_name='${{ secrets.DB_NAME }}'; \$gh_pat='${{ secrets.GH_PAT }}'; \$gh_repo='octobercitystudio-cyber/wlaaalashmawy-site'; ?>" > out/api/config.php
-
       - name: Deploy to production branch
-        uses: peaceiris/actions-gh-pages@v3
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./out
           publish_branch: production
 
-      - name: FTP Deploy to Hostinger
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      # This runs only after the public production branch is published, so database
+      # credentials never enter that branch or its Git history.
+      - name: Create runtime database config for hosting
         if: ${{ env.FTP_SERVER != '' }}
         env:
-          FTP_SERVER: ${{ secrets.FTP_SERVER }}
+          AFC_DB_HOST: ${{ secrets.DB_HOST }}
+          AFC_DB_USER: ${{ secrets.DB_USER }}
+          AFC_DB_PASS: ${{ secrets.DB_PASS }}
+          AFC_DB_NAME: ${{ secrets.DB_NAME }}
+          AFC_ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
+          AFC_ADMIN_PASSWORD_HASH: ${{ secrets.ADMIN_PASSWORD_HASH }}
+        run: |
+          php -r '
+            $required = [
+              "db_host" => getenv("AFC_DB_HOST"),
+              "db_user" => getenv("AFC_DB_USER"),
+              "db_pass" => getenv("AFC_DB_PASS"),
+              "db_name" => getenv("AFC_DB_NAME"),
+            ];
+            foreach ($required as $value) {
+              if ($value === false || $value === "") {
+                fwrite(STDERR, "A required database deployment secret is missing.\n");
+                exit(1);
+              }
+            }
+            $optional = [
+              "admin_username" => getenv("AFC_ADMIN_USERNAME") ?: "",
+              "admin_password_hash" => getenv("AFC_ADMIN_PASSWORD_HASH") ?: "",
+            ];
+            $config = "<?php\n";
+            foreach (array_merge($required, $optional) as $name => $value) {
+              $config .= "$" . $name . " = " . var_export($value, true) . ";\n";
+            }
+            file_put_contents("out/api/config.php", $config, LOCK_EX);
+          '
+          chmod 600 out/api/config.php
+
+      - name: FTPS Deploy to Hostinger
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        if: ${{ env.FTP_SERVER != '' }}
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
           local-dir: ./out/
           server-dir: /public_html/
-          danger-file-transfer-protocol: ftp
           exclude: |
             **/.git*
             **/.git*/**

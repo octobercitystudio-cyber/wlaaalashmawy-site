@@ -7,7 +7,7 @@ export async function fetchSettings() {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 1500);
     const res = await fetch(`${apiUrl}/api/settings.php`, { 
-        cache: 'no-store',
+        cache: 'force-cache',
         signal: controller.signal
     });
     clearTimeout(timeoutId);
@@ -33,8 +33,8 @@ export async function fetchServices() {
     if(res.ok) {
       const data = await res.json();
       if (data && data.length > 0) {
-        return data.map((item: any, index: number) => {
-          const fallback = servicesData[index];
+        return data.map((item: any) => {
+          const fallback = servicesData[Number(item.id) - 1];
           if (fallback) {
             item.title_en = item.title_en || fallback.title.en;
             item.description_en = item.description_en || fallback.shortDesc.en;
@@ -74,12 +74,11 @@ export async function fetchSectors() {
     if(res.ok) {
       const data = await res.json();
       if (data && data.length > 0) {
-        return data.map((item: any, index: number) => {
-          const fallback = sectorsData[index];
+        return data.map((item: any) => {
+          const fallback = sectorsData[Number(item.id) - 1];
           if (fallback) {
             item.title_en = item.title_en || fallback.title.en;
             item.description_en = item.description_en || fallback.shortDesc.en;
-            item.content_en = item.content_en || (fallback.content ? fallback.content.en : '');
           }
           return item;
         });
@@ -129,7 +128,7 @@ export async function fetchFeatures() {
         });
       }
     }
-  } catch (error) {}
+  } catch {}
   
   return [
     { id: 1, title: "الخبرة الواسعة", title_en: "Extensive Experience", description: "فريق من الخبراء المتخصصين في مختلف المجالات المالية والضريبية", description_en: "A team of specialized experts in various financial and tax fields.", icon: "BadgeCheck" },
@@ -153,13 +152,13 @@ export async function fetchStats() {
       const data = await res.json();
       if (Array.isArray(data) && data.length > 0) return data;
     }
-  } catch (error) {}
+  } catch {}
   
   return [
-    { id: 1, title: "سنوات الخبرة", value: "+15" },
-    { id: 2, title: "عميل سعيد", value: "+500" },
-    { id: 3, title: "مشروع ناجح", value: "+1000" },
-    { id: 4, title: "خبير مالي", value: "+50" }
+    { id: 1, title: "عام التأسيس", title_en: "Founded", value: "2024" },
+    { id: 2, title: "خدمات متخصصة", title_en: "Specialized Services", value: "8" },
+    { id: 3, title: "قطاعًا نخدمه", title_en: "Sectors Served", value: "11" },
+    { id: 4, title: "لغات الموقع", title_en: "Website Languages", value: "2" }
   ];
 }
 
@@ -175,13 +174,18 @@ export async function fetchTestimonials() {
     clearTimeout(timeoutId);
     if(res.ok) {
       const data = await res.json();
-      if (Array.isArray(data) && data.length > 0) return data;
+      if (Array.isArray(data)) {
+        return data.filter(
+          (item: any) =>
+            item.is_verified === true ||
+            item.is_verified === 1 ||
+            item.is_verified === "1",
+        );
+      }
     }
-  } catch (error) {}
+  } catch {}
   
-  return [
-    { id: 1, name: "أحمد محمود", position: "المدير التنفيذي لشركة الأفق", content: "خدمات احترافية وفريق عمل متميز، ساعدونا كثيراً في تحسين الكفاءة المالية لشركتنا.", rating: 5 },
-    { id: 2, name: "محمد علي", position: "رئيس مجلس إدارة مجموعة النور", content: "استشاراتهم الضريبية وفرت علينا الكثير من الوقت والجهد، شكراً لكم.", rating: 5 },
-    { id: 3, name: "سارة حسن", position: "مديرة الحسابات في شركة القمة", content: "دقة في المواعيد واحترافية في التعامل، نعتمد عليهم في كافة أعمالنا المالية.", rating: 5 }
-  ];
+  // Testimonials are trust claims, so do not invent placeholders when the CMS
+  // is unavailable.
+  return [];
 }

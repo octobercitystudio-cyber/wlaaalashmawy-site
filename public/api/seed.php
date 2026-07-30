@@ -1,7 +1,17 @@
 <?php
+if (PHP_SAPI !== 'cli') {
+    http_response_code(404);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['error' => 'Not found']);
+    exit;
+}
+
+if (getenv('AFC_ALLOW_MAINTENANCE') !== '1') {
+    fwrite(STDERR, "Maintenance commands are disabled. Set AFC_ALLOW_MAINTENANCE=1 for this process only.\n");
+    exit(1);
+}
+
 require_once __DIR__ . '/db.php';
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json; charset=utf-8');
 
 try {
     $pdo->beginTransaction();
@@ -20,19 +30,10 @@ try {
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM stats");
     $stmt->execute();
     if ($stmt->fetchColumn() == 0) {
-        $pdo->prepare("INSERT INTO stats (title, title_en, value) VALUES (?, ?, ?)")->execute(["سنوات الخبرة", "Years of Experience", "+15"]);
-        $pdo->prepare("INSERT INTO stats (title, title_en, value) VALUES (?, ?, ?)")->execute(["عميل سعيد", "Happy Clients", "+500"]);
-        $pdo->prepare("INSERT INTO stats (title, title_en, value) VALUES (?, ?, ?)")->execute(["مشروع ناجح", "Successful Projects", "+1000"]);
-        $pdo->prepare("INSERT INTO stats (title, title_en, value) VALUES (?, ?, ?)")->execute(["خبير مالي", "Financial Experts", "+50"]);
-    }
-
-    // Testimonials
-    $stmt = $pdo->prepare("SELECT COUNT(*) FROM testimonials");
-    $stmt->execute();
-    if ($stmt->fetchColumn() == 0) {
-        $pdo->prepare("INSERT INTO testimonials (name, name_en, position, position_en, content, content_en, rating) VALUES (?, ?, ?, ?, ?, ?, 5)")->execute(["أحمد محمود", "Ahmed Mahmoud", "المدير التنفيذي لشركة القمة", "CEO of Al Qemma", "خدمات احترافية وفريق عمل متميز ساعدنا كثيراً في تنظيم الأمور المالية لشركتنا.", "Professional services and an outstanding team that helped us greatly in organizing our companys financials."]);
-        $pdo->prepare("INSERT INTO testimonials (name, name_en, position, position_en, content, content_en, rating) VALUES (?, ?, ?, ?, ?, ?, 5)")->execute(["محمد علي", "Mohamed Ali", "رئيس مجلس إدارة مجموعة النور", "Chairman of Al Nour Group", "استشاراتهم الضريبية وفرت علينا الكثير من الوقت والجهد، شكراً لكم.", "Their tax advisory saved us a lot of time and effort, thank you."]);
-        $pdo->prepare("INSERT INTO testimonials (name, name_en, position, position_en, content, content_en, rating) VALUES (?, ?, ?, ?, ?, ?, 5)")->execute(["سارة حسن", "Sarah Hassan", "مديرة الحسابات في شركة الأمل", "Accounting Manager at Al Amal", "دقة في المواعيد واحترافية في التعامل، أنصح بالتعامل معهم.", "Punctual and highly professional, I highly recommend working with them."]);
+        $pdo->prepare("INSERT INTO stats (title, title_en, value) VALUES (?, ?, ?)")->execute(["عام التأسيس", "Founded", "2024"]);
+        $pdo->prepare("INSERT INTO stats (title, title_en, value) VALUES (?, ?, ?)")->execute(["خدمات متخصصة", "Specialized Services", "8"]);
+        $pdo->prepare("INSERT INTO stats (title, title_en, value) VALUES (?, ?, ?)")->execute(["قطاعًا نخدمه", "Sectors Served", "11"]);
+        $pdo->prepare("INSERT INTO stats (title, title_en, value) VALUES (?, ?, ?)")->execute(["لغات الموقع", "Website Languages", "2"]);
     }
 
     // Services
@@ -80,11 +81,11 @@ try {
         'contact_emails' => "[\"info@afc-cpa.com\"]",
         'contact_phones' => "[\"01155729429\",\"0238345397\"]",
         'contact_map' => "https://maps.google.com/maps?q=29.9607581,30.9246025&hl=ar&z=16&output=embed",
-        'social_facebook' => "https://facebook.com",
-        'social_instagram' => "https://instagram.com",
-        'social_youtube' => "https://youtube.com",
-        'social_linkedin' => "https://linkedin.com",
-        'social_tiktok' => "https://tiktok.com",
+        'social_facebook' => "",
+        'social_instagram' => "",
+        'social_youtube' => "",
+        'social_linkedin' => "",
+        'social_tiktok' => "",
     ];
 
     $stmt = $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = setting_value");
@@ -93,9 +94,11 @@ try {
     }
 
     $pdo->commit();
-    echo json_encode(['success' => true, 'message' => 'Database seeded successfully.']);
+    fwrite(STDOUT, "Database seeded successfully.\n");
 } catch (Exception $e) {
     $pdo->rollBack();
-    echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+    error_log('Database seed failed: ' . $e->getMessage());
+    fwrite(STDERR, "Database seed failed. Check the server error log.\n");
+    exit(1);
 }
 ?>

@@ -5,12 +5,17 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 
 import { getDictionary, Lang } from "@/lib/dictionary";
+import { servicePath } from "@/lib/serviceRoutes";
+import { normalizeWhatsAppNumber, parseSettingList } from "@/lib/contact";
 
 export default function Navbar({ settings = {}, services = [], lang = "ar" }: { settings?: any, services?: any[], lang?: Lang }) {
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-  const whatsappNum = settings.contact_whatsapp || '201155729429';
+  const fallbackPhones = parseSettingList(settings.contact_phones);
+  const whatsappNum = normalizeWhatsAppNumber(
+    settings.contact_whatsapp || settings.whatsapp || fallbackPhones[0],
+  );
   const dict = getDictionary(lang);
   const prefix = lang === 'en' ? '/en' : '';
 
@@ -29,14 +34,27 @@ export default function Navbar({ settings = {}, services = [], lang = "ar" }: { 
     } else {
       document.body.classList.remove('mobile-menu-open');
     }
+    return () => document.body.classList.remove('mobile-menu-open');
   }, [isMobileMenuOpen]);
 
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setIsMobileMenuOpen(false);
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isMobileMenuOpen]);
+
+  const localPathname =
+    lang === "en" ? pathname.replace(/^\/en(?=\/|$)/, "") || "/" : pathname;
+
   const isActive = (path: string) => {
-    if (path === '/') return pathname === '/';
-    return pathname.startsWith(path);
+    if (path === '/') return localPathname === '/';
+    return localPathname.startsWith(path);
   };
 
-  const NavLinks = ({ isMobile = false }) => (
+  const renderNavLinks = (isMobile = false) => (
     <ul className={`flex ${isMobile ? 'flex-col gap-md' : 'gap-lg items-center'}`}>
       <li>
         <Link href={`${prefix}/`} className={`nav-link ${isActive('/') ? 'active' : ''}`} onClick={() => isMobile && setIsMobileMenuOpen(false)}>
@@ -61,7 +79,7 @@ export default function Navbar({ settings = {}, services = [], lang = "ar" }: { 
           {isMobile ? (
              <div style={{ paddingInlineStart: '1rem', marginTop: '0.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
                 {services.map(service => (
-                  <Link key={service.id} href={`${prefix}/services/${service.id}`} onClick={() => setIsMobileMenuOpen(false)} style={{ color: 'var(--color-text-muted)', fontSize: '0.95rem' }}>
+                  <Link key={service.id} href={servicePath(service.id, lang)} onClick={() => setIsMobileMenuOpen(false)} style={{ color: 'var(--color-text-muted)', fontSize: '0.95rem' }}>
                     - {lang === "en" && service.title_en ? service.title_en : service.title}
                   </Link>
                 ))}
@@ -69,7 +87,7 @@ export default function Navbar({ settings = {}, services = [], lang = "ar" }: { 
           ) : (
             <div className="nav-dropdown-content">
               {services.map(service => (
-                <Link key={service.id} href={`${prefix}/services/${service.id}`} className="nav-dropdown-item">
+                <Link key={service.id} href={servicePath(service.id, lang)} className="nav-dropdown-item">
                   {lang === "en" && service.title_en ? service.title_en : service.title}
                 </Link>
               ))}
@@ -116,10 +134,12 @@ export default function Navbar({ settings = {}, services = [], lang = "ar" }: { 
         <div>
           <Link href={`${prefix}/`} onClick={() => setIsMobileMenuOpen(false)}>
             <Image 
-              src="/logo.png" 
-              alt="العشماوي للاستشارات المالية" 
-              width={150} 
-              height={48} 
+              src="/afc-wordmark.png"
+              alt={lang === "en" ? "AFC Financial Consulting" : "AFC للاستشارات المالية"}
+              className="site-logo"
+              width={1239}
+              height={562}
+              sizes="(max-width: 1099px) 145px, 180px"
               style={{ 
                 objectFit: "contain",
                 transition: "all 0.3s ease"
@@ -131,7 +151,7 @@ export default function Navbar({ settings = {}, services = [], lang = "ar" }: { 
         
         {/* Desktop Menu */}
         <div className="mobile-hidden">
-          <NavLinks />
+          {renderNavLinks()}
         </div>
 
         {/* CTA & Actions (Desktop) */}
@@ -158,7 +178,9 @@ export default function Navbar({ settings = {}, services = [], lang = "ar" }: { 
               width: '40px',
               height: '40px'
             }}
-            aria-label="Toggle Menu"
+            aria-label={lang === "en" ? "Toggle navigation menu" : "فتح أو إغلاق قائمة التنقل"}
+            aria-expanded={isMobileMenuOpen}
+            aria-controls="mobile-navigation"
           >
             {isMobileMenuOpen ? (
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
@@ -172,7 +194,7 @@ export default function Navbar({ settings = {}, services = [], lang = "ar" }: { 
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
-        <div className="desktop-hidden" style={{
+        <div id="mobile-navigation" className="desktop-hidden" style={{
           position: 'fixed',
           top: '70px',
           left: 0,
@@ -188,7 +210,7 @@ export default function Navbar({ settings = {}, services = [], lang = "ar" }: { 
           gap: '2rem',
           animation: 'fadeInDown 0.3s ease'
         }}>
-          <NavLinks isMobile={true} />
+          {renderNavLinks(true)}
           <div style={{ marginTop: 'auto', paddingTop: '2rem', borderTop: '1px solid var(--color-border)', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
             <a href={`https://wa.me/${whatsappNum}?text=${encodeURIComponent(lang === "en" ? "Hello, I would like to inquire about your services." : "مرحباً، أود الاستفسار عن خدمات مكتبكم.")}`} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ width: '100%', textAlign: 'center', padding: "1rem" }} onClick={() => setIsMobileMenuOpen(false)}>
               {dict.contactUs}

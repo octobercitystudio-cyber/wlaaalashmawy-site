@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useVisualEditor } from "./VisualEditorProvider";
-import { useRouter } from "next/navigation";
+import { sanitizeHtml } from "@/lib/sanitizeHtml";
 
 interface EditableTextProps {
     id: string;
@@ -22,15 +22,13 @@ export function EditableText({ id, value, as: Component = "span", isHtml = false
     const [isEditing, setIsEditing] = useState(false);
     const [currentValue, setCurrentValue] = useState(displayValue);
     const [isSaving, setIsSaving] = useState(false);
-    const router = useRouter();
-
     useEffect(() => {
         setCurrentValue(displayValue);
     }, [displayValue]);
 
     if (!isEditMode) {
         if (isHtml) {
-            return <Component className={className} style={style} dangerouslySetInnerHTML={{ __html: displayValue || "" }} />;
+            return <Component className={className} style={style} dangerouslySetInnerHTML={{ __html: sanitizeHtml(displayValue) }} />;
         }
         return <Component className={className} style={style}>{displayValue}</Component>;
     }

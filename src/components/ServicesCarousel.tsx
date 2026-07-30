@@ -1,22 +1,20 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { servicesData } from "@/data/services";
 
 import { Lang } from "@/lib/dictionary";
+import { servicePath } from "@/lib/serviceRoutes";
 
 export default function ServicesCarousel({ services = [], lang = "ar" }: { services?: any[], lang?: Lang }) {
   const data = services.length > 0 ? services : servicesData;
   const N = data.length;
-  // Create 5 copies of the data to ensure we never run out of slides during rapid clicks
-  const extendedItems = [...data, ...data, ...data, ...data, ...data];
-  const START_INDEX = N * 2; // Start in the middle of the 5 copies
-  
-  const [currentIndex, setCurrentIndex] = useState(START_INDEX);
-  const [itemsToShow, setItemsToShow] = useState(3);
-  const [isTransitioning, setIsTransitioning] = useState(true);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [itemsToShow, setItemsToShow] = useState(1);
+  const [isPaused, setIsPaused] = useState(false);
+  const [reduceMotion, setReduceMotion] = useState(false);
 
   // Responsive items count
   useEffect(() => {
@@ -29,55 +27,56 @@ export default function ServicesCarousel({ services = [], lang = "ar" }: { servi
         setItemsToShow(3);
       }
     };
-    
+
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const handleMotionPreference = () => setReduceMotion(mediaQuery.matches);
     handleResize();
+    handleMotionPreference();
     window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    mediaQuery.addEventListener("change", handleMotionPreference);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+      mediaQuery.removeEventListener("change", handleMotionPreference);
+    };
   }, []);
 
-  // Auto-slide logic
   useEffect(() => {
+    if (isPaused || reduceMotion || N <= itemsToShow) return;
     const interval = setInterval(() => {
-      handleNext();
-    }, 4000); // 4 seconds
+      setCurrentIndex((prev) => {
+        const maxIndex = Math.max(0, N - itemsToShow);
+        return prev >= maxIndex ? 0 : prev + 1;
+      });
+    }, 5000);
 
     return () => clearInterval(interval);
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  // Infinite jump logic
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      if (currentIndex >= N * 3) {
-        setIsTransitioning(false);
-        setCurrentIndex(currentIndex - N);
-      } else if (currentIndex <= N) {
-        setIsTransitioning(false);
-        setCurrentIndex(currentIndex + N);
-      }
-    }, 500); // Wait for CSS transition to finish
-
-    return () => clearTimeout(timeout);
-  }, [currentIndex, N]);
+  }, [N, isPaused, itemsToShow, reduceMotion]);
 
   const handleNext = () => {
-    setIsTransitioning(true);
-    setCurrentIndex((prev) => prev + 1);
+    const maxIndex = Math.max(0, N - itemsToShow);
+    setCurrentIndex((prev) => (prev >= maxIndex ? 0 : prev + 1));
   };
 
   const handlePrev = () => {
-    setIsTransitioning(true);
-    setCurrentIndex((prev) => prev - 1);
+    const maxIndex = Math.max(0, N - itemsToShow);
+    setCurrentIndex((prev) => (prev <= 0 ? maxIndex : prev - 1));
   };
 
-  const goToSlide = (realIndex: number) => {
-    setIsTransitioning(true);
-    setCurrentIndex(START_INDEX + realIndex);
-  };
-
-  const activeDot = currentIndex % N;
+  const goToSlide = (index: number) => setCurrentIndex(index);
+  const pageCount = Math.max(1, N - itemsToShow + 1);
+  const visibleIndex = Math.min(currentIndex, pageCount - 1);
 
   return (
-    <div style={{ position: "relative", padding: "10px 50px" }}>
+    <div
+      style={{ position: "relative", padding: "10px 50px" }}
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+      onFocusCapture={() => setIsPaused(true)}
+      onBlurCapture={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget)) setIsPaused(false);
+      }}
+      aria-roledescription={lang === "en" ? "carousel" : "عارض شرائح"}
+    >
       {/* Navigation Arrows */}
       <button 
         onClick={handleNext}
@@ -100,7 +99,7 @@ export default function ServicesCarousel({ services = [], lang = "ar" }: { servi
           boxShadow: "0 4px 6px rgba(0,0,0,0.2)",
           fontSize: "1.2rem"
         }}
-        aria-label="التالي"
+        aria-label={lang === "en" ? "Next services" : "الخدمات التالية"}
       >
         ❯
       </button>
@@ -125,7 +124,7 @@ export default function ServicesCarousel({ services = [], lang = "ar" }: { servi
           boxShadow: "0 4px 6px rgba(0,0,0,0.2)",
           fontSize: "1.2rem"
         }}
-        aria-label="السابق"
+        aria-label={lang === "en" ? "Previous services" : "الخدمات السابقة"}
       >
         ❮
       </button>
@@ -134,15 +133,18 @@ export default function ServicesCarousel({ services = [], lang = "ar" }: { servi
         <div 
           style={{ 
             display: "flex", 
-            transition: isTransitioning ? "transform 0.5s ease-in-out" : "none", 
+            transition: reduceMotion ? "none" : "transform 0.5s ease-in-out",
             // In RTL, positive translateX moves the container to the right.
             // In LTR, positive translateX moves the container to the right (offscreen), so we use negative.
-            transform: `translateX(${currentIndex * (100 / itemsToShow) * (lang === "en" ? -1 : 1)}%)` 
+            transform: `translateX(${visibleIndex * (100 / itemsToShow) * (lang === "en" ? -1 : 1)}%)`
           }}
         >
-          {extendedItems.map((service, idx) => (
+          {data.map((service, idx) => {
+            const isVisible = idx >= visibleIndex && idx < visibleIndex + itemsToShow;
+            return (
             <div 
               key={`${service.id}-${idx}`} 
+              aria-hidden={!isVisible}
               style={{ 
                 flex: `0 0 ${100 / itemsToShow}%`, 
                 padding: "0 10px" 
@@ -176,7 +178,8 @@ export default function ServicesCarousel({ services = [], lang = "ar" }: { servi
                   </p>
                   <div style={{ marginTop: "auto" }}>
                     <Link 
-                      href={lang === "en" ? `/en/services/${service.id}` : `/services/${service.id}`} 
+                      href={servicePath(service.id, lang)}
+                      tabIndex={isVisible ? 0 : -1}
                       className="btn btn-secondary" 
                       style={{ padding: "0.5rem 1.5rem", fontSize: "0.95rem", width: "100%" }}
                     >
@@ -186,27 +189,28 @@ export default function ServicesCarousel({ services = [], lang = "ar" }: { servi
                 </div>
               </div>
             </div>
-          ))}
+          )})}
         </div>
       </div>
       
       {/* Dots navigation */}
       <div className="flex justify-center items-center gap-sm mt-lg" style={{ direction: "ltr" }}>
-        {Array.from({ length: N }).map((_, idx) => (
+        {Array.from({ length: pageCount }).map((_, idx) => (
           <button 
             key={idx}
             onClick={() => goToSlide(idx)}
             style={{
-              width: activeDot === idx ? "30px" : "12px",
-              height: "12px",
-              borderRadius: "6px",
-              backgroundColor: activeDot === idx ? "var(--color-accent)" : "var(--color-border)",
+              width: visibleIndex === idx ? "36px" : "20px",
+              height: "20px",
+              borderRadius: "10px",
+              backgroundColor: visibleIndex === idx ? "var(--color-accent)" : "var(--color-border)",
               transition: "all 0.3s ease",
               border: "none",
               cursor: "pointer",
               padding: 0
             }}
-            aria-label={`Slide ${idx + 1}`}
+            aria-label={lang === "en" ? `Show services group ${idx + 1}` : `عرض مجموعة الخدمات ${idx + 1}`}
+            aria-current={visibleIndex === idx ? "true" : undefined}
           />
         ))}
       </div>

@@ -1,89 +1,118 @@
 <?php
+
 require_once __DIR__ . '/db.php';
+require_once __DIR__ . '/auth.php';
+
 header('Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization');
+api_handle_options('GET, POST, PUT, DELETE, OPTIONS');
 
-$method = $_SERVER['REQUEST_METHOD'];
+$method = $_SERVER['REQUEST_METHOD'] ?? '';
 
-// Helper to check authentication
-function checkAuth() {
-    $headers = apache_request_headers();
-    $auth = isset($headers['Authorization']) ? $headers['Authorization'] : '';
-    // We will use a simple Bearer token for the admin dashboard
-    // The real authentication will be checked in the login script and stored in localStorage
-    if (strpos($auth, 'Bearer') === false) {
-        http_response_code(401);
-        echo json_encode(['error' => 'Unauthorized']);
-        exit;
+function clean_article_payload($data)
+{
+    if (!array_key_exists('title', $data) || !array_key_exists('content', $data)) {
+        api_json_response(['error' => 'Missing required fields'], 400);
     }
-}
 
-if ($method == 'OPTIONS') {
-    http_response_code(200);
-    exit;
-}
-
-if ($method == 'GET') {
-    $stmt = $pdo->query("SELECT * FROM articles ORDER BY id DESC");
-    echo json_encode($stmt->fetchAll());
-} 
-elseif ($method == 'POST') {
-    checkAuth();
-    $data = json_decode(file_get_contents("php://input"), true);
-    if (!isset($data['title']) || !isset($data['content'])) {
-        http_response_code(400);
-        echo json_encode(['error' => 'Missing fields']);
-        exit;
+    $videoUrl = api_safe_url($data['video_url'] ?? '', false, 500);
+    if ($videoUrl !== '') {
+        $videoHost = strtolower((string) parse_url($videoUrl, PHP_URL_HOST));
+        $allowedVideoHost = $videoHost === 'youtu.be'
+            || $videoHost === 'youtube.com'
+            || substr($videoHost, -12) === '.youtube.com';
+        if (!$allowedVideoHost) {
+            api_json_response(['error' => 'Only YouTube video URLs are allowed'], 422);
+        }
     }
-    
-    $stmt = $pdo->prepare("INSERT INTO articles (title, title_en, date, category, category_en, image, content, content_en, video_url) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-    $stmt->execute([
-        $data['title'],
-        $data['title_en'] ?? '',
-        $data['date'] ?? date('d M Y'),
-        $data['category'] ?? 'عام',
-        $data['category_en'] ?? 'General',
-        $data['image'] ?? '/images/articles/placeholder.jpg',
-        $data['content'],
-        $data['content_en'] ?? '',
-        $data['video_url'] ?? ''
-    ]);
-    
-    echo json_encode(['success' => true, 'id' => $pdo->lastInsertId()]);
+
+    return [
+        'title' => api_plain_text($data['title'], 255, true),
+        'title_en' => api_plain_text($data['title_en'] ?? '', 255),
+        'date' => api_plain_text($data['date'] ?? date('d M Y'), 50, true),
+        'category' => api_plain_text($data['category'] ?? 'عام', 100, true),
+        'category_en' => api_plain_text($data['category_en'] ?? 'General', 100),
+        'image' => api_safe_url($data['image'] ?? '/images/articles/placeholder.jpg', true),
+        'content' => api_sanitize_html($data['content'], 300000),
+        'content_en' => api_sanitize_html($data['content_en'] ?? '', 300000),
+        'video_url' => $videoUrl
+    ];
 }
-elseif ($method == 'DELETE') {
-    checkAuth();
-    $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
-    if ($id) {
-        $stmt = $pdo->prepare("DELETE FROM articles WHERE id = ?");
+
+if ($method === 'GET') {
+    if (array_key_exists('id', $_GET)) {
+        $id = api_positive_id($_GET['id']);
+        $stmt = $pdo->prepare('SELECT * FROM articles WHERE id = ? LIMIT 1');
         $stmt->execute([$id]);
-        echo json_encode(['success' => true]);
-    } else {
-        http_response_code(400);
-        echo json_encode(['error' => 'Missing ID']);
+        $article = $stmt->fetch();
+        if (!$article) {
+            api_json_response(['error' => 'Article not found'], 404);
+        }
+        $article = api_sanitize_rows([$article], ['content', 'content_en'])[0];
+        api_json_response($article);
     }
+
+    $stmt = $pdo->query('SELECT * FROM articles ORDER BY id DESC');
+    api_json_response(api_sanitize_rows($stmt->fetchAll(), ['content', 'content_en']));
 }
-elseif ($method == 'PUT') {
-    checkAuth();
-    $data = json_decode(file_get_contents("php://input"), true);
-    if (!isset($data['id'])) {
-        http_response_code(400);
-        echo json_encode(['error' => 'Missing ID']);
-        exit;
+
+if ($method === 'POST') {
+    api_require_auth($pdo);
+    $article = clean_article_payload(api_read_json());
+    $stmt = $pdo->prepare(
+        'INSERT INTO articles
+            (title, title_en, date, category, category_en, image, content, content_en, video_url)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
+    );
+    $stmt->execute(array_values($article));
+    api_json_response(['success' => true, 'id' => (int) $pdo->lastInsertId()], 201);
+}
+
+if ($method === 'PUT') {
+    api_require_auth($pdo);
+    $data = api_read_json();
+    $id = api_positive_id($data['id'] ?? null);
+    if (!array_key_exists('date', $data)) {
+        $dateStmt = $pdo->prepare('SELECT date FROM articles WHERE id = ?');
+        $dateStmt->execute([$id]);
+        $existingDate = $dateStmt->fetchColumn();
+        if ($existingDate === false) {
+            api_json_response(['error' => 'Article not found'], 404);
+        }
+        $data['date'] = $existingDate;
     }
-    
-    $stmt = $pdo->prepare("UPDATE articles SET title=?, title_en=?, category=?, category_en=?, image=?, content=?, content_en=?, video_url=? WHERE id=?");
-    $stmt->execute([
-        $data['title'],
-        $data['title_en'] ?? '',
-        $data['category'],
-        $data['category_en'] ?? '',
-        $data['image'] ?? '',
-        $data['content'],
-        $data['content_en'] ?? '',
-        $data['video_url'] ?? '',
-        $data['id']
-    ]);
-    echo json_encode(['success' => true]);
+    $article = clean_article_payload($data);
+
+    $stmt = $pdo->prepare(
+        'UPDATE articles
+         SET title = ?, title_en = ?, date = ?, category = ?, category_en = ?,
+             image = ?, content = ?, content_en = ?, video_url = ?
+         WHERE id = ?'
+    );
+    $values = array_values($article);
+    $values[] = $id;
+    $stmt->execute($values);
+
+    if ($stmt->rowCount() === 0) {
+        $exists = $pdo->prepare('SELECT 1 FROM articles WHERE id = ?');
+        $exists->execute([$id]);
+        if (!$exists->fetchColumn()) {
+            api_json_response(['error' => 'Article not found'], 404);
+        }
+    }
+    api_json_response(['success' => true]);
 }
-?>
+
+if ($method === 'DELETE') {
+    api_require_auth($pdo);
+    $id = api_positive_id($_GET['id'] ?? null);
+    $stmt = $pdo->prepare('DELETE FROM articles WHERE id = ?');
+    $stmt->execute([$id]);
+    if ($stmt->rowCount() === 0) {
+        api_json_response(['error' => 'Article not found'], 404);
+    }
+    api_json_response(['success' => true]);
+}
+
+header('Allow: GET, POST, PUT, DELETE, OPTIONS');
+api_json_response(['error' => 'Method not allowed'], 405);

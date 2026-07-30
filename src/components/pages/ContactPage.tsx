@@ -1,18 +1,35 @@
 import { fetchSettings } from "@/lib/api";
 import { EditableText } from "@/components/editor/EditableText";
+import ContactForm from "@/components/ContactForm";
+import {
+  normalizeSocialUrl,
+  normalizeWhatsAppNumber,
+  parseSettingList,
+} from "@/lib/contact";
 
 import { Lang } from "@/lib/dictionary";
 
 export default async function ContactPage({ lang = "ar" }: { lang?: Lang }) {
   const settings = await fetchSettings();
   
-  let emails = [];
-  try { emails = JSON.parse(settings.contact_emails); } catch(e) {}
-  if (!emails || emails.length === 0) emails = [settings.contact_email || 'info@afc-cpa.com'];
-
-  let phones: string[] = [];
-  try { phones = JSON.parse(settings.contact_phones); } catch(e) {}
-  if (!phones || phones.length === 0) phones = [settings.contact_phone || '01155729429', '0238345397'];
+  const emails = parseSettingList(settings.contact_emails, [
+    settings.contact_email || "info@afc-cpa.com",
+  ]);
+  const phones = parseSettingList(settings.contact_phones, [
+    settings.contact_phone || "01155729429",
+    "0238345397",
+  ]);
+  const whatsappNumber = normalizeWhatsAppNumber(
+    settings.contact_whatsapp || settings.whatsapp || phones[0],
+  );
+  const socialLinks = {
+    facebook: normalizeSocialUrl(settings.social_facebook, "facebook"),
+    instagram: normalizeSocialUrl(settings.social_instagram, "instagram"),
+    youtube: normalizeSocialUrl(settings.social_youtube, "youtube"),
+    linkedin: normalizeSocialUrl(settings.social_linkedin, "linkedin"),
+    tiktok: normalizeSocialUrl(settings.social_tiktok, "tiktok"),
+  };
+  const hasSocialLinks = Object.values(socialLinks).some(Boolean);
 
   const address = (lang === "en" && settings.contact_address_en ? settings.contact_address_en : settings.contact_address) || (lang === "en" ? "Office 204, 2nd Floor, Agyad View Mall - 6th of October - Giza - Egypt" : "مكتب 204 الدور الثاني مول اجياد فيو - ٦ اكتوبر - الجيزة - مصر");
   
@@ -56,43 +73,7 @@ export default async function ContactPage({ lang = "ar" }: { lang?: Lang }) {
                 <h2 style={{ fontSize: "2.2rem", color: "var(--color-primary)", marginBottom: "var(--spacing-md)", fontWeight: "bold" }}>
                   {lang === "en" ? "Send a Message" : "أرسل لنا رسالة"}
                 </h2>
-                <form style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-                  <div className="grid grid-cols-1 md-grid-cols-2 gap-md">
-                    <div>
-                      <label style={{ display: "block", marginBottom: "0.8rem", color: "var(--color-text-main)", fontWeight: "600" }}>{lang === "en" ? "Full Name *" : "الاسم بالكامل *"}</label>
-                      <input type="text" style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid var(--color-border)", background: "var(--color-bg-body)", color: "var(--color-text-main)", outline: "none", transition: "all 0.3s ease" }} placeholder={lang === "en" ? "Enter your full name" : "أدخل اسمك الكريم"} required />
-                    </div>
-                    <div>
-                      <label style={{ display: "block", marginBottom: "0.8rem", color: "var(--color-text-main)", fontWeight: "600" }}>{lang === "en" ? "Email Address *" : "البريد الإلكتروني *"}</label>
-                      <input type="email" style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid var(--color-border)", background: "var(--color-bg-body)", color: "var(--color-text-main)", outline: "none", transition: "all 0.3s ease" }} placeholder="example@email.com" required dir="ltr" />
-                    </div>
-                  </div>
-                  
-                  <div>
-                    <label style={{ display: "block", marginBottom: "0.8rem", color: "var(--color-text-main)", fontWeight: "600" }}>{lang === "en" ? "Phone Number *" : "رقم الهاتف *"}</label>
-                    <input type="tel" style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid var(--color-border)", background: "var(--color-bg-body)", color: "var(--color-text-main)", outline: "none", transition: "all 0.3s ease" }} placeholder={lang === "en" ? "Your phone number" : "رقم الهاتف للتواصل"} required dir="ltr" />
-                  </div>
-
-                  <div>
-                    <label style={{ display: "block", marginBottom: "0.8rem", color: "var(--color-text-main)", fontWeight: "600" }}>{lang === "en" ? "Inquiry Type" : "نوع الاستفسار"}</label>
-                    <select style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid var(--color-border)", background: "var(--color-bg-body)", color: "var(--color-text-main)", outline: "none", appearance: "none" }}>
-                      <option value="استشارات محاسبية">{lang === "en" ? "Accounting Consulting" : "استشارات محاسبية"}</option>
-                      <option value="استشارات ضريبية">{lang === "en" ? "Tax Consulting" : "استشارات ضريبية"}</option>
-                      <option value="تأسيس شركات">{lang === "en" ? "Company Formation" : "تأسيس شركات"}</option>
-                      <option value="المراجعة والتدقيق">{lang === "en" ? "Audit & Assurance" : "المراجعة والتدقيق"}</option>
-                      <option value="أخرى">{lang === "en" ? "Other" : "أخرى"}</option>
-                    </select>
-                  </div>
-                  
-                  <div>
-                    <label style={{ display: "block", marginBottom: "0.8rem", color: "var(--color-text-main)", fontWeight: "600" }}>{lang === "en" ? "How can we help you? *" : "كيف يمكننا مساعدتك؟ *"}</label>
-                    <textarea rows={5} style={{ width: "100%", padding: "1.2rem", borderRadius: "8px", border: "1px solid var(--color-border)", background: "var(--color-bg-body)", color: "var(--color-text-main)", outline: "none", resize: "vertical", transition: "all 0.3s ease" }} placeholder={lang === "en" ? "Write the details of your inquiry here..." : "اكتب تفاصيل أو استفسارك هنا..."} required />
-                  </div>
-                  
-                  <button type="button" className="btn btn-primary" style={{ marginTop: "1rem", width: "100%", padding: "1.2rem", fontSize: "1.2rem", fontWeight: "bold", borderRadius: "8px" }}>
-                    {lang === "en" ? "Send Message Now" : "إرسال الرسالة الآن"}
-                  </button>
-                </form>
+                <ContactForm lang={lang} whatsappNumber={whatsappNumber} />
               </div>
             </div>
 
@@ -103,6 +84,7 @@ export default async function ContactPage({ lang = "ar" }: { lang?: Lang }) {
               <div style={{ padding: "0.5rem", background: "var(--color-bg-card)", border: "1px solid var(--color-border)", borderRadius: "16px", height: "350px", boxShadow: "0 10px 30px rgba(0,0,0,0.05)" }}>
                 <iframe 
                   src={map_url}
+                  title={lang === "en" ? "AFC office location" : "موقع مكتب AFC"}
                   width="100%" 
                   height="100%" 
                   style={{ border: 0, borderRadius: "12px" }} 
@@ -122,7 +104,7 @@ export default async function ContactPage({ lang = "ar" }: { lang?: Lang }) {
                   <div>
                     <h4 style={{ fontSize: "1.1rem", color: "var(--color-primary)", marginBottom: "0.3rem", fontWeight: "bold" }}>{lang === "en" ? "Phone Numbers" : "أرقام التواصل"}</h4>
                     {phones.map((phone: string, i: number) => (
-                      <p key={`phone-${i}`} dir="ltr" style={{ color: "var(--color-text-main)", fontSize: "1.1rem", fontWeight: "bold", marginBottom: "0" }}>{phone}</p>
+                      <a key={`phone-${i}`} href={`tel:${phone.replace(/[^\d+]/g, "")}`} dir="ltr" className="contact-link">{phone}</a>
                     ))}
                   </div>
                 </div>
@@ -134,7 +116,7 @@ export default async function ContactPage({ lang = "ar" }: { lang?: Lang }) {
                   <div>
                     <h4 style={{ fontSize: "1.1rem", color: "var(--color-primary)", marginBottom: "0.3rem", fontWeight: "bold" }}>{lang === "en" ? "Email Address" : "البريد الإلكتروني"}</h4>
                     {emails.map((email: string, i: number) => (
-                      <p key={`email-${i}`} style={{ color: "var(--color-text-main)", fontSize: "1.1rem", fontWeight: "bold", marginBottom: "0" }}>{email}</p>
+                      <a key={`email-${i}`} href={`mailto:${email}`} className="contact-link">{email}</a>
                     ))}
                   </div>
                 </div>
@@ -155,30 +137,30 @@ export default async function ContactPage({ lang = "ar" }: { lang?: Lang }) {
                 </div>
 
                 {/* Social Media Links */}
-                <div style={{ display: "flex", flexDirection: "column", gap: "1rem", background: "var(--color-bg-card)", padding: "1.5rem", borderRadius: "12px", border: "1px solid var(--color-border)", boxShadow: "0 4px 15px rgba(0,0,0,0.03)" }}>
+                {hasSocialLinks && <div style={{ display: "flex", flexDirection: "column", gap: "1rem", background: "var(--color-bg-card)", padding: "1.5rem", borderRadius: "12px", border: "1px solid var(--color-border)", boxShadow: "0 4px 15px rgba(0,0,0,0.03)" }}>
                   <h4 style={{ fontSize: "1.1rem", color: "var(--color-primary)", margin: 0, fontWeight: "bold" }}>{lang === "en" ? "Social Media" : "منصات السوشيال ميديا"}</h4>
                   <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-                    <a href={settings.social_facebook || "#"} target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "40px", height: "40px", borderRadius: "12px", background: "#1877F2", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
+                    {socialLinks.facebook && <a href={socialLinks.facebook} aria-label="Facebook" target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "44px", height: "44px", borderRadius: "12px", background: "#1877F2", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
                       <i className="bi bi-facebook fs-5"></i>
-                    </a>
+                    </a>}
                     
-                    <a href={settings.social_instagram || "#"} target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "40px", height: "40px", borderRadius: "12px", background: "#E4405F", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
+                    {socialLinks.instagram && <a href={socialLinks.instagram} aria-label="Instagram" target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "44px", height: "44px", borderRadius: "12px", background: "#E4405F", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
                       <i className="bi bi-instagram fs-5"></i>
-                    </a>
+                    </a>}
                     
-                    <a href={settings.social_youtube || "#"} target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "40px", height: "40px", borderRadius: "12px", background: "#FF0000", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
+                    {socialLinks.youtube && <a href={socialLinks.youtube} aria-label="YouTube" target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "44px", height: "44px", borderRadius: "12px", background: "#FF0000", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
                       <i className="bi bi-youtube fs-5"></i>
-                    </a>
+                    </a>}
                     
-                    <a href={settings.social_linkedin || "#"} target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "40px", height: "40px", borderRadius: "12px", background: "#0A66C2", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
+                    {socialLinks.linkedin && <a href={socialLinks.linkedin} aria-label="LinkedIn" target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "44px", height: "44px", borderRadius: "12px", background: "#0A66C2", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
                       <i className="bi bi-linkedin fs-5"></i>
-                    </a>
+                    </a>}
                     
-                    <a href={settings.social_tiktok || "#"} target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "40px", height: "40px", borderRadius: "12px", background: "#000000", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
+                    {socialLinks.tiktok && <a href={socialLinks.tiktok} aria-label="TikTok" target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "44px", height: "44px", borderRadius: "12px", background: "#000000", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
                       <i className="bi bi-tiktok fs-5"></i>
-                    </a>
+                    </a>}
                   </div>
-                </div>
+                </div>}
               </div>
             </div>
           </div>

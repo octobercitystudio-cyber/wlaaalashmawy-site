@@ -2,11 +2,24 @@ import Link from "next/link";
 import Image from "next/image";
 import { fetchServices, fetchSettings } from "@/lib/api";
 import { Lang } from "@/lib/dictionary";
-
+import { notFound } from "next/navigation";
+import { normalizeWhatsAppNumber, parseSettingList } from "@/lib/contact";
+import { sanitizeHtml } from "@/lib/sanitizeHtml";
 
 function parseMarkdown(text: string) {
   if (!text) return "";
-  let html = text
+  if (/<\/?(?:p|br|strong|b|em|i|u|s|h[1-6]|ul|ol|li|blockquote|pre|code|a|span|div|table|thead|tbody|tr|th|td|hr)\b/i.test(text)) {
+    return sanitizeHtml(text);
+  }
+
+  const escapedText = text
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+
+  const html = escapedText
     .replace(/^### (.*$)/gim, '<h3 style="margin-top:1.5rem;margin-bottom:0.5rem;color:var(--color-primary)">$1</h3>')
     .replace(/^## (.*$)/gim, '<h2 style="margin-top:1.5rem;margin-bottom:0.5rem;color:var(--color-primary)">$1</h2>')
     .replace(/^# (.*$)/gim, '<h1 style="margin-top:1.5rem;margin-bottom:0.5rem;color:var(--color-primary)">$1</h1>')
@@ -24,16 +37,15 @@ export default async function ServiceDetailsPage({ id, lang = "ar" }: { id: stri
   const service = services.find((s: any) => s.id == id);
   
   if (!service) {
-    return (
-      <main className="container py-xl text-center" style={{ paddingTop: "12rem" }}>
-        <h2>{lang === "en" ? "Service Not Found" : "الخدمة غير موجودة"}</h2>
-        <Link href={lang === "en" ? "/en/services" : "/services"} className="btn btn-primary mt-md">{lang === "en" ? "Back to Services" : "العودة إلى الخدمات"}</Link>
-      </main>
-    );
+    notFound();
   }
 
   const title = lang === "en" && service.title_en ? service.title_en : service.title;
   const content = lang === "en" && service.content_en ? service.content_en : service.content;
+  const phones = parseSettingList(settings.contact_phones);
+  const whatsappNumber = normalizeWhatsAppNumber(
+    settings.contact_whatsapp || settings.whatsapp || phones[0],
+  );
 
   return (
     <main>
@@ -55,9 +67,9 @@ export default async function ServiceDetailsPage({ id, lang = "ar" }: { id: stri
 
         <div className="container" style={{ position: "relative", zIndex: 2 }}>
           <Link href={lang === "en" ? "/en/services" : "/services"} style={{ color: "var(--color-accent)", textDecoration: "none", display: "inline-block", marginBottom: "1rem" }}>
-            {lang === "en" ? "? Back to Services" : "❯ العودة إلى الخدمات"}
+            {lang === "en" ? "← Back to Services" : "❯ العودة إلى الخدمات"}
           </Link>
-          <h1 style={{ fontSize: "3.5rem", marginBottom: "1rem", color: "#FFFFFF", fontWeight: "bold" }}>{title}</h1>
+          <h1 className="page-hero-title" style={{ marginBottom: "1rem", color: "#FFFFFF", fontWeight: "bold" }}>{title}</h1>
           <div style={{ width: "80px", height: "4px", backgroundColor: "var(--color-accent)", margin: "0 auto", boxShadow: "0 2px 5px rgba(0,0,0,0.3)" }}></div>
         </div>
       </section>
@@ -65,7 +77,7 @@ export default async function ServiceDetailsPage({ id, lang = "ar" }: { id: stri
       <section className="py-xl" style={{ backgroundColor: "var(--color-bg-body)" }}>
         <div className="container">
           <div style={{ marginBottom: "var(--spacing-xl)" }}>
-            <div 
+            <article
               className="service-content"
               style={{ fontSize: "1.1rem", lineHeight: "1.8", color: "var(--color-text-main)" }}
               dangerouslySetInnerHTML={{ __html: parseMarkdown(content) }} 
@@ -77,7 +89,7 @@ export default async function ServiceDetailsPage({ id, lang = "ar" }: { id: stri
             <p style={{ marginBottom: "var(--spacing-lg)", color: "var(--color-text-muted)" }}>{lang === "en" ? "Get a free consultation regarding this service" : "احصل على استشارة مجانية بخصوص هذه الخدمة"}</p>
             <div style={{ display: "flex", justifyContent: "center", gap: "1rem", flexWrap: "wrap" }}>
               <a 
-                href={`https://wa.me/${(settings.contact_whatsapp || settings.whatsapp || '201155729429').replace(/[^0-9]/g, "")}?text=${encodeURIComponent(lang === "en" ? `Hello, I want to inquire about ${title}` : `مرحباً، أود الاستفسار عن ${title}`)}`}
+                href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent(lang === "en" ? `Hello, I want to inquire about ${title}` : `مرحباً، أود الاستفسار عن ${title}`)}`}
                 target="_blank" 
                 rel="noopener noreferrer" 
                 className="btn btn-primary text-white"

@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# موقع AFC
 
-## Getting Started
+موقع ثنائي اللغة لشركة AFC، مبني بـ Next.js كتصدير ثابت، مع واجهات PHP لإدارة المحتوى والتحليلات الأساسية على الاستضافة.
 
-First, run the development server:
+## التشغيل والتحقق
+
+يتطلب المشروع Node.js 20 أو أحدث.
 
 ```bash
+npm ci
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+فحوص الجودة الكاملة:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run check
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+يشمل ذلك فحص الأسلوب، اختبارات الوحدات، فحص TypeScript، ثم إنشاء النسخة الثابتة داخل `out/`.
 
-## Learn More
+لضغط صور JPEG الجديدة قبل النشر:
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run optimize:images
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## بنية الموقع
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- الصفحات العربية في المسار الرئيسي، والإنجليزية تحت `/en/`.
+- الخدمات الثماني لها روابط وصفية ثابتة، بينما تبقى الروابط القديمة متاحة للتوافق ومعلّمة بعدم الفهرسة.
+- البيانات تأتي من واجهات PHP عند توفرها، مع محتوى ثابت آمن أثناء البناء إذا تعذر الاتصال.
+- نموذج التواصل يفتح رسالة مكتملة في WhatsApp ولا يخزن حقول النموذج في الموقع.
+- لوحة الإدارة متاحة من `/admin/` وتستخدم جلسات عشوائية محدودة بثماني ساعات.
 
-## Deploy on Vercel
+## إعداد PHP محليًا
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+أنشئ ملفًا غير متعقب باسم `public/api/config.local.php`:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```php
+<?php
+$db_host = 'localhost';
+$db_user = 'database_user';
+$db_pass = 'database_password';
+$db_name = 'database_name';
+$admin_username = 'admin';
+$admin_password_hash = '$2y$...';
+```
+
+أنشئ قيمة `admin_password_hash` بواسطة `password_hash` في PHP، ولا تضع كلمة المرور الخام أو بيانات قاعدة البيانات في Git.
+
+ملفات الصيانة `seed.php` و`migrate.php` محجوبة عبر الويب. عند الحاجة إليها، شغّلها مرة واحدة من SSH على الاستضافة مع متغير العملية `AFC_ALLOW_MAINTENANCE=1`.
+
+## النشر
+
+مسار GitHub Actions يبني الموقع ويفحصه، ينشر النسخة العامة الخالية من الأسرار إلى فرع `production`، ثم ينشئ إعداد قاعدة البيانات مؤقتًا داخل ناتج التشغيل ويرفعه عبر FTPS.
+
+الأسرار المطلوبة في GitHub:
+
+- `NEXT_PUBLIC_API_URL`
+- `FTP_SERVER`, `FTP_USERNAME`, `FTP_PASSWORD`
+- `DB_HOST`, `DB_USER`, `DB_PASS`, `DB_NAME`
+
+أضف كذلك:
+
+- `ADMIN_USERNAME`
+- `ADMIN_PASSWORD_HASH`
+
+هاتان القيمتان ضروريتان للتثبيت الجديد أو إذا كانت قاعدة البيانات القديمة ما زالت تحتوي كلمة مرور غير مشفرة. بعد حفظ كلمة مرور جديدة مشفرة من لوحة الإدارة تصبح بيانات الجدول صالحة للاستخدام. لا يقبل النظام كلمات المرور المخزنة كنص صريح، ولا تستخدم FTP غير المشفر، ولا تضف `config.php` الناتج أو مجلد الرفع إلى المستودع.

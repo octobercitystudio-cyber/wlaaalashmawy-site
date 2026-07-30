@@ -171,11 +171,11 @@
             </div>
             <div class="mb-3">
                 <label class="form-label text-muted fw-bold">اسم المستخدم</label>
-                <input type="text" id="username" class="form-control form-control-lg bg-light border-0" style="border-radius: 10px;" value="admin">
+                <input type="text" id="username" class="form-control form-control-lg bg-light border-0" style="border-radius: 10px;" autocomplete="username">
             </div>
             <div class="mb-4">
                 <label class="form-label text-muted fw-bold">كلمة المرور</label>
-                <input type="password" id="password" class="form-control form-control-lg bg-light border-0" style="border-radius: 10px;">
+                <input type="password" id="password" class="form-control form-control-lg bg-light border-0" style="border-radius: 10px;" autocomplete="current-password" onkeydown="if(event.key === 'Enter') login()">
             </div>
             <button onclick="login()" class="btn btn-gold w-100 btn-lg">دخول</button>
             <div id="login-error" class="text-danger mt-3 text-center fw-bold" style="display:none;"></div>
@@ -208,28 +208,6 @@
             <a class="nav-link-sidebar text-danger mt-3" onclick="logout()"><i class="bi bi-box-arrow-right"></i> تسجيل الخروج</a>
         </div>
         
-        <script>
-        // Seed Mock Data Function
-        async function seedMockData() {
-            if(!confirm('هل أنت متأكد من رغبتك في ضخ البيانات الافتراضية إلى قاعدة البيانات؟ هذه العملية مخصصة للمرة الأولى فقط عند إنشاء جداول فارغة.')) return;
-            
-            try {
-                showToast('جاري تعبئة قاعدة البيانات...', 'info');
-                const res = await fetch(`${API_URL}/seed.php`);
-                const data = await res.json();
-                
-                if(data.success) {
-                    showToast('تمت تعبئة قاعدة البيانات بنجاح!', 'success');
-                    setTimeout(() => location.reload(), 2000);
-                } else {
-                    showToast('حدث خطأ: ' + data.error, 'danger');
-                }
-            } catch (e) {
-                showToast('تعذر الاتصال بالخادم لضخ البيانات.', 'danger');
-            }
-        }
-        </script>
-
         <!-- Main Content -->
         <div class="main-content">
             
@@ -470,8 +448,8 @@
                             </div>
                             <div class="mb-3">
                                 <label class="form-label fw-bold">كلمة المرور الجديدة</label>
-                                <input type="text" class="form-control" id="setting_admin_password" dir="ltr">
-                                <small class="text-muted">الرقم السري الافتراضي: Wlaa@2026</small>
+                                <input type="password" class="form-control" id="setting_admin_password" dir="ltr" autocomplete="new-password" minlength="12" placeholder="اتركها فارغة للاحتفاظ بكلمة المرور الحالية">
+                                <small class="text-muted">استخدم 12 حرفًا على الأقل. لا تُعرض كلمة المرور الحالية داخل اللوحة.</small>
                             </div>
                         </div>
                     </div>
@@ -495,14 +473,6 @@
 <label class="form-label fw-bold">وصف الموقع (English) Meta Description</label>
 <textarea class="form-control" id="setting_seo_desc_en" rows="3" dir="ltr"></textarea>
 </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-md-12 mt-2">
-                        <div class="card p-4 border-primary shadow-sm" style="background-color: #f8fbff;">
-                            <h5 class="fw-bold mb-3 text-primary"><i class="bi bi-database-fill-down"></i> تعبئة قاعدة البيانات (للمرة الأولى فقط)</h5>
-                            <p class="text-muted mb-3">استخدم هذا الزر لضخ جميع النصوص، الخدمات، القطاعات والمميزات الافتراضية داخل جداول قاعدة البيانات الخاصة بالاستضافة في حال كانت فارغة. هذا سيتيح لك إمكانية التعديل عليها مباشرة من لوحة التحكم بدلاً من إضافتها من الصفر.</p>
-                            <button class="btn btn-primary" style="width:fit-content" onclick="seedMockData()"><i class="bi bi-cloud-arrow-down"></i> تعبئة البيانات الأساسية الآن</button>
                         </div>
                     </div>
                 </div>
@@ -580,6 +550,13 @@
                                     <input type="text" class="form-control mb-2" id="item-icon" dir="ltr">
                                     <label class="form-label fw-bold mt-2" id="lbl-icon-en">Value / Position (English)</label>
                                     <input type="text" class="form-control" id="item-icon_en" dir="ltr">
+                                </div>
+                                <div class="mb-3" id="div-verified" style="display:none;">
+                                    <div class="form-check form-switch">
+                                        <input class="form-check-input" type="checkbox" role="switch" id="item-verified">
+                                        <label class="form-check-label fw-bold" for="item-verified">شهادة موثقة ومصرح بنشرها</label>
+                                    </div>
+                                    <small class="text-muted">لن تظهر الشهادة للزوار قبل تفعيل هذا الخيار بعد التحقق من صحتها وموافقة صاحبها.</small>
                                 </div>
                                 <div class="mb-3" id="div-image" style="display:none;">
                                     <label class="form-label fw-bold">الصورة البارزة (أو صورة اليوتيوب)</label>
@@ -666,6 +643,47 @@
         let mediaPickerTargetInputId = null, activeSummernote = null;
         let savedArticleCategories = [];
 
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+
+        function plainText(value) {
+            return String(value ?? '')
+                .replace(/<[^>]*>/g, ' ')
+                .replace(/\s+/g, ' ')
+                .trim();
+        }
+
+        function authHeaders(extra = {}) {
+            const token = localStorage.getItem('token');
+            return token
+                ? { ...extra, 'Authorization': `Bearer ${token}` }
+                : { ...extra };
+        }
+
+        async function authorizedFetch(url, options = {}) {
+            const response = await fetch(url, {
+                ...options,
+                headers: authHeaders(options.headers || {})
+            });
+
+            if (response.status === 401) {
+                localStorage.removeItem('token');
+                document.getElementById('dashboard-screen').style.display = 'none';
+                document.getElementById('login-screen').style.display = 'flex';
+                document.getElementById('login-error').innerText = 'انتهت الجلسة. سجل الدخول مرة أخرى.';
+                document.getElementById('login-error').style.display = 'block';
+                throw new Error('Unauthorized');
+            }
+
+            return response;
+        }
+
         function showToast(msg, isError = false) {
             const toastEl = document.getElementById('liveToast');
             document.getElementById('toastMessage').innerText = msg;
@@ -677,7 +695,7 @@
             modal = new bootstrap.Modal(document.getElementById('genericModal'));
             mediaPickerModal = new bootstrap.Modal(document.getElementById('mediaPickerModal'));
             categoriesModal = new bootstrap.Modal(document.getElementById('categoriesModal'));
-            if(localStorage.getItem('token')) showDashboard();
+            if(localStorage.getItem('token')) restoreSession();
             
             const summernoteOptionsAR = {
                 height: 300, direction: 'rtl',
@@ -773,8 +791,7 @@
             if(tabId === 'media') loadMedia();
             
             if(tabId === 'visual-editor') {
-                const token = localStorage.getItem('token');
-                const targetUrl = `/?edit_mode=true&token=${token}`;
+                const targetUrl = '/?edit_mode=true';
                 const iframe = document.getElementById('visual-editor-iframe');
                 if(!iframe.src || iframe.src === 'about:blank' || !iframe.src.includes('edit_mode=true')) {
                     iframe.src = targetUrl;
@@ -783,8 +800,7 @@
         }
 
         function openVisualEditorInNewTab() {
-            const token = localStorage.getItem('token');
-            window.open(`/?edit_mode=true&token=${token}`, '_blank');
+            window.open('/?edit_mode=true', '_blank', 'noopener');
         }
 
         function switchInnerTab(section, innerTab) {
@@ -799,13 +815,42 @@
             const usr = document.getElementById('username').value;
             const pwd = document.getElementById('password').value;
             try {
-                const res = await fetch(API_URL + '/login.php', { method: 'POST', body: JSON.stringify({ username: usr, password: pwd }) });
+                const res = await fetch(API_URL + '/login.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: usr, password: pwd })
+                });
                 const data = await res.json();
-                if(data.token) { localStorage.setItem('token', data.token); showDashboard(); }
+                if(data.token) {
+                    localStorage.setItem('token', data.token);
+                    document.getElementById('password').value = '';
+                    showDashboard();
+                }
                 else { document.getElementById('login-error').innerText = data.error || 'خطأ في تسجيل الدخول'; document.getElementById('login-error').style.display='block'; }
             } catch(e) { showToast('فشل الاتصال', true); }
         }
-        function logout() { localStorage.removeItem('token'); location.reload(); }
+
+        async function restoreSession() {
+            try {
+                const response = await authorizedFetch(`${API_URL}/login.php`);
+                if (response.ok) showDashboard();
+            } catch (e) {
+                // authorizedFetch restores the login screen for expired sessions.
+            }
+        }
+
+        async function logout() {
+            try {
+                await authorizedFetch(`${API_URL}/login.php`, { method: 'DELETE' });
+            } catch (e) {
+                // Clear the local session even if the server is unavailable.
+            } finally {
+                localStorage.removeItem('token');
+                sessionStorage.removeItem('admin_token');
+                sessionStorage.removeItem('edit_mode');
+                location.reload();
+            }
+        }
 
         function showDashboard() {
             document.getElementById('login-screen').style.display = 'none';
@@ -817,7 +862,7 @@
         // Analytics
         async function loadAnalytics() {
             try {
-                const res = await fetch(`${API_URL}/analytics.php`, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+                const res = await authorizedFetch(`${API_URL}/analytics.php`);
                 const stats = await res.json();
                 document.getElementById('stat-total-visits').innerText = stats.total_visits || '0';
                 document.getElementById('stat-unique-visitors').innerText = stats.unique_visitors || '0';
@@ -863,7 +908,27 @@
                         }
 
                         const tr = document.createElement('tr');
-                        tr.innerHTML = `<td class="text-start fw-bold" style="color: var(--primary)">${pageName} <br><small class="text-muted" dir="ltr">${page.page_path}</small></td><td class="fw-bold" style="font-size: 1.1rem">${page.total_views}</td><td class="fw-bold text-success" style="font-size: 1.1rem">${page.unique_views}</td>`;
+                        const nameCell = document.createElement('td');
+                        nameCell.className = 'text-start fw-bold';
+                        nameCell.style.color = 'var(--primary)';
+                        nameCell.append(document.createTextNode(pageName), document.createElement('br'));
+                        const path = document.createElement('small');
+                        path.className = 'text-muted';
+                        path.dir = 'ltr';
+                        path.textContent = page.page_path;
+                        nameCell.appendChild(path);
+
+                        const totalCell = document.createElement('td');
+                        totalCell.className = 'fw-bold';
+                        totalCell.style.fontSize = '1.1rem';
+                        totalCell.textContent = String(page.total_views);
+
+                        const uniqueCell = document.createElement('td');
+                        uniqueCell.className = 'fw-bold text-success';
+                        uniqueCell.style.fontSize = '1.1rem';
+                        uniqueCell.textContent = String(page.unique_views);
+
+                        tr.append(nameCell, totalCell, uniqueCell);
                         tbody.appendChild(tr);
                     });
                 }
@@ -882,7 +947,18 @@
             list.forEach(val => {
                 const div = document.createElement('div');
                 div.className = 'dynamic-list-item';
-                div.innerHTML = `<input type="text" class="form-control" dir="ltr" value="${val}"><button class="btn btn-outline-danger" onclick="this.parentElement.remove()"><i class="bi bi-trash"></i></button>`;
+                const input = document.createElement('input');
+                input.type = type === 'email' ? 'email' : 'tel';
+                input.className = 'form-control';
+                input.dir = 'ltr';
+                input.value = String(val);
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'btn btn-outline-danger';
+                button.setAttribute('aria-label', 'حذف');
+                button.innerHTML = '<i class="bi bi-trash" aria-hidden="true"></i>';
+                button.addEventListener('click', () => div.remove());
+                div.append(input, button);
                 container.appendChild(div);
             });
         }
@@ -899,7 +975,7 @@
         // Settings
         async function loadSettings() {
             try {
-                const res = await fetch(`${API_URL}/settings.php`, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+                const res = await authorizedFetch(`${API_URL}/settings.php`);
                 const s = await res.json();
                 if (s.article_categories) {
                     try { savedArticleCategories = JSON.parse(s.article_categories); } catch(e) { savedArticleCategories = []; }
@@ -925,11 +1001,11 @@
                     seo_title_en: "AFC",
                     seo_desc: "شريكك الموثوق في تقديم حلول محاسبية وضريبية متكاملة لضمان نجاح واستدامة أعمالك.",
                     seo_desc_en: "Your trusted partner in providing comprehensive accounting and tax solutions.",
-                    social_facebook: "https://facebook.com",
-                    social_instagram: "https://instagram.com",
-                    social_youtube: "https://youtube.com",
-                    social_linkedin: "https://linkedin.com",
-                    social_tiktok: "https://tiktok.com"
+                    social_facebook: "",
+                    social_instagram: "",
+                    social_youtube: "",
+                    social_linkedin: "",
+                    social_tiktok: ""
                 };
                 
                 ['hero_title', 'hero_subtitle', 'hero_title_en', 'hero_subtitle_en', 'contact_address', 'contact_address_en', 'contact_map', 'social_facebook', 'social_instagram', 'social_youtube', 'social_linkedin', 'social_tiktok', 'admin_username', 'admin_password', 'seo_title', 'seo_desc', 'seo_title_en', 'seo_desc_en'].forEach(k => {
@@ -972,9 +1048,24 @@
 
         async function sendSettings(data) {
             try {
-                const res = await fetch(API_URL + '/settings.php', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('token') }, body: JSON.stringify(data) });
-                if(res.ok) showToast('تم الحفظ بنجاح!');
-                else showToast('حدث خطأ', true);
+                const res = await authorizedFetch(API_URL + '/settings.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await res.json();
+                if(res.ok) {
+                    document.getElementById('setting_admin_password').value = '';
+                    if (result.reauthenticate) {
+                        localStorage.removeItem('token');
+                        showToast('تم الحفظ. سجل الدخول مجددًا بالبيانات الجديدة.');
+                        setTimeout(() => location.reload(), 1500);
+                    } else {
+                        showToast('تم الحفظ بنجاح!');
+                    }
+                } else {
+                    showToast(result.error || 'حدث خطأ', true);
+                }
             } catch(e) { showToast('خطأ اتصال', true); }
         }
 
@@ -985,9 +1076,19 @@
         }
 
         async function loadItems(type) {
-            const res = await fetch(`${API_URL}/${type}.php`);
-            dataStore[type] = await res.json();
-            renderTable(type);
+            try {
+                const res = await authorizedFetch(`${API_URL}/${type}.php`);
+                const data = await res.json();
+                if (!res.ok || !Array.isArray(data)) {
+                    throw new Error(data.error || 'Invalid response');
+                }
+                dataStore[type] = data;
+                renderTable(type);
+            } catch (error) {
+                dataStore[type] = [];
+                renderTable(type);
+                showToast('تعذر تحميل بعض بيانات الموقع', true);
+            }
         }
 
         function renderTable(type) {
@@ -996,15 +1097,24 @@
             tbody.innerHTML = dataStore[type].length ? '' : `<tr><td colspan="4" class="text-center text-muted py-3">لا توجد بيانات</td></tr>`;
             dataStore[type].forEach(item => {
                 let cols = '';
-                if(type === 'articles') cols = `<td>${item.title}</td><td>${item.category}</td>`;
-                else if(type === 'services' || type === 'sectors') cols = `<td>${item.title}</td>${type==='services'?`<td>${(item.description||'').substring(0,30)}...</td>`:''}`;
-                else if(type === 'features') cols = `<td>${item.title}</td><td>${(item.description||'').substring(0,30)}...</td><td><i class="bi bi-${item.icon}"></i></td>`;
-                else if(type === 'stats') cols = `<td>${item.title}</td><td>${item.value}</td>`;
-                else if(type === 'testimonials') cols = `<td>${item.name}</td><td>${item.position}</td><td>${(item.content||'').substring(0,30)}...</td>`;
+                if(type === 'articles') cols = `<td>${escapeHtml(item.title)}</td><td>${escapeHtml(item.category)}</td>`;
+                else if(type === 'services' || type === 'sectors') cols = `<td>${escapeHtml(item.title)}</td>${type==='services'?`<td>${escapeHtml(plainText(item.description).substring(0,30))}...</td>`:''}`;
+                else if(type === 'features') {
+                    const icon = /^[A-Za-z][A-Za-z0-9-]{0,99}$/.test(item.icon || '') ? item.icon : 'circle';
+                    cols = `<td>${escapeHtml(item.title)}</td><td>${escapeHtml(plainText(item.description).substring(0,30))}...</td><td><i class="bi bi-${icon}"></i></td>`;
+                }
+                else if(type === 'stats') cols = `<td>${escapeHtml(item.title)}</td><td>${escapeHtml(item.value)}</td>`;
+                else if(type === 'testimonials') {
+                    const verification = Number(item.is_verified) === 1
+                        ? '<span class="badge text-bg-success">موثقة</span>'
+                        : '<span class="badge text-bg-secondary">غير منشورة</span>';
+                    cols = `<td>${escapeHtml(item.name)}<br>${verification}</td><td>${escapeHtml(item.position)}</td><td>${escapeHtml(plainText(item.content).substring(0,30))}...</td>`;
+                }
 
+                const safeId = Number.isInteger(Number(item.id)) ? Number(item.id) : 0;
                 tbody.innerHTML += `<tr>${cols}<td>
-                    <button class="btn btn-sm btn-light border text-primary" onclick="editItem('${type}', ${item.id})"><i class="bi bi-pencil"></i></button>
-                    <button class="btn btn-sm btn-light border text-danger" onclick="deleteItem('${type}', ${item.id})"><i class="bi bi-trash"></i></button>
+                    <button class="btn btn-sm btn-light border text-primary" onclick="editItem('${type}', ${safeId})"><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-sm btn-light border text-danger" onclick="deleteItem('${type}', ${safeId})"><i class="bi bi-trash"></i></button>
                 </td></tr>`;
             });
         }
@@ -1016,11 +1126,12 @@
 
         function extractYoutubeId(url) {
             if (!url) return '';
-            if (url.includes('youtu.be/')) return url.split('youtu.be/')[1].split('?')[0].split('&')[0];
-            if (url.includes('watch?v=')) return url.split('watch?v=')[1].split('&')[0];
-            if (url.includes('embed/')) return url.split('embed/')[1].split('?')[0].split('&')[0];
-            if (url.includes('shorts/')) return url.split('shorts/')[1].split('?')[0].split('&')[0];
-            return '';
+            let videoId = '';
+            if (url.includes('youtu.be/')) videoId = url.split('youtu.be/')[1].split('?')[0].split('&')[0];
+            else if (url.includes('watch?v=')) videoId = url.split('watch?v=')[1].split('&')[0];
+            else if (url.includes('embed/')) videoId = url.split('embed/')[1].split('?')[0].split('&')[0];
+            else if (url.includes('shorts/')) videoId = url.split('shorts/')[1].split('?')[0].split('&')[0];
+            return /^[A-Za-z0-9_-]{6,20}$/.test(videoId) ? videoId : '';
         }
 
         function onYoutubeUrlInput() {
@@ -1128,12 +1239,17 @@
             list.innerHTML = cats.map((c, idx) => `
                 <li class="list-group-item d-flex justify-content-between align-items-center py-2">
                     <div>
-                        <span class="fw-bold">${c.ar}</span>
-                        <span class="text-muted ms-2 small" dir="ltr">(${c.en})</span>
+                        <span class="fw-bold">${escapeHtml(c.ar)}</span>
+                        <span class="text-muted ms-2 small" dir="ltr">(${escapeHtml(c.en)})</span>
                     </div>
-                    <button class="btn btn-sm btn-outline-danger" onclick="deleteArticleCategory('${c.ar.replace(/'/g, "\\'")}')" title="حذف القسم"><i class="bi bi-trash"></i></button>
+                    <button class="btn btn-sm btn-outline-danger" onclick="deleteArticleCategoryByIndex(${idx})" title="حذف القسم"><i class="bi bi-trash"></i></button>
                 </li>
             `).join('');
+        }
+
+        function deleteArticleCategoryByIndex(index) {
+            const category = getMergedArticleCategories()[index];
+            if (category) deleteArticleCategory(category.ar);
         }
 
         async function addNewCategoryFromModal() {
@@ -1157,9 +1273,9 @@
                 return;
             }
             savedArticleCategories = cats;
-            await fetch(API_URL + '/settings.php', {
+            await authorizedFetch(API_URL + '/settings.php', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('token') },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ article_categories: JSON.stringify(savedArticleCategories) })
             });
         }
@@ -1167,9 +1283,9 @@
         async function deleteArticleCategory(arName) {
             if (!confirm(`هل أنت متأكد من حذف القسم "${arName}"؟\nملاحظة: المقالات المرتبطة بهذا القسم لن تُحذف ولكن يفضل تعديل قسمها إذا رغبت.`)) return;
             savedArticleCategories = getMergedArticleCategories().filter(c => c.ar !== arName);
-            await fetch(API_URL + '/settings.php', {
+            await authorizedFetch(API_URL + '/settings.php', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('token') },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ article_categories: JSON.stringify(savedArticleCategories) })
             });
             renderCategoriesModalList();
@@ -1180,19 +1296,28 @@
             const sel = document.getElementById('item-category-select');
             if (!sel) return;
             const cats = getMergedArticleCategories();
-            let html = '<option value="">-- اختر قسم المقال --</option>';
+            sel.replaceChildren();
+            sel.add(new Option('-- اختر قسم المقال --', ''));
             let matched = false;
             cats.forEach((c, idx) => {
-                const isSel = (selectedAr && c.ar === selectedAr) ? 'selected' : '';
-                if (isSel) matched = true;
-                html += `<option value="${idx}" data-ar="${c.ar}" data-en="${c.en}" ${isSel}>${c.ar} (${c.en})</option>`;
+                const option = new Option(`${c.ar} (${c.en})`, String(idx));
+                option.dataset.ar = c.ar;
+                option.dataset.en = c.en;
+                option.selected = Boolean(selectedAr && c.ar === selectedAr);
+                if (option.selected) matched = true;
+                sel.add(option);
             });
             if (selectedAr && !matched) {
-                html += `<option value="custom_sel" data-ar="${selectedAr}" data-en="${selectedEn}" selected>${selectedAr} (${selectedEn || selectedAr})</option>`;
+                const option = new Option(`${selectedAr} (${selectedEn || selectedAr})`, 'custom_sel');
+                option.dataset.ar = selectedAr;
+                option.dataset.en = selectedEn;
+                option.selected = true;
+                sel.add(option);
                 matched = true;
             }
-            html += `<option value="new" class="fw-bold text-primary">+ إضافة قسم جديد...</option>`;
-            sel.innerHTML = html;
+            const newOption = new Option('+ إضافة قسم جديد...', 'new');
+            newOption.className = 'fw-bold text-primary';
+            sel.add(newOption);
             
             if (!selectedAr && cats.length > 0) {
                 sel.selectedIndex = 1;
@@ -1221,6 +1346,8 @@
             document.getElementById('item-id').value = ''; document.getElementById('item-type').value = type;
             ['title','icon','description', 'title_en', 'description_en'].forEach(id => { if(document.getElementById(`item-${id}`)) document.getElementById(`item-${id}`).value = ''; });
             document.getElementById('item-image').value = '/images/placeholder.jpg'; document.getElementById('item-image-preview').src = '/images/placeholder.jpg';
+            document.getElementById('item-verified').checked = false;
+            document.getElementById('div-verified').style.display = type === 'testimonial' ? 'block' : 'none';
             $('#item-content').summernote('code', '');
             $('#item-content_en').summernote('code', '');
             
@@ -1246,7 +1373,7 @@
             document.getElementById('item-id').value = item.id;
             
             if(type === 'stat') { document.getElementById('item-title').value = item.title; document.getElementById('item-title_en').value = item.title_en || ''; document.getElementById('item-icon').value = item.value; if(document.getElementById('item-icon_en')) document.getElementById('item-icon_en').value = item.value_en || ''; }
-            else if(type === 'testimonial') { document.getElementById('item-title').value = item.name; document.getElementById('item-title_en').value = item.name_en || ''; document.getElementById('item-icon').value = item.position; if(document.getElementById('item-icon_en')) document.getElementById('item-icon_en').value = item.position_en || ''; $('#item-content').summernote('code', item.content); $('#item-content_en').summernote('code', item.content_en || ''); }
+            else if(type === 'testimonial') { document.getElementById('item-title').value = item.name; document.getElementById('item-title_en').value = item.name_en || ''; document.getElementById('item-icon').value = item.position; if(document.getElementById('item-icon_en')) document.getElementById('item-icon_en').value = item.position_en || ''; document.getElementById('item-verified').checked = Number(item.is_verified) === 1; $('#item-content').summernote('code', item.content); $('#item-content_en').summernote('code', item.content_en || ''); }
             else { 
                 document.getElementById('item-title').value = item.title; $('#item-content').summernote('code', item.content); 
                 document.getElementById('item-title_en').value = item.title_en || ''; $('#item-content_en').summernote('code', item.content_en || '');
@@ -1286,6 +1413,7 @@
                 data.position_en = document.getElementById('item-icon_en') ? document.getElementById('item-icon_en').value : '';
                 data.content = $('#item-content').summernote('code'); 
                 data.content_en = $('#item-content_en').length ? $('#item-content_en').summernote('code') : '';
+                data.is_verified = document.getElementById('item-verified').checked;
             }
             else { 
                 data.title = document.getElementById('item-title').value; 
@@ -1321,31 +1449,87 @@
             }
             
             try {
-                await fetch(`${API_URL}/${typePlural}.php`, { method: id ? 'PUT' : 'POST', headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + localStorage.getItem('token') }, body: JSON.stringify(data) });
-                showToast('تم الحفظ'); modal.hide(); loadItems(typePlural);
+                const response = await authorizedFetch(`${API_URL}/${typePlural}.php`, {
+                    method: id ? 'PUT' : 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+                const result = await response.json();
+                if (!response.ok) {
+                    showToast(result.error || 'تعذر حفظ البيانات', true);
+                    return;
+                }
+                showToast('تم الحفظ');
+                modal.hide();
+                loadItems(typePlural);
             } catch(e) { showToast('خطأ', true); }
         }
 
         async function deleteItem(typePlural, id) {
             if(confirm('متأكد؟')) {
-                await fetch(`${API_URL}/${typePlural}.php?id=${id}`, { method: 'DELETE', headers: { 'Authorization': 'Bearer ' + localStorage.getItem('token') } });
-                loadItems(typePlural); showToast('تم الحذف');
+                const response = await authorizedFetch(`${API_URL}/${typePlural}.php?id=${encodeURIComponent(id)}`, { method: 'DELETE' });
+                const result = await response.json();
+                if (!response.ok) {
+                    showToast(result.error || 'تعذر حذف العنصر', true);
+                    return;
+                }
+                loadItems(typePlural);
+                showToast('تم الحذف');
             }
         }
 
         // Media
         async function loadMedia() {
-            const res = await fetch(`${API_URL}/media.php`, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+            const res = await authorizedFetch(`${API_URL}/media.php`);
             const files = await res.json();
-            const g = document.getElementById('media-gallery'); g.innerHTML = '';
-            files.forEach(f => g.innerHTML += `<div class="col-md-2 col-4"><div class="card overflow-hidden"><img src="${f.url}" style="height:100px;object-fit:cover;"><div class="btn-group w-100"><button class="btn btn-sm btn-light" onclick="navigator.clipboard.writeText('${f.url}')">نسخ</button><button class="btn btn-sm btn-danger" onclick="deleteMedia('${f.name}')">حذف</button></div></div></div>`);
+            const g = document.getElementById('media-gallery');
+            g.replaceChildren();
+            files.forEach(f => g.appendChild(createMediaCard(f, false)));
         }
         async function openMediaPicker(targetId, isEditor = false) {
             mediaPickerTargetInputId = targetId; mediaPickerModal.show();
-            const res = await fetch(`${API_URL}/media.php`, { headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } });
+            const res = await authorizedFetch(`${API_URL}/media.php`);
             const files = await res.json();
-            const g = document.getElementById('media-picker-gallery'); g.innerHTML = '';
-            files.forEach(f => g.innerHTML += `<div class="col-md-2 col-4"><img src="${f.url}" class="img-thumbnail" style="cursor:pointer;height:100px;width:100%;object-fit:cover;" onclick="selectMediaForPicker('${f.url}', ${isEditor})"></div>`);
+            const g = document.getElementById('media-picker-gallery');
+            g.replaceChildren();
+            files.forEach(f => g.appendChild(createMediaCard(f, true, isEditor)));
+        }
+
+        function createMediaCard(file, picker, isEditor = false) {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'col-md-2 col-4';
+            const image = document.createElement('img');
+            image.src = file.url;
+            image.alt = file.name || '';
+            image.loading = 'lazy';
+            image.style.cssText = 'height:100px;width:100%;object-fit:cover;';
+
+            if (picker) {
+                image.className = 'img-thumbnail';
+                image.style.cursor = 'pointer';
+                image.addEventListener('click', () => selectMediaForPicker(file.url, isEditor));
+                wrapper.appendChild(image);
+                return wrapper;
+            }
+
+            const card = document.createElement('div');
+            card.className = 'card overflow-hidden';
+            const controls = document.createElement('div');
+            controls.className = 'btn-group w-100';
+            const copyButton = document.createElement('button');
+            copyButton.type = 'button';
+            copyButton.className = 'btn btn-sm btn-light';
+            copyButton.textContent = 'نسخ';
+            copyButton.addEventListener('click', () => navigator.clipboard.writeText(file.url));
+            const deleteButton = document.createElement('button');
+            deleteButton.type = 'button';
+            deleteButton.className = 'btn btn-sm btn-danger';
+            deleteButton.textContent = 'حذف';
+            deleteButton.addEventListener('click', () => deleteMedia(file.name));
+            controls.append(copyButton, deleteButton);
+            card.append(image, controls);
+            wrapper.appendChild(card);
+            return wrapper;
         }
         function selectMediaForPicker(url, isEditor) {
             if(isEditor && activeSummernote) activeSummernote.invoke('editor.insertImage', url);
@@ -1353,7 +1537,15 @@
             mediaPickerModal.hide();
         }
         async function deleteMedia(filename) {
-            if(confirm('متأكد؟')) { await fetch(`${API_URL}/media.php?file=${filename}`, { method: 'DELETE', headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` } }); loadMedia(); }
+            if(confirm('متأكد؟')) {
+                const response = await authorizedFetch(`${API_URL}/media.php?file=${encodeURIComponent(filename)}`, { method: 'DELETE' });
+                const result = await response.json();
+                if (!response.ok) {
+                    showToast(result.error || 'تعذر حذف الصورة', true);
+                    return;
+                }
+                loadMedia();
+            }
         }
         async function handleMediaUpload(input) {
             const formData = new FormData(); formData.append('image', input.files[0]);

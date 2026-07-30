@@ -1,6 +1,4 @@
 <?php
-// إعدادات جيت هب للنشر التلقائي للموقع
-// يرجى استبدال YOUR_GITHUB_TOKEN_HERE بالرمز الخاص بك (Personal Access Token) من جيت هب
-$gh_pat = 'YOUR_GITHUB_TOKEN_HERE';
-$gh_repo = 'Kimo0O/Wlaa_Alshmawy'; // اسم المستودع الخاص بك
-?>
+// Safe source template only.
+// The hosting deployment creates a runtime-only config.php after publishing the
+// static production branch. Never commit database credentials or access tokens.
