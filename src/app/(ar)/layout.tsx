@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Amiri, Cairo } from "next/font/google";
+import { Tajawal } from "next/font/google";
 import "../globals.css";
 import ClientTracker from "@/components/ClientTracker";
 import Navbar from "@/components/Navbar";
@@ -8,16 +8,10 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import { fetchSettings, fetchServices } from "@/lib/api";
 import { normalizeWhatsAppNumber, parseSettingList } from "@/lib/contact";
 
-const cairo = Cairo({
-  variable: "--font-cairo",
+const tajawal = Tajawal({
+  variable: "--font-tajawal",
   subsets: ["arabic", "latin"],
-  weight: ["300", "400", "600", "700", "800", "900"],
-});
-
-const amiri = Amiri({
-  variable: "--font-amiri",
-  subsets: ["arabic"],
-  weight: ["400", "700"],
+  weight: ["300", "400", "500", "700", "800", "900"],
 });
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -90,7 +84,7 @@ export default async function ArLayout({
   };
 
   return (
-    <html lang="ar" dir="rtl" className={`${cairo.variable} ${amiri.variable}`}>
+    <html lang="ar" dir="rtl" className={`${tajawal.variable}`}>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
         <a className="skip-link" href="#main-content">انتقل إلى المحتوى الرئيسي</a>

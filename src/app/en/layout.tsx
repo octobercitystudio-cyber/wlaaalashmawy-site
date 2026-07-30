@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Montserrat } from "next/font/google";
 import "../globals.css";
 import ClientTracker from "@/components/ClientTracker";
 import Navbar from "@/components/Navbar";
@@ -8,8 +8,8 @@ import WhatsAppButton from "@/components/WhatsAppButton";
 import { fetchSettings, fetchServices } from "@/lib/api";
 import { normalizeWhatsAppNumber, parseSettingList } from "@/lib/contact";
 
-const inter = Inter({
-  variable: "--font-inter",
+const montserrat = Montserrat({
+  variable: "--font-montserrat",
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800", "900"],
 });
@@ -84,7 +84,7 @@ export default async function EnLayout({
   };
 
   return (
-    <html lang="en" dir="ltr" className={`${inter.variable}`}>
+    <html lang="en" dir="ltr" className={`${montserrat.variable}`}>
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
         <a className="skip-link" href="#main-content">Skip to main content</a>
