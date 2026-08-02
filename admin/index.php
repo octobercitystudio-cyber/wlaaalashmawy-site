@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لوحة التحكم | مكتب العشماوي</title>
+    <title>لوحة التحكم | AFC – العشماوي للاستشارات المالية</title>
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -484,7 +484,7 @@
             <div id="sec-settings" class="section-container">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2 class="fw-bold">إعدادات الموقع العامة</h2>
-                    <button class="btn btn-gold" onclick="saveSettingsGroup(['admin_username', 'admin_password', 'seo_title', 'seo_desc', 'seo_title_en', 'seo_desc_en'])">حفظ كافة الإعدادات</button>
+                    <button class="btn btn-gold" onclick="saveAllSettings()">حفظ كافة الإعدادات</button>
                 </div>
                 
                 <div class="row g-4">
@@ -522,6 +522,14 @@
 <label class="form-label fw-bold">وصف الموقع (English) Meta Description</label>
 <textarea class="form-control" id="setting_seo_desc_en" rows="3" dir="ltr"></textarea>
 </div>
+                            <div class="mb-3"><label class="form-label fw-bold">الكلمات المفتاحية</label><textarea class="form-control" id="setting_seo_keywords" rows="4"></textarea></div>
+                            <div class="mb-3"><label class="form-label fw-bold">وصف Google Business</label><textarea class="form-control" id="setting_google_business_description" rows="6"></textarea></div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <div class="card p-4">
+                            <h5 class="fw-bold mb-3"><i class="bi bi-file-earmark-text text-primary"></i> عناوين ووصف الصفحات والخدمات</h5>
+                            <div id="seo-pages-fields" class="row g-3"></div>
                         </div>
                     </div>
                 </div>
@@ -708,11 +716,24 @@
             ['founder_role', 'صفة صاحبة المكتب'], ['vision_title', 'عنوان الرؤية'], ['mission_title', 'عنوان الرسالة'],
             ['contact_page_title', 'عنوان صفحة التواصل'], ['contact_page_subtitle', 'وصف صفحة التواصل'],
             ['contact_form_title', 'عنوان نموذج التواصل'], ['footer_description', 'وصف الفوتر'],
+            ['home_seo_paragraph_1', 'نص SEO الرئيسي - الفقرة الأولى'],
+            ['home_seo_paragraph_2', 'نص SEO الرئيسي - الفقرة الثانية'],
+            ['home_seo_paragraph_3', 'نص SEO الرئيسي - الفقرة الثالثة'],
+            ['home_seo_paragraph_4', 'نص SEO الرئيسي - الفقرة الرابعة'],
+            ['home_seo_text', 'نص SEO الرئيسي المختصر'], ['home_seo_cta', 'دعوة حجز الاستشارة في نص SEO'],
             ['hero_slide_1_title', 'عنوان السلايدر الأول'], ['hero_slide_1_subtitle', 'وصف السلايدر الأول'],
             ['hero_slide_2_title', 'عنوان السلايدر الثاني'], ['hero_slide_2_subtitle', 'وصف السلايدر الثاني'],
             ['hero_slide_3_title', 'عنوان السلايدر الثالث'], ['hero_slide_3_subtitle', 'وصف السلايدر الثالث']
         ];
         const generalTextKeys = generalTextFields.flatMap(([key]) => [key, `${key}_en`]);
+        const seoPageFields = [
+            ['seo_about', 'صفحة من نحن'], ['seo_services', 'صفحة الخدمات'], ['seo_contact', 'صفحة تواصل معنا'],
+            ['seo_service_1', 'الاستشارات المحاسبية'], ['seo_service_2', 'المراجعة'],
+            ['seo_service_3', 'الاستشارات الضريبية'], ['seo_service_4', 'تأسيس الشركات'],
+            ['seo_service_5', 'الإجراءات الضريبية'], ['seo_service_6', 'الفحص الضريبي'],
+            ['seo_service_7', 'إقامات المستثمرين'], ['seo_service_8', 'التراخيص الصناعية']
+        ];
+        const seoSettingKeys = seoPageFields.flatMap(([key]) => [`${key}_title`, `${key}_desc`]);
 
         function renderGeneralContentFields() {
             const container = document.getElementById('general-content-fields');
@@ -721,6 +742,17 @@
                 container.insertAdjacentHTML('beforeend', `
                     <div class="col-md-6"><label class="form-label fw-bold">${escapeHtml(label)} (عربي)</label><textarea class="form-control" rows="2" id="setting_${key}"></textarea></div>
                     <div class="col-md-6"><label class="form-label fw-bold">${escapeHtml(label)} (English)</label><textarea class="form-control" rows="2" dir="ltr" id="setting_${key}_en"></textarea></div>
+                `);
+            });
+        }
+
+        function renderSeoPageFields() {
+            const container = document.getElementById('seo-pages-fields');
+            if (!container || container.children.length) return;
+            seoPageFields.forEach(([key, label]) => {
+                container.insertAdjacentHTML('beforeend', `
+                    <div class="col-md-6"><label class="form-label fw-bold">${escapeHtml(label)} — SEO Title</label><input type="text" class="form-control" id="setting_${key}_title"></div>
+                    <div class="col-md-6"><label class="form-label fw-bold">${escapeHtml(label)} — Meta Description</label><textarea class="form-control" rows="2" id="setting_${key}_desc"></textarea></div>
                 `);
             });
         }
@@ -775,6 +807,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             renderGeneralContentFields();
+            renderSeoPageFields();
             modal = new bootstrap.Modal(document.getElementById('genericModal'));
             mediaPickerModal = new bootstrap.Modal(document.getElementById('mediaPickerModal'));
             categoriesModal = new bootstrap.Modal(document.getElementById('categoriesModal'));
@@ -1186,7 +1219,7 @@
                     social_tiktok: ""
                 };
                 
-                ['hero_title', 'hero_subtitle', 'hero_title_en', 'hero_subtitle_en', 'contact_address', 'contact_address_en', 'contact_map', 'social_facebook', 'social_instagram', 'social_youtube', 'social_linkedin', 'social_tiktok', 'admin_username', 'admin_password', 'seo_title', 'seo_desc', 'seo_title_en', 'seo_desc_en', ...generalImageKeys, ...generalTextKeys].forEach(k => {
+                ['hero_title', 'hero_subtitle', 'hero_title_en', 'hero_subtitle_en', 'contact_address', 'contact_address_en', 'contact_map', 'social_facebook', 'social_instagram', 'social_youtube', 'social_linkedin', 'social_tiktok', 'admin_username', 'admin_password', 'seo_title', 'seo_desc', 'seo_title_en', 'seo_desc_en', 'seo_keywords', 'google_business_description', ...seoSettingKeys, ...generalImageKeys, ...generalTextKeys].forEach(k => {
                     if(document.getElementById(`setting_${k}`)) document.getElementById(`setting_${k}`).value = s[k] || defaults[k] || '';
                 });
                 
@@ -1216,6 +1249,13 @@
                 if (field) data[key] = field.value;
             });
             await sendSettings(data);
+        }
+
+        async function saveAllSettings() {
+            await saveSettingsGroup([
+                'admin_username', 'admin_password', 'seo_title', 'seo_desc', 'seo_title_en', 'seo_desc_en',
+                'seo_keywords', 'google_business_description', ...seoSettingKeys
+            ]);
         }
 
         async function saveContactSettings() {
