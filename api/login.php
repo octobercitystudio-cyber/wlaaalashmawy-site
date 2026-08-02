@@ -51,7 +51,7 @@ if ((int) $attempts->fetchColumn() >= 5) {
 $stmt = $pdo->query(
     "SELECT setting_key, setting_value
      FROM settings
-     WHERE setting_key IN ('admin_username', 'admin_password')"
+     WHERE setting_key IN ('admin_username', 'admin_password', 'admin_password_source')"
 );
 $settings = [];
 foreach ($stmt->fetchAll() as $row) {
@@ -66,12 +66,18 @@ $configuredPassword = isset($admin_password_hash)
     : (getenv('AFC_ADMIN_PASSWORD_HASH') ?: '');
 $databaseUsername = $settings['admin_username'] ?? '';
 $databasePassword = $settings['admin_password'] ?? '';
+$databasePasswordIsAuthoritative = ($settings['admin_password_source'] ?? '') === 'database';
 $databasePasswordInfo = password_get_info($databasePassword);
 $configuredPasswordInfo = password_get_info($configuredPassword);
 
-if (!empty($configuredPasswordInfo['algo'])) {
+if ($databasePasswordIsAuthoritative && !empty($databasePasswordInfo['algo'])) {
+    $storedUsername = $databaseUsername !== ''
+        ? $databaseUsername
+        : $configuredUsername;
+    $storedPassword = $databasePassword;
+} elseif (!empty($configuredPasswordInfo['algo'])) {
     // The protected deployment credential is authoritative, which also makes
-    // password resets possible without exposing or editing database hashes.
+    // deployment-time recovery possible without exposing database hashes.
     $storedUsername = $configuredUsername !== ''
         ? $configuredUsername
         : $databaseUsername;
