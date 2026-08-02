@@ -69,16 +69,16 @@ $databasePassword = $settings['admin_password'] ?? '';
 $databasePasswordInfo = password_get_info($databasePassword);
 $configuredPasswordInfo = password_get_info($configuredPassword);
 
-if (!empty($databasePasswordInfo['algo'])) {
-    $storedUsername = $databaseUsername;
-    $storedPassword = $databasePassword;
-} elseif (!empty($configuredPasswordInfo['algo'])) {
-    // A deployment secret safely replaces any legacy plain-text database
-    // credential. Plain-text passwords are never accepted for authentication.
+if (!empty($configuredPasswordInfo['algo'])) {
+    // The protected deployment credential is authoritative, which also makes
+    // password resets possible without exposing or editing database hashes.
     $storedUsername = $configuredUsername !== ''
         ? $configuredUsername
         : $databaseUsername;
     $storedPassword = $configuredPassword;
+} elseif (!empty($databasePasswordInfo['algo'])) {
+    $storedUsername = $databaseUsername;
+    $storedPassword = $databasePassword;
 } else {
     $storedUsername = '';
     $storedPassword = '';

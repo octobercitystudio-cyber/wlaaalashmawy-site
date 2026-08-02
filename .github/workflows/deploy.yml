@@ -58,7 +58,7 @@ jobs:
           AFC_DB_PASS: ${{ secrets.DB_PASS }}
           AFC_DB_NAME: ${{ secrets.DB_NAME }}
           AFC_ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
-          AFC_ADMIN_PASSWORD_HASH: ${{ secrets.ADMIN_PASSWORD_HASH }}
+          AFC_ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
         run: |
           php -r '
             $required = [
@@ -73,9 +73,17 @@ jobs:
                 exit(1);
               }
             }
+            $adminUsername = getenv("AFC_ADMIN_USERNAME") ?: "";
+            $adminPassword = getenv("AFC_ADMIN_PASSWORD") ?: "";
+            if (($adminUsername === "") !== ($adminPassword === "")) {
+              fwrite(STDERR, "Both admin deployment secrets must be configured together.\n");
+              exit(1);
+            }
             $optional = [
-              "admin_username" => getenv("AFC_ADMIN_USERNAME") ?: "",
-              "admin_password_hash" => getenv("AFC_ADMIN_PASSWORD_HASH") ?: "",
+              "admin_username" => $adminUsername,
+              "admin_password_hash" => $adminPassword !== ""
+                ? password_hash($adminPassword, PASSWORD_DEFAULT)
+                : "",
             ];
             $config = "<?php\n";
             foreach (array_merge($required, $optional) as $name => $value) {
