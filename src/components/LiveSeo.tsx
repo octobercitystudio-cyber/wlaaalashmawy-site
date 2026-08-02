@@ -7,9 +7,12 @@ import { serviceIdFromSlug } from "@/lib/serviceRoutes";
 
 function setMeta(name: string, content: string) {
   if (!content) return;
-  document
-    .querySelectorAll<HTMLMetaElement>(`meta[name="${name}"]`)
-    .forEach((tag) => { tag.content = content; });
+  const tags = Array.from(
+    document.querySelectorAll<HTMLMetaElement>(`meta[name="${name}"]`),
+  );
+  if (!tags.length) return;
+  tags[0].content = content;
+  tags.slice(1).forEach((tag) => tag.remove());
 }
 
 export default function LiveSeo() {
