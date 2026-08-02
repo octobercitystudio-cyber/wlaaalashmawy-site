@@ -290,6 +290,7 @@
                     <li class="nav-item"><a class="nav-link" onclick="switchInnerTab('home', 'features')"><i class="bi bi-star-fill"></i> المميزات</a></li>
                     <li class="nav-item"><a class="nav-link" onclick="switchInnerTab('home', 'stats')"><i class="bi bi-bar-chart-fill"></i> أرقام النجاح</a></li>
                     <li class="nav-item"><a class="nav-link" onclick="switchInnerTab('home', 'testimonials')"><i class="bi bi-chat-quote-fill"></i> آراء العملاء</a></li>
+                    <li class="nav-item"><a class="nav-link" onclick="switchInnerTab('home', 'content')"><i class="bi bi-pencil-square"></i> نصوص وصور الموقع</a></li>
                 </ul>
 
                 <div id="home-hero" class="inner-tab-content active">
@@ -331,6 +332,30 @@
                             <button class="btn btn-gold btn-sm" onclick="showModal('testimonial')"><i class="bi bi-plus"></i> إضافة رأي</button>
                         </div>
                         <table class="table"><tbody id="testimonials-table"></tbody></table>
+                    </div>
+                </div>
+
+                <div id="home-content" class="inner-tab-content">
+                    <div class="card p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div><h5 class="fw-bold mb-1">النصوص والصور العامة</h5><small class="text-muted">هذه الحقول مرتبطة مباشرة بالموقع باللغتين.</small></div>
+                            <button class="btn btn-gold" onclick="saveGeneralContent()"><i class="bi bi-save"></i> حفظ الكل</button>
+                        </div>
+                        <h6 class="fw-bold text-primary mt-2 mb-3">الهوية والصور الرئيسية</h6>
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6"><label class="form-label fw-bold">لوجو الموقع</label><div class="input-group"><input type="text" class="form-control" id="setting_site_logo" dir="ltr"><button class="btn btn-outline-primary" type="button" onclick="openMediaPicker('setting_site_logo')">اختيار صورة</button></div></div>
+                            <div class="col-md-6"><label class="form-label fw-bold">صورة قسم لماذا تختارنا</label><div class="input-group"><input type="text" class="form-control" id="setting_home_about_image" dir="ltr"><button class="btn btn-outline-primary" type="button" onclick="openMediaPicker('setting_home_about_image')">اختيار صورة</button></div></div>
+                            <div class="col-md-4"><label class="form-label fw-bold">صورة السلايدر الأولى</label><div class="input-group"><input type="text" class="form-control" id="setting_hero_slide_1_image" dir="ltr"><button class="btn btn-outline-primary" type="button" onclick="openMediaPicker('setting_hero_slide_1_image')">اختيار</button></div></div>
+                            <div class="col-md-4"><label class="form-label fw-bold">صورة السلايدر الثانية</label><div class="input-group"><input type="text" class="form-control" id="setting_hero_slide_2_image" dir="ltr"><button class="btn btn-outline-primary" type="button" onclick="openMediaPicker('setting_hero_slide_2_image')">اختيار</button></div></div>
+                            <div class="col-md-4"><label class="form-label fw-bold">صورة السلايدر الثالثة</label><div class="input-group"><input type="text" class="form-control" id="setting_hero_slide_3_image" dir="ltr"><button class="btn btn-outline-primary" type="button" onclick="openMediaPicker('setting_hero_slide_3_image')">اختيار</button></div></div>
+                            <div class="col-md-4"><label class="form-label fw-bold">صورة غلاف من نحن</label><div class="input-group"><input type="text" class="form-control" id="setting_about_hero_image" dir="ltr"><button class="btn btn-outline-primary" type="button" onclick="openMediaPicker('setting_about_hero_image')">اختيار</button></div></div>
+                            <div class="col-md-4"><label class="form-label fw-bold">صورة صاحبة المكتب</label><div class="input-group"><input type="text" class="form-control" id="setting_about_profile_image" dir="ltr"><button class="btn btn-outline-primary" type="button" onclick="openMediaPicker('setting_about_profile_image')">اختيار</button></div></div>
+                            <div class="col-md-4"><label class="form-label fw-bold">غلاف صفحة التواصل</label><div class="input-group"><input type="text" class="form-control" id="setting_contact_hero_image" dir="ltr"><button class="btn btn-outline-primary" type="button" onclick="openMediaPicker('setting_contact_hero_image')">اختيار</button></div></div>
+                            <div class="col-md-6"><label class="form-label fw-bold">غلاف صفحة الخدمات</label><div class="input-group"><input type="text" class="form-control" id="setting_services_hero_image" dir="ltr"><button class="btn btn-outline-primary" type="button" onclick="openMediaPicker('setting_services_hero_image')">اختيار</button></div></div>
+                            <div class="col-md-6"><label class="form-label fw-bold">غلاف صفحة القطاعات</label><div class="input-group"><input type="text" class="form-control" id="setting_sectors_hero_image" dir="ltr"><button class="btn btn-outline-primary" type="button" onclick="openMediaPicker('setting_sectors_hero_image')">اختيار</button></div></div>
+                        </div>
+                        <h6 class="fw-bold text-primary mb-3">عناوين ونصوص الصفحات</h6>
+                        <div id="general-content-fields" class="row g-3"></div>
                     </div>
                 </div>
             </div>
@@ -666,6 +691,39 @@
         let modal, mediaPickerModal, categoriesModal, chartInstance;
         let mediaPickerTargetInputId = null, activeSummernote = null;
         let savedArticleCategories = [];
+        const generalImageKeys = [
+            'site_logo', 'home_about_image', 'hero_slide_1_image', 'hero_slide_2_image', 'hero_slide_3_image',
+            'about_hero_image', 'about_profile_image', 'contact_hero_image', 'services_hero_image', 'sectors_hero_image'
+        ];
+        const generalTextFields = [
+            ['home_services_title', 'عنوان خدمات الرئيسية'], ['home_services_subtitle', 'وصف خدمات الرئيسية'],
+            ['home_why_title', 'عنوان لماذا تختار AFC'], ['testimonials_title', 'عنوان آراء العملاء'],
+            ['testimonials_subtitle', 'وصف آراء العملاء'], ['home_cta_title', 'عنوان الدعوة للتواصل'],
+            ['home_cta_text', 'نص الدعوة للتواصل'], ['services_page_title', 'عنوان صفحة الخدمات'],
+            ['services_page_subtitle', 'وصف صفحة الخدمات'], ['sectors_page_title', 'عنوان صفحة القطاعات'],
+            ['sectors_page_subtitle', 'وصف صفحة القطاعات'], ['articles_page_title', 'عنوان صفحة المقالات'],
+            ['articles_page_subtitle', 'وصف صفحة المقالات'], ['about_page_title', 'عنوان صفحة من نحن'],
+            ['about_licenses_title', 'عنوان التراخيص والعضويات'], ['about_license_1', 'الترخيص أو العضوية الأولى'],
+            ['about_license_2', 'الترخيص أو العضوية الثانية'], ['founder_name', 'اسم صاحبة المكتب'],
+            ['founder_role', 'صفة صاحبة المكتب'], ['vision_title', 'عنوان الرؤية'], ['mission_title', 'عنوان الرسالة'],
+            ['contact_page_title', 'عنوان صفحة التواصل'], ['contact_page_subtitle', 'وصف صفحة التواصل'],
+            ['contact_form_title', 'عنوان نموذج التواصل'], ['footer_description', 'وصف الفوتر'],
+            ['hero_slide_1_title', 'عنوان السلايدر الأول'], ['hero_slide_1_subtitle', 'وصف السلايدر الأول'],
+            ['hero_slide_2_title', 'عنوان السلايدر الثاني'], ['hero_slide_2_subtitle', 'وصف السلايدر الثاني'],
+            ['hero_slide_3_title', 'عنوان السلايدر الثالث'], ['hero_slide_3_subtitle', 'وصف السلايدر الثالث']
+        ];
+        const generalTextKeys = generalTextFields.flatMap(([key]) => [key, `${key}_en`]);
+
+        function renderGeneralContentFields() {
+            const container = document.getElementById('general-content-fields');
+            if (!container || container.children.length) return;
+            generalTextFields.forEach(([key, label]) => {
+                container.insertAdjacentHTML('beforeend', `
+                    <div class="col-md-6"><label class="form-label fw-bold">${escapeHtml(label)} (عربي)</label><textarea class="form-control" rows="2" id="setting_${key}"></textarea></div>
+                    <div class="col-md-6"><label class="form-label fw-bold">${escapeHtml(label)} (English)</label><textarea class="form-control" rows="2" dir="ltr" id="setting_${key}_en"></textarea></div>
+                `);
+            });
+        }
 
         function escapeHtml(value) {
             return String(value ?? '')
@@ -716,6 +774,7 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            renderGeneralContentFields();
             modal = new bootstrap.Modal(document.getElementById('genericModal'));
             mediaPickerModal = new bootstrap.Modal(document.getElementById('mediaPickerModal'));
             categoriesModal = new bootstrap.Modal(document.getElementById('categoriesModal'));
@@ -1127,7 +1186,7 @@
                     social_tiktok: ""
                 };
                 
-                ['hero_title', 'hero_subtitle', 'hero_title_en', 'hero_subtitle_en', 'contact_address', 'contact_address_en', 'contact_map', 'social_facebook', 'social_instagram', 'social_youtube', 'social_linkedin', 'social_tiktok', 'admin_username', 'admin_password', 'seo_title', 'seo_desc', 'seo_title_en', 'seo_desc_en'].forEach(k => {
+                ['hero_title', 'hero_subtitle', 'hero_title_en', 'hero_subtitle_en', 'contact_address', 'contact_address_en', 'contact_map', 'social_facebook', 'social_instagram', 'social_youtube', 'social_linkedin', 'social_tiktok', 'admin_username', 'admin_password', 'seo_title', 'seo_desc', 'seo_title_en', 'seo_desc_en', ...generalImageKeys, ...generalTextKeys].forEach(k => {
                     if(document.getElementById(`setting_${k}`)) document.getElementById(`setting_${k}`).value = s[k] || defaults[k] || '';
                 });
                 
@@ -1146,6 +1205,15 @@
             keys.forEach(k => {
                 const el = document.getElementById(`setting_${k}`);
                 data[k] = el.classList.contains('summernote-settings') ? $(el).summernote('code') : el.value;
+            });
+            await sendSettings(data);
+        }
+
+        async function saveGeneralContent() {
+            const data = {};
+            [...generalImageKeys, ...generalTextKeys].forEach((key) => {
+                const field = document.getElementById(`setting_${key}`);
+                if (field) data[key] = field.value;
             });
             await sendSettings(data);
         }
@@ -1476,7 +1544,7 @@
             document.getElementById('div-description').style.display = ['service', 'sector', 'feature'].includes(type) ? 'block' : 'none';
             document.getElementById('div-description-en').style.display = ['service', 'sector', 'feature'].includes(type) ? 'block' : 'none';
             document.getElementById('div-icon').style.display = ['stat', 'testimonial', 'feature'].includes(type) ? 'block' : 'none';
-            document.getElementById('item-image').parentElement.style.display = type === 'stat' || type === 'testimonial' ? 'none' : 'block';
+            document.getElementById('item-image').parentElement.style.display = type === 'stat' ? 'none' : 'block';
             
             if(type === 'stat' || type === 'testimonial') { document.getElementById('item-content').parentElement.style.display = type==='testimonial' ? 'block' : 'none'; document.getElementById('item-content_en').parentElement.style.display = type==='testimonial' ? 'block' : 'none'; document.getElementById('lbl-title').innerText = type==='stat'?'الرقم/العنوان':'اسم العميل'; if(document.getElementById('lbl-title-en')) document.getElementById('lbl-title-en').innerText = type==='stat'?'Value / Title (English)':'Client Name (English)'; if(document.getElementById('div-icon').querySelector('label')) document.getElementById('div-icon').querySelector('label').innerText = type==='stat'?'القيمة (أو أيقونة)':'الوظيفة/الشركة'; if(document.getElementById('lbl-icon-en')) document.getElementById('lbl-icon-en').innerText = type==='stat'?'Value (English)':'Position/Company (English)'; }
             else { document.getElementById('lbl-title').innerText = 'العنوان';
@@ -1554,7 +1622,7 @@
                 data.description_en = document.getElementById('item-description_en') ? document.getElementById('item-description_en').value : ''; 
             }
             
-            if(['article','sector','service'].includes(type)) data.image = document.getElementById('item-image').value;
+            if(['article','sector','service','testimonial'].includes(type)) data.image = document.getElementById('item-image').value;
             if (type === 'article') {
                 const vidId = extractYoutubeId(data.video_url);
                 if (vidId && (!data.image || data.image === '' || data.image === '/images/placeholder.jpg' || data.image === '/images/articles/placeholder.jpg')) {
