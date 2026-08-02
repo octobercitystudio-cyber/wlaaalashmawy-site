@@ -120,10 +120,12 @@ export default function TestimonialsSlider({ testimonials = [], lang = "ar" }: {
                 }}
               >
                 <div className="premium-card flex flex-col items-center text-center gap-md" style={{ position: "relative", padding: "3rem 2rem", height: "100%" }}>
-                  <div style={{ position: "absolute", top: "10px", right: "20px", fontSize: "8rem", color: "rgba(197, 160, 89, 0.05)", lineHeight: 1, fontFamily: "serif", zIndex: 0 }}>"</div>
+                  <div style={{ position: "absolute", top: "10px", right: "20px", fontSize: "8rem", color: "rgba(197, 160, 89, 0.05)", lineHeight: 1, fontFamily: "serif", zIndex: 0 }}>&ldquo;</div>
                   <div className="flex flex-col items-center text-center" style={{ position: "relative", zIndex: 1 }}>
                       {testi.image ? (
                         <div style={{ width: "80px", height: "80px", borderRadius: "50%", overflow: "hidden", marginBottom: "0.5rem", border: "2px solid var(--color-accent)", background: "#fff" }}>
+                          {/* CMS images can use arbitrary validated HTTPS hosts, so a plain image is intentional here. */}
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img src={testi.image} alt={lang === "en" && testi.name_en ? testi.name_en : testi.name} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                         </div>
                       ) : (
@@ -138,7 +140,7 @@ export default function TestimonialsSlider({ testimonials = [], lang = "ar" }: {
                       </div>
                   </div>
                   <p style={{ opacity: 0.9, position: "relative", zIndex: 1, margin: 0, lineHeight: 1.8, fontSize: "1.15rem", maxWidth: "800px" }}>
-                    "{(lang === "en" && testi.content_en ? testi.content_en : testi.content)}"
+                    &ldquo;{(lang === "en" && testi.content_en ? testi.content_en : testi.content)}&rdquo;
                   </p>
                 </div>
               </div>

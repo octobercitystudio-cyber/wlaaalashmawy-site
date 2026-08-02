@@ -5,7 +5,7 @@ import { Lang } from "@/lib/dictionary";
 import { staticArticles } from "@/data/staticArticles";
 
 export default async function ArticlesPage({ lang = "ar", initialArticleId }: { lang?: Lang, initialArticleId?: number }) {
-  let initialArticles: any[] = [...staticArticles];
+  const initialArticles: any[] = [...staticArticles];
   try {
     // We use NEXT_PUBLIC_API_URL provided during build by GitHub Actions
     // During local dev, this might be empty, so we fallback to relative or handle it gracefully

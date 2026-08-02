@@ -2,10 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 
 import { Lang } from '@/lib/dictionary';
-import { servicesData } from '@/data/services';
 import { sanitizeHtml } from '@/lib/sanitizeHtml';
 import { normalizeWhatsAppNumber, parseSettingList } from '@/lib/contact';
 import { staticArticles } from '@/data/staticArticles';
@@ -14,8 +12,6 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
   const [articles, setArticles] = useState<any[]>(initialArticles);
   const [loading, setLoading] = useState(initialArticles.length === 0);
   const [error, setError] = useState('');
-  const [customCategories, setCustomCategories] = useState<{ar: string, en: string}[]>([]);
-  const [servicesList, setServicesList] = useState<any[]>([]);
   const [whatsappNumber, setWhatsappNumber] = useState("201155729429");
   const [selectedTab, setSelectedTab] = useState('الكل');
   const [selectedArticleId, setSelectedArticleId] = useState<number | string>(
@@ -25,6 +21,7 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
 
   useEffect(() => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
+    setError('');
     fetch(`${apiUrl}/api/articles.php`)
       .then(async res => {
         if (!res.ok) throw new Error("Unable to load articles");
@@ -56,6 +53,7 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
       })
       .catch((err) => {
         console.error(err);
+        setError(lang === "en" ? "Unable to refresh articles." : "تعذر تحديث المقالات.");
         setArticles(initialArticles);
         setSelectedArticleId((current) =>
           initialArticles.find((article) => Number(article.id) === Number(current))
@@ -70,22 +68,9 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
       .then(s => {
         const phones = parseSettingList(s.contact_phones);
         setWhatsappNumber(normalizeWhatsAppNumber(s.contact_whatsapp || s.whatsapp || phones[0]));
-        if (s.article_categories) {
-          try {
-            const parsed = JSON.parse(s.article_categories);
-            if (Array.isArray(parsed)) setCustomCategories(parsed);
-          } catch {}
-        }
       })
       .catch(() => {});
-
-    fetch(`${apiUrl}/api/services.php`)
-      .then(res => res.json())
-      .then(data => {
-        if (Array.isArray(data)) setServicesList(data);
-      })
-      .catch(() => {});
-  }, [initialArticleId, lang]);
+  }, [initialArticleId, initialArticles, lang]);
 
   const safeArticles = React.useMemo(
     () => (Array.isArray(articles) ? articles : []),

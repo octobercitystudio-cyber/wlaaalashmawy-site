@@ -2,14 +2,11 @@
 
 import { FormEvent, useState } from "react";
 import type { Lang } from "@/lib/dictionary";
-import { normalizeWhatsAppNumber } from "@/lib/contact";
 
 export default function ContactForm({
   lang,
-  whatsappNumber,
 }: {
   lang: Lang;
-  whatsappNumber: string;
 }) {
   const [submitted, setSubmitted] = useState(false);
 

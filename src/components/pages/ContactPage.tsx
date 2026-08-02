@@ -3,7 +3,6 @@ import { EditableText } from "@/components/editor/EditableText";
 import ContactForm from "@/components/ContactForm";
 import {
   normalizeSocialUrl,
-  normalizeWhatsAppNumber,
   parseSettingList,
 } from "@/lib/contact";
 
@@ -19,9 +18,6 @@ export default async function ContactPage({ lang = "ar" }: { lang?: Lang }) {
     settings.contact_phone || "01155729429",
     "0238345397",
   ]);
-  const whatsappNumber = normalizeWhatsAppNumber(
-    settings.contact_whatsapp || settings.whatsapp || phones[0],
-  );
   const socialLinks = {
     facebook: normalizeSocialUrl(settings.social_facebook || "https://www.facebook.com/profile.php?id=100064870305325", "facebook"),
     instagram: normalizeSocialUrl(settings.social_instagram || "https://www.instagram.com/afc_cpa", "instagram"),
@@ -73,7 +69,7 @@ export default async function ContactPage({ lang = "ar" }: { lang?: Lang }) {
                 <h2 style={{ fontSize: "2.2rem", color: "var(--color-primary)", marginBottom: "var(--spacing-md)", fontWeight: "bold" }}>
                   {lang === "en" ? "Send a Message" : "أرسل لنا رسالة"}
                 </h2>
-                <ContactForm lang={lang} whatsappNumber={whatsappNumber} />
+                <ContactForm lang={lang} />
               </div>
             </div>
 
