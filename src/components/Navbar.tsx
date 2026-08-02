@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 
 import { getDictionary, Lang } from "@/lib/dictionary";
@@ -11,6 +11,12 @@ import { normalizeWhatsAppNumber, parseSettingList } from "@/lib/contact";
 export default function Navbar({ settings = {}, services = [], lang = "ar" }: { settings?: any, services?: any[], lang?: Lang }) {
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
+  const servicesDropdownRef = useRef<HTMLLIElement>(null);
+  const servicesTriggerRef = useRef<HTMLAnchorElement>(null);
+  const isServicesPointerInside = useRef(false);
+  const suppressServicesHoverUntilLeave = useRef(false);
+  const suppressNextServicesFocusOpen = useRef(false);
   const pathname = usePathname();
   const fallbackPhones = parseSettingList(settings.contact_phones);
   const whatsappNum = normalizeWhatsAppNumber(
@@ -46,6 +52,47 @@ export default function Navbar({ settings = {}, services = [], lang = "ar" }: { 
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isMobileMenuOpen]);
 
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+    setIsServicesDropdownOpen(false);
+    suppressServicesHoverUntilLeave.current = isServicesPointerInside.current;
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!isServicesDropdownOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+
+      event.preventDefault();
+      setIsServicesDropdownOpen(false);
+      suppressServicesHoverUntilLeave.current = isServicesPointerInside.current;
+
+      const trigger = servicesTriggerRef.current;
+      if (
+        trigger &&
+        servicesDropdownRef.current?.contains(document.activeElement) &&
+        document.activeElement !== trigger
+      ) {
+        suppressNextServicesFocusOpen.current = true;
+        trigger.focus({ preventScroll: true });
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isServicesDropdownOpen]);
+
+  const closeServicesDropdown = () => {
+    setIsServicesDropdownOpen(false);
+    suppressServicesHoverUntilLeave.current = isServicesPointerInside.current;
+  };
+
+  const handleServicesNavigation = (isMobile: boolean) => {
+    closeServicesDropdown();
+    if (isMobile) setIsMobileMenuOpen(false);
+  };
+
   const localPathname =
     lang === "en" ? pathname.replace(/^\/en(?=\/|$)/, "") || "/" : pathname;
 
@@ -66,9 +113,43 @@ export default function Navbar({ settings = {}, services = [], lang = "ar" }: { 
           {dict.about}
         </Link>
       </li>
-      <li className={isMobile ? '' : 'nav-dropdown'}>
+      <li
+        ref={isMobile ? undefined : servicesDropdownRef}
+        className={isMobile ? '' : `nav-dropdown ${isServicesDropdownOpen ? 'is-open' : ''}`}
+        onMouseEnter={isMobile ? undefined : () => {
+          isServicesPointerInside.current = true;
+          if (!suppressServicesHoverUntilLeave.current) {
+            setIsServicesDropdownOpen(true);
+          }
+        }}
+        onMouseLeave={isMobile ? undefined : () => {
+          isServicesPointerInside.current = false;
+          suppressServicesHoverUntilLeave.current = false;
+          setIsServicesDropdownOpen(false);
+        }}
+        onFocusCapture={isMobile ? undefined : () => {
+          if (suppressNextServicesFocusOpen.current) {
+            suppressNextServicesFocusOpen.current = false;
+            return;
+          }
+          setIsServicesDropdownOpen(true);
+        }}
+        onBlurCapture={isMobile ? undefined : (event) => {
+          if (!event.currentTarget.contains(event.relatedTarget)) {
+            closeServicesDropdown();
+          }
+        }}
+      >
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <Link href={`${prefix}/services`} className={`nav-link ${isActive('/services') ? 'active' : ''}`} onClick={() => isMobile && setIsMobileMenuOpen(false)}>
+          <Link
+            ref={isMobile ? undefined : servicesTriggerRef}
+            href={`${prefix}/services`}
+            className={`nav-link ${isActive('/services') ? 'active' : ''}`}
+            onClick={() => handleServicesNavigation(isMobile)}
+            aria-expanded={isMobile ? undefined : isServicesDropdownOpen}
+            aria-controls={isMobile ? undefined : "desktop-services-menu"}
+            aria-haspopup={isMobile ? undefined : "true"}
+          >
             {dict.ourServices}
             {!isMobile && (
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ marginInlineStart: '4px' }}>
@@ -85,9 +166,18 @@ export default function Navbar({ settings = {}, services = [], lang = "ar" }: { 
                 ))}
              </div>
           ) : (
-            <div className="nav-dropdown-content">
+            <div
+              id="desktop-services-menu"
+              className="nav-dropdown-content"
+              aria-hidden={!isServicesDropdownOpen}
+            >
               {services.map(service => (
-                <Link key={service.id} href={servicePath(service.id, lang)} className="nav-dropdown-item">
+                <Link
+                  key={service.id}
+                  href={servicePath(service.id, lang)}
+                  className="nav-dropdown-item"
+                  onClick={closeServicesDropdown}
+                >
                   {lang === "en" && service.title_en ? service.title_en : service.title}
                 </Link>
               ))}

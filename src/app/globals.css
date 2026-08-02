@@ -409,8 +409,7 @@ html[lang="en"] .hero-title {
   border: 1px solid var(--color-border);
 }
 
-.nav-dropdown:hover .nav-dropdown-content,
-.nav-dropdown:focus-within .nav-dropdown-content {
+.nav-dropdown.is-open .nav-dropdown-content {
   display: block;
   animation: fadeInDown 0.3s ease;
 }
