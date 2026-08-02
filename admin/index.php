@@ -888,7 +888,7 @@
                 }
                 document.getElementById('reset-request-stage').style.display = 'none';
                 document.getElementById('reset-verify-stage').style.display = 'block';
-                showResetMessage('تم إرسال الرمز. راجع البريد الوارد والرسائل غير المرغوب فيها.');
+                showResetMessage('تم إرسال الرمز. يمكنك استخدام أي رمز وصلك خلال آخر 10 دقائق.');
                 document.getElementById('reset-code').focus();
             } catch (error) {
                 showResetMessage('فشل الاتصال بالخادم. حاول مرة أخرى.', true);

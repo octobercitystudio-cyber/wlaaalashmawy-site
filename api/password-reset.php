@@ -26,10 +26,10 @@ $rateKey = $ipAddress !== '' ? $ipAddress : 'unknown';
 if ($action === 'request') {
     $requestCount = $pdo->prepare(
         'SELECT COUNT(*) FROM password_reset_codes
-         WHERE ip_address = ?
+         WHERE (ip_address = ? OR email = ?)
            AND created_at >= DATE_SUB(UTC_TIMESTAMP(), INTERVAL 1 HOUR)'
     );
-    $requestCount->execute([$rateKey]);
+    $requestCount->execute([$rateKey, $recoveryEmail]);
     if ((int) $requestCount->fetchColumn() >= 3) {
         header('Retry-After: 3600');
         api_json_response(['error' => 'Too many reset requests. Try again later.'], 429);
@@ -40,12 +40,6 @@ if ($action === 'request') {
 
     try {
         $pdo->beginTransaction();
-        $invalidate = $pdo->prepare(
-            'UPDATE password_reset_codes
-             SET used_at = UTC_TIMESTAMP()
-             WHERE email = ? AND used_at IS NULL'
-        );
-        $invalidate->execute([$recoveryEmail]);
         $insert = $pdo->prepare(
             'INSERT INTO password_reset_codes
                 (email, code_hash, ip_address, attempts, created_at, expires_at)
@@ -111,21 +105,34 @@ try {
         'SELECT id, code_hash, attempts
          FROM password_reset_codes
          WHERE email = ? AND used_at IS NULL AND expires_at > UTC_TIMESTAMP()
-         ORDER BY id DESC LIMIT 1 FOR UPDATE'
+         ORDER BY id DESC FOR UPDATE'
     );
     $codeStmt->execute([$recoveryEmail]);
-    $reset = $codeStmt->fetch();
+    $activeCodes = $codeStmt->fetchAll();
+    $attemptCount = array_sum(array_map(function ($item) {
+        return (int) $item['attempts'];
+    }, $activeCodes));
 
-    if (!$reset || (int) $reset['attempts'] >= 5) {
+    if (!$activeCodes || $attemptCount >= 5) {
         $pdo->rollBack();
         api_json_response(['error' => 'Invalid or expired verification code'], 422);
     }
 
-    $pdo->prepare(
-        'UPDATE password_reset_codes SET attempts = attempts + 1 WHERE id = ?'
-    )->execute([(int) $reset['id']]);
+    $reset = null;
+    foreach ($activeCodes as $candidate) {
+        if (password_verify($code, (string) $candidate['code_hash'])) {
+            $reset = $candidate;
+            break;
+        }
+    }
 
-    if (!password_verify($code, (string) $reset['code_hash'])) {
+    if (!$reset) {
+        // Count failed guesses once globally, even when several recent email
+        // messages are still valid because delivery order can vary.
+        $latestCode = $activeCodes[0];
+        $pdo->prepare(
+            'UPDATE password_reset_codes SET attempts = attempts + 1 WHERE id = ?'
+        )->execute([(int) $latestCode['id']]);
         $pdo->commit();
         usleep(random_int(150000, 350000));
         api_json_response(['error' => 'Invalid or expired verification code'], 422);
@@ -139,8 +146,10 @@ try {
     $saveSetting->execute(['admin_password', password_hash($newPassword, PASSWORD_DEFAULT)]);
     $saveSetting->execute(['admin_password_source', 'database']);
     $pdo->prepare(
-        'UPDATE password_reset_codes SET used_at = UTC_TIMESTAMP() WHERE id = ?'
-    )->execute([(int) $reset['id']]);
+        'UPDATE password_reset_codes
+         SET used_at = UTC_TIMESTAMP()
+         WHERE email = ? AND used_at IS NULL'
+    )->execute([$recoveryEmail]);
     $pdo->exec('DELETE FROM admin_sessions');
     $pdo->exec('DELETE FROM login_attempts');
     $pdo->commit();
