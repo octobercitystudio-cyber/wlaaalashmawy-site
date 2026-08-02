@@ -3,7 +3,7 @@ import Link from "next/link";
 import HeroSlider from "@/components/HeroSlider";
 import ServicesCarousel from "@/components/ServicesCarousel";
 import AnimatedStat from "@/components/AnimatedStat";
-
+import TestimonialsSlider from "@/components/TestimonialsSlider";
 import { fetchSettings, fetchServices, fetchFeatures, fetchStats, fetchTestimonials } from '@/lib/api';
 import { EditableText } from "@/components/editor/EditableText";
 
@@ -100,32 +100,7 @@ export default async function Home({ lang = "ar" }: { lang?: Lang }) {
           </p>
         </div>
         
-        {/* Horizontal Scrolling Carousel (One per view) */}
-        <div className="flex gap-lg hide-scrollbar" style={{ overflowX: "auto", paddingBottom: "2rem", scrollSnapType: "x mandatory" }}>
-          
-          {testimonials.map((testi: any, index: number) => {
-            const initials = (lang === "en" && testi.name_en ? testi.name_en : testi.name).split(' ').map((n: string) => n[0]).join('').substring(0, 2);
-            return (
-              <div key={testi.id || index} className="premium-card flex flex-col items-center text-center gap-md" style={{ flex: "0 0 100%", scrollSnapAlign: "center", position: "relative", padding: "3rem 2rem" }}>
-                <div style={{ position: "absolute", top: "10px", right: "20px", fontSize: "8rem", color: "rgba(197, 160, 89, 0.05)", lineHeight: 1, fontFamily: "serif", zIndex: 0 }}>"</div>
-                <div className="flex flex-col items-center text-center" style={{ position: "relative", zIndex: 1 }}>
-                    <div style={{ width: "80px", height: "80px", borderRadius: "50%", background: "var(--color-bg-body)", display: "flex", alignItems: "center", justifyContent: "center", color: "var(--color-accent)", fontWeight: "bold", border: "2px solid var(--color-accent)", fontSize: "1.5rem", marginBottom: "0.5rem" }}>
-                      {initials}
-                    </div>
-                    <h4 style={{ margin: 0, color: "var(--color-text-main)", fontSize: "1.2rem" }}>{(lang === "en" && testi.name_en ? testi.name_en : testi.name)}</h4>
-                    <p style={{ margin: "0.2rem 0", fontSize: "0.9rem", color: "var(--color-text-muted)" }}>{(lang === "en" && testi.position_en ? testi.position_en : testi.position)}</p>
-                    <div style={{ color: "#FFD700", letterSpacing: "3px", fontSize: "1.3rem", marginTop: "0.5rem" }}>
-                      {'★'.repeat(testi.rating || 5)}{'☆'.repeat(5 - (testi.rating || 5))}
-                    </div>
-                </div>
-                <p style={{ opacity: 0.9, position: "relative", zIndex: 1, margin: 0, lineHeight: 1.8, fontSize: "1.15rem", maxWidth: "800px" }}>
-                  "{(lang === "en" && testi.content_en ? testi.content_en : testi.content)}"
-                </p>
-              </div>
-            );
-          })}
-
-        </div>
+        <TestimonialsSlider testimonials={testimonials} lang={lang} />
       </section>
 
       {/* Call to Action & Contact */}

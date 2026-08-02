@@ -2,9 +2,10 @@ import ArticlesClient from "@/components/ArticlesClient";
 
 // This function runs at build time to fetch the articles for SEO
 import { Lang } from "@/lib/dictionary";
+import { staticArticles } from "@/data/staticArticles";
 
 export default async function ArticlesPage({ lang = "ar", initialArticleId }: { lang?: Lang, initialArticleId?: number }) {
-  let initialArticles = [];
+  let initialArticles: any[] = [...staticArticles];
   try {
     // We use NEXT_PUBLIC_API_URL provided during build by GitHub Actions
     // During local dev, this might be empty, so we fallback to relative or handle it gracefully
@@ -18,8 +19,20 @@ export default async function ArticlesPage({ lang = "ar", initialArticleId }: { 
         });
         clearTimeout(timeoutId);
         if(res.ok) {
-            initialArticles = await res.json();
-            if (!Array.isArray(initialArticles)) initialArticles = [];
+            const contentType = res.headers.get("content-type");
+            if (contentType && contentType.includes("application/json")) {
+                const fetched = await res.json();
+                if (Array.isArray(fetched)) {
+                    fetched.forEach(apiArticle => {
+                      const exists = staticArticles.some(staticArticle => 
+                        (staticArticle.title && apiArticle.title && staticArticle.title.trim() === apiArticle.title.trim())
+                      );
+                      if (!exists) {
+                        initialArticles.push(apiArticle);
+                      }
+                    });
+                }
+            }
         }
     } catch(e) {
         console.error("Fetch failed during build, using empty array for now", e);

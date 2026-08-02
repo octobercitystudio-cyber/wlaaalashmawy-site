@@ -14,7 +14,9 @@ export default async function AboutPage({ lang = "ar" }: { lang?: Lang }) {
         paddingTop: "12rem", 
         paddingBottom: "5rem", 
         backgroundColor: "#06192D",
-        background: "radial-gradient(circle at 18% 18%, rgba(0, 91, 171, 0.42) 0%, rgba(0, 91, 171, 0) 34%), radial-gradient(circle at 82% 112%, rgba(42, 139, 205, 0.34) 0%, rgba(42, 139, 205, 0) 42%), linear-gradient(135deg, #06192D 0%, #082C4C 52%, #075A94 100%)",
+        backgroundImage: "linear-gradient(rgba(6, 25, 45, 0.75), rgba(6, 25, 45, 0.85)), url('/images/about_us_hero.jpg')",
+        backgroundSize: "cover",
+        backgroundPosition: "center",
         color: "#FFFFFF",
         textAlign: "center",
         position: "relative",
@@ -40,6 +42,36 @@ export default async function AboutPage({ lang = "ar" }: { lang?: Lang }) {
       {/* 2. Company & Chairman */}
       <section className="py-xl" style={{ backgroundColor: "var(--color-bg-body)" }}>
         <div className="container" style={{ maxWidth: "1200px" }}>
+          {/* Licenses & Memberships */}
+          <div className="text-center" style={{ marginBottom: "5rem" }}>
+            <h2 style={{ fontSize: "2rem", color: "var(--color-primary)", fontWeight: "bold", marginBottom: "2rem" }}>
+              {lang === "en" ? "Licenses & Memberships" : "التراخيص والعضويات"}
+            </h2>
+            <div className="grid grid-cols-1 md-grid-cols-2 gap-lg" style={{ maxWidth: "800px", marginInline: "auto" }}>
+              <div className="premium-card flex flex-col items-center justify-center text-center" style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)", padding: "2rem", borderRadius: "16px", boxShadow: "0 5px 15px rgba(0,0,0,0.05)" }}>
+                <div style={{ width: "60px", height: "60px", borderRadius: "50%", backgroundColor: "rgba(212, 175, 55, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1rem" }}>
+                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  </svg>
+                </div>
+                <h3 style={{ fontSize: "1.25rem", color: "var(--color-text-main)", fontWeight: "bold", margin: 0 }}>
+                  {lang === "en" ? "Ministry of Finance - Register of Accountants and Auditors" : "وزارة المالية - سجل المحاسبين والمراجعين"}
+                </h3>
+              </div>
+              <div className="premium-card flex flex-col items-center justify-center text-center" style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)", padding: "2rem", borderRadius: "16px", boxShadow: "0 5px 15px rgba(0,0,0,0.05)" }}>
+                <div style={{ width: "60px", height: "60px", borderRadius: "50%", backgroundColor: "rgba(0, 91, 171, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1rem" }}>
+                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  </svg>
+                </div>
+                <h3 style={{ fontSize: "1.25rem", color: "var(--color-text-main)", fontWeight: "bold", margin: 0 }}>
+                  {lang === "en" ? "Egyptian Tax Association" : "جمعية الضرائب المصرية"}
+                </h3>
+              </div>
+            </div>
+          </div>
+
           <div
             className="about-leadership"
             data-lang={lang}
@@ -103,10 +135,9 @@ export default async function AboutPage({ lang = "ar" }: { lang?: Lang }) {
                 textAlign: lang === "en" ? "left" : "right",
               }}
             >
-              <h2 style={{ fontSize: "2.5rem", color: "var(--color-primary)", fontWeight: "bold", marginBottom: "2rem" }}>{lang === "en" ? "About The Company" : "عن الشركة"}</h2>
               <EditableText
                 id={lang === "en" ? "about_full_en" : "about_full"}
-                value={(lang === "en" && settings.about_full_en ? settings.about_full_en : settings.about_full) || (lang === "en" ? `"Wlaa Magdy Al-Ashmawy for Legal Accounting" (AFC) is one of the leading firms in Egypt in the fields of accounting, auditing, taxation, and financial advisory services. Founded in 2024 by Ms. Wlaa Magdy Al-Ashmawy, the firm was built on a clear vision aimed at providing outstanding professional services based on integrity, expertise, and building sustainable relationships with clients.<br/><br/>At AFC, we ensure our clients that every engagement is handled by a team of dedicated professionals committed to the highest standards of quality and excellence. We adopt an integrated approach rooted in a deep understanding of the unique challenges facing small and medium-sized enterprises (SMEs), allowing us to provide practical and strategic solutions that enhance value.<br/><br/>Our comprehensive services are designed to support clients at every stage of their business journey, empowering them to make informed decisions, achieve sustainable growth, and focus on maximizing the long-term value of their business.` : `تُعد شركة "ولاء مجدي العشماوي للمحاسبة القانونية" (AFC) واحدة من الشركات الرائدة في مصر في مجالات المحاسبة، والمراجعة، والضرائب، والخدمات الاستشارية المالية. تأسست الشركة عام 2024 على يد السيدة ولاء مجدي العشماوي، انطلاقاً من رؤية واضحة تهدف إلى تقديم خدمات مهنية متميزة ترتكز على النزاهة والخبرة وبناء علاقات مستدامة مع العملاء.<br/><br/>في AFC، نضمن لعملائنا أن يتولى تنفيذ كل مهمة فريق من المهنيين المتفانين الملتزمين بأعلى معايير الجودة والتميز. ونحن نتبنى نهجاً متكاملاً يرتكز على فهم عميق للتحديات الفريدة التي تواجه الشركات الصغيرة والمتوسطة، مما يتيح لنا تقديم حلول عملية واستراتيجية تعزز القيمة.<br/><br/>صُممت خدماتنا الشاملة لدعم العملاء في كل مرحلة من مراحل رحلة أعمالهم، مما يُمكّنهم من اتخاذ قرارات مدروسة، وتحقيق نمو مستدام، والتركيز على تعظيم القيمة طويلة الأمد لأعمالهم.`)}
+                value={(lang === "en" && settings.about_full_en ? settings.about_full_en : settings.about_full) || (lang === "en" ? `"Al-Ashmawy Office for Financial Advisory" (AFC) is one of the leading firms in Egypt in the fields of accounting, auditing, taxation, and financial advisory services. Founded in 2024 by Ms. Wlaa Magdy Al-Ashmawy, the firm was built on a clear vision aimed at providing outstanding professional services based on integrity, expertise, and building sustainable relationships with clients.<br/><br/>At AFC, we ensure our clients that every engagement is handled by a team of dedicated professionals committed to the highest standards of quality and excellence. We adopt an integrated approach rooted in a deep understanding of the unique challenges facing small and medium-sized enterprises (SMEs), allowing us to provide practical and strategic solutions that enhance value.<br/><br/>Our comprehensive services are designed to support clients at every stage of their business journey, empowering them to make informed decisions, achieve sustainable growth, and focus on maximizing the long-term value of their business.` : `يُعد "مكتب العشماوي للاستشارات المالية" (AFC) واحداً من المكاتب الرائدة في مصر في مجالات المحاسبة، والمراجعة، والضرائب، والخدمات الاستشارية المالية. تأسس المكتب عام 2024 على يد السيدة ولاء مجدي العشماوي، انطلاقاً من رؤية واضحة تهدف إلى تقديم خدمات مهنية متميزة ترتكز على النزاهة والخبرة وبناء علاقات مستدامة مع العملاء.<br/><br/>في AFC، نضمن لعملائنا أن يتولى تنفيذ كل مهمة فريق من المهنيين المتفانين الملتزمين بأعلى معايير الجودة والتميز. ونحن نتبنى نهجاً متكاملاً يرتكز على فهم عميق للتحديات الفريدة التي تواجه الشركات الصغيرة والمتوسطة، مما يتيح لنا تقديم حلول عملية واستراتيجية تعزز القيمة.<br/><br/>صُممت خدماتنا الشاملة لدعم العملاء في كل مرحلة من مراحل رحلة أعمالهم، مما يُمكّنهم من اتخاذ قرارات مدروسة، وتحقيق نمو مستدام، والتركيز على تعظيم القيمة طويلة الأمد لأعمالهم.`)}
                 isHtml={true}
                 as="div"
                 style={{ fontSize: "1.2rem", fontWeight: 400, lineHeight: "2", color: "var(--color-text-main)", opacity: 0.9 }}
@@ -154,6 +185,7 @@ export default async function AboutPage({ lang = "ar" }: { lang?: Lang }) {
               />
             </div>
           </div>
+
 
         </div>
       </section>

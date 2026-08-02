@@ -15,7 +15,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   try {
     const res = await fetch(`${apiUrl}/api/articles.php`, { cache: 'force-cache' });
     if(res.ok) {
-        const articles = await res.json();
+        const fetched = await res.json();
+        const { staticArticles } = await import("@/data/staticArticles");
+        const articles = Array.isArray(fetched) ? [...staticArticles, ...fetched] : [...staticArticles];
         article = articles.find((a: any) => a.id.toString() === resolvedParams.id);
     }
   } catch(e) {
@@ -60,7 +62,9 @@ export async function generateStaticParams() {
   try {
     const res = await fetch(`${apiUrl}/api/articles.php`, { cache: 'force-cache' });
     if(res.ok) {
-        const articles = await res.json();
+        const fetched = await res.json();
+        const { staticArticles } = await import("@/data/staticArticles");
+        const articles = Array.isArray(fetched) ? [...staticArticles, ...fetched] : [...staticArticles];
         if (articles.length === 0) return [{ id: "0" }];
         return articles.map((article: any) => ({
           id: article.id.toString(),

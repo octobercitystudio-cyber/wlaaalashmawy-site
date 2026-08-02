@@ -8,6 +8,7 @@ import { Lang } from '@/lib/dictionary';
 import { servicesData } from '@/data/services';
 import { sanitizeHtml } from '@/lib/sanitizeHtml';
 import { normalizeWhatsAppNumber, parseSettingList } from '@/lib/contact';
+import { staticArticles } from '@/data/staticArticles';
 
 export default function ArticlesClient({ initialArticles, lang = 'ar', initialArticleId }: { initialArticles: any[], lang?: Lang, initialArticleId?: number }) {
   const [articles, setArticles] = useState<any[]>(initialArticles);
@@ -25,21 +26,43 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
   useEffect(() => {
     const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
     fetch(`${apiUrl}/api/articles.php`)
-      .then(res => {
+      .then(async res => {
         if (!res.ok) throw new Error("Unable to load articles");
+        const contentType = res.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+            throw new Error("API did not return JSON");
+        }
         return res.json();
       })
       .then(data => {
         if (Array.isArray(data)) {
-          setArticles(data);
+          // Deduplicate based on title, prioritizing staticArticles
+          const combined = [...staticArticles];
+          data.forEach(apiArticle => {
+            const exists = staticArticles.some(staticArticle => 
+              (staticArticle.title && apiArticle.title && staticArticle.title.trim() === apiArticle.title.trim())
+            );
+            if (!exists) {
+              combined.push(apiArticle);
+            }
+          });
+          setArticles(combined);
           setSelectedArticleId((current) =>
-            data.find((article) => Number(article.id) === Number(current))
+            combined.find((article) => Number(article.id) === Number(current))
               ? current
-              : initialArticleId || data[0]?.id || 0,
+              : initialArticleId || combined[0]?.id || 0,
           );
         }
       })
-      .catch(() => setError(lang === "en" ? "Unable to load the latest articles." : "تعذر تحميل أحدث المقالات."))
+      .catch((err) => {
+        console.error(err);
+        setArticles(initialArticles);
+        setSelectedArticleId((current) =>
+          initialArticles.find((article) => Number(article.id) === Number(current))
+            ? current
+            : initialArticleId || initialArticles[0]?.id || 0,
+        );
+      })
       .finally(() => setLoading(false));
 
     fetch(`${apiUrl}/api/settings.php`)
@@ -74,7 +97,7 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
       { ar: 'محاسبة', en: 'Accounting' },
       { ar: 'مراجعة', en: 'Audit' },
       { ar: 'ضرايب', en: 'Taxes' },
-      { ar: 'تاسيس الشركات والمنشات', en: 'Company Formation' },
+      { ar: 'تأسيس الشركات والمؤسسات', en: 'Company Formation' },
       { ar: 'إقامات مستثمرين', en: 'Investor Residency' },
       { ar: 'تراخيص صناعيه', en: 'Industrial Licensing' }
     ];
@@ -209,10 +232,13 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
             ) : error ? (
               <p style={{ color: "red" }}>{error}</p>
             ) : filteredArticles.length > 0 ? filteredArticles.map((article) => (
-              <Link
+              <button
                 key={article.id}
-                href={lang === "en" ? `/en/articles/${article.id}` : `/articles/${article.id}`}
-                onClick={() => setSelectedArticleId(article.id)}
+                onClick={() => {
+                  setSelectedArticleId(article.id);
+                  const newUrl = lang === "en" ? `/en/articles/${article.id}` : `/articles/${article.id}`;
+                  window.history.pushState(null, '', newUrl);
+                }}
                 style={{ 
                   display: "block",
                   width: "100%",
@@ -238,7 +264,7 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <time style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>{article.date}</time>
                 </div>
-              </Link>
+              </button>
             )) : (
               <p style={{ color: "var(--color-text-muted)" }}>{lang === "en" ? "No matching articles found." : "لا توجد مقالات مطابقة للبحث."}</p>
             )}
@@ -314,8 +340,8 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
                 
                 <div 
                   className="article-body-content"
-                  style={{ fontSize: "1.15rem", fontWeight: 400, lineHeight: "2.1", color: "var(--color-text-main)", opacity: 0.9, textAlign: "justify" }}
-                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(lang === 'en' && selectedArticle.content_en ? selectedArticle.content_en : selectedArticle.content) }}
+                  style={{ fontSize: "1.15rem", fontWeight: 400, lineHeight: "2.1", color: "var(--color-text-main)", opacity: 0.9, textAlign: "justify", marginTop: "1rem" }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(lang === 'en' && selectedArticle.content_en ? selectedArticle.content_en : selectedArticle.content).replace(/<h[1-6]>/g, '<h4 style="margin-top: 0;">') }}
                 />
 
                 <div style={{ marginTop: "4rem", paddingTop: "2rem", borderTop: "1px solid var(--color-border)" }}>

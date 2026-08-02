@@ -44,9 +44,9 @@ export default function ContactForm({
             `الرسالة: ${message}`,
           ].join("\n");
 
-    const url = `https://wa.me/${normalizeWhatsAppNumber(whatsappNumber)}?text=${encodeURIComponent(body)}`;
-    const popup = window.open(url, "_blank", "noopener,noreferrer");
-    if (popup) popup.opener = null;
+    const subject = lang === "en" ? "New Inquiry from AFC Website" : "استفسار جديد من موقع AFC";
+    const url = `mailto:info@afc-cpa.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    window.location.href = url;
     setSubmitted(true);
   }
 
@@ -180,20 +180,20 @@ export default function ContactForm({
           borderRadius: "8px",
         }}
       >
-        <i className="bi bi-whatsapp" aria-hidden="true" />
-        {lang === "en" ? "Continue on WhatsApp" : "متابعة الإرسال عبر واتساب"}
+        <i className="bi bi-envelope" aria-hidden="true" style={{ marginRight: "0.5rem", marginLeft: "0.5rem" }} />
+        {lang === "en" ? "Send via Email" : "إرسال عبر البريد الإلكتروني"}
       </button>
 
       <p className="form-note">
         {lang === "en"
-          ? "Your message will open in WhatsApp for your review before it is sent."
-          : "ستفتح الرسالة في واتساب لمراجعتها قبل الإرسال."}
+          ? "Your message will open in your email app for review before sending."
+          : "ستفتح الرسالة في تطبيق البريد الخاص بك لمراجعتها قبل الإرسال."}
       </p>
       <p role="status" aria-live="polite" className="sr-status">
         {submitted
           ? lang === "en"
-            ? "Your message was prepared in WhatsApp."
-            : "تم تجهيز رسالتك في واتساب."
+            ? "Your email was prepared."
+            : "تم تجهيز رسالتك للإرسال عبر البريد."
           : ""}
       </p>
     </form>

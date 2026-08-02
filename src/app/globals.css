@@ -373,12 +373,12 @@ html[lang="en"] .hero-title {
 /* Header logo */
 .site-logo {
   display: block;
-  width: 180px;
+  width: 150px;
   height: auto;
 }
 
 @media (max-width: 1099px) {
-  .site-logo { width: 145px; }
+  .site-logo { width: 120px; }
   .py-xl { padding-top: var(--spacing-lg); padding-bottom: var(--spacing-lg); }
   .flex-col-mobile { flex-direction: column; }
   .mobile-hidden { display: none !important; }

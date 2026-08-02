@@ -42,7 +42,6 @@ export default function Footer({ settings = {}, lang = "ar" }: { settings?: any,
             <li><Link href={`${prefix}/sectors`}>{dict.sectors}</Link></li>
             <li><Link href={`${prefix}/articles`}>{dict.articles}</Link></li>
             <li><Link href={`${prefix}/contact`}>{dict.contact}</Link></li>
-            <li><Link href={`${prefix}/privacy`}>{lang === "en" ? "Privacy Policy" : "سياسة الخصوصية"}</Link></li>
           </ul>
         </div>
         <div>
@@ -98,6 +97,11 @@ export default function Footer({ settings = {}, lang = "ar" }: { settings?: any,
       <div className="container text-center" style={{ marginTop: "var(--spacing-xl)", paddingTop: "var(--spacing-md)", borderTop: "1px solid rgba(255,255,255,0.2)" }}>
         <p style={{ margin: 0, fontSize: "1rem", color: "#FFFFFF" }}>
           <span dir="ltr">© {new Date().getFullYear()}</span> {lang === "en" ? "All rights reserved to www.afc-cpa.com" : "جميع الحقوق محفوظة لموقع www.afc-cpa.com"}
+          <span style={{ margin: "0 10px", opacity: 0.5 }}>|</span>
+          {lang === "en" ? "Powered by " : "تم الإنشاء بواسطة "}
+          <a href="https://www.multitaskagency.com" target="_blank" rel="noopener noreferrer" style={{ color: "#FFFFFF", textDecoration: "none", fontWeight: "bold", transition: "opacity 0.3s ease" }} className="hover:opacity-80">
+            MT AGENCY
+          </a>
         </p>
       </div>
     </footer>
