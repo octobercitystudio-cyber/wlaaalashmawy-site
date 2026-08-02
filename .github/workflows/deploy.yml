@@ -85,14 +85,18 @@ jobs:
           '
           chmod 600 out/api/config.php
 
-      - name: Securely deploy to Hostinger
-        uses: appleboy/scp-action@v1.0.0
+      - name: FTPS deploy to Hostinger
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
-          host: ${{ secrets.HOST_IP }}
-          username: ${{ secrets.HOST_USER }}
-          password: ${{ secrets.HOST_PASSWORD }}
-          port: ${{ secrets.HOST_PORT }}
-          source: "out/*"
-          target: "public_html"
-          strip_components: 1
-          overwrite: true
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
+          port: 21
+          local-dir: ./out/
+          server-dir: /
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            images/uploads/**
