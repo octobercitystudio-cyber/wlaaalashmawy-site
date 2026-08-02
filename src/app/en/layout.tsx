@@ -7,7 +7,9 @@ import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { fetchArticles, fetchFeatures, fetchSectors, fetchSettings, fetchServices, fetchStats, fetchTestimonials } from "@/lib/api";
 import { SiteContentProvider } from "@/components/SiteContentProvider";
+import LiveSeo from "@/components/LiveSeo";
 import { normalizeWhatsAppNumber, parseSettingList } from "@/lib/contact";
+import { BRAND_EN } from "@/lib/seo";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat",
@@ -17,13 +19,13 @@ const montserrat = Montserrat({
 
 export async function generateMetadata(): Promise<Metadata> {
   const settings = await fetchSettings();
-  const title = settings.seo_title_en || "AFC | Accounting, Audit & Tax Services in Egypt";
+  const title = `${BRAND_EN} | Accounting, Audit & Tax Services in Egypt`;
   const description = settings.seo_desc_en || "AFC provides professional accounting, audit, tax, company formation and financial advisory services in Egypt.";
   return {
     metadataBase: new URL("https://www.afc-cpa.com"),
     title: {
       default: title,
-      template: "%s | AFC"
+      template: `%s | ${BRAND_EN}`
     },
     description,
     keywords: ["Accounting Firm Egypt", "Audit Firm Egypt", "Tax Consultants Egypt", "Bookkeeping Services Egypt", "CPA Egypt", "Wlaa Magdy", "AFC"],
@@ -36,7 +38,7 @@ export async function generateMetadata(): Promise<Metadata> {
       locale: "en_US",
       alternateLocale: ["ar_EG"],
       url: "/en/",
-      siteName: "AFC",
+      siteName: BRAND_EN,
       title,
       description,
       images: [{ url: "/hero_egypt.jpg", width: 1376, height: 768, alt: title }],
@@ -68,7 +70,7 @@ export default async function EnLayout({
   const structuredData = {
     "@context": "https://schema.org",
     "@type": ["LocalBusiness", "AccountingService"],
-    name: "AFC Financial Consulting",
+    name: BRAND_EN,
     image: "https://www.afc-cpa.com/Logo.png",
     logo: "https://www.afc-cpa.com/Logo.png",
     "@id": "https://www.afc-cpa.com/#business",
@@ -93,6 +95,7 @@ export default async function EnLayout({
         <SiteContentProvider initialContent={{ settings, services, sectors, features, stats, testimonials, articles }}>
           <VisualEditorProvider>
             <ClientTracker />
+            <LiveSeo />
             <Navbar settings={settings} services={services} lang="en" />
             <div id="main-content" className="flex flex-col min-h-full">
               {children}

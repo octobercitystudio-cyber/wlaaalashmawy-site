@@ -7,7 +7,9 @@ import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { fetchArticles, fetchFeatures, fetchSectors, fetchSettings, fetchServices, fetchStats, fetchTestimonials } from "@/lib/api";
 import { SiteContentProvider } from "@/components/SiteContentProvider";
+import LiveSeo from "@/components/LiveSeo";
 import { normalizeWhatsAppNumber, parseSettingList } from "@/lib/contact";
+import { BRAND_AR, GOOGLE_BUSINESS_DESCRIPTION, HOME_SEO, SEO_KEYWORDS } from "@/lib/seo";
 
 const tajawal = Tajawal({
   variable: "--font-tajawal",
@@ -16,17 +18,16 @@ const tajawal = Tajawal({
 });
 
 export async function generateMetadata(): Promise<Metadata> {
-  const settings = await fetchSettings();
-  const title = settings.seo_title || "AFC للاستشارات المالية والمحاسبية";
-  const description = settings.seo_desc || "مكتب AFC بإدارة أ. ولاء مجدي. نقدم خدمات المحاسبة القانونية والاستشارات الضريبية والمراجعة وتأسيس الشركات في مصر.";
+  const title = HOME_SEO.title;
+  const description = HOME_SEO.description;
   return {
     metadataBase: new URL("https://www.afc-cpa.com"),
     title: {
       default: title,
-      template: "%s | AFC"
+      template: `%s | ${BRAND_AR}`
     },
     description,
-    keywords: ["ولاء مجدي", "مكتب العشماوي للمحاسبة", "AFC", "CPA", "شركة محاسبة في مصر", "مكتب محاسبة قانوني", "استشارات ضريبية", "تأسيس شركات"],
+    keywords: SEO_KEYWORDS,
     alternates: {
       canonical: "/",
       languages: { ar: "/", en: "/en/" },
@@ -36,7 +37,7 @@ export async function generateMetadata(): Promise<Metadata> {
       locale: "ar_EG",
       alternateLocale: ["en_US"],
       url: "/",
-      siteName: "AFC",
+      siteName: BRAND_AR,
       title,
       description,
       images: [{ url: "/hero_egypt.jpg", width: 1376, height: 768, alt: title }],
@@ -68,7 +69,7 @@ export default async function ArLayout({
   const structuredData = {
     "@context": "https://schema.org",
     "@type": ["LocalBusiness", "AccountingService"],
-    name: "AFC للاستشارات المالية والمحاسبية",
+    name: BRAND_AR,
     image: "https://www.afc-cpa.com/Logo.png",
     logo: "https://www.afc-cpa.com/Logo.png",
     "@id": "https://www.afc-cpa.com/#business",
@@ -81,8 +82,9 @@ export default async function ArLayout({
       addressRegion: "الجيزة",
       addressCountry: "EG",
     },
-    founder: { "@type": "Person", name: "ولاء مجدي العشماوي" },
-    description: "خدمات محاسبة ومراجعة وضرائب واستشارات مالية للشركات والمستثمرين.",
+    founder: { "@type": "Person", name: "ولاء مجدي العشماوي", jobTitle: "محاسب قانوني CPA" },
+    areaServed: ["6 أكتوبر", "الشيخ زايد", "الجيزة", "مصر"],
+    description: settings.google_business_description || GOOGLE_BUSINESS_DESCRIPTION,
   };
 
   return (
@@ -93,6 +95,7 @@ export default async function ArLayout({
         <SiteContentProvider initialContent={{ settings, services, sectors, features, stats, testimonials, articles }}>
           <VisualEditorProvider>
             <ClientTracker />
+            <LiveSeo />
             <Navbar settings={settings} services={services} lang="ar" />
             <div id="main-content" className="flex flex-col min-h-full">
               {children}

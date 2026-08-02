@@ -180,7 +180,7 @@ try {
     // The title/name checks keep this migration safe and idempotent.
     $cmsSeedFile = dirname(__DIR__) . '/content/cms-seed.json';
     $cmsSeedVersion = $pdo->query("SELECT setting_value FROM settings WHERE setting_key = 'cms_seed_version' LIMIT 1")->fetchColumn();
-    if ($cmsSeedVersion !== '1' && is_file($cmsSeedFile)) {
+    if ($cmsSeedVersion !== '2' && is_file($cmsSeedFile)) {
         $cmsSeed = json_decode((string) file_get_contents($cmsSeedFile), true);
         if (is_array($cmsSeed)) {
             $insertSetting = $pdo->prepare(
@@ -190,6 +190,23 @@ try {
                 if (!is_string($settingKey) || !preg_match('/^[a-z][a-z0-9_]{0,99}$/', $settingKey)) continue;
                 $insertSetting->execute([$settingKey, (string) $settingValue]);
             }
+            $overwriteSetting = $pdo->prepare(
+                'INSERT INTO settings (setting_key, setting_value) VALUES (?, ?)
+                 ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)'
+            );
+            foreach (($cmsSeed['overwriteSettings'] ?? []) as $settingKey => $settingValue) {
+                if (!is_string($settingKey) || !preg_match('/^[a-z][a-z0-9_]{0,99}$/', $settingKey)) continue;
+                $overwriteSetting->execute([$settingKey, (string) $settingValue]);
+            }
+            $pdo->exec(
+                "UPDATE settings SET setting_value = REPLACE(setting_value, 'شركة \"ولاء مجدي العشماوي للمحاسبة القانونية\" (AFC)', 'AFC – العشماوي للاستشارات المالية') WHERE setting_key = 'about_full'"
+            );
+            $pdo->exec(
+                "UPDATE settings SET setting_value = REPLACE(setting_value, '\"Wlaa Magdy Al-Ashmawy for Legal Accounting\" (AFC)', 'AFC – Al-Ashmawy Financial Consulting') WHERE setting_key = 'about_full_en'"
+            );
+            $pdo->exec(
+                "UPDATE settings SET setting_value = REPLACE(setting_value, '\"Al-Ashmawy Office for Financial Advisory\" (AFC)', 'AFC – Al-Ashmawy Financial Consulting') WHERE setting_key = 'about_full_en'"
+            );
 
             $articleExists = $pdo->prepare('SELECT id FROM articles WHERE title = ? LIMIT 1');
             $insertArticle = $pdo->prepare(
@@ -234,7 +251,7 @@ try {
                 ]);
             }
             $seedMarker = $pdo->prepare(
-                "INSERT INTO settings (setting_key, setting_value) VALUES ('cms_seed_version', '1')
+                "INSERT INTO settings (setting_key, setting_value) VALUES ('cms_seed_version', '2')
                  ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)"
             );
             $seedMarker->execute();

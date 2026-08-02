@@ -229,7 +229,7 @@ export default function Navbar({ settings = {}, services = [], lang = "ar" }: { 
           <Link href={`${prefix}/`} onClick={() => setIsMobileMenuOpen(false)}>
             <Image 
               src={settings.site_logo || "/afc-wordmark.png"}
-              alt={lang === "en" ? "AFC Financial Consulting" : "AFC للاستشارات المالية"}
+              alt={lang === "en" ? "AFC – Al-Ashmawy Financial Consulting" : "AFC – العشماوي للاستشارات المالية"}
               className="site-logo"
               width={1239}
               height={562}

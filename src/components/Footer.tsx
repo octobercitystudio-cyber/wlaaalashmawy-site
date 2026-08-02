@@ -33,7 +33,7 @@ export default function Footer({ settings = {}, lang = "ar" }: { settings?: any,
     <footer style={{ marginTop: "auto", borderTop: "1px solid var(--color-accent-hover)", padding: "2rem 0 1rem 0", background: "var(--color-accent-hover)", color: "#FFFFFF" }}>
       <div className="container grid grid-cols-1 md-grid-cols-3 gap-lg">
         <div style={{ textAlign: "center" }}>
-          <h3 style={{ marginBottom: "0.5rem", fontSize: "3rem", fontWeight: "900", letterSpacing: "3px", color: "#FFFFFF" }}>AFC</h3>
+          <h3 style={{ marginBottom: "0.5rem", fontSize: "1.65rem", fontWeight: "900", color: "#FFFFFF" }}>{lang === "en" ? "AFC – Al-Ashmawy Financial Consulting" : "AFC – العشماوي للاستشارات المالية"}</h3>
           <p style={{ color: "#FFFFFF", opacity: 0.9, maxWidth: "300px", margin: "0 auto", fontSize: "1.1rem" }}>
             {(lang === "en" ? settings.footer_description_en : settings.footer_description) || (lang === "en" ? "Your trusted partner in providing comprehensive accounting and tax solutions to ensure the success and sustainability of your business." : "شريكك الموثوق في تقديم حلول محاسبية وضريبية متكاملة لضمان نجاح واستدامة أعمالك.")}
           </p>

@@ -7,6 +7,7 @@ import {
   canonicalServiceSlug,
   serviceIdFromSlug,
 } from "@/lib/serviceRoutes";
+import { SEO_KEYWORDS, SERVICE_SEO } from "@/lib/seo";
 
 export const dynamicParams = false;
 
@@ -29,9 +30,12 @@ export async function generateMetadata({
   }
 
   const canonicalSlug = canonicalServiceSlug(id)!;
+  const seo = SERVICE_SEO[id] || { title: service.title, description: service.description };
   return {
-    title: service.title,
-    description: service.description,
+    title: { absolute: seo.title },
+    description: seo.description,
+    keywords: SEO_KEYWORDS,
+    openGraph: { title: seo.title, description: seo.description, url: `/${canonicalSlug}/`, type: "website" },
     alternates: {
       canonical: `https://www.afc-cpa.com/${canonicalSlug}/`,
       languages: {

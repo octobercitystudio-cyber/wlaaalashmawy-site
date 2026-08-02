@@ -10,6 +10,7 @@ import { EditableText } from "@/components/editor/EditableText";
 import { useSiteContent } from "@/components/SiteContentProvider";
 
 import { Lang } from "@/lib/dictionary";
+import { BRAND_AR, BRAND_EN, HOME_SEO_CTA, HOME_SEO_PARAGRAPHS } from "@/lib/seo";
 
 export default function Home({ lang = "ar" }: { lang?: Lang }) {
   const { settings, services, features, stats, testimonials } = useSiteContent();
@@ -83,7 +84,7 @@ export default function Home({ lang = "ar" }: { lang?: Lang }) {
           <div className="premium-card flex justify-center items-center" style={{ minHeight: "350px", padding: 0, overflow: "hidden", position: "relative", border: "2px solid var(--color-accent)" }}>
             <Image 
               src={settings.home_about_image || "/images/wlaa-office.jpg"}
-              alt={lang === "en" ? "Wlaa Magdy - Founder of AFC" : "الأستاذة ولاء مجدي - مؤسس شركة AFC"} 
+              alt={lang === "en" ? "Wlaa Magdy - Founder of AFC – Al-Ashmawy Financial Consulting" : "الأستاذة ولاء مجدي العشماوي - مؤسسة AFC – العشماوي للاستشارات المالية"}
               fill 
               style={{ objectFit: "cover", objectPosition: "top center" }} 
             />
@@ -101,6 +102,30 @@ export default function Home({ lang = "ar" }: { lang?: Lang }) {
         </div>
         
         <TestimonialsSlider testimonials={testimonials} lang={lang} />
+      </section>
+
+      {/* Search-friendly company overview */}
+      <section className="container py-xl" aria-labelledby="home-seo-heading">
+        <div className="premium-card" style={{ padding: "clamp(1.5rem, 4vw, 3rem)", textAlign: lang === "en" ? "left" : "right" }}>
+          <h2 id="home-seo-heading" className="text-gold" style={{ marginBottom: "1.5rem" }}>
+            {lang === "en" ? BRAND_EN : BRAND_AR}
+          </h2>
+          {lang === "ar" ? HOME_SEO_PARAGRAPHS.map((fallback, index) => (
+            <p key={index} style={{ fontSize: "1.08rem", lineHeight: 2, marginBottom: "1rem" }}>
+              {settings[`home_seo_paragraph_${index + 1}`] || fallback}
+            </p>
+          )) : (
+            <p style={{ fontSize: "1.08rem", lineHeight: 2, marginBottom: "1rem" }}>
+              {settings.home_seo_text_en || "AFC – Al-Ashmawy Financial Consulting provides integrated accounting, audit and tax solutions for companies, investors and entrepreneurs across Egypt."}
+            </p>
+          )}
+          <p style={{ fontSize: "1.12rem", lineHeight: 2, fontWeight: 700, color: "var(--color-primary)", margin: "1.5rem 0" }}>
+            {(lang === "en" ? settings.home_seo_cta_en : settings.home_seo_cta) || (lang === "en" ? "Book your consultation with AFC and let our team help you build a more efficient and stable financial and tax system." : HOME_SEO_CTA)}
+          </p>
+          <Link href={lang === "en" ? "/en/contact" : "/contact"} className="btn btn-primary">
+            {lang === "en" ? "Book Your Consultation" : "احجز استشارتك الآن"}
+          </Link>
+        </div>
       </section>
 
       {/* Call to Action & Contact */}
