@@ -7,13 +7,9 @@ import { serviceIdFromSlug } from "@/lib/serviceRoutes";
 
 function setMeta(name: string, content: string) {
   if (!content) return;
-  let tag = document.querySelector<HTMLMetaElement>(`meta[name="${name}"]`);
-  if (!tag) {
-    tag = document.createElement("meta");
-    tag.name = name;
-    document.head.appendChild(tag);
-  }
-  tag.content = content;
+  document
+    .querySelectorAll<HTMLMetaElement>(`meta[name="${name}"]`)
+    .forEach((tag) => { tag.content = content; });
 }
 
 export default function LiveSeo() {
