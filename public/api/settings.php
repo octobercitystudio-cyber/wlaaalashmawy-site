@@ -109,6 +109,7 @@ foreach ($data as $key => $value) {
             api_json_response(['error' => 'Admin password must be at least 12 characters'], 422);
         }
         $updates[$key] = password_hash($value, PASSWORD_DEFAULT);
+        $updates['admin_password_source'] = 'database';
         $credentialsChanged = true;
         continue;
     }

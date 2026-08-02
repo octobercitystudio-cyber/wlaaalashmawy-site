@@ -59,6 +59,7 @@ jobs:
           AFC_DB_NAME: ${{ secrets.DB_NAME }}
           AFC_ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
           AFC_ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          AFC_ADMIN_RECOVERY_EMAIL: ${{ secrets.ADMIN_RECOVERY_EMAIL }}
         run: |
           php -r '
             $required = [
@@ -75,8 +76,13 @@ jobs:
             }
             $adminUsername = getenv("AFC_ADMIN_USERNAME") ?: "";
             $adminPassword = getenv("AFC_ADMIN_PASSWORD") ?: "";
+            $adminRecoveryEmail = getenv("AFC_ADMIN_RECOVERY_EMAIL") ?: "";
             if (($adminUsername === "") !== ($adminPassword === "")) {
               fwrite(STDERR, "Both admin deployment secrets must be configured together.\n");
+              exit(1);
+            }
+            if (!filter_var($adminRecoveryEmail, FILTER_VALIDATE_EMAIL)) {
+              fwrite(STDERR, "A valid admin recovery email deployment secret is required.\n");
               exit(1);
             }
             $optional = [
@@ -84,6 +90,7 @@ jobs:
               "admin_password_hash" => $adminPassword !== ""
                 ? password_hash($adminPassword, PASSWORD_DEFAULT)
                 : "",
+              "admin_recovery_email" => $adminRecoveryEmail,
             ];
             $config = "<?php\n";
             foreach (array_merge($required, $optional) as $name => $value) {

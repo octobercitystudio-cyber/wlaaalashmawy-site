@@ -179,6 +179,30 @@
             </div>
             <button onclick="login()" class="btn btn-gold w-100 btn-lg">دخول</button>
             <div id="login-error" class="text-danger mt-3 text-center fw-bold" style="display:none;"></div>
+            <button type="button" class="btn btn-link w-100 mt-2 text-decoration-none" onclick="togglePasswordReset()">نسيت كلمة المرور؟</button>
+            <div id="password-reset-panel" class="mt-2 pt-3 border-top" style="display:none;">
+                <p class="small text-muted text-center mb-3">سيتم إرسال رمز تحقق إلى بريد الاستعادة المسجل.</p>
+                <div id="reset-request-stage">
+                    <button type="button" id="send-reset-code" class="btn btn-outline-primary w-100" onclick="requestPasswordReset()">إرسال رمز التحقق</button>
+                </div>
+                <div id="reset-verify-stage" style="display:none;">
+                    <div class="mb-3">
+                        <label class="form-label text-muted fw-bold">رمز التحقق</label>
+                        <input type="text" id="reset-code" class="form-control bg-light border-0 text-center" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" autocomplete="one-time-code" dir="ltr" placeholder="000000">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted fw-bold">كلمة المرور الجديدة</label>
+                        <input type="password" id="reset-password" class="form-control bg-light border-0" minlength="12" maxlength="4096" autocomplete="new-password" dir="ltr" placeholder="12 حرفًا على الأقل">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted fw-bold">تأكيد كلمة المرور</label>
+                        <input type="password" id="reset-password-confirm" class="form-control bg-light border-0" minlength="12" maxlength="4096" autocomplete="new-password" dir="ltr">
+                    </div>
+                    <button type="button" id="complete-reset" class="btn btn-gold w-100" onclick="completePasswordReset()">تغيير كلمة المرور</button>
+                    <button type="button" class="btn btn-link w-100 btn-sm text-decoration-none" onclick="requestPasswordReset()">إرسال رمز جديد</button>
+                </div>
+                <div id="reset-message" class="mt-3 text-center fw-bold" role="status" style="display:none;"></div>
+            </div>
         </div>
     </div>
 
@@ -828,6 +852,101 @@
                 }
                 else { document.getElementById('login-error').innerText = data.error || 'خطأ في تسجيل الدخول'; document.getElementById('login-error').style.display='block'; }
             } catch(e) { showToast('فشل الاتصال', true); }
+        }
+
+        function togglePasswordReset() {
+            const panel = document.getElementById('password-reset-panel');
+            const isVisible = panel.style.display !== 'none';
+            panel.style.display = isVisible ? 'none' : 'block';
+            document.getElementById('login-error').style.display = 'none';
+        }
+
+        function showResetMessage(message, isError = false) {
+            const element = document.getElementById('reset-message');
+            element.textContent = message;
+            element.className = `mt-3 text-center fw-bold ${isError ? 'text-danger' : 'text-success'}`;
+            element.style.display = 'block';
+        }
+
+        async function requestPasswordReset() {
+            const button = document.getElementById('send-reset-code');
+            button.disabled = true;
+            showResetMessage('جارٍ إرسال الرمز...');
+            try {
+                const response = await fetch(API_URL + '/password-reset.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'request' })
+                });
+                const result = await response.json();
+                if (!response.ok) {
+                    const message = response.status === 429
+                        ? 'تم طلب رموز كثيرة. حاول مرة أخرى لاحقًا.'
+                        : 'تعذر إرسال الرمز الآن. حاول مرة أخرى.';
+                    showResetMessage(message, true);
+                    return;
+                }
+                document.getElementById('reset-request-stage').style.display = 'none';
+                document.getElementById('reset-verify-stage').style.display = 'block';
+                showResetMessage('تم إرسال الرمز. راجع البريد الوارد والرسائل غير المرغوب فيها.');
+                document.getElementById('reset-code').focus();
+            } catch (error) {
+                showResetMessage('فشل الاتصال بالخادم. حاول مرة أخرى.', true);
+            } finally {
+                button.disabled = false;
+            }
+        }
+
+        async function completePasswordReset() {
+            const code = document.getElementById('reset-code').value.trim();
+            const password = document.getElementById('reset-password').value;
+            const confirmation = document.getElementById('reset-password-confirm').value;
+            if (!/^[0-9]{6}$/.test(code)) {
+                showResetMessage('أدخل رمز التحقق المكون من 6 أرقام.', true);
+                return;
+            }
+            if (password.length < 12) {
+                showResetMessage('يجب ألا تقل كلمة المرور عن 12 حرفًا.', true);
+                return;
+            }
+            if (password !== confirmation) {
+                showResetMessage('كلمتا المرور غير متطابقتين.', true);
+                return;
+            }
+
+            const button = document.getElementById('complete-reset');
+            button.disabled = true;
+            showResetMessage('جارٍ تغيير كلمة المرور...');
+            try {
+                const response = await fetch(API_URL + '/password-reset.php', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ action: 'reset', code, password })
+                });
+                const result = await response.json();
+                if (!response.ok) {
+                    showResetMessage(
+                        response.status === 422
+                            ? 'الرمز غير صحيح أو انتهت صلاحيته.'
+                            : 'تعذر تغيير كلمة المرور الآن.',
+                        true
+                    );
+                    return;
+                }
+                document.getElementById('reset-code').value = '';
+                document.getElementById('reset-password').value = '';
+                document.getElementById('reset-password-confirm').value = '';
+                document.getElementById('password-reset-panel').style.display = 'none';
+                document.getElementById('password').value = '';
+                document.getElementById('password').focus();
+                document.getElementById('login-error').textContent = 'تم تغيير كلمة المرور. يمكنك تسجيل الدخول الآن.';
+                document.getElementById('login-error').className = 'text-success mt-3 text-center fw-bold';
+                document.getElementById('login-error').style.display = 'block';
+            } catch (error) {
+                showResetMessage('فشل الاتصال بالخادم. حاول مرة أخرى.', true);
+            } finally {
+                button.disabled = false;
+            }
         }
 
         async function restoreSession() {

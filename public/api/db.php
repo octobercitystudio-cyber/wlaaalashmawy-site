@@ -127,6 +127,19 @@ try {
             attempted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             INDEX idx_login_attempts_ip_time (ip_address, attempted_at)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+        CREATE TABLE IF NOT EXISTS password_reset_codes (
+            id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            email VARCHAR(254) NOT NULL,
+            code_hash VARCHAR(255) NOT NULL,
+            ip_address VARCHAR(45) DEFAULT '',
+            attempts TINYINT UNSIGNED NOT NULL DEFAULT 0,
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            expires_at DATETIME NOT NULL,
+            used_at DATETIME DEFAULT NULL,
+            INDEX idx_password_reset_email_expiry (email, expires_at),
+            INDEX idx_password_reset_ip_time (ip_address, created_at)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     ");
 
     // Safely add ip_address column if it doesn't exist
@@ -165,6 +178,7 @@ try {
     if (random_int(1, 100) === 1) {
         $pdo->exec("DELETE FROM admin_sessions WHERE expires_at <= UTC_TIMESTAMP()");
         $pdo->exec("DELETE FROM login_attempts WHERE attempted_at < DATE_SUB(UTC_TIMESTAMP(), INTERVAL 1 DAY)");
+        $pdo->exec("DELETE FROM password_reset_codes WHERE created_at < DATE_SUB(UTC_TIMESTAMP(), INTERVAL 1 DAY)");
         $pdo->exec("DELETE FROM visits WHERE visited_at < DATE_SUB(UTC_TIMESTAMP(), INTERVAL 180 DAY)");
     }
 
