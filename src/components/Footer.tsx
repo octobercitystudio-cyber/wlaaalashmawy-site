@@ -16,11 +16,11 @@ export default function Footer({ settings = {}, lang = "ar" }: { settings?: any,
   const dict = getDictionary(lang);
   const prefix = lang === "en" ? "/en" : "";
   const socialLinks = {
-    facebook: normalizeSocialUrl(settings.social_facebook, "facebook"),
-    instagram: normalizeSocialUrl(settings.social_instagram, "instagram"),
-    youtube: normalizeSocialUrl(settings.social_youtube, "youtube"),
-    linkedin: normalizeSocialUrl(settings.social_linkedin, "linkedin"),
-    tiktok: normalizeSocialUrl(settings.social_tiktok, "tiktok"),
+    facebook: normalizeSocialUrl(settings.social_facebook || "https://www.facebook.com/profile.php?id=100064870305325", "facebook"),
+    instagram: normalizeSocialUrl(settings.social_instagram || "https://www.instagram.com/afc_cpa", "instagram"),
+    youtube: normalizeSocialUrl(settings.social_youtube || "https://www.youtube.com/@AFC_CPA", "youtube"),
+    linkedin: normalizeSocialUrl(settings.social_linkedin || "https://www.linkedin.com/company/135176511", "linkedin"),
+    tiktok: normalizeSocialUrl(settings.social_tiktok || "https://www.tiktok.com/@afc_cpa", "tiktok"),
   };
   const hasSocialLinks = Object.values(socialLinks).some(Boolean);
   
