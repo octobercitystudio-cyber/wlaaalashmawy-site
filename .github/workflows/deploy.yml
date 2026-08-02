@@ -16,8 +16,6 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      FTP_SERVER: ${{ secrets.FTP_SERVER }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -54,9 +52,8 @@ jobs:
       # This runs only after the public production branch is published, so database
       # credentials never enter that branch or its Git history.
       - name: Create runtime database config for hosting
-        if: ${{ env.FTP_SERVER != '' }}
         env:
-          AFC_DB_HOST: ${{ secrets.DB_HOST }}
+          AFC_DB_HOST: localhost
           AFC_DB_USER: ${{ secrets.DB_USER }}
           AFC_DB_PASS: ${{ secrets.DB_PASS }}
           AFC_DB_NAME: ${{ secrets.DB_NAME }}
@@ -88,19 +85,14 @@ jobs:
           '
           chmod 600 out/api/config.php
 
-      - name: FTPS Deploy to Hostinger
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-        if: ${{ env.FTP_SERVER != '' }}
+      - name: Securely deploy to Hostinger
+        uses: appleboy/scp-action@v1.0.0
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
-          port: 21
-          local-dir: ./out/
-          server-dir: /public_html/
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
-            images/uploads/**
+          host: ${{ secrets.HOST_IP }}
+          username: ${{ secrets.HOST_USER }}
+          password: ${{ secrets.HOST_PASSWORD }}
+          port: ${{ secrets.HOST_PORT }}
+          source: "out/*"
+          target: "public_html"
+          strip_components: 1
+          overwrite: true
