@@ -1,7 +1,17 @@
 <?php
+if (PHP_SAPI !== 'cli') {
+    http_response_code(404);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(['error' => 'Not found']);
+    exit;
+}
+
+if (getenv('AFC_ALLOW_MAINTENANCE') !== '1') {
+    fwrite(STDERR, "Maintenance commands are disabled. Set AFC_ALLOW_MAINTENANCE=1 for this process only.\n");
+    exit(1);
+}
+
 require_once __DIR__ . '/db.php';
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json; charset=utf-8');
 
 try {
     $pdo->beginTransaction();
@@ -20,19 +30,10 @@ try {
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM stats");
     $stmt->execute();
     if ($stmt->fetchColumn() == 0) {
-        $pdo->prepare("INSERT INTO stats (title, title_en, value) VALUES (?, ?, ?)")->execute(["سنوات الخبرة", "Years of Experience", "+15"]);
-        $pdo->prepare("INSERT INTO stats (title, title_en, value) VALUES (?, ?, ?)")->execute(["عميل سعيد", "Happy Clients", "+500"]);
-        $pdo->prepare("INSERT INTO stats (title, title_en, value) VALUES (?, ?, ?)")->execute(["مشروع ناجح", "Successful Projects", "+1000"]);
-        $pdo->prepare("INSERT INTO stats (title, title_en, value) VALUES (?, ?, ?)")->execute(["خبير مالي", "Financial Experts", "+50"]);
-    }
-
-    // Testimonials
-    $stmt = $pdo->prepare("SELECT COUNT(*) FROM testimonials");
-    $stmt->execute();
-    if ($stmt->fetchColumn() == 0) {
-        $pdo->prepare("INSERT INTO testimonials (name, name_en, position, position_en, content, content_en, rating) VALUES (?, ?, ?, ?, ?, ?, 5)")->execute(["أحمد محمود", "Ahmed Mahmoud", "المدير التنفيذي لشركة القمة", "CEO of Al Qemma", "خدمات احترافية وفريق عمل متميز ساعدنا كثيراً في تنظيم الأمور المالية لشركتنا.", "Professional services and an outstanding team that helped us greatly in organizing our companys financials."]);
-        $pdo->prepare("INSERT INTO testimonials (name, name_en, position, position_en, content, content_en, rating) VALUES (?, ?, ?, ?, ?, ?, 5)")->execute(["محمد علي", "Mohamed Ali", "رئيس مجلس إدارة مجموعة النور", "Chairman of Al Nour Group", "استشاراتهم الضريبية وفرت علينا الكثير من الوقت والجهد، شكراً لكم.", "Their tax advisory saved us a lot of time and effort, thank you."]);
-        $pdo->prepare("INSERT INTO testimonials (name, name_en, position, position_en, content, content_en, rating) VALUES (?, ?, ?, ?, ?, ?, 5)")->execute(["سارة حسن", "Sarah Hassan", "مديرة الحسابات في شركة الأمل", "Accounting Manager at Al Amal", "دقة في المواعيد واحترافية في التعامل، أنصح بالتعامل معهم.", "Punctual and highly professional, I highly recommend working with them."]);
+        $pdo->prepare("INSERT INTO stats (title, title_en, value) VALUES (?, ?, ?)")->execute(["عام التأسيس", "Founded", "2024"]);
+        $pdo->prepare("INSERT INTO stats (title, title_en, value) VALUES (?, ?, ?)")->execute(["خدمات متخصصة", "Specialized Services", "8"]);
+        $pdo->prepare("INSERT INTO stats (title, title_en, value) VALUES (?, ?, ?)")->execute(["قطاعًا نخدمه", "Sectors Served", "11"]);
+        $pdo->prepare("INSERT INTO stats (title, title_en, value) VALUES (?, ?, ?)")->execute(["لغات الموقع", "Website Languages", "2"]);
     }
 
     // Services
@@ -66,6 +67,39 @@ try {
         $pdo->prepare("INSERT INTO sectors (title, title_en, description, description_en, content, content_en, image) VALUES (?, ?, ?, ?, '', '', ?)")->execute(["المنظمات غير الهادفة للربح", "Non-Profit Organizations", "ضمان أعلى مستويات الشفافية والحوكمة من خلال تقارير مالية دقيقة وإدارة رشيدة للمنح والتمويل الخيري.", "Ensuring high transparency and governance through accurate financial reporting and prudent grant management.", "/images/sectors/non_profit.jpg"]);
     }
 
+    // Articles
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM articles WHERE title = ?");
+    $title1 = "دليلك الشامل لتأسيس الشركات في مصر وفقاً للقانون 159 لسنة 1981";
+    $stmt->execute([$title1]);
+    if ($stmt->fetchColumn() == 0) {
+        $pdo->prepare("INSERT INTO articles (title, title_en, date, category, category_en, image, content, content_en) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")->execute([
+            $title1, 
+            "Your Comprehensive Guide to Company Incorporation in Egypt under Law No. 159 of 1981",
+            date('d M Y'), 
+            "قسم التأسيس", 
+            "Incorporation",
+            "/images/articles/placeholder.jpg", 
+            "عندما تقرر تحويل فكرتك التجارية إلى كيان قانوني قائم في مصر، فإن الخطوة الأولى والأهم هي اختيار المظلة القانونية الصحيحة. يُعد القانون رقم 159 لسنة 1981 هو التشريع الأم المنظم لشركات المساهمة، الشركات ذات المسؤولية المحدودة، وشركات الشخص الواحد.<br><br>لكي تتخذ القرار الاستثماري الأنسب لمشروعك، إليك الفروق الجوهرية بين الأشكال القانونية الأكثر طلباً تحت مظلة هذا القانون:<br><br><strong>1. الشركات ذات المسؤولية المحدودة</strong><br>• الأنسب لـ: المشروعات الصغيرة والمتوسطة والعائلية.<br>• المسؤولية: تنحصر مسؤولية كل شريك في حدود حصته في رأس المال فقط، مما يحمي أموالك الشخصية.<br>• الإدارة: تتم من خلال مدير أو أكثر (وليس مجلس إدارة معقد)، ولا يوجد حد أدنى إلزامي لرأس المال بموجب التعديلات الأخيرة، مما يجعلها مرنة وسريعة التأسيس.<br><br><strong>2. شركات المساهمة</strong><br>• الأنسب لـ: المشروعات الكبرى التي تتطلب رؤوس أموال ضخمة أو تخطط للطرح في البورصة مستقبلاً.<br>• الهيكل الإداري: تعتمد على مجلس إدارة يتكون من 3 أعضاء على الأقل، وتنقسيم حصصها إلى أسهم قابلة للتداول بسهولة.<br>• رأس المال: يشترط القانون حداً أدنى لرأس المال المصدر (يتم سداد جزء منه عند التأسيس).<br><br><strong>3. شركة الشخص الواحد</strong><br>• الأنسب لـ: المستثمر الفردي الذي يرغب في فصل ذمته المالية الشخصية عن عمله التجاري.<br>• الميزة التنافسية: تمنحك مزايا شركات الأموال وصلاحيات الإدارة الكاملة دون الحاجة لوجود شركاء آخرين.<br><br><strong>كيف يدعمك مكتبنا؟</strong><br>تحديد الشكل القانوني لشركتك هو حجر الأساس لنجاحها المالي والضريبي. في AFC لا نكتفي بإجراءات التأسيس الورقية، بل ندرس طبيعة نشاطك ومخطط نموك لنختار لك الكيان الأنسب الذي يحمي استثماراتك ويوفر لك أفضل ميزة ضريبية.",
+            "When transforming your business idea into a legally established entity in Egypt, the first and most critical decision is selecting the appropriate legal structure. Law No. 159 of 1981 serves as the principal legislation governing Joint Stock Companies (JSCs), Limited Liability Companies (LLCs), and One Person Companies (OPCs), providing the legal framework for their establishment, management, and governance.<br><br>To help you make the right investment decision, below is an overview of the key differences between the most common legal entities regulated under this law:<br><br><strong>1. Limited Liability Company (LLC)</strong><br>Best suited for: Small, medium-sized, and family-owned businesses.<br>Liability: Each partner's liability is limited to the value of their capital contribution, safeguarding their personal assets from the company's financial obligations.<br>Management: An LLC is managed by one or more managers rather than a board of directors. Under the latest legislative amendments, there is no mandatory minimum capital requirement, making this structure flexible, cost-effective, and efficient to establish.<br><br><strong>2. Joint Stock Company (JSC)</strong><br>Best suited for: Large-scale enterprises requiring substantial capital investment or businesses planning a future listing on the Egyptian Stock Exchange.<br>Corporate Structure: Managed by a Board of Directors consisting of at least three members. Ownership is divided into transferable shares, facilitating investment and ownership transfers.<br>Capital Requirements: The law prescribes a minimum issued capital, with a specified portion payable upon incorporation in accordance with the applicable regulations.<br><br><strong>3. One Person Company (OPC)</strong><br>Best suited for: Individual investors seeking to separate their personal assets from their business activities.<br>Key Advantage: An OPC provides the legal protection and benefits of a corporate entity while allowing a single owner to retain full managerial authority without the need for additional shareholders or partners.<br><br><strong>How AFC Supports Your Business</strong><br>Choosing the right legal structure is the cornerstone of your company's financial, legal, and tax success.<br>At AFC, we go beyond handling incorporation procedures. We conduct a comprehensive assessment of your business activities, investment objectives, and long-term growth strategy to recommend the most suitable legal entity—one that protects your investment, enhances operational efficiency, and optimizes your tax position while ensuring full compliance with Egyptian laws and regulations."
+        ]);
+    }
+
+    $stmt = $pdo->prepare("SELECT COUNT(*) FROM articles WHERE title = ?");
+    $title2 = "دليلك للاستثمار في مصر وفقًا لقانون الاستثمار رقم 72 لسنة 2017";
+    $stmt->execute([$title2]);
+    if ($stmt->fetchColumn() == 0) {
+        $pdo->prepare("INSERT INTO articles (title, title_en, date, category, category_en, image, content, content_en) VALUES (?, ?, ?, ?, ?, ?, ?, ?)")->execute([
+            $title2,
+            "Your Guide to Investing in Egypt under Investment Law No. 72 of 2017",
+            date('d M Y'),
+            "قسم التأسيس",
+            "Incorporation",
+            "/images/articles/placeholder.jpg",
+            "إذا كنت تخطط لتأسيس مشروع جديد أو التوسع في استثماراتك داخل مصر، فإن قانون الاستثمار رقم 72 لسنة 2017 يمثل أحد أهم التشريعات التي تهدف إلى جذب الاستثمارات المحلية والأجنبية، من خلال توفير حوافز وضمانات وإجراءات أكثر مرونة للمستثمرين.<br><br>ولا يقتصر دور هذا القانون على تنظيم الاستثمار، بل يمنح المستثمر بيئة أعمال أكثر استقرارًا، ويختصر العديد من الإجراءات الحكومية، بما يساهم في سرعة بدء النشاط وتعزيز فرص النجاح.<br><br><strong>أهم المزايا التي يقدمها قانون 72 لسنة 2017</strong><br><br><strong>أولاً: الضمانات القانونية للمستثمر</strong><br>يمنح القانون المستثمرين العديد من الضمانات، من أهمها:<br>• المساواة بين المستثمرين وعدم التمييز.<br>• حماية المشروع من الإجراءات أو القرارات التعسفية.<br>• ضمان حرية إدارة المشروع والتصرف في أصوله وفقًا للقانون.<br>• تسهيل تحويل الأرباح ورؤوس الأموال للمستثمرين الأجانب وفقًا للتشريعات المنظمة.<br><br><strong>ثانياً: الحوافز الاستثمارية</strong><br>يوفر القانون مجموعة من الحوافز لتشجيع الاستثمار، ومن أبرزها:<br>• الإعفاء من ضريبة الدمغة ورسوم التوثيق والشهر على عقود تأسيس الشركات وبعض العقود المرتبطة بها لمدة خمس سنوات.<br>• تطبيق تعريفة جمركية موحدة بنسبة 2% على الآلات والمعدات والأجهزة اللازمة لإنشاء المشروع، وفقًا للضوابط القانونية.<br>• حوافز خاصة وإضافية لبعض المشروعات والقطاعات والمناطق المستهدفة بالتنمية، وفقًا للشروط التي يحددها القانون والقرارات المنظمة.<br><br><strong>ثالثاً: أنظمة الاستثمار</strong><br>يتيح القانون للمستثمر اختيار النظام الاستثماري الأنسب لطبيعة مشروعه، مثل:<br>• الاستثمار الداخلي.<br>• المناطق الحرة.<br>• المناطق الاستثمارية.<br>• المناطق التكنولوجية.<br><br>ويختلف كل نظام من حيث المزايا والإجراءات والحوافز المقررة له.<br><br><strong>من هم المستفيدون من قانون 72 لسنة 2017؟</strong><br>يُعد هذا القانون الخيار الأمثل لـ:<br>• المستثمرين المصريين والأجانب.<br>• المشروعات الصناعية.<br>• الشركات الخدمية والتجارية.<br>• الشركات التي تستهدف التوسع أو التصدير.<br>• المشروعات الراغبة في الاستفادة من الحوافز الاستثمارية التي تقررها الدولة.<br><br><strong>كيف يساعدك AFC؟</strong><br>الاستفادة من قانون الاستثمار لا تتوقف عند تأسيس الشركة، بل تبدأ باختيار النظام الاستثماري المناسب، والتأكد من استيفاء شروط الحصول على الحوافز والمزايا التي يتيحها القانون.<br>في AFC – Alashmawy Financial Consulting نقدم استشارات متخصصة للمستثمرين، تشمل دراسة المشروع، واختيار أفضل هيكل قانوني، وإنهاء جميع إجراءات التأسيس أمام الهيئة العامة للاستثمار والجهات المختصة، مع تقديم الدعم الكامل للحصول على الحوافز الاستثمارية المتاحة وفقًا لأحكام القانون.<br><br>ابدأ استثمارك بثقة... ودع فريق AFC يساعدك في تأسيس مشروعك على أسس قانونية سليمة، مع الاستفادة من المزايا التي يتيحها قانون الاستثمار رقم 72 لسنة 2017.",
+            "If you are planning to establish a new business or expand your investments in Egypt, Investment Law No. 72 of 2017 is one of the country's most significant legislative frameworks designed to attract both domestic and foreign investment. The law offers a comprehensive package of incentives, legal guarantees, and streamlined procedures to create a more competitive and investor-friendly business environment.<br><br>Beyond regulating investment activities, the law promotes business stability, simplifies governmental procedures, and facilitates faster project establishment, enabling investors to focus on sustainable growth and long-term success.<br><br><strong>Key Benefits of Investment Law No. 72 of 2017</strong><br><br><strong>1. Legal Guarantees for Investors</strong><br>The law provides investors with a broad range of legal protections, including:<br>• Equal treatment of all investors without discrimination.<br>• Protection against arbitrary administrative actions or decisions.<br>• The right to manage investment projects and dispose of assets in accordance with the law.<br>• The ability for foreign investors to transfer profits and capital in compliance with the applicable regulations.<br><br><strong>2. Investment Incentives</strong><br>The law offers several incentives designed to encourage investment, including:<br>• Exemption from stamp duty, notarization fees, and registration fees on company incorporation contracts and certain related agreements for a period of five years.<br>• A unified customs duty rate of 2% on machinery, equipment, and devices required for establishing investment projects, subject to the applicable legal conditions.<br>• Additional and special incentives for eligible projects operating in targeted sectors and development zones, in accordance with the provisions of the law and its implementing regulations.<br><br><strong>3. Investment Systems</strong><br>The law enables investors to choose the investment regime that best suits the nature of their projects, including:<br>• Inland Investment.<br>• Free Zones.<br>• Investment Zones.<br>• Technology Zones.<br><br>Each investment system offers its own regulatory framework, procedures, incentives, and operational advantages.<br><br><strong>Who Can Benefit from Investment Law No. 72 of 2017?</strong><br>This law is particularly suitable for:<br>• Egyptian and foreign investors.<br>• Industrial projects.<br>• Commercial and service companies.<br>• Businesses planning expansion or export activities.<br>• Investment projects seeking to benefit from government-approved investment incentives.<br><br><strong>How AFC Supports Your Investment Journey</strong><br>Maximizing the benefits of the Investment Law goes far beyond simply incorporating a company. It begins with selecting the appropriate investment regime and ensuring that your project meets the eligibility requirements for the incentives and advantages provided under the law.<br><br>At AFC – Alashmawy Financial Consulting, we provide comprehensive investment advisory services tailored to both local and international investors. Our services include evaluating your investment project, selecting the most appropriate legal structure, completing all incorporation procedures before the General Authority for Investment and Free Zones (GAFI) and other competent authorities, and providing end-to-end support in obtaining all applicable investment incentives available under Investment Law No. 72 of 2017.<br><br><strong>Invest with Confidence</strong><br>Build your business on a strong legal foundation and maximize the opportunities offered by Egypt's Investment Law.<br>Let AFC be your trusted partner in establishing and growing your investment with confidence, compliance, and long-term success."
+        ]);
+    }
+
     
     // Settings
     $settingsToSeed = [
@@ -80,11 +114,11 @@ try {
         'contact_emails' => "[\"info@afc-cpa.com\"]",
         'contact_phones' => "[\"01155729429\",\"0238345397\"]",
         'contact_map' => "https://maps.google.com/maps?q=29.9607581,30.9246025&hl=ar&z=16&output=embed",
-        'social_facebook' => "https://facebook.com",
-        'social_instagram' => "https://instagram.com",
-        'social_youtube' => "https://youtube.com",
-        'social_linkedin' => "https://linkedin.com",
-        'social_tiktok' => "https://tiktok.com",
+        'social_facebook' => "",
+        'social_instagram' => "",
+        'social_youtube' => "",
+        'social_linkedin' => "",
+        'social_tiktok' => "",
     ];
 
     $stmt = $pdo->prepare("INSERT INTO settings (setting_key, setting_value) VALUES (?, ?) ON DUPLICATE KEY UPDATE setting_value = setting_value");
@@ -93,9 +127,11 @@ try {
     }
 
     $pdo->commit();
-    echo json_encode(['success' => true, 'message' => 'Database seeded successfully.']);
+    fwrite(STDOUT, "Database seeded successfully.\n");
 } catch (Exception $e) {
     $pdo->rollBack();
-    echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+    error_log('Database seed failed: ' . $e->getMessage());
+    fwrite(STDERR, "Database seed failed. Check the server error log.\n");
+    exit(1);
 }
 ?>

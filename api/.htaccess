@@ -1,0 +1,10 @@
+Options -Indexes
+
+<FilesMatch "^(auth|config(?:\.local)?|db|security|migrate|seed)\.php$|\.sql$">
+    Require all denied
+</FilesMatch>
+
+<IfModule mod_headers.c>
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set Referrer-Policy "same-origin"
+</IfModule>
