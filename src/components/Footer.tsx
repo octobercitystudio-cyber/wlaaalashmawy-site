@@ -25,17 +25,17 @@ export default function Footer({ settings = {}, lang = "ar" }: { settings?: any,
   const hasSocialLinks = Object.values(socialLinks).some(Boolean);
   
   return (
-    <footer style={{ marginTop: "auto", borderTop: "1px solid var(--color-accent-hover)", padding: "var(--spacing-xl) 0 var(--spacing-md) 0", background: "var(--color-accent-hover)", color: "#FFFFFF" }}>
+    <footer style={{ marginTop: "auto", borderTop: "1px solid var(--color-accent-hover)", padding: "2rem 0 1rem 0", background: "var(--color-accent-hover)", color: "#FFFFFF" }}>
       <div className="container grid grid-cols-1 md-grid-cols-3 gap-lg">
         <div style={{ textAlign: "center" }}>
-          <h3 style={{ marginBottom: "var(--spacing-sm)", fontSize: "4rem", fontWeight: "900", letterSpacing: "4px", color: "#FFFFFF" }}>AFC</h3>
+          <h3 style={{ marginBottom: "0.5rem", fontSize: "3rem", fontWeight: "900", letterSpacing: "3px", color: "#FFFFFF" }}>AFC</h3>
           <p style={{ color: "#FFFFFF", opacity: 0.9, maxWidth: "300px", margin: "0 auto", fontSize: "1.1rem" }}>
             {lang === "en" ? "Your trusted partner in providing comprehensive accounting and tax solutions to ensure the success and sustainability of your business." : "شريكك الموثوق في تقديم حلول محاسبية وضريبية متكاملة لضمان نجاح واستدامة أعمالك."}
           </p>
         </div>
         <div>
           <h3 style={{ marginBottom: "var(--spacing-md)", fontSize: "1.3rem", color: "#FFFFFF" }}>{dict.quickLinks}</h3>
-          <ul className="footer-links flex flex-col gap-sm" style={{ opacity: 0.9 }}>
+          <ul className="footer-links flex flex-col gap-xs" style={{ opacity: 0.9 }}>
             <li><Link href={`${prefix}/`}>{dict.home}</Link></li>
             <li><Link href={`${prefix}/about`}>{dict.about}</Link></li>
             <li><Link href={`${prefix}/services`}>{dict.services}</Link></li>
@@ -46,7 +46,7 @@ export default function Footer({ settings = {}, lang = "ar" }: { settings?: any,
         </div>
         <div>
           <h3 style={{ marginBottom: "var(--spacing-md)", fontSize: "1.3rem", color: "#FFFFFF" }}>{dict.contact}</h3>
-          <ul className="footer-links flex flex-col gap-sm" style={{ opacity: 0.9 }}>
+          <ul className="footer-links flex flex-col gap-xs" style={{ opacity: 0.9 }}>
             {emails.map((email: string, i: number) => (
               <li key={`email-${i}`} style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                 <span>📧</span> 
@@ -65,7 +65,7 @@ export default function Footer({ settings = {}, lang = "ar" }: { settings?: any,
             </li>
           </ul>
           
-          {hasSocialLinks && <div style={{ display: "flex", gap: "1rem", marginTop: "1.5rem" }}>
+          {hasSocialLinks && <div style={{ display: "flex", gap: "0.75rem", marginTop: "1rem" }}>
             {socialLinks.facebook && (
             <a href={socialLinks.facebook} aria-label="Facebook" target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "44px", height: "44px", borderRadius: "10px", background: "#1877F2", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
               <i className="bi bi-facebook"></i>
@@ -94,11 +94,11 @@ export default function Footer({ settings = {}, lang = "ar" }: { settings?: any,
           </div>}
         </div>
       </div>
-      <div className="container text-center" style={{ marginTop: "var(--spacing-xl)", paddingTop: "var(--spacing-md)", borderTop: "1px solid rgba(255,255,255,0.2)" }}>
+      <div className="container text-center" style={{ marginTop: "2rem", paddingTop: "1rem", borderTop: "1px solid rgba(255,255,255,0.2)" }}>
         <p style={{ margin: 0, fontSize: "1rem", color: "#FFFFFF" }}>
           <span dir="ltr">© {new Date().getFullYear()}</span> {lang === "en" ? "All rights reserved to www.afc-cpa.com" : "جميع الحقوق محفوظة لموقع www.afc-cpa.com"}
           <span style={{ margin: "0 10px", opacity: 0.5 }}>|</span>
-          {lang === "en" ? "Powered by " : "تم الإنشاء بواسطة "}
+          {lang === "en" ? "Powered by " : "تم التصميم بواسطة "}
           <a href="https://www.multitaskagency.com" target="_blank" rel="noopener noreferrer" style={{ color: "#FFFFFF", textDecoration: "none", fontWeight: "bold", transition: "opacity 0.3s ease" }} className="hover:opacity-80">
             MT AGENCY
           </a>
