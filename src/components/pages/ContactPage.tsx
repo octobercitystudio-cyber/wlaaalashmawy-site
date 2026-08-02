@@ -140,23 +140,23 @@ export default async function ContactPage({ lang = "ar" }: { lang?: Lang }) {
                 {hasSocialLinks && <div style={{ display: "flex", flexDirection: "column", gap: "1rem", background: "var(--color-bg-card)", padding: "1.5rem", borderRadius: "12px", border: "1px solid var(--color-border)", boxShadow: "0 4px 15px rgba(0,0,0,0.03)" }}>
                   <h4 style={{ fontSize: "1.1rem", color: "var(--color-primary)", margin: 0, fontWeight: "bold" }}>{lang === "en" ? "Social Media" : "منصات السوشيال ميديا"}</h4>
                   <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-                    {socialLinks.facebook && <a href={socialLinks.facebook} aria-label="Facebook" target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "44px", height: "44px", borderRadius: "12px", background: "#1877F2", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
+                    {socialLinks.facebook && <a href={socialLinks.facebook} aria-label="Facebook" target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "44px", height: "44px", borderRadius: "12px", background: "var(--color-accent)", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
                       <i className="bi bi-facebook fs-5"></i>
                     </a>}
                     
-                    {socialLinks.instagram && <a href={socialLinks.instagram} aria-label="Instagram" target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "44px", height: "44px", borderRadius: "12px", background: "#E4405F", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
+                    {socialLinks.instagram && <a href={socialLinks.instagram} aria-label="Instagram" target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "44px", height: "44px", borderRadius: "12px", background: "var(--color-accent)", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
                       <i className="bi bi-instagram fs-5"></i>
                     </a>}
                     
-                    {socialLinks.youtube && <a href={socialLinks.youtube} aria-label="YouTube" target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "44px", height: "44px", borderRadius: "12px", background: "#FF0000", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
+                    {socialLinks.youtube && <a href={socialLinks.youtube} aria-label="YouTube" target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "44px", height: "44px", borderRadius: "12px", background: "var(--color-accent)", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
                       <i className="bi bi-youtube fs-5"></i>
                     </a>}
                     
-                    {socialLinks.linkedin && <a href={socialLinks.linkedin} aria-label="LinkedIn" target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "44px", height: "44px", borderRadius: "12px", background: "#0A66C2", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
+                    {socialLinks.linkedin && <a href={socialLinks.linkedin} aria-label="LinkedIn" target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "44px", height: "44px", borderRadius: "12px", background: "var(--color-accent)", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
                       <i className="bi bi-linkedin fs-5"></i>
                     </a>}
                     
-                    {socialLinks.tiktok && <a href={socialLinks.tiktok} aria-label="TikTok" target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "44px", height: "44px", borderRadius: "12px", background: "#000000", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
+                    {socialLinks.tiktok && <a href={socialLinks.tiktok} aria-label="TikTok" target="_blank" rel="noopener noreferrer" className="hover:opacity-100" style={{ width: "44px", height: "44px", borderRadius: "12px", background: "var(--color-accent)", color: "#FFFFFF", display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.3s ease", opacity: 0.9 }}>
                       <i className="bi bi-tiktok fs-5"></i>
                     </a>}
                   </div>
