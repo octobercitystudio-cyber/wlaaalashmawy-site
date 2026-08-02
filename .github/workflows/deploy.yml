@@ -101,14 +101,20 @@ jobs:
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y --no-install-recommends lftp
-          lftp -u "$FTP_USERNAME","$FTP_PASSWORD" "ftp://$FTP_SERVER:21" -e "
-            set ftp:ssl-force true;
-            set ftp:ssl-protect-data true;
-            set ssl:verify-certificate true;
-            set net:max-retries 3;
-            mirror --reverse --delete --parallel=4 --verbose \
-              --exclude-glob images/uploads \
-              --exclude-glob images/uploads/** \
-              ./out/ /;
-            bye
-          "
+          lftp <<LFTP_COMMANDS
+          set cmd:fail-exit true
+          set ftp:ssl-force true
+          set ftp:ssl-protect-data true
+          set ftp:ssl-auth TLS
+          set ftp:passive-mode true
+          set ssl:verify-certificate true
+          set net:timeout 20
+          set net:max-retries 3
+          set net:reconnect-interval-base 5
+          open -u "$FTP_USERNAME","$FTP_PASSWORD" "ftp://$FTP_SERVER:21"
+          mirror --reverse --delete --parallel=4 --verbose \
+            --exclude-glob images/uploads \
+            --exclude-glob images/uploads/** \
+            ./out/ /
+          bye
+          LFTP_COMMANDS
