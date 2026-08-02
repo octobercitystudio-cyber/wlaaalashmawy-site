@@ -1,9 +1,14 @@
+"use client";
+
 import Link from "next/link";
 
 import { getDictionary, Lang } from "@/lib/dictionary";
 import { normalizeSocialUrl, parseSettingList } from "@/lib/contact";
+import { useSiteContent } from "@/components/SiteContentProvider";
 
 export default function Footer({ settings = {}, lang = "ar" }: { settings?: any, services?: any[], lang?: Lang }) {
+  const liveContent = useSiteContent();
+  settings = liveContent.settings;
   const emails = parseSettingList(settings.contact_emails, [
     settings.contact_email || "info@afc-cpa.com",
   ]);
@@ -30,7 +35,7 @@ export default function Footer({ settings = {}, lang = "ar" }: { settings?: any,
         <div style={{ textAlign: "center" }}>
           <h3 style={{ marginBottom: "0.5rem", fontSize: "3rem", fontWeight: "900", letterSpacing: "3px", color: "#FFFFFF" }}>AFC</h3>
           <p style={{ color: "#FFFFFF", opacity: 0.9, maxWidth: "300px", margin: "0 auto", fontSize: "1.1rem" }}>
-            {lang === "en" ? "Your trusted partner in providing comprehensive accounting and tax solutions to ensure the success and sustainability of your business." : "شريكك الموثوق في تقديم حلول محاسبية وضريبية متكاملة لضمان نجاح واستدامة أعمالك."}
+            {(lang === "en" ? settings.footer_description_en : settings.footer_description) || (lang === "en" ? "Your trusted partner in providing comprehensive accounting and tax solutions to ensure the success and sustainability of your business." : "شريكك الموثوق في تقديم حلول محاسبية وضريبية متكاملة لضمان نجاح واستدامة أعمالك.")}
           </p>
         </div>
         <div>

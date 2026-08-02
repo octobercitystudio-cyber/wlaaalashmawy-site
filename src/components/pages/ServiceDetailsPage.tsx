@@ -1,10 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
-import { fetchServices, fetchSettings } from "@/lib/api";
 import { Lang } from "@/lib/dictionary";
-import { notFound } from "next/navigation";
 import { normalizeWhatsAppNumber, parseSettingList } from "@/lib/contact";
 import { sanitizeHtml } from "@/lib/sanitizeHtml";
+import { useSiteContent } from "@/components/SiteContentProvider";
 
 function parseMarkdown(text: string) {
   if (!text) return "";
@@ -31,13 +32,12 @@ function parseMarkdown(text: string) {
   return html;
 }
 
-export default async function ServiceDetailsPage({ id, lang = "ar" }: { id: string, lang?: Lang }) {
-  const services = await fetchServices();
-  const settings = await fetchSettings();
+export default function ServiceDetailsPage({ id, lang = "ar" }: { id: string, lang?: Lang }) {
+  const { services, settings } = useSiteContent();
   const service = services.find((s: any) => s.id == id);
   
   if (!service) {
-    notFound();
+    return <main className="container py-xl" style={{ paddingTop: "10rem", minHeight: "60vh" }}><h1>{lang === "en" ? "Service not found" : "الخدمة غير موجودة"}</h1></main>;
   }
 
   const title = lang === "en" && service.title_en ? service.title_en : service.title;

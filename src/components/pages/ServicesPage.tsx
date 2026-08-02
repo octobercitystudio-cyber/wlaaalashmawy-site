@@ -1,12 +1,14 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
-import { fetchServices } from '@/lib/api';
+import { useSiteContent } from "@/components/SiteContentProvider";
 
 import { Lang } from "@/lib/dictionary";
 import { servicePath } from "@/lib/serviceRoutes";
 
-export default async function ServicesPage({ lang = "ar" }: { lang?: Lang }) {
-  const services = await fetchServices();
+export default function ServicesPage({ lang = "ar" }: { lang?: Lang }) {
+  const { services, settings } = useSiteContent();
   
   return (
     <main>
@@ -18,7 +20,7 @@ export default async function ServicesPage({ lang = "ar" }: { lang?: Lang }) {
         position: "relative",
         overflow: "hidden"
       }}>
-        <Image src="/images/services_hero.jpg" alt="خدماتنا الاحترافية" fill style={{ objectFit: "cover", zIndex: 0 }} priority />
+        <Image src={settings.services_hero_image || "/images/services_hero.jpg"} alt="خدماتنا الاحترافية" fill style={{ objectFit: "cover", zIndex: 0 }} priority />
         {/* Dark Overlay */}
         <div style={{
           position: "absolute",
@@ -32,13 +34,13 @@ export default async function ServicesPage({ lang = "ar" }: { lang?: Lang }) {
 
         <div className="container" style={{ position: "relative", zIndex: 2 }}>
           <h1 style={{ fontSize: "3.5rem", marginBottom: "1rem", color: "#FFFFFF", fontWeight: "bold", textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>
-            {lang === "en" ? "Our Professional Services" : "خدماتنا الاحترافية"}
+            {(lang === "en" ? settings.services_page_title_en : settings.services_page_title) || (lang === "en" ? "Our Professional Services" : "خدماتنا الاحترافية")}
           </h1>
           <div style={{ width: "80px", height: "4px", backgroundColor: "var(--color-accent)", margin: "0 auto 2rem", boxShadow: "0 2px 5px rgba(0,0,0,0.3)" }}></div>
           <p style={{ fontSize: "1.3rem", maxWidth: "800px", margin: "0 auto", color: "rgba(255,255,255,0.95)", lineHeight: "1.8", textShadow: "0 2px 5px rgba(0,0,0,0.5)", fontWeight: "700" }}>
-            {lang === "en" 
+            {(lang === "en" ? settings.services_page_subtitle_en : settings.services_page_subtitle) || (lang === "en"
               ? "We provide a comprehensive range of financial, accounting, tax, and institutional services to meet all your business needs and ensure sustainable growth." 
-              : "نقدم مجموعة متكاملة من الخدمات المالية والمحاسبية والضريبية والمؤسسية لتلبية كافة احتياجات أعمالك وضمان نموها المستدام."}
+              : "نقدم مجموعة متكاملة من الخدمات المالية والمحاسبية والضريبية والمؤسسية لتلبية كافة احتياجات أعمالك وضمان نموها المستدام.")}
           </p>
         </div>
       </section>

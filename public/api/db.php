@@ -96,6 +96,7 @@ try {
             position_en VARCHAR(255) DEFAULT '',
             content TEXT NOT NULL,
             content_en TEXT,
+            image VARCHAR(500) DEFAULT '',
             rating INT DEFAULT 5,
             is_verified TINYINT(1) NOT NULL DEFAULT 0,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -154,6 +155,7 @@ try {
         "ALTER TABLE testimonials ADD COLUMN name_en VARCHAR(255) DEFAULT ''",
         "ALTER TABLE testimonials ADD COLUMN position_en VARCHAR(255) DEFAULT ''",
         "ALTER TABLE testimonials ADD COLUMN content_en TEXT",
+        "ALTER TABLE testimonials ADD COLUMN image VARCHAR(500) DEFAULT ''",
         "ALTER TABLE testimonials ADD COLUMN is_verified TINYINT(1) NOT NULL DEFAULT 0",
         "ALTER TABLE articles ADD COLUMN title_en VARCHAR(255) DEFAULT ''",
         "ALTER TABLE articles ADD COLUMN category_en VARCHAR(100) DEFAULT ''",
@@ -171,6 +173,71 @@ try {
             $pdo->exec($alterStatement);
         } catch (PDOException $e) {
             // The column already exists.
+        }
+    }
+
+    // Import the content that previously lived only in the static frontend.
+    // The title/name checks keep this migration safe and idempotent.
+    $cmsSeedFile = dirname(__DIR__) . '/content/cms-seed.json';
+    $cmsSeedVersion = $pdo->query("SELECT setting_value FROM settings WHERE setting_key = 'cms_seed_version' LIMIT 1")->fetchColumn();
+    if ($cmsSeedVersion !== '1' && is_file($cmsSeedFile)) {
+        $cmsSeed = json_decode((string) file_get_contents($cmsSeedFile), true);
+        if (is_array($cmsSeed)) {
+            $insertSetting = $pdo->prepare(
+                'INSERT IGNORE INTO settings (setting_key, setting_value) VALUES (?, ?)'
+            );
+            foreach (($cmsSeed['settings'] ?? []) as $settingKey => $settingValue) {
+                if (!is_string($settingKey) || !preg_match('/^[a-z][a-z0-9_]{0,99}$/', $settingKey)) continue;
+                $insertSetting->execute([$settingKey, (string) $settingValue]);
+            }
+
+            $articleExists = $pdo->prepare('SELECT id FROM articles WHERE title = ? LIMIT 1');
+            $insertArticle = $pdo->prepare(
+                'INSERT INTO articles (title, title_en, date, category, category_en, image, video_url, content, content_en)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
+            );
+            foreach (($cmsSeed['articles'] ?? []) as $article) {
+                if (!is_array($article) || empty($article['title']) || empty($article['content'])) continue;
+                $articleExists->execute([(string) $article['title']]);
+                if ($articleExists->fetchColumn()) continue;
+                $insertArticle->execute([
+                    api_plain_text($article['title'], 255, true),
+                    api_plain_text($article['title_en'] ?? '', 255),
+                    api_plain_text($article['date'] ?? date('Y-m-d'), 50),
+                    api_plain_text($article['category'] ?? '', 100, true),
+                    api_plain_text($article['category_en'] ?? '', 100),
+                    api_safe_url($article['image'] ?? '', true, 500),
+                    api_safe_url($article['video_url'] ?? '', false, 500),
+                    api_sanitize_html($article['content'], 1000000),
+                    api_sanitize_html($article['content_en'] ?? '', 1000000),
+                ]);
+            }
+
+            $testimonialExists = $pdo->prepare('SELECT id FROM testimonials WHERE name = ? LIMIT 1');
+            $insertTestimonial = $pdo->prepare(
+                'INSERT INTO testimonials (name, name_en, position, position_en, content, content_en, image, rating, is_verified)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, 1)'
+            );
+            foreach (($cmsSeed['testimonials'] ?? []) as $testimonial) {
+                if (!is_array($testimonial) || empty($testimonial['name']) || empty($testimonial['content'])) continue;
+                $testimonialExists->execute([(string) $testimonial['name']]);
+                if ($testimonialExists->fetchColumn()) continue;
+                $insertTestimonial->execute([
+                    api_plain_text($testimonial['name'], 255, true),
+                    api_plain_text($testimonial['name_en'] ?? '', 255),
+                    api_plain_text($testimonial['position'] ?? '', 255),
+                    api_plain_text($testimonial['position_en'] ?? '', 255),
+                    api_plain_text($testimonial['content'], 20000, true),
+                    api_plain_text($testimonial['content_en'] ?? '', 20000),
+                    api_safe_url($testimonial['image'] ?? '', true, 500),
+                    max(1, min(5, (int) ($testimonial['rating'] ?? 5))),
+                ]);
+            }
+            $seedMarker = $pdo->prepare(
+                "INSERT INTO settings (setting_key, setting_value) VALUES ('cms_seed_version', '1')
+                 ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)"
+            );
+            $seedMarker->execute();
         }
     }
 

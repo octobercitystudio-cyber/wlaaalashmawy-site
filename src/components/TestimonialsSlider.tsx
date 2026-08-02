@@ -17,6 +17,10 @@ export default function TestimonialsSlider({ testimonials = [], lang = "ar" }: {
     return () => clearInterval(interval);
   }, [N, isPaused]);
 
+  useEffect(() => {
+    if (currentIndex >= N) setCurrentIndex(0);
+  }, [N, currentIndex]);
+
   if (!testimonials || N === 0) return null;
 
   const handleNext = () => {

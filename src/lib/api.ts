@@ -235,10 +235,28 @@ export async function fetchTestimonials() {
             item.is_verified === 1 ||
             item.is_verified === "1",
         );
-        return [...staticTestimonials, ...apiTestimonials];
+        return apiTestimonials.length > 0 ? apiTestimonials : staticTestimonials;
       }
     }
   } catch {}
   
   return staticTestimonials;
+}
+
+export async function fetchArticles() {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://www.afc-cpa.com';
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 8000);
+    const res = await fetch(`${apiUrl}/api/articles.php`, {
+      cache: 'force-cache',
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
+    if (res.ok) {
+      const data = await res.json();
+      if (Array.isArray(data)) return data;
+    }
+  } catch {}
+  return [];
 }

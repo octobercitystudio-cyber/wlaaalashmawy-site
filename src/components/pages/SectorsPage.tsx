@@ -1,10 +1,12 @@
+"use client";
+
 import Image from "next/image";
-import { fetchSectors } from '@/lib/api';
+import { useSiteContent } from "@/components/SiteContentProvider";
 
 import { Lang } from "@/lib/dictionary";
 
-export default async function SectorsPage({ lang = "ar" }: { lang?: Lang }) {
-  const sectors = await fetchSectors();
+export default function SectorsPage({ lang = "ar" }: { lang?: Lang }) {
+  const { sectors, settings } = useSiteContent();
   
   return (
     <main>
@@ -16,7 +18,7 @@ export default async function SectorsPage({ lang = "ar" }: { lang?: Lang }) {
         position: "relative",
         overflow: "hidden"
       }}>
-        <Image src="/images/services_hero.jpg" alt="" fill style={{ objectFit: "cover", zIndex: 0 }} priority />
+        <Image src={settings.sectors_hero_image || "/images/services_hero.jpg"} alt="" fill style={{ objectFit: "cover", zIndex: 0 }} priority />
         {/* Dark Overlay */}
         <div style={{
           position: "absolute",
@@ -30,13 +32,13 @@ export default async function SectorsPage({ lang = "ar" }: { lang?: Lang }) {
 
         <div className="container" style={{ position: "relative", zIndex: 2 }}>
           <h1 style={{ fontSize: "3.5rem", marginBottom: "1rem", color: "#FFFFFF", fontWeight: "bold", textShadow: "0 2px 10px rgba(0,0,0,0.5)" }}>
-            {lang === "en" ? "Business Sectors" : "قطاعات الأعمال"}
+            {(lang === "en" ? settings.sectors_page_title_en : settings.sectors_page_title) || (lang === "en" ? "Business Sectors" : "قطاعات الأعمال")}
           </h1>
           <div style={{ width: "80px", height: "4px", backgroundColor: "var(--color-accent)", margin: "0 auto 2rem", boxShadow: "0 2px 5px rgba(0,0,0,0.3)" }}></div>
           <p style={{ fontSize: "1.3rem", maxWidth: "800px", margin: "0 auto", color: "rgba(255,255,255,0.95)", lineHeight: "1.8", textShadow: "0 2px 5px rgba(0,0,0,0.5)", fontWeight: "700" }}>
-            {lang === "en" 
+            {(lang === "en" ? settings.sectors_page_subtitle_en : settings.sectors_page_subtitle) || (lang === "en"
               ? "We provide deep expertise and specialized financial solutions tailored to meet the unique requirements of various business sectors." 
-              : "نقدم خبراتنا المتخصصة وحلولاً مالية مصممة خصيصاً لتلبية التحديات والمتطلبات الفريدة لمختلف قطاعات الأعمال."}
+              : "نقدم خبراتنا المتخصصة وحلولاً مالية مصممة خصيصاً لتلبية التحديات والمتطلبات الفريدة لمختلف قطاعات الأعمال.")}
           </p>
         </div>
       </section>

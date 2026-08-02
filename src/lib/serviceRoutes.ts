@@ -44,5 +44,5 @@ export function canonicalServiceSlug(id: string | number): string | null {
 export function servicePath(id: string | number, lang: Lang): string {
   const slug = canonicalServiceSlug(id);
   const prefix = lang === "en" ? "/en" : "";
-  return slug ? `${prefix}/${slug}` : `${prefix}/services/${id}`;
+  return slug ? `${prefix}/${slug}` : `${prefix}/service-details/?id=${encodeURIComponent(String(id))}`;
 }

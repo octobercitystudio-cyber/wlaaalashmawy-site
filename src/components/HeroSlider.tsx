@@ -10,25 +10,25 @@ import { normalizeWhatsAppNumber, parseSettingList } from "@/lib/contact";
 export default function HeroSlider({ settings = {}, lang = "ar" }: { settings?: any, lang?: Lang }) {
   const slides = [
     {
-      image: "/hero_egypt.jpg",
-      title: lang === "en" ? "Professional Expertise Rooted in Egypt" : "خبرة مهنية راسخة في السوق المصري",
-      subtitle: lang === "en" 
+      image: settings.hero_slide_1_image || "/hero_egypt.jpg",
+      title: (lang === "en" ? settings.hero_slide_1_title_en : settings.hero_slide_1_title) || (lang === "en" ? "Professional Expertise Rooted in Egypt" : "خبرة مهنية راسخة في السوق المصري"),
+      subtitle: (lang === "en" ? settings.hero_slide_1_subtitle_en : settings.hero_slide_1_subtitle) || (lang === "en"
         ? "AFC provides practical accounting, audit and tax solutions tailored to the needs of businesses and investors operating in Egypt."
-        : "تقدم AFC حلولًا عملية في المحاسبة والمراجعة والضرائب، مصممة لاحتياجات الشركات والمستثمرين العاملين في مصر."
+        : "تقدم AFC حلولًا عملية في المحاسبة والمراجعة والضرائب، مصممة لاحتياجات الشركات والمستثمرين العاملين في مصر.")
     },
     {
-      image: "/hero_ksa.jpg",
-      title: lang === "en" ? "Financial Readiness for Regional Expansion" : "جاهزية مالية تدعم التوسع الإقليمي",
-      subtitle: lang === "en"
+      image: settings.hero_slide_2_image || "/hero_ksa.jpg",
+      title: (lang === "en" ? settings.hero_slide_2_title_en : settings.hero_slide_2_title) || (lang === "en" ? "Financial Readiness for Regional Expansion" : "جاهزية مالية تدعم التوسع الإقليمي"),
+      subtitle: (lang === "en" ? settings.hero_slide_2_subtitle_en : settings.hero_slide_2_subtitle) || (lang === "en"
         ? "We help businesses strengthen records, reporting and planning before regional expansion, while jurisdiction-specific work is handled with licensed local specialists where required."
-        : "نساعد الشركات على تقوية السجلات والتقارير والتخطيط قبل التوسع إقليميًا، مع تنفيذ المتطلبات الخاصة بكل دولة بالتعاون مع المختصين المرخصين عند الحاجة."
+        : "نساعد الشركات على تقوية السجلات والتقارير والتخطيط قبل التوسع إقليميًا، مع تنفيذ المتطلبات الخاصة بكل دولة بالتعاون مع المختصين المرخصين عند الحاجة.")
     },
     {
-      image: "/hero_uae.jpg",
-      title: lang === "en" ? "Clearer Reporting for Better Decisions" : "تقارير أوضح لقرارات أفضل",
-      subtitle: lang === "en"
+      image: settings.hero_slide_3_image || "/hero_uae.jpg",
+      title: (lang === "en" ? settings.hero_slide_3_title_en : settings.hero_slide_3_title) || (lang === "en" ? "Clearer Reporting for Better Decisions" : "تقارير أوضح لقرارات أفضل"),
+      subtitle: (lang === "en" ? settings.hero_slide_3_subtitle_en : settings.hero_slide_3_subtitle) || (lang === "en"
         ? "Reliable financial information gives management and investors a stronger foundation for evaluating opportunities and managing growth."
-        : "تمنح المعلومات المالية الموثوقة الإدارة والمستثمرين أساسًا أقوى لتقييم الفرص وإدارة النمو."
+        : "تمنح المعلومات المالية الموثوقة الإدارة والمستثمرين أساسًا أقوى لتقييم الفرص وإدارة النمو.")
     }
   ];
 

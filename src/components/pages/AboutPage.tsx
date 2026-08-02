@@ -1,11 +1,13 @@
+"use client";
+
 import Image from "next/image";
-import { fetchSettings } from '@/lib/api';
 import { EditableText } from "@/components/editor/EditableText";
+import { useSiteContent } from "@/components/SiteContentProvider";
 
 import { Lang } from "@/lib/dictionary";
 
-export default async function AboutPage({ lang = "ar" }: { lang?: Lang }) {
-  const settings = await fetchSettings();
+export default function AboutPage({ lang = "ar" }: { lang?: Lang }) {
+  const { settings } = useSiteContent();
   
   return (
     <main style={{ backgroundColor: "#FAFAFA" }}>
@@ -14,7 +16,7 @@ export default async function AboutPage({ lang = "ar" }: { lang?: Lang }) {
         paddingTop: "12rem", 
         paddingBottom: "5rem", 
         backgroundColor: "#06192D",
-        backgroundImage: "linear-gradient(rgba(6, 25, 45, 0.75), rgba(6, 25, 45, 0.85)), url('/images/about_us_hero.jpg')",
+        backgroundImage: `linear-gradient(rgba(6, 25, 45, 0.75), rgba(6, 25, 45, 0.85)), url('${settings.about_hero_image || "/images/about_us_hero.jpg"}')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         color: "#FFFFFF",
@@ -34,7 +36,7 @@ export default async function AboutPage({ lang = "ar" }: { lang?: Lang }) {
         }}></div>
 
         <div className="container" style={{ position: "relative", zIndex: 1 }}>
-          <h1 style={{ fontSize: "3.5rem", marginBottom: "1rem", color: "#FFFFFF", fontWeight: "bold" }}>{lang === "en" ? "About Us" : "من نحن"}</h1>
+          <h1 style={{ fontSize: "3.5rem", marginBottom: "1rem", color: "#FFFFFF", fontWeight: "bold" }}>{(lang === "en" ? settings.about_page_title_en : settings.about_page_title) || (lang === "en" ? "About Us" : "من نحن")}</h1>
           <div style={{ width: "80px", height: "4px", backgroundColor: "var(--color-accent)", margin: "0 auto" }}></div>
         </div>
       </section>
@@ -45,7 +47,7 @@ export default async function AboutPage({ lang = "ar" }: { lang?: Lang }) {
           {/* Licenses & Memberships */}
           <div className="text-center" style={{ marginBottom: "5rem" }}>
             <h2 style={{ fontSize: "2rem", color: "var(--color-primary)", fontWeight: "bold", marginBottom: "2rem" }}>
-              {lang === "en" ? "Licenses & Memberships" : "التراخيص والعضويات"}
+              {(lang === "en" ? settings.about_licenses_title_en : settings.about_licenses_title) || (lang === "en" ? "Licenses & Memberships" : "التراخيص والعضويات")}
             </h2>
             <div className="grid grid-cols-1 md-grid-cols-2 gap-lg" style={{ maxWidth: "800px", marginInline: "auto" }}>
               <div className="premium-card flex flex-col items-center justify-center text-center" style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)", padding: "2rem", borderRadius: "16px", boxShadow: "0 5px 15px rgba(0,0,0,0.05)" }}>
@@ -55,7 +57,7 @@ export default async function AboutPage({ lang = "ar" }: { lang?: Lang }) {
                   </svg>
                 </div>
                 <h3 style={{ fontSize: "1.25rem", color: "var(--color-text-main)", fontWeight: "bold", margin: 0 }}>
-                  {lang === "en" ? "Ministry of Finance - Register of Accountants and Auditors" : "وزارة المالية - سجل المحاسبين والمراجعين"}
+                  {(lang === "en" ? settings.about_license_1_en : settings.about_license_1) || (lang === "en" ? "Ministry of Finance - Register of Accountants and Auditors" : "وزارة المالية - سجل المحاسبين والمراجعين")}
                 </h3>
               </div>
               <div className="premium-card flex flex-col items-center justify-center text-center" style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)", padding: "2rem", borderRadius: "16px", boxShadow: "0 5px 15px rgba(0,0,0,0.05)" }}>
@@ -66,7 +68,7 @@ export default async function AboutPage({ lang = "ar" }: { lang?: Lang }) {
                   </svg>
                 </div>
                 <h3 style={{ fontSize: "1.25rem", color: "var(--color-text-main)", fontWeight: "bold", margin: 0 }}>
-                  {lang === "en" ? "Egyptian Tax Association" : "جمعية الضرائب المصرية"}
+                  {(lang === "en" ? settings.about_license_2_en : settings.about_license_2) || (lang === "en" ? "Egyptian Tax Association" : "جمعية الضرائب المصرية")}
                 </h3>
               </div>
             </div>
@@ -109,7 +111,7 @@ export default async function AboutPage({ lang = "ar" }: { lang?: Lang }) {
                 }}
               >
                 <Image
-                  src="/images/wlaa-profile.jpg"
+                  src={settings.about_profile_image || "/images/wlaa-profile.jpg"}
                   alt="السيدة ولاء مجدي العشماوي - رئيس مجلس الإدارة"
                   fill
                   sizes="(max-width: 899px) 82vw, 360px"
@@ -118,10 +120,10 @@ export default async function AboutPage({ lang = "ar" }: { lang?: Lang }) {
               </div>
               <div className="about-leadership__identity" style={{ marginTop: "1.5rem" }}>
                 <h3 style={{ fontSize: "2rem", color: "var(--color-primary)", fontWeight: "bold", marginBottom: "0.5rem" }}>
-                  {lang === "en" ? "Wlaa Magdy Al-Ashmawy" : "أ. ولاء مجدي العشماوي"}
+                  {(lang === "en" ? settings.founder_name_en : settings.founder_name) || (lang === "en" ? "Wlaa Magdy Al-Ashmawy" : "أ. ولاء مجدي العشماوي")}
                 </h3>
                 <p style={{ fontSize: "1.2rem", color: "var(--color-accent)", fontWeight: "bold", margin: 0 }}>
-                  {lang === "en" ? "Founder & Chairman" : "المؤسس ورئيس مجلس الإدارة"}
+                  {(lang === "en" ? settings.founder_role_en : settings.founder_role) || (lang === "en" ? "Founder & Chairman" : "المؤسس ورئيس مجلس الإدارة")}
                 </p>
               </div>
             </div>
@@ -158,7 +160,7 @@ export default async function AboutPage({ lang = "ar" }: { lang?: Lang }) {
                   <circle cx="12" cy="12" r="3"></circle>
                 </svg>
               </div>
-              <h2 style={{ fontSize: "2rem", color: "var(--color-primary)", fontWeight: "bold", marginBottom: "1.5rem" }}>{lang === "en" ? "Vision" : "الرؤية"}</h2>
+              <h2 style={{ fontSize: "2rem", color: "var(--color-primary)", fontWeight: "bold", marginBottom: "1.5rem" }}>{(lang === "en" ? settings.vision_title_en : settings.vision_title) || (lang === "en" ? "Vision" : "الرؤية")}</h2>
               <EditableText 
                 id={lang === "en" ? "vision_en" : "vision"}
                 value={(lang === "en" && settings.vision_en ? settings.vision_en : settings.vision) || (lang === "en" ? "To be the trusted partner and first choice for companies seeking exceptional accounting, tax, auditing, and financial advisory services, through expertise, integrity, and innovation." : "أن نكون الشريك الموثوق والاختيار الأول للشركات التي تبحث عن خدمات محاسبية وضريبية ومراجعة واستشارات مالية استثنائية، من خلال الخبرة والنزاهة والابتكار.")}
@@ -175,7 +177,7 @@ export default async function AboutPage({ lang = "ar" }: { lang?: Lang }) {
                   <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                 </svg>
               </div>
-              <h2 style={{ fontSize: "2rem", color: "var(--color-primary)", fontWeight: "bold", marginBottom: "1.5rem" }}>{lang === "en" ? "Mission" : "الرسالة"}</h2>
+              <h2 style={{ fontSize: "2rem", color: "var(--color-primary)", fontWeight: "bold", marginBottom: "1.5rem" }}>{(lang === "en" ? settings.mission_title_en : settings.mission_title) || (lang === "en" ? "Mission" : "الرسالة")}</h2>
               <EditableText 
                 id={lang === "en" ? "mission_en" : "mission"}
                 value={(lang === "en" && settings.mission_en ? settings.mission_en : settings.mission) || (lang === "en" ? "To be the reliable force behind our clients' success by delivering insightful solutions, uncompromising quality, and strategic guidance that fosters growth, builds trust, and creates sustainable value." : "أن نكون القوة الموثوقة وراء نجاح عملائنا، من خلال تقديم حلول ثاقبة، وجودة لا تقبل التنازل، وتوجيه استراتيجي يعزز النمو، ويرسخ الثقة، ويخلق قيمة مستدامة.")}

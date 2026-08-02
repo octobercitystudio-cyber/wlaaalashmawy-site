@@ -26,6 +26,10 @@ function sanitize_public_setting($key, $value)
         return filter_var($value, FILTER_VALIDATE_URL) !== false && $scheme === 'https' ? $value : '';
     }
 
+    if (preg_match('/(_image$|_logo$)/', $key)) {
+        return api_safe_url($value, true, 1000);
+    }
+
     if (preg_match('/^(about_|vision|mission|hero_)/', $key)) {
         return api_sanitize_html($value);
     }
@@ -128,7 +132,9 @@ foreach ($data as $key => $value) {
         api_json_response(['error' => 'This setting cannot be changed through the public API'], 403);
     }
 
-    if (preg_match('/^(social_|contact_map$)/', $key)) {
+    if (preg_match('/(_image$|_logo$)/', $key)) {
+        $updates[$key] = api_safe_url($value, true, 1000);
+    } elseif (preg_match('/^(social_|contact_map$)/', $key)) {
         $updates[$key] = api_safe_url($value, false, 1000);
     } elseif (in_array($key, ['contact_emails', 'contact_phones', 'article_categories'], true)) {
         $decoded = json_decode($value, true);

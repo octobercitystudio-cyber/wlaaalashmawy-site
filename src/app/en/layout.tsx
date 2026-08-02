@@ -5,7 +5,8 @@ import ClientTracker from "@/components/ClientTracker";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import { fetchSettings, fetchServices } from "@/lib/api";
+import { fetchArticles, fetchFeatures, fetchSectors, fetchSettings, fetchServices, fetchStats, fetchTestimonials } from "@/lib/api";
+import { SiteContentProvider } from "@/components/SiteContentProvider";
 import { normalizeWhatsAppNumber, parseSettingList } from "@/lib/contact";
 
 const montserrat = Montserrat({
@@ -56,8 +57,9 @@ export default async function EnLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const settings = await fetchSettings();
-  const services = await fetchServices();
+  const [settings, services, sectors, features, stats, testimonials, articles] = await Promise.all([
+    fetchSettings(), fetchServices(), fetchSectors(), fetchFeatures(), fetchStats(), fetchTestimonials(), fetchArticles(),
+  ]);
   const phones = parseSettingList(settings.contact_phones);
   const telephone = normalizeWhatsAppNumber(
     settings.contact_whatsapp || settings.whatsapp || phones[0],
@@ -88,15 +90,17 @@ export default async function EnLayout({
       <body>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData).replace(/</g, "\\u003c") }} />
         <a className="skip-link" href="#main-content">Skip to main content</a>
-        <VisualEditorProvider>
-          <ClientTracker />
-          <Navbar settings={settings} services={services} lang="en" />
-          <div id="main-content" className="flex flex-col min-h-full">
-            {children}
-          </div>
-          <Footer settings={settings} services={services} lang="en" />
-          <WhatsAppButton settings={settings} />
-        </VisualEditorProvider>
+        <SiteContentProvider initialContent={{ settings, services, sectors, features, stats, testimonials, articles }}>
+          <VisualEditorProvider>
+            <ClientTracker />
+            <Navbar settings={settings} services={services} lang="en" />
+            <div id="main-content" className="flex flex-col min-h-full">
+              {children}
+            </div>
+            <Footer settings={settings} services={services} lang="en" />
+            <WhatsAppButton settings={settings} />
+          </VisualEditorProvider>
+        </SiteContentProvider>
       </body>
     </html>
   );

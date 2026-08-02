@@ -3,8 +3,11 @@
 import React from "react";
 import { usePathname } from "next/navigation";
 import { normalizeWhatsAppNumber, parseSettingList } from "@/lib/contact";
+import { useSiteContent } from "@/components/SiteContentProvider";
 
 export default function WhatsAppButton({ settings = {} }: { settings?: any }) {
+  const liveContent = useSiteContent();
+  settings = liveContent.settings;
   const pathname = usePathname();
   const isEnglish = pathname === "/en" || pathname.startsWith("/en/");
   const phones = parseSettingList(settings.contact_phones);

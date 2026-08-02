@@ -7,8 +7,12 @@ import { usePathname } from "next/navigation";
 import { getDictionary, Lang } from "@/lib/dictionary";
 import { servicePath } from "@/lib/serviceRoutes";
 import { normalizeWhatsAppNumber, parseSettingList } from "@/lib/contact";
+import { useSiteContent } from "@/components/SiteContentProvider";
 
 export default function Navbar({ settings = {}, services = [], lang = "ar" }: { settings?: any, services?: any[], lang?: Lang }) {
+  const liveContent = useSiteContent();
+  settings = liveContent.settings;
+  services = liveContent.services;
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
@@ -224,7 +228,7 @@ export default function Navbar({ settings = {}, services = [], lang = "ar" }: { 
         <div>
           <Link href={`${prefix}/`} onClick={() => setIsMobileMenuOpen(false)}>
             <Image 
-              src="/afc-wordmark.png"
+              src={settings.site_logo || "/afc-wordmark.png"}
               alt={lang === "en" ? "AFC Financial Consulting" : "AFC للاستشارات المالية"}
               className="site-logo"
               width={1239}

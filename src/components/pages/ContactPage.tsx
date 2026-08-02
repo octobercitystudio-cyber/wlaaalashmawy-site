@@ -1,15 +1,17 @@
-import { fetchSettings } from "@/lib/api";
+"use client";
+
 import { EditableText } from "@/components/editor/EditableText";
 import ContactForm from "@/components/ContactForm";
 import {
   normalizeSocialUrl,
   parseSettingList,
 } from "@/lib/contact";
+import { useSiteContent } from "@/components/SiteContentProvider";
 
 import { Lang } from "@/lib/dictionary";
 
-export default async function ContactPage({ lang = "ar" }: { lang?: Lang }) {
-  const settings = await fetchSettings();
+export default function ContactPage({ lang = "ar" }: { lang?: Lang }) {
+  const { settings } = useSiteContent();
   
   const emails = parseSettingList(settings.contact_emails, [
     settings.contact_email || "info@afc-cpa.com",
@@ -42,7 +44,7 @@ export default async function ContactPage({ lang = "ar" }: { lang?: Lang }) {
       {/* Header Area */}
       <section style={{ 
         padding: "8rem 0 6rem 0",
-        background: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('/images/contact_hero.jpg')",
+        background: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('${settings.contact_hero_image || "/images/contact_hero.jpg"}')`,
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
@@ -51,10 +53,10 @@ export default async function ContactPage({ lang = "ar" }: { lang?: Lang }) {
       }}>
         <div className="container" style={{ paddingTop: "2rem" }}>
           <h1 className="animate-fade-in-up" style={{ fontSize: "3rem", marginBottom: "var(--spacing-md)", fontWeight: "bold", color: "#FFFFFF" }}>
-            {lang === "en" ? "Contact Us" : "تواصل معنا"}
+            {(lang === "en" ? settings.contact_page_title_en : settings.contact_page_title) || (lang === "en" ? "Contact Us" : "تواصل معنا")}
           </h1>
           <p className="animate-fade-in-up" style={{ animationDelay: "0.2s", fontSize: "1.3rem", maxWidth: "600px", margin: "0 auto", opacity: 1, color: "#FFFFFF", fontWeight: "bold", textShadow: "0 2px 4px rgba(0,0,0,0.5)" }}>
-            {lang === "en" ? "We are here to answer all your inquiries and provide the support you need. Don't hesitate to reach out to us." : "نحن هنا للإجابة على كافة استفساراتكم وتقديم الدعم الذي تحتاجونه. لا تترددوا في التواصل معنا."}
+            {(lang === "en" ? settings.contact_page_subtitle_en : settings.contact_page_subtitle) || (lang === "en" ? "We are here to answer all your inquiries and provide the support you need. Don't hesitate to reach out to us." : "نحن هنا للإجابة على كافة استفساراتكم وتقديم الدعم الذي تحتاجونه. لا تترددوا في التواصل معنا.")}
           </p>
         </div>
       </section>
@@ -67,7 +69,7 @@ export default async function ContactPage({ lang = "ar" }: { lang?: Lang }) {
             <div className="animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
               <div style={{ background: "var(--color-bg-card)", padding: "2.5rem", borderRadius: "16px", boxShadow: "0 10px 30px rgba(0,0,0,0.05)", border: "1px solid var(--color-border)" }}>
                 <h2 style={{ fontSize: "2.2rem", color: "var(--color-primary)", marginBottom: "var(--spacing-md)", fontWeight: "bold" }}>
-                  {lang === "en" ? "Send a Message" : "أرسل لنا رسالة"}
+                  {(lang === "en" ? settings.contact_form_title_en : settings.contact_form_title) || (lang === "en" ? "Send a Message" : "أرسل لنا رسالة")}
                 </h2>
                 <ContactForm lang={lang} />
               </div>

@@ -35,6 +35,7 @@ function clean_testimonial_payload($data)
         'name_en' => api_plain_text($data['name_en'] ?? '', 255),
         'position_en' => api_plain_text($data['position_en'] ?? '', 255),
         'content_en' => api_plain_text($data['content_en'] ?? '', 20000),
+        'image' => api_safe_url($data['image'] ?? '', true, 500),
         'is_verified' => $isVerified ? 1 : 0
     ];
 }
@@ -52,8 +53,8 @@ if ($method === 'POST') {
     $testimonial = clean_testimonial_payload(api_read_json());
     $stmt = $pdo->prepare(
         'INSERT INTO testimonials
-            (name, position, content, rating, name_en, position_en, content_en, is_verified)
-         VALUES (?, ?, ?, ?, ?, ?, ?, ?)'
+            (name, position, content, rating, name_en, position_en, content_en, image, is_verified)
+         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
     );
     $stmt->execute(array_values($testimonial));
     api_json_response(['success' => true, 'id' => (int) $pdo->lastInsertId()], 201);
@@ -67,7 +68,7 @@ if ($method === 'PUT') {
     $stmt = $pdo->prepare(
         'UPDATE testimonials
          SET name = ?, position = ?, content = ?, rating = ?,
-             name_en = ?, position_en = ?, content_en = ?, is_verified = ?
+             name_en = ?, position_en = ?, content_en = ?, image = ?, is_verified = ?
          WHERE id = ?'
     );
     $values = array_values($testimonial);

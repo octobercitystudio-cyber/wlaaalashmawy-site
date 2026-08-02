@@ -6,9 +6,10 @@ import Image from 'next/image';
 import { Lang } from '@/lib/dictionary';
 import { sanitizeHtml } from '@/lib/sanitizeHtml';
 import { normalizeWhatsAppNumber, parseSettingList } from '@/lib/contact';
-import { staticArticles } from '@/data/staticArticles';
+import { useSiteContent } from '@/components/SiteContentProvider';
 
 export default function ArticlesClient({ initialArticles, lang = 'ar', initialArticleId }: { initialArticles: any[], lang?: Lang, initialArticleId?: number }) {
+  const liveContent = useSiteContent();
   const [articles, setArticles] = useState<any[]>(initialArticles);
   const [loading, setLoading] = useState(initialArticles.length === 0);
   const [error, setError] = useState('');
@@ -20,57 +21,20 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
   const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
-    const apiUrl = process.env.NEXT_PUBLIC_API_URL || '';
-    setError('');
-    fetch(`${apiUrl}/api/articles.php`)
-      .then(async res => {
-        if (!res.ok) throw new Error("Unable to load articles");
-        const contentType = res.headers.get("content-type");
-        if (!contentType || !contentType.includes("application/json")) {
-            throw new Error("API did not return JSON");
-        }
-        return res.json();
-      })
-      .then(data => {
-        if (Array.isArray(data)) {
-          // Deduplicate based on title, prioritizing staticArticles
-          const combined = [...staticArticles];
-          data.forEach(apiArticle => {
-            const exists = staticArticles.some(staticArticle => 
-              (staticArticle.title && apiArticle.title && staticArticle.title.trim() === apiArticle.title.trim())
-            );
-            if (!exists) {
-              combined.push(apiArticle);
-            }
-          });
-          setArticles(combined);
-          setSelectedArticleId((current) =>
-            combined.find((article) => Number(article.id) === Number(current))
-              ? current
-              : initialArticleId || combined[0]?.id || 0,
-          );
-        }
-      })
-      .catch((err) => {
-        console.error(err);
-        setError(lang === "en" ? "Unable to refresh articles." : "تعذر تحديث المقالات.");
-        setArticles(initialArticles);
-        setSelectedArticleId((current) =>
-          initialArticles.find((article) => Number(article.id) === Number(current))
-            ? current
-            : initialArticleId || initialArticles[0]?.id || 0,
-        );
-      })
-      .finally(() => setLoading(false));
-
-    fetch(`${apiUrl}/api/settings.php`)
-      .then(res => res.json())
-      .then(s => {
-        const phones = parseSettingList(s.contact_phones);
-        setWhatsappNumber(normalizeWhatsAppNumber(s.contact_whatsapp || s.whatsapp || phones[0]));
-      })
-      .catch(() => {});
-  }, [initialArticleId, initialArticles, lang]);
+    const currentArticles = liveContent.articles.length ? liveContent.articles : initialArticles;
+    setArticles(currentArticles);
+    const queryId = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("id") : null;
+    setSelectedArticleId((current) => {
+      const preferred = queryId || initialArticleId || current;
+      return currentArticles.find((article) => Number(article.id) === Number(preferred))
+        ? preferred
+        : currentArticles[0]?.id || 0;
+    });
+    const phones = parseSettingList(liveContent.settings.contact_phones);
+    setWhatsappNumber(normalizeWhatsAppNumber(liveContent.settings.contact_whatsapp || liveContent.settings.whatsapp || phones[0]));
+    setError("");
+    setLoading(false);
+  }, [initialArticleId, initialArticles, liveContent.articles, liveContent.settings]);
 
   const safeArticles = React.useMemo(
     () => (Array.isArray(articles) ? articles : []),
@@ -78,15 +42,13 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
   );
 
   const allCategoryNames = React.useMemo(() => {
-    return [
-      { ar: 'محاسبة', en: 'Accounting' },
-      { ar: 'مراجعة', en: 'Audit' },
-      { ar: 'ضرايب', en: 'Taxes' },
-      { ar: 'تأسيس الشركات والمؤسسات', en: 'Company Formation' },
-      { ar: 'إقامات مستثمرين', en: 'Investor Residency' },
-      { ar: 'تراخيص صناعيه', en: 'Industrial Licensing' }
-    ];
-  }, []);
+    const categories = new Map<string, string>();
+    safeArticles.forEach((article) => {
+      const ar = String(article.category || '').trim();
+      if (ar) categories.set(ar, String(article.category_en || ar).trim());
+    });
+    return Array.from(categories, ([ar, en]) => ({ ar, en }));
+  }, [safeArticles]);
 
   const getYouTubeEmbedUrl = (url?: string) => {
     if (!url) return null;
@@ -172,12 +134,12 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
       <div className="container">
         <div className="text-center mb-xl">
           <h1 className="text-gold" style={{ fontSize: "3rem", marginBottom: "var(--spacing-md)" }}>
-            {lang === "en" ? "Blog & Articles" : "المقالات والمدونة"}
+            {(lang === "en" ? liveContent.settings.articles_page_title_en : liveContent.settings.articles_page_title) || (lang === "en" ? "Blog & Articles" : "المقالات والمدونة")}
           </h1>
           <p style={{ fontSize: "1.2rem", maxWidth: "800px", margin: "0 auto", color: "var(--color-text-main)", opacity: 0.9, fontWeight: "700" }}>
-            {lang === "en" 
+            {(lang === "en" ? liveContent.settings.articles_page_subtitle_en : liveContent.settings.articles_page_subtitle) || (lang === "en"
               ? "Stay up to date with the latest developments in accounting, tax, and business. We offer professional insights and valuable tips to support your success." 
-              : "ابقَ على اطلاع دائم بأحدث التطورات في عالم المحاسبة، الضرائب، والأعمال. نقدم لك تحليلات احترافية ونصائح قيمة لدعم مسيرة نجاحك."}
+              : "ابقَ على اطلاع دائم بأحدث التطورات في عالم المحاسبة، الضرائب، والأعمال. نقدم لك تحليلات احترافية ونصائح قيمة لدعم مسيرة نجاحك.")}
           </p>
         </div>
 
@@ -221,7 +183,7 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
                 key={article.id}
                 onClick={() => {
                   setSelectedArticleId(article.id);
-                  const newUrl = lang === "en" ? `/en/articles/${article.id}` : `/articles/${article.id}`;
+                  const newUrl = lang === "en" ? `/en/articles/?id=${article.id}` : `/articles/?id=${article.id}`;
                   window.history.pushState(null, '', newUrl);
                 }}
                 style={{ 
