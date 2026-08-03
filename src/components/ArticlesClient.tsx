@@ -106,6 +106,50 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
     }
   };
 
+  const renderArticleContent = (article: any, view: 'mobile' | 'desktop') => (
+    <article className="animate-fade-in" key={`${view}-${article.id}`}>
+      <div className="flex gap-md items-center mb-md" style={{ marginBottom: "0.8rem" }}>
+        <span style={{ background: "rgba(0, 91, 171, 0.1)", color: "var(--color-accent)", padding: "0.4rem 1.2rem", borderRadius: "20px", fontSize: "0.95rem", fontWeight: "bold" }}>
+          {lang === 'en' ? (article.category_en || allCategoryNames.find(c => c.ar === article.category)?.en || article.category) : article.category}
+        </span>
+        <time style={{ fontSize: "1rem", color: "var(--color-text-muted)" }}>{article.date}</time>
+      </div>
+
+      <h2 className="article-detail-title" style={{ fontSize: "2.2rem", color: "var(--color-primary)", marginBottom: "0.4rem", lineHeight: "1.3" }}>
+        {lang === 'en' && article.title_en ? article.title_en : article.title}
+      </h2>
+
+      <div style={{ width: "60px", height: "3px", background: "var(--color-accent)", marginBottom: "1rem", borderRadius: "2px" }}></div>
+
+      {article.video_url && getYouTubeEmbedUrl(article.video_url) ? (
+        <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, overflow: "hidden", maxWidth: "100%", marginBottom: "1.5rem", borderRadius: "12px", boxShadow: "0 4px 15px rgba(0,0,0,0.1)" }}>
+          <iframe
+            src={getYouTubeEmbedUrl(article.video_url)!}
+            title={lang === "en" ? `Video: ${article.title_en || article.title}` : `فيديو: ${article.title}`}
+            style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: 0 }}
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          />
+        </div>
+      ) : article.image && (
+        <div className="article-detail-image" style={{ position: "relative", width: "100%", height: "380px", marginBottom: "1.2rem", borderRadius: "12px", overflow: "hidden" }}>
+          <Image src={article.image} alt={lang === "en" ? (article.title_en || article.title) : article.title} fill style={{ objectFit: "cover" }} />
+        </div>
+      )}
+
+      <div
+        className="article-body-content"
+        style={{ fontSize: "1.15rem", fontWeight: 400, lineHeight: "2.1", color: "var(--color-text-main)", opacity: 0.9, textAlign: "justify", marginTop: "1rem" }}
+        dangerouslySetInnerHTML={{ __html: sanitizeHtml(lang === 'en' && article.content_en ? article.content_en : article.content).replace(/<h[1-6]>/g, '<h4 style="margin-top: 0;">') }}
+      />
+
+      <div style={{ marginTop: "4rem", paddingTop: "2rem", borderTop: "1px solid var(--color-border)" }}>
+        <h4 style={{ marginBottom: "1rem", color: "var(--color-primary)" }}>{lang === "en" ? "Have a question about this topic?" : "هل لديك استفسار بخصوص هذا الموضوع؟"}</h4>
+        <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent((lang === "en" ? "Hello, I would like to inquire about the article: " : "مرحبًا، أود الاستفسار بخصوص المقال: ") + (lang === "en" && article.title_en ? article.title_en : article.title))}`} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ padding: "0.8rem 2rem" }}>{lang === "en" ? "Contact us via WhatsApp" : "تواصل معنا عبر واتساب"}</a>
+      </div>
+    </article>
+  );
+
   return (
     <div className="animate-fade-in" style={{ flex: 1, padding: "var(--spacing-xl) 0" }}>
       <style dangerouslySetInnerHTML={{ __html: `
@@ -123,11 +167,32 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
         .article-body-content h4:first-child {
           margin-top: 0 !important;
         }
+        .mobile-article-content {
+          display: block;
+          padding: 1rem 0.25rem 1.75rem;
+        }
+        .desktop-article-content {
+          display: none;
+        }
+        @media (max-width: 767px) {
+          .mobile-article-content .article-detail-title {
+            font-size: 1.6rem !important;
+          }
+          .mobile-article-content .article-detail-image {
+            height: 230px !important;
+          }
+        }
         @media (min-width: 768px) {
           .articles-layout {
             display: grid;
             grid-template-columns: 1fr 2.5fr; /* Right column 1 fraction, Left column 2.5 fractions */
             align-items: start;
+          }
+          .mobile-article-content {
+            display: none;
+          }
+          .desktop-article-content {
+            display: block;
           }
         }
       `}} />
@@ -179,39 +244,46 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
             ) : error ? (
               <p style={{ color: "red" }}>{error}</p>
             ) : filteredArticles.length > 0 ? filteredArticles.map((article) => (
-              <button
-                key={article.id}
-                onClick={() => {
-                  setSelectedArticleId(article.id);
-                  const newUrl = lang === "en" ? `/en/articles/?id=${article.id}` : `/articles/?id=${article.id}`;
-                  window.history.pushState(null, '', newUrl);
-                }}
-                style={{ 
-                  display: "block",
-                  width: "100%",
-                  textAlign: lang === "en" ? "left" : "right",
-                  padding: "1.2rem",
-                  background: Number(selectedArticleId) === Number(article.id) ? "rgba(0, 91, 171, 0.05)" : "var(--color-bg-card)",
-                  border: "1px solid",
-                  borderColor: Number(selectedArticleId) === Number(article.id) ? "var(--color-accent)" : "var(--color-border)",
-                  borderRadius: "8px",
-                  cursor: "pointer",
-                  transition: "all 0.3s ease",
-                  borderInlineStart: Number(selectedArticleId) === Number(article.id) ? "4px solid var(--color-accent)" : "1px solid var(--color-border)"
-                }}
-              >
-                <h4 style={{ 
-                  fontSize: "1.1rem", 
-                  color: Number(selectedArticleId) === Number(article.id) ? "var(--color-accent)" : "var(--color-primary)",
-                  marginBottom: "0.5rem",
-                  lineHeight: "1.4"
-                }}>
-                  {lang === "en" && article.title_en ? article.title_en : article.title}
-                </h4>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <time style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>{article.date}</time>
-                </div>
-              </button>
+              <div key={article.id}>
+                <button
+                  onClick={() => {
+                    setSelectedArticleId(article.id);
+                    const newUrl = lang === "en" ? `/en/articles/?id=${article.id}` : `/articles/?id=${article.id}`;
+                    window.history.pushState(null, '', newUrl);
+                  }}
+                  aria-expanded={Number(selectedArticleId) === Number(article.id)}
+                  style={{
+                    display: "block",
+                    width: "100%",
+                    textAlign: lang === "en" ? "left" : "right",
+                    padding: "1.2rem",
+                    background: Number(selectedArticleId) === Number(article.id) ? "rgba(0, 91, 171, 0.05)" : "var(--color-bg-card)",
+                    border: "1px solid",
+                    borderColor: Number(selectedArticleId) === Number(article.id) ? "var(--color-accent)" : "var(--color-border)",
+                    borderRadius: "8px",
+                    cursor: "pointer",
+                    transition: "all 0.3s ease",
+                    borderInlineStart: Number(selectedArticleId) === Number(article.id) ? "4px solid var(--color-accent)" : "1px solid var(--color-border)"
+                  }}
+                >
+                  <h4 style={{
+                    fontSize: "1.1rem",
+                    color: Number(selectedArticleId) === Number(article.id) ? "var(--color-accent)" : "var(--color-primary)",
+                    marginBottom: "0.5rem",
+                    lineHeight: "1.4"
+                  }}>
+                    {lang === "en" && article.title_en ? article.title_en : article.title}
+                  </h4>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    <time style={{ fontSize: "0.85rem", color: "var(--color-text-muted)" }}>{article.date}</time>
+                  </div>
+                </button>
+                {Number(selectedArticleId) === Number(article.id) && (
+                  <div className="mobile-article-content">
+                    {renderArticleContent(article, 'mobile')}
+                  </div>
+                )}
+              </div>
             )) : (
               <p style={{ color: "var(--color-text-muted)" }}>{lang === "en" ? "No matching articles found." : "لا توجد مقالات مطابقة للبحث."}</p>
             )}
@@ -254,53 +326,13 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
               ))}
             </div>
 
-            {selectedArticle ? (
-              <article className="animate-fade-in" key={selectedArticle.id}>
-                <div className="flex gap-md items-center mb-md" style={{ marginBottom: "0.8rem" }}>
-                  <span style={{ background: "rgba(0, 91, 171, 0.1)", color: "var(--color-accent)", padding: "0.4rem 1.2rem", borderRadius: "20px", fontSize: "0.95rem", fontWeight: "bold" }}>
-                    {lang === 'en' ? (selectedArticle.category_en || allCategoryNames.find(c => c.ar === selectedArticle.category)?.en || selectedArticle.category) : selectedArticle.category}
-                  </span>
-                  <time style={{ fontSize: "1rem", color: "var(--color-text-muted)" }}>{selectedArticle.date}</time>
+            <div className="desktop-article-content">
+              {selectedArticle ? renderArticleContent(selectedArticle, 'desktop') : (
+                <div style={{ textAlign: "center", padding: "3rem", color: "var(--color-text-muted)" }}>
+                  {lang === "en" ? "No articles in this section yet." : "لا توجد مقالات في هذا القسم حالياً. أضف مقالات جديدة لظهورها هنا."}
                 </div>
-                
-                <h2 style={{ fontSize: "2.2rem", color: "var(--color-primary)", marginBottom: "0.4rem", lineHeight: "1.3" }}>
-                  {lang === 'en' && selectedArticle.title_en ? selectedArticle.title_en : selectedArticle.title}
-                </h2>
-                
-                <div style={{ width: "60px", height: "3px", background: "var(--color-accent)", marginBottom: "1rem", borderRadius: "2px" }}></div>
-                
-                {selectedArticle.video_url && getYouTubeEmbedUrl(selectedArticle.video_url) ? (
-                  <div style={{ position: "relative", paddingBottom: "56.25%", height: 0, overflow: "hidden", maxWidth: "100%", marginBottom: "1.5rem", borderRadius: "12px", boxShadow: "0 4px 15px rgba(0,0,0,0.1)" }}>
-                    <iframe 
-                      src={getYouTubeEmbedUrl(selectedArticle.video_url)!} 
-                      title={lang === "en" ? `Video: ${selectedArticle.title_en || selectedArticle.title}` : `فيديو: ${selectedArticle.title}`}
-                      style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%", border: 0 }} 
-                      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                      allowFullScreen 
-                    />
-                  </div>
-                ) : selectedArticle.image && (
-                  <div style={{ position: "relative", width: "100%", height: "380px", marginBottom: "1.2rem", borderRadius: "12px", overflow: "hidden" }}>
-                    <Image src={selectedArticle.image} alt={lang === "en" ? (selectedArticle.title_en || selectedArticle.title) : selectedArticle.title} fill style={{ objectFit: "cover" }} />
-                  </div>
-                )}
-                
-                <div 
-                  className="article-body-content"
-                  style={{ fontSize: "1.15rem", fontWeight: 400, lineHeight: "2.1", color: "var(--color-text-main)", opacity: 0.9, textAlign: "justify", marginTop: "1rem" }}
-                  dangerouslySetInnerHTML={{ __html: sanitizeHtml(lang === 'en' && selectedArticle.content_en ? selectedArticle.content_en : selectedArticle.content).replace(/<h[1-6]>/g, '<h4 style="margin-top: 0;">') }}
-                />
-
-                <div style={{ marginTop: "4rem", paddingTop: "2rem", borderTop: "1px solid var(--color-border)" }}>
-                  <h4 style={{ marginBottom: "1rem", color: "var(--color-primary)" }}>{lang === "en" ? "Have a question about this topic?" : "هل لديك استفسار بخصوص هذا الموضوع؟"}</h4>
-                  <a href={`https://wa.me/${whatsappNumber}?text=${encodeURIComponent((lang === "en" ? "Hello, I would like to inquire about the article: " : "مرحبًا، أود الاستفسار بخصوص المقال: ") + (lang === "en" && selectedArticle.title_en ? selectedArticle.title_en : selectedArticle.title))}`} target="_blank" rel="noopener noreferrer" className="btn btn-primary" style={{ padding: "0.8rem 2rem" }}>{lang === "en" ? "Contact us via WhatsApp" : "تواصل معنا عبر واتساب"}</a>
-                </div>
-              </article>
-            ) : (
-              <div style={{ textAlign: "center", padding: "3rem", color: "var(--color-text-muted)" }}>
-                {lang === "en" ? "No articles in this section yet." : "لا توجد مقالات في هذا القسم حالياً. أضف مقالات جديدة لظهورها هنا."}
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </div>
