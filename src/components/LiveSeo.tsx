@@ -11,8 +11,12 @@ function setMeta(name: string, content: string) {
     document.querySelectorAll<HTMLMetaElement>(`meta[name="${name}"]`),
   );
   if (!tags.length) return;
-  tags[0].content = content;
-  tags.slice(1).forEach((tag) => tag.remove());
+  // These nodes are owned by Next.js. Removing them manually breaks React's
+  // next client-side navigation, so update their values without changing the
+  // document structure.
+  tags.forEach((tag) => {
+    tag.content = content;
+  });
 }
 
 export default function LiveSeo() {
