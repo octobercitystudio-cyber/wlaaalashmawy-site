@@ -9,13 +9,19 @@ import { servicePath } from "@/lib/serviceRoutes";
 import { normalizeWhatsAppNumber, parseSettingList } from "@/lib/contact";
 import { useSiteContent } from "@/components/SiteContentProvider";
 
+const DEFAULT_SITE_LOGO = "/afc-wordmark.png";
+
 export default function Navbar({ settings = {}, services = [], lang = "ar" }: { settings?: any, services?: any[], lang?: Lang }) {
   const liveContent = useSiteContent();
   settings = liveContent.settings;
   services = liveContent.services;
+  const configuredLogo = typeof settings.site_logo === "string" && settings.site_logo.trim()
+    ? settings.site_logo.trim()
+    : DEFAULT_SITE_LOGO;
   const [scrolled, setScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
+  const [logoSrc, setLogoSrc] = useState(configuredLogo);
   const servicesDropdownRef = useRef<HTMLLIElement>(null);
   const servicesTriggerRef = useRef<HTMLAnchorElement>(null);
   const isServicesPointerInside = useRef(false);
@@ -28,6 +34,10 @@ export default function Navbar({ settings = {}, services = [], lang = "ar" }: { 
   );
   const dict = getDictionary(lang);
   const prefix = lang === 'en' ? '/en' : '';
+
+  useEffect(() => {
+    setLogoSrc(configuredLogo);
+  }, [configuredLogo]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -228,7 +238,7 @@ export default function Navbar({ settings = {}, services = [], lang = "ar" }: { 
         <div>
           <Link href={`${prefix}/`} onClick={() => setIsMobileMenuOpen(false)}>
             <Image 
-              src={settings.site_logo || "/afc-wordmark.png"}
+              src={logoSrc}
               alt={lang === "en" ? "AFC – Al-Ashmawy Financial Consulting" : "AFC – العشماوي للاستشارات المالية"}
               className="site-logo"
               width={1239}
@@ -237,7 +247,10 @@ export default function Navbar({ settings = {}, services = [], lang = "ar" }: { 
               style={{ 
                 objectFit: "contain",
                 transition: "all 0.3s ease"
-              }} 
+              }}
+              onError={() => {
+                if (logoSrc !== DEFAULT_SITE_LOGO) setLogoSrc(DEFAULT_SITE_LOGO);
+              }}
               priority
             />
           </Link>
