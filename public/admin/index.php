@@ -400,7 +400,6 @@
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <h2 class="fw-bold">المدونة والمقالات</h2>
                     <div>
-                        <button class="btn btn-outline-primary me-2" onclick="openCategoriesModal()"><i class="bi bi-tags"></i> إدارة أقسام المقالات</button>
                         <button class="btn btn-gold" onclick="showModal('article')"><i class="bi bi-plus-lg"></i> إضافة مقال</button>
                     </div>
                 </div>
@@ -1417,37 +1416,14 @@
         }
 
         function getMergedArticleCategories() {
-            const catsMap = new Map();
-            const defaults = [
-                { ar: 'الاستشارات المحاسبية', en: 'Accounting Advisory' },
-                { ar: 'الاستشارات الضريبية', en: 'Tax Advisory' },
-                { ar: 'المراجعة والتدقيق', en: 'Audit & Assurance' },
-                { ar: 'تأسيس الشركات', en: 'Company Formation' },
-                { ar: 'الاستشارات المالية', en: 'Financial Advisory' }
+            return [
+                { ar: 'محاسبة', en: 'Accounting', aliases: ['الاستشارات المحاسبية', 'Accounting Advisory'] },
+                { ar: 'مراجعة', en: 'Audit', aliases: ['المراجعة', 'المراجعة والتدقيق', 'Audit & Assurance', 'Auditing'] },
+                { ar: 'ضرايب', en: 'Taxes', aliases: ['ضرائب', 'الاستشارات الضريبية', 'Tax Advisory'] },
+                { ar: 'تأسيس الشركات والمنشآت', en: 'Company Formation', aliases: ['تأسيس الشركات والمنشات', 'تأسيس الشركات والمؤسسات', 'تأسيس الشركات'] },
+                { ar: 'إقامات مستثمرين', en: 'Investor Residency', aliases: ['إقامات المستثمرين', 'اقامات مستثمرين', 'Investor Residency Services'] },
+                { ar: 'تراخيص صناعية', en: 'Industrial Licensing', aliases: ['تراخيص صناعيه', 'التراخيص الصناعية'] }
             ];
-            defaults.forEach(c => catsMap.set(c.ar.trim(), c));
-            if (dataStore['services']) {
-                dataStore['services'].forEach(s => {
-                    if (s && s.title && s.title.trim()) {
-                        if (!catsMap.has(s.title.trim())) {
-                            catsMap.set(s.title.trim(), { ar: s.title.trim(), en: (s.title_en || s.title).trim() });
-                        }
-                    }
-                });
-            }
-            savedArticleCategories.forEach(c => {
-                if (c && c.ar) catsMap.set(c.ar.trim(), { ar: c.ar.trim(), en: (c.en || c.ar).trim() });
-            });
-            if (dataStore['articles']) {
-                dataStore['articles'].forEach(a => {
-                    if (a.category && a.category.trim()) {
-                        if (!catsMap.has(a.category.trim())) {
-                            catsMap.set(a.category.trim(), { ar: a.category.trim(), en: (a.category_en || a.category).trim() });
-                        }
-                    }
-                });
-            }
-            return Array.from(catsMap.values());
         }
 
         function openCategoriesModal() {
@@ -1525,28 +1501,18 @@
             const cats = getMergedArticleCategories();
             sel.replaceChildren();
             sel.add(new Option('-- اختر قسم المقال --', ''));
-            let matched = false;
+            const selectedCategory = cats.find(c =>
+                c.ar === selectedAr || c.en === selectedEn || c.aliases.includes(selectedAr) || c.aliases.includes(selectedEn)
+            );
             cats.forEach((c, idx) => {
                 const option = new Option(`${c.ar} (${c.en})`, String(idx));
                 option.dataset.ar = c.ar;
                 option.dataset.en = c.en;
-                option.selected = Boolean(selectedAr && c.ar === selectedAr);
-                if (option.selected) matched = true;
+                option.selected = selectedCategory === c;
                 sel.add(option);
             });
-            if (selectedAr && !matched) {
-                const option = new Option(`${selectedAr} (${selectedEn || selectedAr})`, 'custom_sel');
-                option.dataset.ar = selectedAr;
-                option.dataset.en = selectedEn;
-                option.selected = true;
-                sel.add(option);
-                matched = true;
-            }
-            const newOption = new Option('+ إضافة قسم جديد...', 'new');
-            newOption.className = 'fw-bold text-primary';
-            sel.add(newOption);
             
-            if (!selectedAr && cats.length > 0) {
+            if (!selectedCategory && cats.length > 0) {
                 sel.selectedIndex = 1;
             }
             onCategorySelectChange();
@@ -1555,11 +1521,7 @@
         function onCategorySelectChange() {
             const sel = document.getElementById('item-category-select');
             if (!sel) return;
-            if (sel.value === 'new') {
-                document.getElementById('custom-category-inputs').style.display = 'block';
-                document.getElementById('item-category').value = '';
-                document.getElementById('item-category_en').value = '';
-            } else if (sel.value !== '' && sel.value !== 'custom_sel') {
+            if (sel.value !== '') {
                 document.getElementById('custom-category-inputs').style.display = 'none';
                 const opt = sel.options[sel.selectedIndex];
                 document.getElementById('item-category').value = opt.getAttribute('data-ar') || '';

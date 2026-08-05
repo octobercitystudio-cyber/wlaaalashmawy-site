@@ -7,6 +7,7 @@ import { Lang } from '@/lib/dictionary';
 import { sanitizeHtml } from '@/lib/sanitizeHtml';
 import { normalizeWhatsAppNumber, parseSettingList } from '@/lib/contact';
 import { useSiteContent } from '@/components/SiteContentProvider';
+import { articleCategories, resolveArticleCategory } from '@/data/articleCategories';
 
 const ALL_ARTICLES_TAB = '__all__';
 
@@ -25,6 +26,11 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
   useEffect(() => {
     const currentArticles = liveContent.articles.length ? liveContent.articles : initialArticles;
     setArticles(currentArticles);
+    setSelectedTab((current) => {
+      if (current !== ALL_ARTICLES_TAB) return current;
+      return resolveArticleCategory(currentArticles[0]?.category, currentArticles[0]?.category_en)?.key
+        || articleCategories[0].key;
+    });
     const queryId = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("id") : null;
     setSelectedArticleId((current) => {
       const preferred = queryId || initialArticleId || current;
@@ -43,14 +49,17 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
     [articles],
   );
 
-  const getLocalizedCategory = React.useCallback(
-    (article: any) => String(lang === 'en' ? (article.category_en || article.category || '') : (article.category || '')).trim(),
-    [lang],
+  const getArticleCategory = React.useCallback(
+    (article: any) => resolveArticleCategory(article.category, article.category_en) || articleCategories[0],
+    [],
   );
 
-  const allCategoryNames = React.useMemo(
-    () => Array.from(new Set(safeArticles.map(getLocalizedCategory).filter(Boolean))),
-    [getLocalizedCategory, safeArticles],
+  const getLocalizedCategory = React.useCallback(
+    (article: any) => {
+      const category = getArticleCategory(article);
+      return lang === 'en' ? category.en : category.ar;
+    },
+    [getArticleCategory, lang],
   );
 
   const getYouTubeEmbedUrl = (url?: string) => {
@@ -66,7 +75,7 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
   };
 
   const filteredArticles = safeArticles.filter(a => {
-    const matchesTab = selectedTab === ALL_ARTICLES_TAB || getLocalizedCategory(a) === selectedTab;
+    const matchesTab = selectedTab === ALL_ARTICLES_TAB || getArticleCategory(a).key === selectedTab;
     const localizedTitle = lang === "en" ? (a.title_en || a.title || "") : (a.title || "");
     const matchesSearch = localizedTitle.toLocaleLowerCase().includes(searchQuery.toLocaleLowerCase());
     return matchesTab && matchesSearch;
@@ -77,7 +86,7 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
   const handleTabChange = (tab: string) => {
     setSelectedTab(tab);
     const newFiltered = safeArticles.filter(a => {
-      const matchesTab = tab === ALL_ARTICLES_TAB || getLocalizedCategory(a) === tab;
+      const matchesTab = tab === ALL_ARTICLES_TAB || getArticleCategory(a).key === tab;
       const localizedTitle = lang === "en" ? (a.title_en || a.title || "") : (a.title || "");
       const matchesSearch = localizedTitle.toLocaleLowerCase().includes(searchQuery.toLocaleLowerCase());
       return matchesTab && matchesSearch;
@@ -95,7 +104,7 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
     const query = e.target.value;
     setSearchQuery(query);
     const newFiltered = safeArticles.filter(a => {
-      const matchesTab = selectedTab === ALL_ARTICLES_TAB || getLocalizedCategory(a) === selectedTab;
+      const matchesTab = selectedTab === ALL_ARTICLES_TAB || getArticleCategory(a).key === selectedTab;
       const localizedTitle = lang === "en" ? (a.title_en || a.title || "") : (a.title || "");
       const matchesSearch = localizedTitle.toLocaleLowerCase().includes(query.toLocaleLowerCase());
       return matchesTab && matchesSearch;
@@ -296,35 +305,21 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
           <div style={{ minHeight: "500px", padding: "0 1rem" }}>
             {/* Tabs */}
             <div className="flex gap-sm mb-lg" style={{ flexWrap: "wrap", borderBottom: "1px solid var(--color-border)", paddingBottom: "1.5rem" }}>
-              <button 
-                onClick={() => handleTabChange(ALL_ARTICLES_TAB)}
-                style={{
-                  padding: "0.5rem 1.5rem",
-                  borderRadius: "30px",
-                  background: selectedTab === ALL_ARTICLES_TAB ? "var(--color-accent)" : "transparent",
-                  color: selectedTab === ALL_ARTICLES_TAB ? "#fff" : "var(--color-text-main)",
-                  fontWeight: selectedTab === ALL_ARTICLES_TAB ? "bold" : "normal",
-                  transition: "all 0.3s ease",
-                  border: selectedTab === ALL_ARTICLES_TAB ? "1px solid var(--color-accent)" : "1px solid var(--color-border)",
-                }}
-              >
-                {lang === 'en' ? 'All' : 'الكل'}
-              </button>
-              {allCategoryNames.map(category => (
+              {articleCategories.map(category => (
                 <button 
-                  key={category}
-                  onClick={() => handleTabChange(category)}
+                  key={category.key}
+                  onClick={() => handleTabChange(category.key)}
                   style={{
                     padding: "0.5rem 1.5rem",
                     borderRadius: "30px",
-                    background: selectedTab === category ? "var(--color-accent)" : "transparent",
-                    color: selectedTab === category ? "#fff" : "var(--color-text-main)",
-                    fontWeight: selectedTab === category ? "bold" : "normal",
+                    background: selectedTab === category.key ? "var(--color-accent)" : "transparent",
+                    color: selectedTab === category.key ? "#fff" : "var(--color-text-main)",
+                    fontWeight: selectedTab === category.key ? "bold" : "normal",
                     transition: "all 0.3s ease",
-                    border: selectedTab === category ? "1px solid var(--color-accent)" : "1px solid var(--color-border)",
+                    border: selectedTab === category.key ? "1px solid var(--color-accent)" : "1px solid var(--color-border)",
                   }}
                 >
-                  {category}
+                  {lang === 'en' ? category.en : category.ar}
                 </button>
               ))}
             </div>

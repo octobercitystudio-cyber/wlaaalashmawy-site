@@ -9,6 +9,23 @@ api_handle_options('GET, POST, PUT, DELETE, OPTIONS');
 
 $method = $_SERVER['REQUEST_METHOD'] ?? '';
 
+function canonical_article_category($value)
+{
+    $categories = [
+        'محاسبة' => 'Accounting',
+        'مراجعة' => 'Audit',
+        'ضرايب' => 'Taxes',
+        'تأسيس الشركات والمنشآت' => 'Company Formation',
+        'إقامات مستثمرين' => 'Investor Residency',
+        'تراخيص صناعية' => 'Industrial Licensing'
+    ];
+    $category = api_plain_text($value ?? 'محاسبة', 100, true);
+    if (!array_key_exists($category, $categories)) {
+        api_json_response(['error' => 'Invalid article category'], 422);
+    }
+    return [$category, $categories[$category]];
+}
+
 function clean_article_payload($data)
 {
     if (!array_key_exists('title', $data) || !array_key_exists('content', $data)) {
@@ -26,12 +43,14 @@ function clean_article_payload($data)
         }
     }
 
+    [$category, $categoryEn] = canonical_article_category($data['category'] ?? 'محاسبة');
+
     return [
         'title' => api_plain_text($data['title'], 255, true),
         'title_en' => api_plain_text($data['title_en'] ?? '', 255),
         'date' => api_plain_text($data['date'] ?? date('d M Y'), 50, true),
-        'category' => api_plain_text($data['category'] ?? 'عام', 100, true),
-        'category_en' => api_plain_text($data['category_en'] ?? 'General', 100),
+        'category' => $category,
+        'category_en' => $categoryEn,
         'image' => api_safe_url($data['image'] ?? '/images/articles/placeholder.jpg', true),
         'content' => api_sanitize_html($data['content'], 300000),
         'content_en' => api_sanitize_html($data['content_en'] ?? '', 300000),

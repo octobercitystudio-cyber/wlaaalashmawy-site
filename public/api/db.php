@@ -180,7 +180,7 @@ try {
     // The title/name checks keep this migration safe and idempotent.
     $cmsSeedFile = dirname(__DIR__) . '/content/cms-seed.json';
     $cmsSeedVersion = $pdo->query("SELECT setting_value FROM settings WHERE setting_key = 'cms_seed_version' LIMIT 1")->fetchColumn();
-    if ($cmsSeedVersion !== '2' && is_file($cmsSeedFile)) {
+    if ($cmsSeedVersion !== '3' && is_file($cmsSeedFile)) {
         $cmsSeed = json_decode((string) file_get_contents($cmsSeedFile), true);
         if (is_array($cmsSeed)) {
             $insertSetting = $pdo->prepare(
@@ -208,7 +208,14 @@ try {
                 "UPDATE settings SET setting_value = REPLACE(setting_value, '\"Al-Ashmawy Office for Financial Advisory\" (AFC)', 'AFC – Al-Ashmawy Financial Consulting') WHERE setting_key = 'about_full_en'"
             );
 
-            $articleExists = $pdo->prepare('SELECT id FROM articles WHERE title = ? LIMIT 1');
+            $articleExists = $pdo->prepare('SELECT id FROM articles WHERE TRIM(title) = TRIM(?) LIMIT 1');
+            $updateSeedArticle = $pdo->prepare(
+                'UPDATE articles
+                 SET category = ?, category_en = ?,
+                     title_en = CASE WHEN title_en IS NULL OR TRIM(title_en) = \'\' THEN ? ELSE title_en END,
+                     content_en = CASE WHEN content_en IS NULL OR TRIM(content_en) = \'\' THEN ? ELSE content_en END
+                 WHERE id = ?'
+            );
             $insertArticle = $pdo->prepare(
                 'INSERT INTO articles (title, title_en, date, category, category_en, image, video_url, content, content_en)
                  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)'
@@ -216,7 +223,17 @@ try {
             foreach (($cmsSeed['articles'] ?? []) as $article) {
                 if (!is_array($article) || empty($article['title']) || empty($article['content'])) continue;
                 $articleExists->execute([(string) $article['title']]);
-                if ($articleExists->fetchColumn()) continue;
+                $existingArticleId = (int) $articleExists->fetchColumn();
+                if ($existingArticleId > 0) {
+                    $updateSeedArticle->execute([
+                        api_plain_text($article['category'] ?? '', 100, true),
+                        api_plain_text($article['category_en'] ?? '', 100),
+                        api_plain_text($article['title_en'] ?? '', 255),
+                        api_sanitize_html($article['content_en'] ?? '', 1000000),
+                        $existingArticleId,
+                    ]);
+                    continue;
+                }
                 $insertArticle->execute([
                     api_plain_text($article['title'], 255, true),
                     api_plain_text($article['title_en'] ?? '', 255),
@@ -251,7 +268,7 @@ try {
                 ]);
             }
             $seedMarker = $pdo->prepare(
-                "INSERT INTO settings (setting_key, setting_value) VALUES ('cms_seed_version', '2')
+                "INSERT INTO settings (setting_key, setting_value) VALUES ('cms_seed_version', '3')
                  ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)"
             );
             $seedMarker->execute();

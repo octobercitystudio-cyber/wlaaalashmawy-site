@@ -1,6 +1,7 @@
 import { servicesData } from "@/data/services";
 import { sectorsData } from "@/data/sectors";
 import { staticArticles } from "@/data/staticArticles";
+import { articleCategories, resolveArticleCategory } from "@/data/articleCategories";
 
 export async function fetchSettings() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL || 'https://www.afc-cpa.com';
@@ -263,13 +264,16 @@ export async function fetchArticles() {
 
         return data.map((article: any) => {
           const fallback = fallbackByArabicTitle.get(String(article.title || "").trim());
-          if (!fallback) return article;
+          const category = resolveArticleCategory(article.category, article.category_en)
+            || resolveArticleCategory(fallback?.category, fallback?.category_en)
+            || articleCategories[0];
 
           return {
             ...article,
-            title_en: article.title_en || fallback.title_en,
-            category_en: article.category_en || fallback.category_en,
-            content_en: article.content_en || fallback.content_en,
+            title_en: article.title_en || fallback?.title_en || "",
+            category: category.ar,
+            category_en: category.en,
+            content_en: article.content_en || fallback?.content_en || "",
           };
         });
       }

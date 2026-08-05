@@ -13,6 +13,10 @@ import {
   serviceIdFromSlug,
   servicePath,
 } from "../src/lib/serviceRoutes";
+import {
+  articleCategories,
+  resolveArticleCategory,
+} from "../src/data/articleCategories";
 
 test("service routes resolve canonical slugs and legacy aliases", () => {
   assert.equal(new Set(allServiceSlugs).size, allServiceSlugs.length);
@@ -23,6 +27,22 @@ test("service routes resolve canonical slugs and legacy aliases", () => {
   assert.equal(canonicalServiceSlug(8), "industrial-licensing");
   assert.equal(servicePath(4, "ar"), "/company-formation");
   assert.equal(servicePath(4, "en"), "/en/company-formation");
+});
+
+test("article categories stay limited to the six bilingual tabs", () => {
+  assert.deepEqual(
+    articleCategories.map(({ ar, en }) => [ar, en]),
+    [
+      ["محاسبة", "Accounting"],
+      ["مراجعة", "Audit"],
+      ["ضرايب", "Taxes"],
+      ["تأسيس الشركات والمنشآت", "Company Formation"],
+      ["إقامات مستثمرين", "Investor Residency"],
+      ["تراخيص صناعية", "Industrial Licensing"],
+    ],
+  );
+  assert.equal(resolveArticleCategory("تأسيس الشركات والمؤسسات")?.key, "company-formation");
+  assert.equal(resolveArticleCategory("", "Tax Advisory")?.key, "taxes");
 });
 
 test("setting lists retain useful fallbacks", () => {
