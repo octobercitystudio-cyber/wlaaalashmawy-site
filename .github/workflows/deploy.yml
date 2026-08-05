@@ -130,7 +130,16 @@ jobs:
           set net:max-retries 3
           set net:reconnect-interval-base 5
           open -u "$FTP_USERNAME","$FTP_PASSWORD" "ftp://$FTP_SERVER:21"
-          mirror --reverse --delete --parallel=4 --verbose \
+          # Upload first without deleting remote paths. Deleting while parallel
+          # transfers are still creating nested Next.js routes causes intermittent
+          # Hostinger 550 errors when one worker removes a directory another uses.
+          mirror --reverse --parallel=4 --no-perms --verbose \
+            --exclude-glob images/uploads \
+            --exclude-glob images/uploads/** \
+            ./out/ /
+          # Clean obsolete files only after every upload has finished, using one
+          # worker so remote directories cannot be removed out from under a transfer.
+          mirror --reverse --delete --parallel=1 --no-perms --verbose \
             --exclude-glob images/uploads \
             --exclude-glob images/uploads/** \
             ./out/ /
