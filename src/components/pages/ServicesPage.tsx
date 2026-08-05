@@ -20,7 +20,7 @@ export default function ServicesPage({ lang = "ar" }: { lang?: Lang }) {
         position: "relative",
         overflow: "hidden"
       }}>
-        <Image src={settings.services_hero_image || "/images/services_hero.jpg"} alt="خدماتنا الاحترافية" fill style={{ objectFit: "cover", zIndex: 0 }} priority />
+        <Image src={settings.services_hero_image || "/images/services_hero.jpg"} alt={lang === "en" ? "Our Professional Services" : "خدماتنا الاحترافية"} fill style={{ objectFit: "cover", zIndex: 0 }} priority />
         {/* Dark Overlay */}
         <div style={{
           position: "absolute",

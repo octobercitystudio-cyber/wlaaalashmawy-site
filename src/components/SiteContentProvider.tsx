@@ -33,11 +33,21 @@ function mergeRowsPreservingEnglish(currentRows: any[], incomingRows: any[]) {
       .filter((row) => row?.id !== undefined && row?.id !== null)
       .map((row) => [String(row.id), row]),
   );
+  const currentByArabicTitle = new Map(
+    currentRows
+      .map((row) => {
+        const title = typeof row?.title === "string" ? row.title : row?.title?.ar;
+        return [String(title || "").trim(), row] as const;
+      })
+      .filter(([title]) => Boolean(title)),
+  );
 
   return incomingRows.map((incoming) => {
-    const current = incoming?.id !== undefined && incoming?.id !== null
+    const currentByMatchingId = incoming?.id !== undefined && incoming?.id !== null
       ? currentById.get(String(incoming.id))
       : undefined;
+    const incomingTitle = typeof incoming?.title === "string" ? incoming.title.trim() : "";
+    const current = currentByMatchingId || currentByArabicTitle.get(incomingTitle);
     if (!current) return incoming;
 
     const merged = { ...current, ...incoming };
