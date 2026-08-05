@@ -111,12 +111,24 @@ jobs:
           # Hostinger exposes this account through a custom FTP hostname while
           # serving its shared *.hstgr.io certificate. Verify the full chain
           # and Hostinger certificate namespace before lftp connects.
-          openssl s_client \
-            -connect "$FTP_SERVER:21" \
-            -starttls ftp \
-            -servername "$FTP_SERVER" \
-            -verify_hostname deployment.hstgr.io \
-            -verify_return_error </dev/null
+          certificate_verified=false
+          for attempt in {1..6}; do
+            echo "Verifying Hostinger FTPS certificate (attempt $attempt of 6)..."
+            if timeout 30 openssl s_client \
+              -connect "$FTP_SERVER:21" \
+              -starttls ftp \
+              -servername "$FTP_SERVER" \
+              -verify_hostname deployment.hstgr.io \
+              -verify_return_error </dev/null; then
+              certificate_verified=true
+              break
+            fi
+            sleep $((attempt * 10))
+          done
+          if [ "$certificate_verified" != "true" ]; then
+            echo "Hostinger FTPS certificate verification failed after 6 attempts." >&2
+            exit 1
+          fi
           lftp <<LFTP_COMMANDS
           set cmd:fail-exit true
           set ftp:ssl-force true
