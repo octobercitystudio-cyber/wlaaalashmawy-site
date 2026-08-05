@@ -27,6 +27,31 @@ const SiteContentContext = createContext<SiteContent & { refresh: () => Promise<
   refresh: async () => {},
 });
 
+function mergeRowsPreservingEnglish(currentRows: any[], incomingRows: any[]) {
+  const currentById = new Map(
+    currentRows
+      .filter((row) => row?.id !== undefined && row?.id !== null)
+      .map((row) => [String(row.id), row]),
+  );
+
+  return incomingRows.map((incoming) => {
+    const current = incoming?.id !== undefined && incoming?.id !== null
+      ? currentById.get(String(incoming.id))
+      : undefined;
+    if (!current) return incoming;
+
+    const merged = { ...current, ...incoming };
+    Object.keys(current).forEach((key) => {
+      if (!key.endsWith("_en")) return;
+      const incomingValue = incoming[key];
+      if (typeof incomingValue !== "string" || !incomingValue.trim()) {
+        merged[key] = current[key];
+      }
+    });
+    return merged;
+  });
+}
+
 export function SiteContentProvider({
   initialContent,
   children,
@@ -53,7 +78,9 @@ export function SiteContentProvider({
         if (result.status !== "fulfilled") continue;
         const [key, value] = result.value;
         if (key === "settings" && value && !Array.isArray(value)) next.settings = value;
-        if (key !== "settings" && Array.isArray(value)) next[key] = value;
+        if (key !== "settings" && Array.isArray(value)) {
+          next[key] = mergeRowsPreservingEnglish(current[key], value);
+        }
       }
       return next;
     });
