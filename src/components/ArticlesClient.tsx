@@ -8,13 +8,15 @@ import { sanitizeHtml } from '@/lib/sanitizeHtml';
 import { normalizeWhatsAppNumber, parseSettingList } from '@/lib/contact';
 import { useSiteContent } from '@/components/SiteContentProvider';
 
+const ALL_ARTICLES_TAB = '__all__';
+
 export default function ArticlesClient({ initialArticles, lang = 'ar', initialArticleId }: { initialArticles: any[], lang?: Lang, initialArticleId?: number }) {
   const liveContent = useSiteContent();
   const [articles, setArticles] = useState<any[]>(initialArticles);
   const [loading, setLoading] = useState(initialArticles.length === 0);
   const [error, setError] = useState('');
   const [whatsappNumber, setWhatsappNumber] = useState("201155729429");
-  const [selectedTab, setSelectedTab] = useState('الكل');
+  const [selectedTab, setSelectedTab] = useState(ALL_ARTICLES_TAB);
   const [selectedArticleId, setSelectedArticleId] = useState<number | string>(
     initialArticleId || (initialArticles.length > 0 ? initialArticles[0].id : 0),
   );
@@ -41,14 +43,15 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
     [articles],
   );
 
-  const allCategoryNames = React.useMemo(() => {
-    const categories = new Map<string, string>();
-    safeArticles.forEach((article) => {
-      const ar = String(article.category || '').trim();
-      if (ar) categories.set(ar, String(article.category_en || ar).trim());
-    });
-    return Array.from(categories, ([ar, en]) => ({ ar, en }));
-  }, [safeArticles]);
+  const getLocalizedCategory = React.useCallback(
+    (article: any) => String(lang === 'en' ? (article.category_en || article.category || '') : (article.category || '')).trim(),
+    [lang],
+  );
+
+  const allCategoryNames = React.useMemo(
+    () => Array.from(new Set(safeArticles.map(getLocalizedCategory).filter(Boolean))),
+    [getLocalizedCategory, safeArticles],
+  );
 
   const getYouTubeEmbedUrl = (url?: string) => {
     if (!url) return null;
@@ -63,7 +66,7 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
   };
 
   const filteredArticles = safeArticles.filter(a => {
-    const matchesTab = selectedTab === 'الكل' || a.category === selectedTab;
+    const matchesTab = selectedTab === ALL_ARTICLES_TAB || getLocalizedCategory(a) === selectedTab;
     const localizedTitle = lang === "en" ? (a.title_en || a.title || "") : (a.title || "");
     const matchesSearch = localizedTitle.toLocaleLowerCase().includes(searchQuery.toLocaleLowerCase());
     return matchesTab && matchesSearch;
@@ -74,7 +77,7 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
   const handleTabChange = (tab: string) => {
     setSelectedTab(tab);
     const newFiltered = safeArticles.filter(a => {
-      const matchesTab = tab === 'الكل' || a.category === tab;
+      const matchesTab = tab === ALL_ARTICLES_TAB || getLocalizedCategory(a) === tab;
       const localizedTitle = lang === "en" ? (a.title_en || a.title || "") : (a.title || "");
       const matchesSearch = localizedTitle.toLocaleLowerCase().includes(searchQuery.toLocaleLowerCase());
       return matchesTab && matchesSearch;
@@ -92,7 +95,7 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
     const query = e.target.value;
     setSearchQuery(query);
     const newFiltered = safeArticles.filter(a => {
-      const matchesTab = selectedTab === 'الكل' || a.category === selectedTab;
+      const matchesTab = selectedTab === ALL_ARTICLES_TAB || getLocalizedCategory(a) === selectedTab;
       const localizedTitle = lang === "en" ? (a.title_en || a.title || "") : (a.title || "");
       const matchesSearch = localizedTitle.toLocaleLowerCase().includes(query.toLocaleLowerCase());
       return matchesTab && matchesSearch;
@@ -110,7 +113,7 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
     <article className="animate-fade-in" key={`${view}-${article.id}`}>
       <div className="flex gap-md items-center mb-md" style={{ marginBottom: "0.8rem" }}>
         <span style={{ background: "rgba(0, 91, 171, 0.1)", color: "var(--color-accent)", padding: "0.4rem 1.2rem", borderRadius: "20px", fontSize: "0.95rem", fontWeight: "bold" }}>
-          {lang === 'en' ? (article.category_en || allCategoryNames.find(c => c.ar === article.category)?.en || article.category) : article.category}
+          {getLocalizedCategory(article)}
         </span>
         <time style={{ fontSize: "1rem", color: "var(--color-text-muted)" }}>{article.date}</time>
       </div>
@@ -294,34 +297,34 @@ export default function ArticlesClient({ initialArticles, lang = 'ar', initialAr
             {/* Tabs */}
             <div className="flex gap-sm mb-lg" style={{ flexWrap: "wrap", borderBottom: "1px solid var(--color-border)", paddingBottom: "1.5rem" }}>
               <button 
-                onClick={() => handleTabChange('الكل')}
+                onClick={() => handleTabChange(ALL_ARTICLES_TAB)}
                 style={{
                   padding: "0.5rem 1.5rem",
                   borderRadius: "30px",
-                  background: selectedTab === 'الكل' ? "var(--color-accent)" : "transparent",
-                  color: selectedTab === 'الكل' ? "#fff" : "var(--color-text-main)",
-                  fontWeight: selectedTab === 'الكل' ? "bold" : "normal",
+                  background: selectedTab === ALL_ARTICLES_TAB ? "var(--color-accent)" : "transparent",
+                  color: selectedTab === ALL_ARTICLES_TAB ? "#fff" : "var(--color-text-main)",
+                  fontWeight: selectedTab === ALL_ARTICLES_TAB ? "bold" : "normal",
                   transition: "all 0.3s ease",
-                  border: selectedTab === 'الكل' ? "1px solid var(--color-accent)" : "1px solid var(--color-border)",
+                  border: selectedTab === ALL_ARTICLES_TAB ? "1px solid var(--color-accent)" : "1px solid var(--color-border)",
                 }}
               >
                 {lang === 'en' ? 'All' : 'الكل'}
               </button>
-              {allCategoryNames.map(cat => (
+              {allCategoryNames.map(category => (
                 <button 
-                  key={cat.ar} 
-                  onClick={() => handleTabChange(cat.ar)}
+                  key={category}
+                  onClick={() => handleTabChange(category)}
                   style={{
                     padding: "0.5rem 1.5rem",
                     borderRadius: "30px",
-                    background: selectedTab === cat.ar ? "var(--color-accent)" : "transparent",
-                    color: selectedTab === cat.ar ? "#fff" : "var(--color-text-main)",
-                    fontWeight: selectedTab === cat.ar ? "bold" : "normal",
+                    background: selectedTab === category ? "var(--color-accent)" : "transparent",
+                    color: selectedTab === category ? "#fff" : "var(--color-text-main)",
+                    fontWeight: selectedTab === category ? "bold" : "normal",
                     transition: "all 0.3s ease",
-                    border: selectedTab === cat.ar ? "1px solid var(--color-accent)" : "1px solid var(--color-border)",
+                    border: selectedTab === category ? "1px solid var(--color-accent)" : "1px solid var(--color-border)",
                   }}
                 >
-                  {lang === 'en' ? (cat.en || cat.ar) : cat.ar}
+                  {category}
                 </button>
               ))}
             </div>
