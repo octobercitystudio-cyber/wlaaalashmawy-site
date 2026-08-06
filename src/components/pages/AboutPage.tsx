@@ -44,36 +44,6 @@ export default function AboutPage({ lang = "ar" }: { lang?: Lang }) {
       {/* 2. Company & Chairman */}
       <section className="py-xl" style={{ backgroundColor: "var(--color-bg-body)" }}>
         <div className="container" style={{ maxWidth: "1200px" }}>
-          {/* Licenses & Memberships */}
-          <div className="text-center" style={{ marginBottom: "5rem" }}>
-            <h2 style={{ fontSize: "2rem", color: "var(--color-primary)", fontWeight: "bold", marginBottom: "2rem" }}>
-              {(lang === "en" ? settings.about_licenses_title_en : settings.about_licenses_title) || (lang === "en" ? "Licenses & Memberships" : "التراخيص والعضويات")}
-            </h2>
-            <div className="grid grid-cols-1 md-grid-cols-2 gap-lg" style={{ maxWidth: "800px", marginInline: "auto" }}>
-              <div className="premium-card flex flex-col items-center justify-center text-center" style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)", padding: "2rem", borderRadius: "16px", boxShadow: "0 5px 15px rgba(0,0,0,0.05)" }}>
-                <div style={{ width: "60px", height: "60px", borderRadius: "50%", backgroundColor: "rgba(212, 175, 55, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1rem" }}>
-                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-                  </svg>
-                </div>
-                <h3 style={{ fontSize: "1.25rem", color: "var(--color-text-main)", fontWeight: "bold", margin: 0 }}>
-                  {(lang === "en" ? settings.about_license_1_en : settings.about_license_1) || (lang === "en" ? "Ministry of Finance - Register of Accountants and Auditors" : "وزارة المالية - سجل المحاسبين والمراجعين")}
-                </h3>
-              </div>
-              <div className="premium-card flex flex-col items-center justify-center text-center" style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)", padding: "2rem", borderRadius: "16px", boxShadow: "0 5px 15px rgba(0,0,0,0.05)" }}>
-                <div style={{ width: "60px", height: "60px", borderRadius: "50%", backgroundColor: "rgba(0, 91, 171, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1rem" }}>
-                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
-                  </svg>
-                </div>
-                <h3 style={{ fontSize: "1.25rem", color: "var(--color-text-main)", fontWeight: "bold", margin: 0 }}>
-                  {(lang === "en" ? settings.about_license_2_en : settings.about_license_2) || (lang === "en" ? "Egyptian Tax Association" : "جمعية الضرائب المصرية")}
-                </h3>
-              </div>
-            </div>
-          </div>
-
           <div
             className="about-leadership"
             data-lang={lang}
@@ -144,6 +114,36 @@ export default function AboutPage({ lang = "ar" }: { lang?: Lang }) {
                 as="div"
                 style={{ fontSize: "1.2rem", fontWeight: 400, lineHeight: "2", color: "var(--color-text-main)", opacity: 0.9 }}
               />
+            </div>
+          </div>
+
+          {/* Licenses & Memberships */}
+          <div className="text-center" style={{ marginBottom: "5rem" }}>
+            <h2 style={{ fontSize: "2rem", color: "var(--color-primary)", fontWeight: "bold", marginBottom: "2rem" }}>
+              {(lang === "en" ? settings.about_licenses_title_en : settings.about_licenses_title) || (lang === "en" ? "Licenses & Memberships" : "التراخيص والعضويات")}
+            </h2>
+            <div className="grid grid-cols-1 md-grid-cols-2 gap-lg" style={{ maxWidth: "800px", marginInline: "auto" }}>
+              <div className="premium-card flex flex-col items-center justify-center text-center" style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)", padding: "2rem", borderRadius: "16px", boxShadow: "0 5px 15px rgba(0,0,0,0.05)" }}>
+                <div style={{ width: "60px", height: "60px", borderRadius: "50%", backgroundColor: "rgba(212, 175, 55, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1rem" }}>
+                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--color-accent)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                  </svg>
+                </div>
+                <h3 style={{ fontSize: "1.25rem", color: "var(--color-text-main)", fontWeight: "bold", margin: 0 }}>
+                  {(lang === "en" ? settings.about_license_1_en : settings.about_license_1) || (lang === "en" ? "Ministry of Finance - Register of Accountants and Auditors" : "وزارة المالية - سجل المحاسبين والمراجعين")}
+                </h3>
+              </div>
+              <div className="premium-card flex flex-col items-center justify-center text-center" style={{ background: "var(--color-bg-card)", border: "1px solid var(--color-border)", padding: "2rem", borderRadius: "16px", boxShadow: "0 5px 15px rgba(0,0,0,0.05)" }}>
+                <div style={{ width: "60px", height: "60px", borderRadius: "50%", backgroundColor: "rgba(0, 91, 171, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1rem" }}>
+                  <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="var(--color-primary)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  </svg>
+                </div>
+                <h3 style={{ fontSize: "1.25rem", color: "var(--color-text-main)", fontWeight: "bold", margin: 0 }}>
+                  {(lang === "en" ? settings.about_license_2_en : settings.about_license_2) || (lang === "en" ? "Egyptian Tax Association" : "جمعية الضرائب المصرية")}
+                </h3>
+              </div>
             </div>
           </div>
 
