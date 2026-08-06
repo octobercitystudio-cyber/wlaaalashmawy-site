@@ -187,7 +187,7 @@ try {
     // The title/name checks keep this migration safe and idempotent.
     $cmsSeedFile = dirname(__DIR__) . '/content/cms-seed.json';
     $cmsSeedVersion = $pdo->query("SELECT setting_value FROM settings WHERE setting_key = 'cms_seed_version' LIMIT 1")->fetchColumn();
-    if ($cmsSeedVersion !== '3' && is_file($cmsSeedFile)) {
+    if ($cmsSeedVersion !== '4' && is_file($cmsSeedFile)) {
         $cmsSeed = json_decode((string) file_get_contents($cmsSeedFile), true);
         if (is_array($cmsSeed)) {
             $insertSetting = $pdo->prepare(
@@ -275,7 +275,7 @@ try {
                 ]);
             }
             $seedMarker = $pdo->prepare(
-                "INSERT INTO settings (setting_key, setting_value) VALUES ('cms_seed_version', '3')
+                "INSERT INTO settings (setting_key, setting_value) VALUES ('cms_seed_version', '4')
                  ON DUPLICATE KEY UPDATE setting_value = VALUES(setting_value)"
             );
             $seedMarker->execute();
