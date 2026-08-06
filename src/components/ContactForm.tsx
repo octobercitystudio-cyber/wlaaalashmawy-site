@@ -8,43 +8,38 @@ export default function ContactForm({
 }: {
   lang: Lang;
 }) {
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "sending" | "success" | "error">("idle");
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const form = event.currentTarget;
     if (!form.reportValidity()) return;
 
     const data = new FormData(form);
-    const name = String(data.get("name") ?? "").trim();
-    const email = String(data.get("email") ?? "").trim();
-    const phone = String(data.get("phone") ?? "").trim();
-    const inquiry = String(data.get("inquiry") ?? "").trim();
-    const message = String(data.get("message") ?? "").trim();
+    setStatus("sending");
 
-    const body =
-      lang === "en"
-        ? [
-            "Hello AFC, I would like to request a consultation.",
-            `Name: ${name}`,
-            `Email: ${email}`,
-            `Phone: ${phone}`,
-            `Inquiry: ${inquiry}`,
-            `Message: ${message}`,
-          ].join("\n")
-        : [
-            "مرحبًا AFC، أرغب في طلب استشارة.",
-            `الاسم: ${name}`,
-            `البريد الإلكتروني: ${email}`,
-            `الهاتف: ${phone}`,
-            `نوع الاستفسار: ${inquiry}`,
-            `الرسالة: ${message}`,
-          ].join("\n");
+    try {
+      const response = await fetch("/api/contact.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: String(data.get("name") ?? "").trim(),
+          email: String(data.get("email") ?? "").trim(),
+          phone: String(data.get("phone") ?? "").trim(),
+          inquiry: String(data.get("inquiry") ?? "").trim(),
+          message: String(data.get("message") ?? "").trim(),
+          website: String(data.get("website") ?? "").trim(),
+          language: lang,
+        }),
+      });
 
-    const subject = lang === "en" ? "New Inquiry from AFC Website" : "استفسار جديد من موقع AFC";
-    const url = `mailto:info@afc-cpa.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    window.location.href = url;
-    setSubmitted(true);
+      if (!response.ok) throw new Error("Contact request failed");
+
+      form.reset();
+      setStatus("success");
+    } catch {
+      setStatus("error");
+    }
   }
 
   const fieldStyle = {
@@ -71,6 +66,10 @@ export default function ContactForm({
       onSubmit={handleSubmit}
       style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}
     >
+      <div aria-hidden="true" style={{ position: "absolute", left: "-10000px", width: "1px", height: "1px", overflow: "hidden" }}>
+        <label htmlFor="contact-website">Website</label>
+        <input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
+      </div>
       <div className="grid grid-cols-1 md-grid-cols-2 gap-md">
         <div>
           <label htmlFor="contact-name" style={labelStyle}>
@@ -167,6 +166,7 @@ export default function ContactForm({
 
       <button
         type="submit"
+        disabled={status === "sending"}
         className="btn btn-primary"
         style={{
           marginTop: "0.5rem",
@@ -178,20 +178,31 @@ export default function ContactForm({
         }}
       >
         <i className="bi bi-envelope" aria-hidden="true" style={{ marginRight: "0.5rem", marginLeft: "0.5rem" }} />
-        {lang === "en" ? "Send via Email" : "إرسال عبر البريد الإلكتروني"}
+        {status === "sending"
+          ? lang === "en" ? "Sending..." : "جارٍ الإرسال..."
+          : lang === "en" ? "Send" : "إرسال"}
       </button>
 
       <p className="form-note">
         {lang === "en"
-          ? "Your message will open in your email app for review before sending."
-          : "ستفتح الرسالة في تطبيق البريد الخاص بك لمراجعتها قبل الإرسال."}
+          ? "Your message will be delivered directly to the AFC team."
+          : "سيتم إرسال رسالتك مباشرة إلى بريد فريق AFC."}
       </p>
-      <p role="status" aria-live="polite" className="sr-status">
-        {submitted
+      <p
+        role="status"
+        aria-live="polite"
+        className="sr-status"
+        style={{ color: status === "error" ? "#b42318" : "var(--color-accent)" }}
+      >
+        {status === "success"
           ? lang === "en"
-            ? "Your email was prepared."
-            : "تم تجهيز رسالتك للإرسال عبر البريد."
-          : ""}
+            ? "Your message was sent successfully. The AFC team will contact you soon."
+            : "تم إرسال رسالتك بنجاح، وسيتواصل معك فريق AFC قريبًا."
+          : status === "error"
+            ? lang === "en"
+              ? "We could not send your message. Please try again shortly."
+              : "تعذر إرسال رسالتك الآن. يرجى المحاولة مرة أخرى بعد قليل."
+            : ""}
       </p>
     </form>
   );
