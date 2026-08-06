@@ -83,10 +83,10 @@ export default function Home({ lang = "ar" }: { lang?: Lang }) {
           </div>
           <div className="premium-card flex justify-center items-center" style={{ minHeight: "350px", padding: 0, overflow: "hidden", position: "relative", border: "2px solid var(--color-accent)" }}>
             <Image 
-              src={settings.home_about_image || "/images/wlaa-office.jpg"}
-              alt={lang === "en" ? "Wlaa Magdy - Founder of AFC – Al-Ashmawy Financial Consulting" : "الأستاذة ولاء مجدي العشماوي - مؤسسة AFC – العشماوي للاستشارات المالية"}
+              src={settings.home_about_image || "/images/afc_office.jpg"}
+              alt={lang === "en" ? "AFC office" : "مقر مكتب AFC"}
               fill 
-              style={{ objectFit: "cover", objectPosition: "top center" }} 
+              style={{ objectFit: "cover" }} 
             />
           </div>
         </div>

@@ -36,7 +36,7 @@ const articles = Function(`"use strict"; return (${extractArray(articlesSource, 
 const testimonials = Function(`"use strict"; return (${extractArray(apiSource, "const staticTestimonials")});`)();
 const settings = {
   site_logo: "/afc-wordmark.png",
-  home_about_image: "/images/wlaa-office.jpg",
+  home_about_image: "/images/afc_office.jpg",
   about_hero_image: "/images/about_us_hero.jpg",
   about_profile_image: "/images/wlaa-profile.jpg",
   contact_hero_image: "/images/contact_hero.jpg",
@@ -140,6 +140,7 @@ const settings = {
   seo_service_8_desc: "مساعدة المصانع والمستثمرين في استخراج وتجديد التراخيص الصناعية واستكمال إجراءات التشغيل والامتثال للجهات المختصة.",
 };
 const overwriteSettings = {
+  home_about_image: "/images/afc_office.jpg",
   seo_title: "AFC – العشماوي للاستشارات المالية | محاسب قانوني في 6 أكتوبر",
   seo_desc: "مكتب AFC بإدارة أ. ولاء مجدي العشماوي يقدم خدمات المحاسبة والمراجعة والضرائب وتأسيس الشركات في 6 أكتوبر والجيزة وجميع أنحاء مصر.",
   seo_title_en: "AFC – Al-Ashmawy Financial Consulting | Accounting, Audit & Tax Services in Egypt",
