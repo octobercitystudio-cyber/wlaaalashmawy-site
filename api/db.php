@@ -141,6 +141,13 @@ try {
             INDEX idx_password_reset_email_expiry (email, expires_at),
             INDEX idx_password_reset_ip_time (ip_address, created_at)
         ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+        CREATE TABLE IF NOT EXISTS contact_rate_limits (
+            id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+            ip_hash CHAR(64) NOT NULL,
+            submitted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            INDEX idx_contact_rate_ip_time (ip_hash, submitted_at)
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
     ");
 
     // Safely add ip_address column if it doesn't exist
@@ -280,6 +287,7 @@ try {
         $pdo->exec("DELETE FROM admin_sessions WHERE expires_at <= UTC_TIMESTAMP()");
         $pdo->exec("DELETE FROM login_attempts WHERE attempted_at < DATE_SUB(UTC_TIMESTAMP(), INTERVAL 1 DAY)");
         $pdo->exec("DELETE FROM password_reset_codes WHERE created_at < DATE_SUB(UTC_TIMESTAMP(), INTERVAL 1 DAY)");
+        $pdo->exec("DELETE FROM contact_rate_limits WHERE submitted_at < DATE_SUB(UTC_TIMESTAMP(), INTERVAL 2 DAY)");
         $pdo->exec("DELETE FROM visits WHERE visited_at < DATE_SUB(UTC_TIMESTAMP(), INTERVAL 180 DAY)");
     }
 
